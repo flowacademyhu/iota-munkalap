@@ -17,6 +17,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "coverageReporters": ["text", "lcov"]
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
