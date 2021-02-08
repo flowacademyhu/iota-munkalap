@@ -1,25 +1,35 @@
 import logo from './logo.svg';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import TableOfMunkatarsak from './TableOfMunkatarsak';
 import './App.css';
 
-function App() {
+export default function App() {
+  const [user, setUser] = useState();
+
+ useEffect(async () => {
+    const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+    setUser(data);
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Név</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Aktiv</th>
+    </tr>
+  </thead>
+  {user ? (
+            user.map(user => (
+              <TableOfMunkatarsak user={user} key={user.id} />
+            ))
+          ) : (
+            <>Users are loading...</>
+          )}
+</table>
     </div>
   );
 }
-
-export default App;
