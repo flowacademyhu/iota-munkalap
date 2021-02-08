@@ -9,7 +9,7 @@ function SaveEmployee() {
     >
       <Form>
         <h1 className='text-center'>Új munkavállaló</h1>
-        <Input label='Név' type='text' />
+        <Input name='name' label='Név' type='text' />
       </Form>
     </Formik>
   )
