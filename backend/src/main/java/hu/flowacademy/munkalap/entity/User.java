@@ -2,10 +2,16 @@ package hu.flowacademy.munkalap.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.munkalap.enumCustom.Kind;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user_custom")
 public class User {
