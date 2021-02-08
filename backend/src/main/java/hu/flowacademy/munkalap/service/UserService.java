@@ -6,6 +6,8 @@ import hu.flowacademy.munkalap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class UserService {
 
@@ -18,6 +20,8 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setKind(Kind.USER);
+        user.setEnabled(true);
+        user.setCreatedAt(new Date());
         return userRepository.save(user);
     }
 }
