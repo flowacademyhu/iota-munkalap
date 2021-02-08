@@ -23,9 +23,11 @@ public class User {
     private String name;
     private String email;
     private Kind kind;
-    //private String password;
+    private String password;
+    private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:sss")
     private Date createdAt;
+
 
 }
 

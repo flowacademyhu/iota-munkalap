@@ -1,6 +1,7 @@
 package hu.flowacademy.munkalap.service;
 
 import hu.flowacademy.munkalap.entity.User;
+import hu.flowacademy.munkalap.enumCustom.Kind;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        user.setKind(Kind.USER);
         return userRepository.save(user);
     }
 }
