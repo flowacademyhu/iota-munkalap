@@ -1,35 +1,46 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import GetingAndListingEmployees from './GetingAndListingEmployees';
 
-export default function TableOfEmployees() {
+export default function TableListOfEmployees() {
   const [user, setUser] = useState();
 
- useEffect(async () => {
-    const { data } = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+  useEffect(() => {
+    const fetchData = async () => {
+    const { data } = await axios(`https://jsonplaceholder.typicode.com/users`);
     setUser(data);
-  }, []);
+    }
+    fetchData();
+  }, [setUser]);
   return (
     <div className="border border-secondary">
       <div className="container-sm">
-      <table className="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Név</th>
-      <th scope="col">E-mail</th>
-      <th scope="col">Aktiv</th>
-    </tr>
-  </thead>
-  {user ? (
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Név</th>
+              <th scope="col">E-mail</th>
+              <th scope="col">Aktiv</th>
+            </tr>
+          </thead>
+          <tbody>
+          {user ? (
             user.map(user => (
-              <GetingAndListingEmployees user={user} key={user.id} />
+              <tr key={user.id}>
+               <th scope="row">{user.id}</th>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.aktive}</td>
+              </tr>
             ))
-          ) : (
-            <>Users are loading...</>
-          )}
-</table>
-</div>
+          )
+          : <tr>
+            <td>Loading...</td>
+            </tr>
+          }
+            </tbody>
+        </table>
+      </div>
     </div>
   );
 }
