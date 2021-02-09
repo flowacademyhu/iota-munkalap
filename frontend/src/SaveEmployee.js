@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
+import axios from 'axios';
+import { MockAdapter } from 'axios-mock-adapter';
 import Input from './Input';
 import Button from './Button';
 
@@ -19,18 +21,25 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
+async function postData(values) {
+  await axios
+    .post('https://jsonplaceholder.typicode.com/users', values)
+    .then(response => console.log(response.status));
+}
+
 function SaveEmployee() {
   return (
-    <Formik 
-      initialValues={{ 
-        name: '', 
+    <Formik
+      initialValues={{
+        name: '',
         email: '',
-        password: '', 
-        confirmPassword: '' 
+        password: '',
+        confirmPassword: ''
       }}
       validationSchema={schema}
       onSubmit={values => {
         console.log("Küldés:", values);
+        postData(values);
       }}
     >
       <Form>
