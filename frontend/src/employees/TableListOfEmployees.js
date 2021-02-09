@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import useUser from '../Hooks/useUser';
 
 export default function TableListOfEmployees() {
-  const [user, setUser] = useState();
+  const { user } = useUser();
 
-  useEffect(() => {
-    const fetchData = async () => {
-    const { data } = await axios(`https://jsonplaceholder.typicode.com/users`);
-    setUser(data);
-    }
-    fetchData();
-  }, [setUser]);
   return (
     <div className="border border-secondary">
-      <div className="container-sm">
+      <div className="container-fluid">
         <table className="table">
           <thead>
             <tr>
@@ -24,21 +17,21 @@ export default function TableListOfEmployees() {
             </tr>
           </thead>
           <tbody>
-          {user ? (
-            user.map(user => (
-              <tr key={user.id}>
-               <th scope="row">{user.id}</th>
-                    <td>{user.name}</td>
-                    <td>{user.email}</td>
-                    <td>{user.aktive}</td>
+            {user ? (
+              user.map(user => (
+                <tr key={user.id}>
+                  <th scope="row">{user.id}</th>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.active}</td>
+                </tr>
+              ))
+            )
+              : <tr>
+                <td>Loading...</td>
               </tr>
-            ))
-          )
-          : <tr>
-            <td>Loading...</td>
-            </tr>
-          }
-            </tbody>
+            }
+          </tbody>
         </table>
       </div>
     </div>
