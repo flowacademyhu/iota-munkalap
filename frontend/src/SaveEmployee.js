@@ -1,11 +1,21 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import Input from './Input';
+import Button from './Button';
 
 function SaveEmployee() {
   return (
     <Formik 
-     // initialValues={{ name: '', email: '', password: '', password: '' }}
+      initialValues={{ 
+        name: '', 
+        email: '',
+        password: '', 
+        confirmPassword: '' 
+      }}
+      //validationSchema={schema}
+      onSubmit={values => {
+        console.log("Küldés:", values);
+      }}
     >
       <Form>
         <h1 className='text-center'>Új munkavállaló</h1>
