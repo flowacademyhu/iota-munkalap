@@ -44,7 +44,7 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
+  "Dependencies": {
     "axios-mock-adapter": "^1.19.0"
   }
 }
