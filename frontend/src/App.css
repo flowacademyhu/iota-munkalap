@@ -28,6 +28,37 @@
   color: #61dafb;
 }
 
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: lightgray;
+  vertical-align: middle
+}
+
+.flex-container > div {
+  background-color: green;
+  
+  padding: 20px;
+  font-size: 30px;
+  border-radius: 2px;
+  height: 49px;
+  width: 150px;
+
+}
+
+.flex-container > img {
+  
+  padding: 20px;
+  font-size: 30px;
+  border-radius: 5px;
+
+}
+
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

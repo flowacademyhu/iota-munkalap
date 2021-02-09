@@ -1,4 +1,5 @@
 import React from "react";
+import logo from './uj_logo.png';
 
 import {
     BrowserRouter as Router,
@@ -9,25 +10,17 @@ import {
 
 export default function Page() {
     return (
-        //ToDo:
-        //IF Loged in -> Page.js else Login.js 
+        
         <Router>
-            <div>
-                <ul>
-                    <li>
-                        <Link to="/employee">Munkavállalók</Link>
-                    </li>
-                    <li>
-                        <Link to="/partners">Partnerek</Link>
-                    </li>
-                    <li>
-                        <Link to="/worksheet">Munkalapok</Link>
-                    </li>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                </ul>
-
+            <div class="flex-container">
+            
+            <img src={logo} alt="ingo stop logo" width="135" height="49"/>
+            
+            <div><Link to="/employee">Munkavállalók</Link></div>
+            <div><Link to="/partners">Partnerek</Link></div>
+            <div><Link to="/worksheet">Munkalapok</Link></div>
+       
+</div>
                 <hr />
 
 
@@ -42,7 +35,7 @@ export default function Page() {
                         <Worksheet />
                     </Route>
                 </Switch>
-            </div>
+         
         </Router>
     );
 }
