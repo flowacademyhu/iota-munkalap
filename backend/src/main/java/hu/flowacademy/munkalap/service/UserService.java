@@ -6,6 +6,7 @@ import hu.flowacademy.munkalap.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -21,7 +22,7 @@ public class UserService {
     public User saveUser(User user) {
         user.setKind(Kind.USER);
         user.setEnabled(true);
-        user.setCreatedAt(new Date());
+        user.setCreatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }
 }

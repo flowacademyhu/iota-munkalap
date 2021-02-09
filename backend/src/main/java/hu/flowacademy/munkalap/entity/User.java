@@ -8,7 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @NoArgsConstructor
@@ -28,5 +29,5 @@ public class User {
     private String password;
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:sss")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 }
