@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Input from './Input';
 import Button from './Button';
 import PopUp from './PopUp';
-import {postUser} from './UserAPI';
+import { postUser } from './UserAPI';
 
 const schema = yup.object().shape({
   email: yup
@@ -22,21 +22,22 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-
 function SaveEmployee() {
   const [send, setSend] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
   async function postData(values) {
-    await postUser(values)
-      .then(response => {
-        if (response.status === 201 || response.status === 200) {
-          setPopUpMessage('Munkavállaló sikeresen létrehozva');
-        } else {
-          setPopUpMessage('A létrehozás sikertelen');
-        }
-        setSend(true);
-      });
+    try {
+      const response = await postUser(values);
+      if (response.status === 201) {
+        setPopUpMessage('Munkavállaló sikeresen létrehozva');
+      } else {
+        setPopUpMessage('A létrehozás sikertelen');
+      }
+    } catch (error) {
+      setPopUpMessage('A létrehozás sikertelen');
+    }
+    setSend(true);
   }
 
   return (
@@ -63,7 +64,7 @@ function SaveEmployee() {
               <Input name='password' label='Jelszó' type='password' />
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
               <div className='buttons'>
-                <Link to=''>
+                <Link to='/employees'>
                   <Button text='Mégse' />
                 </Link>
                 <Button text='Mentés' type='submit' />
