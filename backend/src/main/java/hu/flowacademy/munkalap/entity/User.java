@@ -3,6 +3,7 @@ package hu.flowacademy.munkalap.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.munkalap.enumCustom.Kind;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder(toBuilder = true)
 @Table(name = "user_custom")
 public class User {
 

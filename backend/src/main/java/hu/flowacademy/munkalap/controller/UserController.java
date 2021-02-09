@@ -1,5 +1,6 @@
 package hu.flowacademy.munkalap.controller;
 
+import hu.flowacademy.munkalap.dto.UserCreateDTO;
 import hu.flowacademy.munkalap.entity.User;
 import hu.flowacademy.munkalap.jsonResponse.JsonResponse;
 import hu.flowacademy.munkalap.service.UserService;
@@ -24,8 +25,14 @@ public class UserController {
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed("admin")
-    public User saveUser(@RequestBody User user) {
+    public User createUser(@RequestBody UserCreateDTO userCreateDTO) {
+        User user = User.builder()
+                .name(userCreateDTO.getName())
+                .password(userCreateDTO.getPassword())
+                .email(userCreateDTO.getEmail())
+                .build();
         return userService.saveUser(user);
     }
+
 
 }
