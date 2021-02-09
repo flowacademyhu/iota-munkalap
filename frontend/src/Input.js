@@ -1,10 +1,19 @@
 import React from 'react';
+import { useField } from "formik";
 
-function Input({ name, label, type, value }) {
+function Input({ label, type, ...props }) {
+  const [field, meta] = useField(props);
+  const { name } = props;
+
   return (
-    <div>
+    <div className='form-group'>
       <label htmlFor={name}>{label}:</label>
-      <input type={type} className='inputfield' />
+      <input
+        {...field}
+        {...props}
+        id={name}
+        type={type}
+        className='inputfield' />
     </div>
   );
 }
