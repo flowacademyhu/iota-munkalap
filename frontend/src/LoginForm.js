@@ -5,8 +5,13 @@ import * as yup from "yup";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import Button from "./Button";
+//const axios = require('axios')
+var axios = require("axios");
+var MockAdapter = require("axios-mock-adapter");
+var mock = new MockAdapter(axios);
 
-//import userApi from "./userApi";
+
+ 
 
 const schema = yup.object().shape({
     email: yup
@@ -19,6 +24,8 @@ const schema = yup.object().shape({
         .min(5, "A jelszó legalább 5 karakter legyen!")
 });
 
+mock.onPut("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, {accessToken: '...'});
+
 export default function LoginForm({ onRegistered }) {
   //  const [error, setError] = useState();
     return (
@@ -28,9 +35,18 @@ export default function LoginForm({ onRegistered }) {
                 password: ""
             }}
             validationSchema={schema}
-            onSubmit={async values => {
-                console.log("Küldés:", values);
-            }}
+      onSubmit={async values => {
+        console.log("Küldés:", values);
+        const result = await axios.put('http://localhost:8080/api/users/login', {username: 'user12345', password: 'user12345'});
+        console.log(result);
+        // await userApi.register(values);
+        // if (result.error) {
+        //   setError(result.error);
+        // } else {
+        //   setError(null);
+        //   onRegistered(result.id);
+        // }
+      }}
         >
             <Form>
                 <h3 className="mb-5 text-center">Bejelentkezés</h3>
