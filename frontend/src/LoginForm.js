@@ -5,9 +5,11 @@ import * as yup from "yup";
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import Button from "./Button";
+import axios from "axios"
+import MockAdapter from 'axios-mock-adapter'
 //const axios = require('axios')
-var axios = require("axios");
-var MockAdapter = require("axios-mock-adapter");
+
+//var MockAdapter = require("axios-mock-adapter");
 var mock = new MockAdapter(axios);
 
 
