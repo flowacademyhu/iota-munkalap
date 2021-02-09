@@ -1,3 +1,27 @@
-
 server:
   port: 8081
+
+spring:
+  datasource:
+    url: jdbc:h2:file:./db/demo
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+
+keycloak:
+  realm: worksheet
+  auth-server-url: http://localhost:8180/auth
+  ssl-required: external
+  resource: worksheetclient
+  credentials.secret: be835fad-eba0-4797-ad88-b802b676d2f3
+  use-resource-role-mappings: true
+  bearer-only: true

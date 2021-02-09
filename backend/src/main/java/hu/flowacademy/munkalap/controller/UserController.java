@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
+
 @RestController
 @RequestMapping("api")
 public class UserController {
@@ -21,17 +23,10 @@ public class UserController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
+    @RolesAllowed("admin")
     public User saveUser(@RequestBody User user) {
         userService.saveUser(user);
         return new User();
     }
 
 }
-
-/*@RestController
-public class CompanyController {
-    @RequestMapping(value = "/api/something", method = RequestMethod.GET)
-    public ResponseEntity something() {
-        return new ResponseEntity(new EmptyJsonResponse(), HttpStatus.OK);
-    }
-}*/
