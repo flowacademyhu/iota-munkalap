@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import LoginForm from './LoginForm';
 import React from "react";
+import './style.css';
 
 function App() {
 

@@ -1,8 +1,9 @@
-import React from "react";
-export default function Button({ children }) {
+import React from 'react'
+
+function Button({ text, onClick, type }) {
   return (
-    <button type="submit" className="btn btn-primary w-100 mb-3">
-      {children}
-    </button>
+    <button onClick={onClick} type={type} className='button'>{text}</button>
   );
 }
+
+export default Button;
