@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
+import {login} from "./UserAPI"
 import * as yup from "yup";
 
 import EmailInput from "./EmailInput";
@@ -11,6 +12,8 @@ import MockAdapter from 'axios-mock-adapter'
 
 //var MockAdapter = require("axios-mock-adapter");
 var mock = new MockAdapter(axios);
+
+//axios.get('http://localhost:8080/api/users/login', { username: 'user12345', password: 'user12345' });
 
 
 
@@ -40,7 +43,7 @@ export default function LoginForm() {
                         }}
                         validationSchema={schema}
                         onSubmit={async values => {
-                            const result = await axios.get('http://localhost:8080/api/users/login', { username: 'user12345', password: 'user12345' });
+                            const result = await login(username, password);
                             console.log(result);
                         }}
                     >
