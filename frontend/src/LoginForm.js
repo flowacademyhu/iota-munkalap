@@ -27,11 +27,10 @@ const schema = yup.object().shape({
 mock.onPut("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
 
 export default function LoginForm() {
-    //  const [error, setError] = useState();
     return (
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
+        <div className="container bg-secondary">
+            <div className="row">
+                <div className="col-12">
                     <Formik
                         initialValues={{
                             email: "",
@@ -42,16 +41,9 @@ export default function LoginForm() {
                             console.log("Küldés:", values);
                             const result = await axios.put('http://localhost:8080/api/users/login', { username: 'user12345', password: 'user12345' });
                             console.log(result);
-                            // await userApi.register(values);
-                            // if (result.error) {
-                            //   setError(result.error);
-                            // } else {
-                            //   setError(null);
-                            //   onRegistered(result.id);
-                            // }
                         }}
                     >
-                        <Form className>
+                        <Form>
                             <h3 className="mb-5 text-center">Bejelentkezés</h3>
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
