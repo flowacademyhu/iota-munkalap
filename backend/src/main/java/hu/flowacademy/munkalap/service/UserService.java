@@ -46,7 +46,7 @@ public class UserService {
             throw new WorksheetUserException("Bad Email", HttpStatus.BAD_REQUEST);
         }
         if (!(EmailValidator.getInstance().isValid(user.getEmail()))) {
-            throw new WorksheetUserException("Bad Email", HttpStatus.MULTI_STATUS);
+            throw new WorksheetUserException("Bad Email", HttpStatus.BAD_REQUEST);
         }
 
     }
