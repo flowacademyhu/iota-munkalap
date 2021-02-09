@@ -14,11 +14,7 @@ export default function App() {
           <SaveEmployee />
         </Route>
         <Route path=''>
-          <div className="border border-secondary">
-            <div className="container-fluid">
-              <TableListOfEmployees />
-            </div>
-          </div>
+          <TableListOfEmployees />
         </Route>
       </Switch>
     </Router>
