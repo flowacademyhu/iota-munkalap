@@ -5,7 +5,6 @@
 .button {
   background-color: green;
   color: white;
-  min-width: 30%;
   margin: 20px;
   font-size: 30px;
 }
