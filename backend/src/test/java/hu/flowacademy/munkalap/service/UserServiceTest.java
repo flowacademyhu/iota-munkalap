@@ -1,6 +1,7 @@
 package hu.flowacademy.munkalap.service;
 
 import hu.flowacademy.munkalap.entity.User;
+import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void givenUserObject_whenSavingUser_thenGreatSuccess() {
+    public void givenUserObject_whenSavingUser_thenGreatSuccess() throws WorksheetUserException {
         givenUniquePerson();
         User userData = givenProperUserObject();
         User result = userService.saveUser(userData);
