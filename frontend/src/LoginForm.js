@@ -48,7 +48,7 @@ export default function LoginForm() {
                             <EmailInput name="email" />
                             <PasswordInput name="password" />
                             <div className="my-5 d-flex justify-content-center">
-                                <Button text="Bejelentkezés" />
+                                <Button text="Belépés" />
                             </div>
 
 
