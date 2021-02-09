@@ -1,7 +1,23 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import * as yup from 'yup';
 import Input from './Input';
 import Button from './Button';
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Az email kötelező!")
+    .email("Nem megfelelő email cím!"),
+  password: yup
+    .string()
+    .required("A jelszó kötelező!")
+    .min(5, "Legalább 5 karakteres jelszó kell!"),
+  confirmPassword: yup
+    .string()
+    .required("Add meg a jelszót még egyszer!")
+    .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
+});
 
 function SaveEmployee() {
   return (
@@ -12,7 +28,7 @@ function SaveEmployee() {
         password: '', 
         confirmPassword: '' 
       }}
-      //validationSchema={schema}
+      validationSchema={schema}
       onSubmit={values => {
         console.log("Küldés:", values);
       }}
