@@ -8,7 +8,7 @@ function Input({ label, type, placeholder, ...props }) {
   const showError = touched && error;
 
   return (
-    <div className='form-group'>
+    <div className='form-group my-4'>
       <label htmlFor={name}>{label}:</label>
       <input
         {...field}
