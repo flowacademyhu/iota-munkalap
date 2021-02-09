@@ -40,7 +40,6 @@ export default function LoginForm() {
                         }}
                         validationSchema={schema}
                         onSubmit={async values => {
-                            console.log("Küldés:", values);
                             const result = await axios.get('http://localhost:8080/api/users/login', { username: 'user12345', password: 'user12345' });
                             console.log(result);
                         }}
