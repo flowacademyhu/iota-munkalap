@@ -29,7 +29,10 @@ const schema = yup.object().shape({
         .min(5, "A jelszó legalább 5 karakter legyen!")
 });
 
-mock.onGet("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
+const username = "user12345";
+const password = "user12345";
+
+mock.onPost("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
 
 export default function LoginForm() {
     return (
@@ -52,7 +55,7 @@ export default function LoginForm() {
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
                             <div className="my-5 d-flex justify-content-center">
-                                <Button text="Bejelentkezés" />
+                                <Button type="submit" text="Bejelentkezés" />
                             </div>
 
 
