@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { GetUsers } from '../UserAPI';
+import { getUsers } from '../UserAPI';
 
 export default function useUser() {
   const [user, setUser] = useState();
   useEffect(() => {
     async function updatePosts() {
-      const { data } = await GetUsers();
+      const { data } = await getUsers();
       setUser(data);
     }
     updatePosts();
