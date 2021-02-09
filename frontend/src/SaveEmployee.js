@@ -24,6 +24,7 @@ const schema = yup.object().shape({
 
 function SaveEmployee() {
   const [sent, setSent] = useState(false);
+  const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
   async function postData(values) {
@@ -31,6 +32,7 @@ function SaveEmployee() {
       const response = await postUser(values);
       if (response.status === 201) {
         setPopUpMessage('Munkavállaló sikeresen létrehozva');
+        setSentSuccessfully(true);
       } else {
         setPopUpMessage('A létrehozás sikertelen');
       }
@@ -44,7 +46,12 @@ function SaveEmployee() {
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {sent && <PopUp body={popUpMessage} />}
+          {sent 
+            && <PopUp 
+                body={popUpMessage} 
+                sentSuccessfully={sentSuccessfully}
+                setSent={setSent} 
+              />}
           <Formik
             initialValues={{
               name: '',
