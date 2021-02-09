@@ -3,6 +3,7 @@ package hu.flowacademy.munkalap.service;
 import hu.flowacademy.munkalap.entity.User;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -40,6 +42,24 @@ class UserServiceTest {
         assertThat(result.getName(), is(NEW_NAME));
         assertThat(result.getPassword(), is(NEW_PASSWORD));
         assertThat(result.getEmail(), is(NEW_EMAIL));
+    }
+
+    @Test
+    public void givenBadEmailUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+        User userData = User.builder().email("elhasalamailem.hu").name("Görgey").password("Artúr").build();
+        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+    }
+
+    @Test
+    public void givenBadNameUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+        User userData = User.builder().email("joazemail@orulok.hu").name("").password("Artúr").build();
+        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+    }
+
+    @Test
+    public void givenBadPasswordUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+        User userData = User.builder().email("joazemail@orulok.hu").name("Görgey").password("").build();
+        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     private void givenUniquePerson() {
