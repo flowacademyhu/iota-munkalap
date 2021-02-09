@@ -45,10 +45,10 @@ export default function LoginForm() {
                     >
                         <Form>
                             <h3 className="mb-5 text-center">Bejelentkezés</h3>
-                            <EmailInput name="email" />
-                            <PasswordInput name="password" />
+                            <EmailInput label="Email cím" name="email" />
+                            <PasswordInput label="Jelszó" name="password" />
                             <div className="my-5 d-flex justify-content-center">
-                                <Button text="Belépés" />
+                                <Button text="Bejelentkezés" />
                             </div>
 
 
