@@ -13,7 +13,7 @@ export default function App() {
         <Route path='/addemployee'>
           <SaveEmployee />
         </Route>
-        <Route path=''>
+        <Route path='/employees'>
           <TableListOfEmployees />
         </Route>
       </Switch>

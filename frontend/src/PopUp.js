@@ -7,7 +7,7 @@ function PopUp({ body }) {
     <Modal show={true}>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        <Link to=''>
+        <Link to='/employees'>
           <button>OK</button>
         </Link>
       </Modal.Footer>
