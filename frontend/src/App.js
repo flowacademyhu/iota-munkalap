@@ -1,16 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SaveEmployee from './SaveEmployee';
 import './style.css';
 
 function App() {
   return (
-    <div className="container my-5">
-      <div className="row justify-content-center">
-        <div className="col-12">
+    <Router>
+      <Switch>
+        <Route path='/addemployee'>
           <SaveEmployee />
-        </div>
-      </div>
-    </div>
+        </Route>
+        <Route path=''>
+          <div>Munkavallalok listaja</div>
+        </Route>
+      </Switch>
+    </Router>
+
+
   );
 }
 
