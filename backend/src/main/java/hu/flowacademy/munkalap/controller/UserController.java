@@ -25,8 +25,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed("admin")
     public User saveUser(@RequestBody User user) {
-        userService.saveUser(user);
-        return new User();
+        return userService.saveUser(user);
     }
 
 }
