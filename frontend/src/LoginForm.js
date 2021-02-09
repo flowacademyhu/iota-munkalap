@@ -36,7 +36,7 @@ export default function LoginForm({ onRegistered }) {
                 <h3 className="mb-5 text-center">Bejelentkezés</h3>
                 <EmailInput label="Email cím" name="email" />
                 <PasswordInput label="Jelszó" name="password" />
-                <Button>Bejelentkezés</Button>                    
+                <Button text="Bejelentkezés"/>                 
 
             </Form>
         </Formik>
