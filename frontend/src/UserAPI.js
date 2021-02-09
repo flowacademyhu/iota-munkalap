@@ -9,9 +9,9 @@ function getUsers() {
         .get(`/users`);
 }
 
-function login() {
+function login(username, password) {
     return api
-        .get(`username`);
+        .post(`/users`, {username, password});
 }
 
 export { getUsers, login }
