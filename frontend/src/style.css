@@ -5,8 +5,9 @@
 .button {
   background-color: green;
   color: white;
-  width: 30%;
+  min-width: 30%;
   margin: 20px;
+  font-size: 30px;
 }
 
 .form-control {
