@@ -2,7 +2,7 @@ import React from 'react';
 import useUsers from '../hooks/useUsers';
 
 export default function TableListOfEmployees() {
-  const { user } = useUsers();
+  const { users } = useUsers();
 
   return (
     <div className="border border-secondary">
@@ -17,8 +17,8 @@ export default function TableListOfEmployees() {
             </tr>
           </thead>
           <tbody>
-            {user ? (
-              user.map(user => (
+            {users ? (
+              users.map(user => (
                 <tr key={user.id}>
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
