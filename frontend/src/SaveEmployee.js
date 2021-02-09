@@ -23,7 +23,7 @@ const schema = yup.object().shape({
 });
 
 function SaveEmployee() {
-  const [send, setSend] = useState(false);
+  const [sent, setSent] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
   async function postData(values) {
@@ -37,14 +37,14 @@ function SaveEmployee() {
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen');
     }
-    setSend(true);
+    setSent(true);
   }
 
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {send && <PopUp body={popUpMessage} />}
+          {sent && <PopUp body={popUpMessage} />}
           <Formik
             initialValues={{
               name: '',
