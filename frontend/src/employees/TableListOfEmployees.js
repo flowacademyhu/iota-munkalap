@@ -1,8 +1,8 @@
 import React from 'react';
-import useUser from '../hooks/useUser';
+import useUsers from '../hooks/useUsers';
 
 export default function TableListOfEmployees() {
-  const { user } = useUser();
+  const { user } = useUsers();
 
   return (
     <div className="border border-secondary">
