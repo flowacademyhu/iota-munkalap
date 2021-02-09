@@ -1,5 +1,5 @@
 import React from 'react';
-import useUser from '../Hooks/useUser';
+import useUser from '../hooks/useUser';
 
 export default function TableListOfEmployees() {
   const { user } = useUser();
