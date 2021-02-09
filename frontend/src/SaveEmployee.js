@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
-import { MockAdapter } from 'axios-mock-adapter';
 import Input from './Input';
 import Button from './Button';
+import PopUp from './PopUp';
+
+var axios = require("axios");
+var MockAdapter = require("axios-mock-adapter");
+var mock = new MockAdapter(axios);
 
 const schema = yup.object().shape({
   email: yup
@@ -21,39 +24,54 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-async function postData(values) {
-  await axios
-    .post('https://jsonplaceholder.typicode.com/users', values)
-    .then(response => console.log(response.status));
-}
 
 function SaveEmployee() {
+  const [send, setSend] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState('');
+
+  async function postData(values) {
+   // mock.onPost().reply(400);
+    await axios
+      .post('https://jsonplaceholder.typicode.com/users', values)
+      .then(response => {
+        if (response.status === 201 || response.status === 200) {
+          setPopUpMessage('Munkavállaló sikeresen létrehozva');
+        } else {
+          setPopUpMessage('A létrehozás sikertelen');
+        }
+        setSend(true);
+      });
+  }
+
   return (
-    <Formik
-      initialValues={{
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      }}
-      validationSchema={schema}
-      onSubmit={values => {
-        console.log("Küldés:", values);
-        postData(values);
-      }}
-    >
-      <Form>
-        <h1 className='text-center'>Új munkavállaló</h1>
-        <Input name='name' label='Név' type='text' />
-        <Input name='email' label='E-mail' type='email' />
-        <Input name='password' label='Jelszó' type='password' />
-        <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
-        <div className='buttons'>
-          <Button text='Mégse' />
-          <Button text='Mentés' type='submit' />
-        </div>
-      </Form>
-    </Formik>
+    <>
+      {send && <PopUp body={popUpMessage} />}
+      <Formik
+        initialValues={{
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        }}
+        validationSchema={schema}
+        onSubmit={values => {
+          console.log("Küldés:", values);
+          postData(values);
+        }}
+      >
+        <Form>
+          <h1 className='text-center'>Új munkavállaló</h1>
+          <Input name='name' label='Név' type='text' />
+          <Input name='email' label='E-mail' type='email' />
+          <Input name='password' label='Jelszó' type='password' />
+          <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
+          <div className='buttons'>
+            <Button text='Mégse' />
+            <Button text='Mentés' type='submit' />
+          </div>
+        </Form>
+      </Formik>
+    </>
   )
 }
 
