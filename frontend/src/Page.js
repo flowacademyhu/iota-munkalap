@@ -1,5 +1,6 @@
 import React from "react";
 import logo from './uj_logo.png';
+import tools from './tools.png'
 
 import {
     BrowserRouter as Router,
@@ -19,6 +20,7 @@ export default function Page() {
             <div><Link to="/employee">Munkavállalók</Link></div>
             <div><Link to="/partners">Partnerek</Link></div>
             <div><Link to="/worksheet">Munkalapok</Link></div>
+            <img src={tools} alt="ingo stop logo" width="49" height="49"/>
        
 </div>
                 <hr />
