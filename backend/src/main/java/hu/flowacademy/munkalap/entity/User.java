@@ -29,8 +29,4 @@ public class User {
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:sss")
     private Date createdAt;
-
-
 }
-
-//TODO MYSQL / no H2, Change.
