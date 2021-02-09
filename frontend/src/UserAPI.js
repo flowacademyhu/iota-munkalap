@@ -9,4 +9,9 @@ function getUsers() {
         .get(`/users`);
 }
 
-export { getUsers }
+function postUser(values) {
+  return api
+      .post(`/users`, values);
+}
+
+export { getUsers, postUser };
