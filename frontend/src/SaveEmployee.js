@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Input from './Input';
 import Button from './Button';
 import PopUp from './PopUp';
-
-var axios = require("axios");
+import {postUser} from './UserAPI';
 
 const schema = yup.object().shape({
   email: yup
@@ -29,8 +29,7 @@ function SaveEmployee() {
   const [popUpMessage, setPopUpMessage] = useState('');
 
   async function postData(values) {
-    await axios
-      .post('https://jsonplaceholder.typicode.com/users', values)
+    await postUser(values)
       .then(response => {
         if (response.status === 201 || response.status === 200) {
           setPopUpMessage('Munkavállaló sikeresen létrehozva');
@@ -55,7 +54,6 @@ function SaveEmployee() {
             }}
             validationSchema={schema}
             onSubmit={values => {
-              console.log("Küldés:", values);
               postData(values);
             }}
           >
