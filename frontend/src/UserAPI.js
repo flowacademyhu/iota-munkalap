@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-const getRoot = `https://jsonplaceholder.typicode.com/users`;
+const api = axios.create({
+    baseURL: `https://jsonplaceholder.typicode.com/`,
+})
 
-function GetUsers() {
-    return axios
-        .get(getRoot);
+function getUsers() {
+    return api
+        .get(`/users`);
 }
 
-export { GetUsers }
+export { getUsers }
