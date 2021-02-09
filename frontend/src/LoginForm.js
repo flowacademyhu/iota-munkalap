@@ -28,7 +28,7 @@ mock.onPut("http://localhost:8080/api/users/login", { username: 'user12345', pas
 
 export default function LoginForm() {
     return (
-        <div className="container bg-secondary">
+        <div className="container background">
             <div className="row">
                 <div className="col-12">
                     <Formik
@@ -45,10 +45,10 @@ export default function LoginForm() {
                     >
                         <Form>
                             <h3 className="mb-5 text-center">Bejelentkezés</h3>
-                            <EmailInput label="Email cím" name="email" />
-                            <PasswordInput label="Jelszó" name="password" />
-                            <div className="mt-5 d-flex justify-content-center">
-                                <Button  text="Bejelentkezés" />
+                            <EmailInput name="email" />
+                            <PasswordInput name="password" />
+                            <div className="my-5 d-flex justify-content-center">
+                                <Button text="Bejelentkezés" />
                             </div>
 
 
