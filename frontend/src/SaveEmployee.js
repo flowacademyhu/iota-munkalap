@@ -13,6 +13,8 @@ function SaveEmployee() {
         <Input name='email' label='E-mail' type='email' />
         <Input name='password' label='Jelszó' type='password' />
         <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
+        <Button text='Mégse' />
+        <Button text='Mentés' type='submit' />
       </Form>
     </Formik>
   )
