@@ -5,4 +5,19 @@
 .button {
   background-color: green;
   color: white;
+  width: 30%;
+  margin: 20px;
+}
+
+.form-control {
+  margin: 20px 0px 20px 0px;
+}
+
+.label {
+  font-size: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
 }

@@ -9,7 +9,7 @@ function Input({ label, type, ...props }) {
 
   return (
     <div className='form-group'>
-      <label htmlFor={name}>{label}:</label>
+      <label htmlFor={name} className='label'>{label}:</label>
       <input
         {...field}
         {...props}
