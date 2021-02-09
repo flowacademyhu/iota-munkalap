@@ -28,6 +28,8 @@ public class User {
     private Kind kind;
     private String password;
     private boolean enabled;
-    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:sss")
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+
 }
