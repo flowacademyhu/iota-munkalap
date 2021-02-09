@@ -44,7 +44,7 @@ export default function LoginForm() {
                         }}
                     >
                         <Form>
-                            <h3 className="mb-5 text-center">Bejelentkezés</h3>
+                            <h3 className="my-5 text-center">Bejelentkezés</h3>
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
                             <div className="my-5 d-flex justify-content-center">
