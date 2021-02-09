@@ -9,13 +9,6 @@ function App() {
 
   const [token, setToken] = useState();
 
- // if(!token) {
- //   return (
-  //    //<Login setToken={setToken}/> //Decoment this when Login is done and funktioning 
- //     <div>Login screen</div>
- //     )
- // }
-
   return (
 
       <Page/>
