@@ -3,7 +3,6 @@ package hu.flowacademy.munkalap.service;
 import hu.flowacademy.munkalap.entity.User;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
