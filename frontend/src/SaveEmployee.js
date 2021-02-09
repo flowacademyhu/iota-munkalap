@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Input from './Input';
 import Button from './Button';
 import PopUp from './PopUp';
