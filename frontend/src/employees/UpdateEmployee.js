@@ -10,16 +10,19 @@ function UpdateEmployee() {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
 
-  useEffect(async () => {
-    try {
-      const response = await getUser(id);
-      setUserData({ ...response.data, loaded: true });
-    } catch (error) {
-      setUserData({ loaded: true });
-      setPopUpMessage('A módosítás sikertelen');
-      setSent(true);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getUser(id);
+        setUserData({ ...response.data, loaded: true });
+      } catch (error) {
+        setUserData({ loaded: true });
+        setPopUpMessage('A módosítás sikertelen');
+        setSent(true);
+      }
     }
-  }, []);
+    fetchData();
+  }, [id]);
 
   async function putData(values) {
     try {
