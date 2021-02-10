@@ -16,14 +16,12 @@ export default function Page() {
         
         <Router>
             <div class="flex-container">
-            
-            <NavLink to="./partners"><img src={logo} alt="ingo stop logo" width="135" height="49"/></NavLink>
+            <img src={logo} alt="ingo stop logo" width="135" height="49"/>
             <MenuItem name="Munkavállalók" link="./employee"/>
             <MenuItem name="Partnerek" link="./partners"/>
             <MenuItem name="Munkalapok" link="./worksheets"/>
-            <NavLink to="./partners"><img src={tools} alt="ingo stop logo" width="49" height="49"/></NavLink>
-       
-</div>
+            <img src={tools} alt="ingo stop logo" width="49" height="49"/>
+            </div>
                 <hr />
 
 
@@ -34,7 +32,7 @@ export default function Page() {
                     <Route path="/partners">
                         <Partners />
                     </Route>
-                    <Route path="/worksheet">
+                    <Route path="/worksheets">
                         <Worksheet />
                     </Route>
                 </Switch>
