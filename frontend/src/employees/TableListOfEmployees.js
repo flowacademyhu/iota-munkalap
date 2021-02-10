@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useUsers from '../hooks/useUsers';
+import Button from '../Button';
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
+  const [isActiveArray, setIsActiveArray] = useState([
+    false, true, true, false, true, true, true, false, true, false
+  ]);
+
+function setUserToInactive(user) {
+  //user.active = false;
+  //changeUser(user);
+  console.log("Axios put metodus meghivasa");
+}
 
   return (
     <div className="border border-secondary">
@@ -23,11 +33,22 @@ export default function TableListOfEmployees() {
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.active}</td>
+                  {isActiveArray[user.id - 1]
+                    ? <td className="d-flex justify-content-between">
+                      Active {
+                        <Button
+                        onClick={() => setUserToInactive(user)}
+                          type="button"
+                          className="btn-close"
+                          arialLabel="Close" />
+                      }
+                    </td>
+                    :
+                    <td>Inactive</td>}
                 </tr>
-              ))
-            )
-              : <tr>
+              )))
+              :
+              <tr>
                 <td>Loading...</td>
               </tr>
             }
