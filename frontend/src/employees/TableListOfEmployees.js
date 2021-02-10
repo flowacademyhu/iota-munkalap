@@ -1,15 +1,10 @@
 import React from 'react';
 import useUsers from '../hooks/useUsers';
 import Button from '../Button';
-import { postUser } from '../UserAPI';
+import { putUserInactive } from '../UserAPI';
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
-
-function setUserToInactive(user) {
-  user.active = false;
-  postUser(user);
-}
 
   return (
     <div className="border border-secondary">
@@ -30,11 +25,11 @@ function setUserToInactive(user) {
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  {user.active === "Active"
+                  {user.isActive
                     ? <td className="d-flex justify-content-between">
                       Active {
                         <Button
-                        onClick={() => setUserToInactive(user)}
+                        onClick={() => putUserInactive(user.id)}
                           type="button"
                           className="btn-close"
                           arialLabel="Close" />
