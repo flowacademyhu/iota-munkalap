@@ -9,7 +9,6 @@ export default function TableListOfEmployees() {
 function setUserToInactive(user) {
   user.active = false;
   postUser(user);
-  console.log("Axios put metodus meghivasa");
 }
 
   return (
