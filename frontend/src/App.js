@@ -1,29 +1,13 @@
-import LoginForm from './LoginForm';
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateEmployee from './employees/CreateEmployee';
-import UpdateEmployee from './employees/UpdateEmployee';
 import './style.css';
-import TableListOfEmployees from './employees/TableListOfEmployees';
+import './App.css';
+import Page from './Page';
 
-export default function App() {
+function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path='/employees/new'>
-          <CreateEmployee />
-        </Route>
-        <Route path='/employees/update/:id'>
-          <UpdateEmployee />
-        </Route>
-        <Route path='/employees'>
-          <TableListOfEmployees />
-        </Route>
-        <Route path='/'>
-          <LoginForm />
-        </Route>
-      </Switch>
-    </Router>
+      <Page/>
   );
 }
+
+export default App;
