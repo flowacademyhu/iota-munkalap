@@ -24,7 +24,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path}) {
+function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title}) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -49,7 +49,7 @@ function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, 
             }}
           >
             <Form>
-              <h1 className='text-center'>Új munkavállaló</h1>
+              <h1 className='text-center'>{title}</h1>
               <Input name='name' label='Név' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />

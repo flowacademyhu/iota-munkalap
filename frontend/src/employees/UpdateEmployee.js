@@ -30,6 +30,7 @@ function UpdateEmployee({id}) {
       popUpMessage={popUpMessage} 
       sendData={putData}
       path='update'
+      title='Adatok módosítása'
     />
   );
 }

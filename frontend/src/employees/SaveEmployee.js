@@ -30,6 +30,7 @@ function SaveEmployee() {
       popUpMessage={popUpMessage} 
       sendData={postData}
       path='new'
+      title='Új munkatárs létrehozása'
     />
   );
 }
