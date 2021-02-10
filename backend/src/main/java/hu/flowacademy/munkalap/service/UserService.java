@@ -5,6 +5,7 @@ import hu.flowacademy.munkalap.enumCustom.Role;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
 
-    public User saveUser(User user) throws WorksheetUserException {
-        Objects.requireNonNull(user);
+    public User saveUser(@NonNull User user) throws WorksheetUserException {
+
 
         validateUser(user);
 
