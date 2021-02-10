@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import useUsers from '../hooks/useUsers';
 import Button from '../Button';
+import { postUser } from '../UserAPI';
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
-  const [isActiveArray, setIsActiveArray] = useState([
-    false, true, true, false, true, true, true, false, true, false
-  ]);
 
 function setUserToInactive(user) {
-  //user.active = false;
-  //changeUser(user);
+  user.active = false;
+  postUser(user);
   console.log("Axios put metodus meghivasa");
 }
 
@@ -33,7 +31,7 @@ function setUserToInactive(user) {
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  {isActiveArray[user.id - 1]
+                  {user.active == "Active"
                     ? <td className="d-flex justify-content-between">
                       Active {
                         <Button
