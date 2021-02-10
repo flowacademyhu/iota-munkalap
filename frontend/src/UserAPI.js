@@ -16,11 +16,11 @@ function getUsers() {
         .get(`/users`);
 }
 
-function login(username, password) {
+function login(values) {
 mock.onPost().reply(200);
 
     return api2
-        .post(`/login`, {username, password});
+        .post(`/login`, values);
 }
 
 function postUser(values) {

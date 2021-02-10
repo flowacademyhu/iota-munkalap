@@ -18,11 +18,6 @@ const schema = yup.object().shape({
         .min(5, "A jelszó legalább 5 karakter legyen!")
 });
 
-const username = "user12345";
-const password = "user12345";
-
-//mock.onPost("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
-
 export default function LoginForm() {
     return (
         <div className="container loginform">
@@ -35,7 +30,7 @@ export default function LoginForm() {
                         }}
                         validationSchema={schema}
                         onSubmit={async values => {
-                            const result = await login(username, password);
+                            const result = await login(values);
                             console.log(result); 
                         }}
                     >
