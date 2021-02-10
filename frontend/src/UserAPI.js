@@ -23,9 +23,14 @@ function postUser(values) {
         .post(`/users`, values);
 }
 
+function getUser(id) {
+    return api
+        .get(`/users/${id}`);
+}
+
 function putUser(id, values) {
     return api
         .put(`/users/${id}`, values);
 }
 
-export { getUsers, postUser, putUser, login };
+export { getUsers, postUser, putUser, login, getUser };

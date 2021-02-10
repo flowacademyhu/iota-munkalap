@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EmployeeForm from './EmployeeForm';
-import { putUser } from '../UserAPI';
+import { putUser, getUser } from '../UserAPI';
 import { useParams } from 'react-router-dom';
 
 function UpdateEmployee() {
@@ -8,6 +8,20 @@ function UpdateEmployee() {
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
   const { id } = useParams();
+  const [userData, setUserData] = useState({});
+
+  useEffect(async () => {
+    try {
+      const response = await getUser(id);
+      if (response.status === 200) {
+        setUserData({ name: response.data.name, email: response.data.email, loaded: true });
+      } else {
+        setUserData({ name: '', email: '', loaded: true });
+      }
+    } catch (error) {
+      setUserData({ name: '', email: '', loaded: true });
+    }
+  }, []);
 
   async function putData(values) {
     try {
@@ -25,15 +39,20 @@ function UpdateEmployee() {
   }
 
   return (
-    <EmployeeForm
-      sent={sent}
-      setSent={setSent}
-      sentSuccessfully={sentSuccessfully}
-      popUpMessage={popUpMessage}
-      sendData={putData}
-      path='update'
-      title='Adatok módosítása'
-    />
+    <>
+      {userData.loaded &&
+        <EmployeeForm
+          sent={sent}
+          setSent={setSent}
+          sentSuccessfully={sentSuccessfully}
+          popUpMessage={popUpMessage}
+          sendData={putData}
+          path='update'
+          title='Adatok módosítása'
+          name={userData.name}
+          email={userData.email}
+        />}
+    </>
   );
 }
 

@@ -24,7 +24,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title}) {
+function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title, name, email}) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -38,8 +38,8 @@ function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, 
               />}
           <Formik
             initialValues={{
-              name: '',
-              email: '',
+              name: name || '',
+              email: email || '',
               password: '',
               confirmPassword: ''
             }}
