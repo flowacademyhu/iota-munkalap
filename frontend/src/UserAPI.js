@@ -16,9 +16,9 @@ function getUsers() {
         .get(`/users`);
 }
 
-function login(values) {
 mock.onPost().reply(200);
 
+function login(values) {
     return api2
         .post(`/login`, values);
 }
