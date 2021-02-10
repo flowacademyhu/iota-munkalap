@@ -15,7 +15,7 @@ const schema = yup.object().shape({
     password: yup
         .string()
         .required("A jelszó megadása kötelező!")
-        .min(5, "A jelszó legalább 5 karakter legyen!")
+        .min(8, "A jelszó legalább 8 karakter legyen!")
 });
 
 export default function LoginForm() {
