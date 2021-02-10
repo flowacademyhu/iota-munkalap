@@ -25,7 +25,7 @@ const password = "user12345";
 
 export default function LoginForm() {
     return (
-        <div className="container background">
+        <div className="container loginform">
             <div className="row">
                 <div className="col-12">
                     <Formik
