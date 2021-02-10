@@ -2,14 +2,10 @@ import React from "react";
 import { Formik, Form } from "formik";
 import {login} from "./UserAPI"
 import * as yup from "yup";
-import axios from "axios"
-import MockAdapter from 'axios-mock-adapter'
 
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import Button from "./Button";
-
-var mock = new MockAdapter(axios);
 
 const schema = yup.object().shape({
     email: yup
@@ -25,7 +21,7 @@ const schema = yup.object().shape({
 const username = "user12345";
 const password = "user12345";
 
-mock.onPost("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
+//mock.onPost("http://localhost:8080/api/users/login", { username: 'user12345', password: 'user12345' }).reply(204, { accessToken: '...' });
 
 export default function LoginForm() {
     return (
@@ -40,7 +36,7 @@ export default function LoginForm() {
                         validationSchema={schema}
                         onSubmit={async values => {
                             const result = await login(username, password);
-                            console.log(result);
+                            console.log(result); 
                         }}
                     >
                         <Form>
