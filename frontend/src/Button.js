@@ -1,8 +1,16 @@
 import React from 'react'
 
-function Button({ text, onClick, type }) {
+function Button({ text, onClick, type, className, arialLabel, disabled }) {
   return (
-    <button onClick={onClick} type={type} className='button'>{text}</button>
+    <button 
+    onClick={onClick} 
+    disabled={disabled}
+    type={type} 
+    className={className} 
+    aria-label={arialLabel}
+    >
+      {text}
+      </button>
   );
 }
 
