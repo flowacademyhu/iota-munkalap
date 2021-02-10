@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useUsers from '../hooks/useUsers';
 import Button from '../Button';
 import { postUser } from '../UserAPI';
@@ -31,7 +31,7 @@ function setUserToInactive(user) {
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  {user.active == "Active"
+                  {user.active === "Active"
                     ? <td className="d-flex justify-content-between">
                       Active {
                         <Button
