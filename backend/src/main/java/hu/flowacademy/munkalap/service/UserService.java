@@ -17,7 +17,6 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Transactional
 public class UserService {
 
