@@ -9,7 +9,7 @@ export default function TableListOfEmployees() {
   return (
     <div className="border border-secondary">
       <div className="container-fluid">
-        <table className="table">
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -26,7 +26,8 @@ export default function TableListOfEmployees() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   {user.isActive
-                    ? <td className="d-flex justify-content-between" text="Active">
+                    ? <td className="d-flex justify-content-between">
+                        Active
                         <Button
                         onClick={() => putUserInactive(user.id)}
                         type="button"
@@ -35,7 +36,8 @@ export default function TableListOfEmployees() {
 
                     </td>
                     :
-                    <td text="Inactive"></td>}
+                    <td>Inactive</td>
+                    }
                 </tr>
               )))
               :
