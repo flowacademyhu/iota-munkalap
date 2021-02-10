@@ -10,11 +10,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
