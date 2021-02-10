@@ -25,6 +25,7 @@ public class User {
     @Column(unique = true)
     @NonNull
     private String email;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
