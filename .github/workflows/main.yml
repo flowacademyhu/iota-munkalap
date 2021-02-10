@@ -73,3 +73,26 @@ jobs:
           java-version: 11
       - name: Run maven test
         run: mvn -B clean test
+        
+  deploy_staging:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [build_frontend, build-backend]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: iota-munkalap-frontend
+          path: frontend/build
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IOTA_MUNKALAP_708E0B88 }}'
+          channelId: live
+          projectId: iota-munkalap-708e0b88
+        env:
+          FIREBASE_CLI_PREVIEWS: hostingchannels
+    
