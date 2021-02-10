@@ -55,19 +55,19 @@ class UserServiceTest {
     }
 
     @Test
-    public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+    public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("").name("Görgey").password("Artúr").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
-    public void givenMissingNameUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+    public void givenMissingNameUser_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("joazemail@orulok.hu").name("").password("Artúr").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
-    public void givenMissingPasswordUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+    public void givenMissingPasswordUser_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("joazemail@orulok.hu").name("Görgey").password("").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
