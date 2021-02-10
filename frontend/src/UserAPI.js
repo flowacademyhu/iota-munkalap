@@ -9,19 +9,19 @@ function getUsers() {
         .get(`/users`);
 }
 
-function login(values) {
+function login(credentials) {
     return api
-        .post(`/login`, values);
+        .post(`/login`, credentials);
 }
 
-function postUser(values) {
+function postUser(credentials) {
     return api
-        .post(`/users`, values);
+        .post(`/users`, credentials);
 }
 
-function putUser(id, values) {
+function putUser(id, valucredentialses) {
     return api
-        .put(`/users/${id}`, values);
+        .put(`/users/${id}`, credentials);
 }
 
 function putUserInactive(id) {

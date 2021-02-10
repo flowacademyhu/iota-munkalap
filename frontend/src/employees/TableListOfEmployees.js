@@ -27,13 +27,13 @@ export default function TableListOfEmployees() {
                   <td>{user.email}</td>
                   {user.isActive
                     ? <td className="d-flex justify-content-between">
-                      Active {
+                      Active
                         <Button
                         onClick={() => putUserInactive(user.id)}
-                          type="button"
-                          className="btn-close"
-                          arialLabel="Close" />
-                      }
+                        type="button"
+                        className="btn-close"
+                        arialLabel="Close" />
+
                     </td>
                     :
                     <td>Inactive</td>}
