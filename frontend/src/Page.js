@@ -10,9 +10,7 @@ import './style.css';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link,
-    NavLink, 
+    Route 
 } from "react-router-dom";
 
 export default function Page() {
