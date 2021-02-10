@@ -7,22 +7,19 @@ import './style.css';
 import TableListOfEmployees from './employees/TableListOfEmployees';
 
 export default function App() {
-
-  function App() {
-    return (
-      <Router>
-        <Switch>
-          <Route path='/addemployee'>
-            <SaveEmployee />
-          </Route>
-          <Route path='/employees'>
-            <TableListOfEmployees />
-          </Route>
-          <Route path='/'>
-            <LoginForm />
-          </Route>
-        </Switch>
-      </Router>
-    );
-  }
+  return (
+    <Router>
+      <Switch>
+        <Route path='/addemployee'>
+          <SaveEmployee />
+        </Route>
+        <Route path='/employees'>
+          <TableListOfEmployees />
+        </Route>
+        <Route path='/'>
+          <LoginForm />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
