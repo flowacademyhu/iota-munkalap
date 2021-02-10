@@ -1,6 +1,7 @@
 package hu.flowacademy.munkalap.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import hu.flowacademy.munkalap.enumCustom.Kind;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class User {
     private String name;
     private String email;
     private Kind kind;
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")

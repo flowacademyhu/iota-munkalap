@@ -18,9 +18,10 @@ spring:
       enabled: true
 
 keycloakBackendClient:
-  realm: worksheet
+  realm: master
+  realm2: worksheet
   server-url: http://localhost:8180/auth
-  client_id: worksheetbackendclient
+  client-id: admin-cli
   adminusername: gyanyim
   adminpassword: snxTZr9$5GGnS7w
 

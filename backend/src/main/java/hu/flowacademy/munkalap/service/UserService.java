@@ -4,6 +4,8 @@ import hu.flowacademy.munkalap.entity.User;
 import hu.flowacademy.munkalap.enumCustom.Kind;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,15 +16,11 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final KeycloakClientService keycloakClientService;
 
     public User saveUser(User user) throws WorksheetUserException {
         Objects.requireNonNull(user);
@@ -32,6 +30,7 @@ public class UserService {
         user.setKind(Kind.USER);
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
+        keycloakClientService.createAccount(user.getName(), user.getEmail());
         return userRepository.save(user);
     }
 
