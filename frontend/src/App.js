@@ -14,8 +14,8 @@ export default function App() {
         <Route path='/employees/new'>
           <SaveEmployee />
         </Route>
-        <Route path='/employees/update'>
-          <UpdateEmployee id='1' />
+        <Route path='/employees/update/:id'>
+          <UpdateEmployee />
         </Route>
         <Route path='/employees'>
           <TableListOfEmployees />

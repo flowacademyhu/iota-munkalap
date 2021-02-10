@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import EmployeeForm from './EmployeeForm';
 import { putUser } from '../UserAPI';
+import { useParams } from 'react-router-dom';
 
-function UpdateEmployee({id}) {
+function UpdateEmployee() {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
+  const { id } = useParams();
 
   async function putData(values) {
     try {
@@ -23,11 +25,11 @@ function UpdateEmployee({id}) {
   }
 
   return (
-    <EmployeeForm 
-      sent={sent} 
-      setSent={setSent} 
-      sentSuccessfully={sentSuccessfully} 
-      popUpMessage={popUpMessage} 
+    <EmployeeForm
+      sent={sent}
+      setSent={setSent}
+      sentSuccessfully={sentSuccessfully}
+      popUpMessage={popUpMessage}
       sendData={putData}
       path='update'
       title='Adatok módosítása'
