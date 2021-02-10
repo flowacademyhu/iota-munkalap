@@ -25,10 +25,7 @@ public class UserService {
     private final KeycloakClientService keycloakClientService;
 
     public User saveUser(@NonNull User user) throws WorksheetUserException {
-
-
         validateUser(user);
-
         user.setRole(Role.USER);
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
