@@ -24,6 +24,8 @@ keycloakBackendClient:
   client-id: admin-cli
   adminusername: gyanyim
   adminpassword: snxTZr9$5GGnS7w
+  user-role: worksheetuser
+  token-url: http://localhost:8180/auth/realms/worksheet/protocol/openid-connect/token
 
 keycloak:
   realm: worksheet
