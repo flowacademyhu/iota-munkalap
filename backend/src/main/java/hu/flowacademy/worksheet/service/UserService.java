@@ -1,9 +1,9 @@
-package hu.flowacademy.munkalap.service;
+package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.munkalap.entity.User;
-import hu.flowacademy.munkalap.enumCustom.Role;
-import hu.flowacademy.munkalap.exception.WorksheetUserException;
-import hu.flowacademy.munkalap.repository.UserRepository;
+import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import org.apache.commons.validator.routines.EmailValidator;

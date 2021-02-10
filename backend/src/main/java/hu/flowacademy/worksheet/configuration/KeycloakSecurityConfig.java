@@ -1,4 +1,4 @@
-package hu.flowacademy.munkalap.configuration;
+package hu.flowacademy.worksheet.configuration;
 
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;

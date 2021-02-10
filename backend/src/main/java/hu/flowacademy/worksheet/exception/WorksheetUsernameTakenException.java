@@ -1,4 +1,4 @@
-package hu.flowacademy.munkalap.exception;
+package hu.flowacademy.worksheet.exception;
 
 import org.springframework.http.HttpStatus;
 

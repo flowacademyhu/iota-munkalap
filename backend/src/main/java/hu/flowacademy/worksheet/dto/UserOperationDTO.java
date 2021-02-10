@@ -1,4 +1,4 @@
-package hu.flowacademy.munkalap.dto;
+package hu.flowacademy.worksheet.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

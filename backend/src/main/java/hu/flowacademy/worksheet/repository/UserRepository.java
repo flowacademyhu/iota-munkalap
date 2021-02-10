@@ -1,6 +1,6 @@
-package hu.flowacademy.munkalap.repository;
+package hu.flowacademy.worksheet.repository;
 
-import hu.flowacademy.munkalap.entity.User;
+import hu.flowacademy.worksheet.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

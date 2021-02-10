@@ -1,8 +1,7 @@
-package hu.flowacademy.munkalap.entity;
+package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import hu.flowacademy.munkalap.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Role;
 import lombok.*;
 
 import javax.persistence.*;

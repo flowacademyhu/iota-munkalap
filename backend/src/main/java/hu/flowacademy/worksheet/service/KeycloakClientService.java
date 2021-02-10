@@ -1,7 +1,7 @@
-package hu.flowacademy.munkalap.service;
+package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.munkalap.exception.WorksheetUserException;
-import hu.flowacademy.munkalap.exception.WorksheetUsernameTakenException;
+import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.exception.WorksheetUsernameTakenException;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.core.Response;
 import java.util.Arrays;
 import java.util.Locale;
 
