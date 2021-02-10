@@ -1,5 +1,5 @@
 package hu.flowacademy.munkalap.enumCustom;
 
-public enum Kind {
+public enum Role {
     ADMIN, USER
 }

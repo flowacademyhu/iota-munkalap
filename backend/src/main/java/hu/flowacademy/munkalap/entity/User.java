@@ -2,7 +2,7 @@ package hu.flowacademy.munkalap.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import hu.flowacademy.munkalap.enumCustom.Kind;
+import hu.flowacademy.munkalap.enumCustom.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class User {
 
     private String name;
     private String email;
-    private Kind kind;
+    private Role role;
     @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     private String password;
     private boolean enabled;

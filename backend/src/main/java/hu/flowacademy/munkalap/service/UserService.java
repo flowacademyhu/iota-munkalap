@@ -1,13 +1,11 @@
 package hu.flowacademy.munkalap.service;
 
 import hu.flowacademy.munkalap.entity.User;
-import hu.flowacademy.munkalap.enumCustom.Kind;
+import hu.flowacademy.munkalap.enumCustom.Role;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -27,7 +25,7 @@ public class UserService {
 
         validateUser(user);
 
-        user.setKind(Kind.USER);
+        user.setRole(Role.USER);
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
         keycloakClientService.createAccount(user.getName(), user.getEmail());
