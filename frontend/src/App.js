@@ -1,4 +1,5 @@
-import React from 'react';
+import LoginForm from './LoginForm';
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SaveEmployee from './employees/SaveEmployee';
@@ -7,7 +8,6 @@ import './style.css';
 import TableListOfEmployees from './employees/TableListOfEmployees';
 
 export default function App() {
-
   return (
     <Router>
       <Switch>
@@ -19,6 +19,9 @@ export default function App() {
         </Route>
         <Route path='/employees'>
           <TableListOfEmployees />
+        </Route>
+        <Route path='/'>
+          <LoginForm />
         </Route>
       </Switch>
     </Router>
