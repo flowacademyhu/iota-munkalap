@@ -33,13 +33,13 @@ public class UserService {
 
     private void validateUser(User user) throws WorksheetUserException {
         if (!StringUtils.hasText(user.getName())) {
-            throw new WorksheetUserException("Username null or empty String", HttpStatus.BAD_REQUEST);
+            throw new WorksheetUserException("Username null or empty String");
         }
         if (!StringUtils.hasText(user.getEmail())) {
-            throw new WorksheetUserException("Missing Email", HttpStatus.BAD_REQUEST);
+            throw new WorksheetUserException("Missing Email");
         }
         if (!EmailValidator.getInstance().isValid(user.getEmail())) {
-            throw new WorksheetUserException("Invalid Email", HttpStatus.BAD_REQUEST);
+            throw new WorksheetUserException("Invalid Email");
         }
     }
 }
