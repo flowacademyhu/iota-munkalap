@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { postUser } from './UserAPI';
 import EmployeeForm from './EmployeeForm';
+import { putUser } from '../UserAPI';
 
-function SaveEmployee() {
+function UpdateEmployee({id}) {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
-  async function postData(values) {
+  async function putData(values) {
     try {
-      const response = await postUser(values);
-      if (response.status === 201) {
-        setPopUpMessage('Munkavállaló sikeresen létrehozva');
+      const response = await putUser(id, values);
+      if (response.status === 200) {
+        setPopUpMessage('Munkavállaló sikeresen módosítva');
         setSentSuccessfully(true);
       } else {
-        setPopUpMessage('A létrehozás sikertelen');
+        setPopUpMessage('A módosítás sikertelen');
       }
     } catch (error) {
-      setPopUpMessage('A létrehozás sikertelen');
+      setPopUpMessage('A módosítás sikertelen');
     }
     setSent(true);
   }
@@ -28,10 +28,10 @@ function SaveEmployee() {
       setSent={setSent} 
       sentSuccessfully={sentSuccessfully} 
       popUpMessage={popUpMessage} 
-      sendData={postData}
-      path='new'
+      sendData={putData}
+      path='update'
     />
   );
 }
 
-export default SaveEmployee;
+export default UpdateEmployee;
