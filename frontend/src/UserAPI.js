@@ -19,4 +19,9 @@ mock.onPost().reply(200);
         .post(`/users`, {username, password});
 }
 
-export { getUsers, login }
+function postUser(values) {
+  return api
+      .post(`/users`, values);
+}
+
+export { getUsers, postUser, login };
