@@ -14,7 +14,10 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("A jelszó kötelező!")
-    .min(5, "Legalább 5 karakteres jelszó kell!"),
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+      "A jelszó minimum 8 karakter hosszú, tartalmaznia kell kis- és nagybetűt, valamint számot!"
+    ),
   confirmPassword: yup
     .string()
     .required("Add meg a jelszót még egyszer!")
