@@ -26,8 +26,7 @@ export default function TableListOfEmployees() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   {user.isActive
-                    ? <td className="d-flex justify-content-between">
-                      Active
+                    ? <td className="d-flex justify-content-between" text="Active">
                         <Button
                         onClick={() => putUserInactive(user.id)}
                         type="button"
@@ -36,7 +35,7 @@ export default function TableListOfEmployees() {
 
                     </td>
                     :
-                    <td>Inactive</td>}
+                    <td text="Inactive"></td>}
                 </tr>
               )))
               :

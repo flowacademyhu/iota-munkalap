@@ -19,7 +19,7 @@ function postUser(credentials) {
         .post(`/users`, credentials);
 }
 
-function putUser(id, valucredentialses) {
+function putUser(id, credentials) {
     return api
         .put(`/users/${id}`, credentials);
 }
