@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { postUser } from '../UserAPI';
 import EmployeeForm from './EmployeeForm';
 
-function SaveEmployee() {
+function CreateEmployee() {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
@@ -35,4 +35,4 @@ function SaveEmployee() {
   );
 }
 
-export default SaveEmployee;
+export default CreateEmployee;

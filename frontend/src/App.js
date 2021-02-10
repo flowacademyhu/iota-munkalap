@@ -2,7 +2,7 @@ import LoginForm from './LoginForm';
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SaveEmployee from './employees/SaveEmployee';
+import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
 import './style.css';
 import TableListOfEmployees from './employees/TableListOfEmployees';
@@ -12,7 +12,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path='/employees/new'>
-          <SaveEmployee />
+          <CreateEmployee />
         </Route>
         <Route path='/employees/update/:id'>
           <UpdateEmployee />
