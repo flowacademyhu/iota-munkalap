@@ -5,8 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SaveEmployee from './SaveEmployee';
 import './style.css';
 import TableListOfEmployees from './employees/TableListOfEmployees';
+import useToken from './hooks/useToken';
+
 
 export default function App() {
+
+  const { token, setToken } = useToken();
+  if (!token) {
+    return <LoginForm setToken={setToken} />
+  }
+
   return (
     <Router>
       <Switch>
@@ -15,9 +23,6 @@ export default function App() {
         </Route>
         <Route path='/employees'>
           <TableListOfEmployees />
-        </Route>
-        <Route path='/'>
-          <LoginForm />
         </Route>
       </Switch>
     </Router>
