@@ -13,13 +13,11 @@ function UpdateEmployee() {
   useEffect(async () => {
     try {
       const response = await getUser(id);
-      if (response.status === 200) {
-        setUserData({ name: response.data.name, email: response.data.email, loaded: true });
-      } else {
-        setUserData({ name: '', email: '', loaded: true });
-      }
+      setUserData({ ...response.data, loaded: true });
     } catch (error) {
-      setUserData({ name: '', email: '', loaded: true });
+      setUserData({ loaded: true });
+      setPopUpMessage('A módosítás sikertelen');
+      setSent(true);
     }
   }, []);
 
