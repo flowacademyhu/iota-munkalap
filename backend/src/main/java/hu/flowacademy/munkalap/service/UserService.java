@@ -5,6 +5,7 @@ import hu.flowacademy.munkalap.enumCustom.Role;
 import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 @Service
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class UserService {
 
