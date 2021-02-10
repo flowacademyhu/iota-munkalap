@@ -3,10 +3,7 @@ package hu.flowacademy.munkalap.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hu.flowacademy.munkalap.enumCustom.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -24,11 +21,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NonNull
     private String name;
+    @Column(unique = true)
+    @NonNull
     private String email;
     private Role role;
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
-    private String password;
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;

@@ -24,7 +24,6 @@ public class UserController {
     public User createUser(@RequestBody UserOperationDTO userOperationDTO) {
         User user = User.builder()
                 .name(userOperationDTO.getName())
-                .password(userOperationDTO.getPassword())
                 .email(userOperationDTO.getEmail())
                 .build();
         try {

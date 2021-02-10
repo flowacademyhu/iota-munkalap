@@ -21,7 +21,6 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     private static final String NEW_NAME = "Széchenyi István";
-    private static final String NEW_PASSWORD = "1234";
     private static final String NEW_EMAIL = "pista@pista.hu";
     private static final Long REGISTRATION_ID = 111L;
 
@@ -43,32 +42,25 @@ class UserServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getId(), is(REGISTRATION_ID));
         assertThat(result.getName(), is(NEW_NAME));
-        assertThat(result.getPassword(), is(NEW_PASSWORD));
         assertThat(result.getEmail(), is(NEW_EMAIL));
         verifyNoMoreInteractions(userRepository);
     }
 
     @Test
     public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
-        User userData = User.builder().email("elhasalamailem.hu").name("Görgey").password("Artúr").build();
+        User userData = User.builder().email("elhasalamailem.hu").name("Görgey").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("").name("Görgey").password("Artúr").build();
+        User userData = User.builder().email("").name("Görgey").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").name("").password("Artúr").build();
-        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
-    }
-
-    @Test
-    public void givenMissingPasswordUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").name("Görgey").password("").build();
+        User userData = User.builder().email("joazemail@orulok.hu").name("").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
@@ -84,7 +76,6 @@ class UserServiceTest {
         User user = new User();
         user.setEmail(NEW_EMAIL);
         user.setName(NEW_NAME);
-        user.setPassword(NEW_PASSWORD);
         return user;
     }
 }

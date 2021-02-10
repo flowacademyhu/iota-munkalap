@@ -6,7 +6,6 @@ import hu.flowacademy.munkalap.exception.WorksheetUserException;
 import hu.flowacademy.munkalap.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,6 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -36,9 +34,6 @@ public class UserService {
     private void validateUser(User user) throws WorksheetUserException {
         if (!StringUtils.hasText(user.getName())) {
             throw new WorksheetUserException("Username null or empty String", HttpStatus.BAD_REQUEST);
-        }
-        if (!StringUtils.hasText(user.getPassword())) {
-            throw new WorksheetUserException("Password null or empty String", HttpStatus.BAD_REQUEST);
         }
         if (!StringUtils.hasText(user.getEmail())) {
             throw new WorksheetUserException("Missing Email", HttpStatus.BAD_REQUEST);
