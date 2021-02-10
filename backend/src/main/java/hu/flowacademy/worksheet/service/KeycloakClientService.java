@@ -23,6 +23,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -35,7 +37,6 @@ public class KeycloakClientService {
     private final KeycloakClientConfiguration keycloakClientConfiguration;
     private final Keycloak keycloak;
 
-    //keycloack autowired
 
     public int createAccount(String name, String email) throws WorksheetUserException {
         CredentialRepresentation credential = createCredentials();
@@ -86,6 +87,8 @@ public class KeycloakClientService {
         user.setFirstName(namesToUse[1]);
         user.setUsername(user.getLastName().toLowerCase(Locale.ROOT) + email);
         user.setCredentials(Arrays.asList(credential));
+        user.setEnabled(true);
+        user.setEmail(email);
         return user;
     }
 
@@ -101,5 +104,4 @@ public class KeycloakClientService {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
         return restTemplate.postForEntity(keycloakClientConfiguration.getTokenUrl(), request, LoginResponseDTO.class).getBody();
     }
-
 }
