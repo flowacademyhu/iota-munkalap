@@ -17,7 +17,7 @@ export default function Page() {
     return (
         
         <Router>
-            <div class="d-flex justify-content-around">
+            <div className="d-flex justify-content-around">
             <img src={logo} alt="ingo stop logo" width="135" height="49"/>
             <MenuItem name="Munkavállalók" link="/employees"/>
             <MenuItem name="Partnerek" link="/partners"/>
