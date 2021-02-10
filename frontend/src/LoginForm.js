@@ -1,11 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import { Formik, Form } from "formik";
 import {login} from "./UserAPI"
 import * as yup from "yup";
+import PropTypes from 'prop-types'
 
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import Button from "./Button";
+
+async function loginUser(credentials) {
+    return fetch('http://localhost:8080/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => data.json())
+   }
+
 
 const schema = yup.object().shape({
     email: yup
@@ -18,7 +31,21 @@ const schema = yup.object().shape({
         .min(8, "A jelszó legalább 8 karakter legyen!")
 });
 
-export default function LoginForm() {
+export default function LoginForm({setToken}) {
+
+//     const [username, setUserName] = useState();
+//   const [password, setPassword] = useState();
+
+  const handleSubmit = async (values) => {
+    e.preventDefault();
+    const token = await loginUser({
+     // email,
+      //password
+      values
+    });
+    setToken(token);
+  }
+
     return (
         <div className="container loginform">
             <div className="row">
@@ -29,12 +56,13 @@ export default function LoginForm() {
                             password: ""
                         }}
                         validationSchema={schema}
-                        onSubmit={async values => {
-                            const result = await login(values);
-                            console.log(result); 
+                        onSubmit={(e, values) => {
+                          //  const result = await login(values);
+                           // console.log(result); 
+                            handleSubmit(values)
                         }}
                     >
-                        <Form>
+                        <Form >
                             <h3 className="my-5 text-center">Bejelentkezés</h3>
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
@@ -49,5 +77,7 @@ export default function LoginForm() {
             </div>
         </div >
     );
+    LoginForm.propTypes = {
+        setToken: PropTypes.func.isRequired }
 }
 
