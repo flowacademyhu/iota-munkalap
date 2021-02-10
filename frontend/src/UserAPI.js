@@ -10,8 +10,13 @@ function getUsers() {
 }
 
 function postUser(values) {
-  return api
-      .post(`/users`, values);
+    return api
+        .post(`/users`, values);
 }
 
-export { getUsers, postUser };
+function putUser(id, values) {
+    return api
+        .put(`/users/${id}`, values);
+}
+
+export { getUsers, postUser, putUser };
