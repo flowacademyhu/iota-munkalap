@@ -17,6 +17,13 @@ spring:
     console:
       enabled: true
 
+keycloakBackendClient:
+  realm: worksheet
+  server-url: http://localhost:8180/auth
+  client_id: worksheetbackendclient
+  adminusername: gyanyim
+  adminpassword: snxTZr9$5GGnS7w
+
 keycloak:
   realm: worksheet
   auth-server-url: http://localhost:8180/auth
