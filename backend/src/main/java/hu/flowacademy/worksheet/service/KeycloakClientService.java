@@ -37,8 +37,6 @@ import java.util.Locale;
 @Service
 public class KeycloakClientService {
 
-    private static final Logger log = LoggerFactory.getLogger(KeycloakClientService.class);
-
     private RestTemplate restTemplate = new RestTemplate();
 
     private final KeycloakClientConfiguration keycloakClientConfiguration;
@@ -96,7 +94,6 @@ public class KeycloakClientService {
         user.setCredentials(Arrays.asList(credential));
         user.setEnabled(true);
         user.setEmail(email);
-        log.info("Show the user: {}", user.toString());
         return user;
     }
 
