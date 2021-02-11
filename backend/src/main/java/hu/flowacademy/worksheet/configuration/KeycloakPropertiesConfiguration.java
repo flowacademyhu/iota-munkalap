@@ -11,7 +11,7 @@ public class KeycloakPropertiesConfiguration {
     private String serverUrl;
     @Value("${keycloakBackendClient.realm}")
     private String realm;
-    @Value("${keycloakBackendClient.realm2}")
+    @Value("${keycloak.realm}")
     private String realm2;
     @Value("${keycloakBackendClient.adminusername}")
     private String adminUsername;

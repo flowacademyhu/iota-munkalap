@@ -19,7 +19,6 @@ spring:
 
 keycloakBackendClient:
   realm: master
-  realm2: worksheet
   client-id: admin-cli
   adminusername: gyanyim
   adminpassword: snxTZr9$5GGnS7w
