@@ -6,9 +6,9 @@ export default function FilterEmployees() {
 <Form>
   <Form.Row className="align-items-center">
     <Col xs="auto" className="my-1">
-      <Form.Label className="mr-sm-2" htmlFor="inlineFormCustomSelect" srOnly>
-        Preference
-      </Form.Label>
+    <Form.Control type="search" placeholder="Keresés..." />
+    </Col>
+    <Col xs="auto" className="my-1">
       <Form.Control
         as="select"
         className="mr-sm-2"
@@ -21,7 +21,7 @@ export default function FilterEmployees() {
       </Form.Control>
     </Col>
     <Col xs="auto" className="my-1">
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Mehet</Button>
     </Col>
   </Form.Row>
 </Form>

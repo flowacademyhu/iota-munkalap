@@ -10,7 +10,7 @@ export default function TableListOfEmployees() {
   return (
    
     <div className="border border-secondary">
-       <FilterEmployees/>
+      <div class="d-flex justify-content-around"><FilterEmployees/></div>
       <div className="container-fluid">
         <table className="table">
           <thead>
