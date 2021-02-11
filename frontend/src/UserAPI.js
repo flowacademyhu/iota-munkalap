@@ -1,22 +1,19 @@
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter'
 
-var mock = new MockAdapter(axios);
 
 const api = axios.create({
     baseURL: `https://jsonplaceholder.typicode.com/`,
 })
 
 const api2 = axios.create({
-    baseURL: `http://localhost:8080/api/users/`,
+    baseURL: `http://localhost:8081/api/`,
 })
 
 function getUsers() {
-    return api
+    return api2
         .get(`/users`);
 }
 
-mock.onPost().reply(200);
 
 function login(values) {
     return api2
@@ -24,7 +21,7 @@ function login(values) {
 }
 
 function postUser(values) {
-  return api
+  return api2
       .post(`/users`, values);
 }
 

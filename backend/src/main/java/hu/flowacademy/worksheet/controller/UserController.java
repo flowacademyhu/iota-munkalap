@@ -15,6 +15,7 @@ import javax.annotation.security.RolesAllowed;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin
 @RequestMapping("api")
 public class UserController {
 
