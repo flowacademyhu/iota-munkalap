@@ -20,8 +20,12 @@ const api3 = axios.create({
 })
 
 async function loginUser(credentials) {
-    const result = await api3.post('/login', credentials);
-    return result.data.access_token;
+    try {
+        const result = await api3.post('/login', credentials);
+        return result.data.access_token;
+    } catch (error) {
+        alert('A belépés sikertelen.');
+    }   
 }
 
 function getUsers() {
