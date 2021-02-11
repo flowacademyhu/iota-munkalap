@@ -20,12 +20,10 @@ spring:
 keycloakBackendClient:
   realm: master
   realm2: worksheet
-  server-url: http://localhost:8180/auth
   client-id: admin-cli
   adminusername: gyanyim
   adminpassword: snxTZr9$5GGnS7w
   user-role: worksheetuser
-  token-url: /protocol/openid-connect/token
 
 keycloak:
   realm: worksheet

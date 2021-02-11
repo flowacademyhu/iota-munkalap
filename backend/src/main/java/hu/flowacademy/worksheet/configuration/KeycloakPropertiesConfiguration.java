@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @Getter
 public class KeycloakPropertiesConfiguration {
-    @Value("${keycloakBackendClient.server-url}")
+    @Value("${keycloak.auth-server-url}")
     private String serverUrl;
     @Value("${keycloakBackendClient.realm}")
     private String realm;
@@ -23,11 +23,4 @@ public class KeycloakPropertiesConfiguration {
     private String userRole;
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
-    @Value("${keycloakBackendClient.token-url}")
-    private String tokenUrlEnding;
-    private String tokenUrl = buildUrl(serverUrl, realm2, tokenUrlEnding);
-
-    private String buildUrl(String serverUrl, String realm2, String tokenUrlEnding) {
-        return serverUrl + realm2 + tokenUrlEnding;
-    }
 }
