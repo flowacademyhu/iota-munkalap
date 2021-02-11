@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: `https://localhost:8081/api`,
+    baseURL: `https://jsonplaceholder.typicode.com/`,
 })
 
 function getUsers() {
@@ -33,4 +33,4 @@ function getUser(id) {
         .get(`/users/${id}`);
 }
 
-export { getUsers, postUser, putUser, login, putUserInactive };
+export { getUsers, postUser, putUser, login, putUserInactive, getUser };

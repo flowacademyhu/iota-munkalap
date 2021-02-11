@@ -27,26 +27,27 @@ export default function TableListOfEmployees() {
                   <th scope="row">{user.id}</th>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
-                  <td>{user.active}</td>
-                  <td>
-                    <Link to={`/employees/update/${user.id}`}>
-                      <EditButton />
-                    </Link>
-                  </td>
                   {user.isActive
                     ? <td className="d-flex justify-content-between">
-                        Active
-                        <Button
+                      Active
+                      <Link to={`/employees/update/${user.id}`}>
+                        <EditButton />
+                      </Link>
+                      <Button
                         onClick={() => putUserInactive(user.id)}
                         type="button"
                         className="btn btn-danger"
                         text="Inaktiválás"
-                        />
-
+                      />
                     </td>
                     :
-                    <td>Inactive</td>
-                    }
+                    <td className="d-flex justify-content-between">
+                      Inactive
+                      <Link to={`/employees/update/${user.id}`}>
+                        <EditButton />
+                      </Link>
+                    </td>
+                  }
                 </tr>
               )))
               :
