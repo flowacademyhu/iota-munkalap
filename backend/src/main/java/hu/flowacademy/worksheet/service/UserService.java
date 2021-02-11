@@ -27,7 +27,7 @@ public class UserService {
         user.setRole(Role.USER);
         user.setEnabled(true);
         user.setCreatedAt(LocalDateTime.now());
-        keycloakClientService.createAccount(user.getName(), user.getEmail());
+        keycloakClientService.createAccount(user);
         return userRepository.save(user);
     }
 

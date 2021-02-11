@@ -32,6 +32,7 @@ public class UserController {
         User user = User.builder()
                 .name(userOperationDTO.getName())
                 .email(userOperationDTO.getEmail())
+                .password(userOperationDTO.getPassword())
                 .build();
         return userService.saveUser(user);
     }

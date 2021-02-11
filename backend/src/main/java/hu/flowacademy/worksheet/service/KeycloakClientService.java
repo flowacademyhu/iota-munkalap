@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.KeycloakClientConfiguration;
 import hu.flowacademy.worksheet.dto.LoginResponseDTO;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
 import hu.flowacademy.worksheet.exception.WorksheetUsernameTakenException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,8 @@ import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -32,15 +35,17 @@ import java.util.Locale;
 @Service
 public class KeycloakClientService {
 
+    private static final Logger log = LoggerFactory.getLogger(KeycloakClientService.class);
+
     private RestTemplate restTemplate = new RestTemplate();
 
     private final KeycloakClientConfiguration keycloakClientConfiguration;
     private final Keycloak keycloak;
 
 
-    public int createAccount(String name, String email) throws WorksheetUserException {
-        CredentialRepresentation credential = createCredentials();
-        UserRepresentation user = createUserRepresentation(name, email, credential);
+    public int createAccount(User importedUser) throws WorksheetUserException {
+        CredentialRepresentation credential = createCredentials(importedUser.getPassword());
+        UserRepresentation user = createUserRepresentation(importedUser.getName(), importedUser.getEmail(), credential);
         RealmResource ourRealm = keycloak.realm("worksheet");
         RolesResource roleList = ourRealm.roles();
         UsersResource everyOne = ourRealm.users();
@@ -72,10 +77,10 @@ public class KeycloakClientService {
         return out;
     }
 
-    public CredentialRepresentation createCredentials() {
+    public CredentialRepresentation createCredentials(String password) {
         CredentialRepresentation credential = new CredentialRepresentation();
         credential.setType(CredentialRepresentation.PASSWORD);
-        credential.setValue("dummypassword");
+        credential.setValue(password);
         credential.setTemporary(false);
         return credential;
     }
@@ -89,6 +94,7 @@ public class KeycloakClientService {
         user.setCredentials(Arrays.asList(credential));
         user.setEnabled(true);
         user.setEmail(email);
+        log.info("Show the user: {}", user.toString());
         return user;
     }
 
@@ -102,6 +108,35 @@ public class KeycloakClientService {
         map.add("username", email);
         map.add("grant_type", "password");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-        return restTemplate.postForEntity(keycloakClientConfiguration.getTokenUrl(), request, LoginResponseDTO.class).getBody();
+        LoginResponseDTO result = restTemplate.postForEntity(keycloakClientConfiguration.getTokenUrl(), request, LoginResponseDTO.class).getBody();
+        log.info("Show the LoginResponseDTO result: {}", result.toString());
+        return result;
     }
 }
+    /*
+    public static String getCreatedId(Response response) {
+        URI location = response.getLocation();
+        if (!response.getStatusInfo().equals(Response.Status.CREATED)) {
+            Response.StatusType statusInfo = response.getStatusInfo();
+            throw new RuntimeException("Create method returned status " +
+                    statusInfo.getReasonPhrase() + " (Code: " + statusInfo.getStatusCode() + "); expected status: Created (201)");
+        }
+        if (location == null) {
+            return null;
+        }
+        String path = location.getPath();
+        return path.substring(path.lastIndexOf('/') + 1);
+    }
+    */
+
+/*
+    //final String createdId = keycloak.getCreatedId(response);
+
+    CredentialRepresentation newCredential = new CredentialRepresentation();
+    UserResource userResource = keycloak.realm("realm").users().get(createdId);
+        newCredential.setType(CredentialRepresentation.PASSWORD);
+        newCredential.setValue(password);
+        newCredential.setTemporary(false);
+        userResource.resetPassword(newCredential);
+        return HttpStatus.CREATED.value();
+*/
