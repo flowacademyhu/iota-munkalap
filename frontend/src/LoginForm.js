@@ -22,8 +22,9 @@ const schema = yup.object().shape({
 export default function LoginForm({ setToken }) {
 
     const handleSubmit = async (values) => {
-        const { accessToken } = await loginUser(values);
-        setToken(accessToken.acces_token);
+        const  accessToken  = await loginUser(values);
+        console.log(accessToken);
+        setToken(accessToken);
     }
 
     return (
