@@ -9,6 +9,7 @@ import hu.flowacademy.worksheet.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.representations.AccessToken;
+import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,7 +41,7 @@ public class UserController {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
-    public LoginResponseDTO login(@RequestBody UserOperationDTO userOperationDTO) {
+    public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
 
     }

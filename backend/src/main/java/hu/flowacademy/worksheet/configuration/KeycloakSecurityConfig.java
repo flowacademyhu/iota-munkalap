@@ -58,7 +58,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         return new KeycloakSpringBootConfigResolver();
     }
 
-
+/*
     @Bean
     @Scope(scopeName = WebApplicationContext.SCOPE_REQUEST,
             proxyMode = ScopedProxyMode.TARGET_CLASS)
@@ -69,5 +69,5 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         return ((KeycloakPrincipal) request.getUserPrincipal())
                 .getKeycloakSecurityContext().getToken();
     }
-
+    */
 }

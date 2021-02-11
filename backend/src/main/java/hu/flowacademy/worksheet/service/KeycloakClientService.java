@@ -12,6 +12,7 @@ import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
@@ -29,6 +30,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @RequiredArgsConstructor
@@ -53,7 +55,7 @@ public class KeycloakClientService {
         javax.ws.rs.core.Response response = keycloak.realm("worksheet").users().create(user);
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource oneUser = everyOne.get(userId);
-        oneUser.roles().realmLevel().add(Arrays.asList(roleToUse));
+        oneUser.roles().realmLevel().add(List.of(roleToUse));
         final int status = response.getStatus();
         if (status != HttpStatus.CREATED.value()) {
             throw new WorksheetUsernameTakenException("Username taken!", HttpStatus.CONFLICT);
@@ -98,45 +100,14 @@ public class KeycloakClientService {
         return user;
     }
 
-    public LoginResponseDTO login(String email, String password) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", keycloakClientConfiguration.getClientId());
-        map.add("client_secret", keycloakClientConfiguration.getClientSecret());
-        map.add("password", password);
-        map.add("username", email);
-        map.add("grant_type", "password");
-        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
-        LoginResponseDTO result = restTemplate.postForEntity(keycloakClientConfiguration.getTokenUrl(), request, LoginResponseDTO.class).getBody();
-        log.info("Show the LoginResponseDTO result: {}", result.toString());
-        return result;
+    public AccessTokenResponse login(String email, String password) {
+        return Keycloak.getInstance(
+                keycloakClientConfiguration.getServerUrl(),
+                keycloakClientConfiguration.getRealm2(),
+                email, password,
+                keycloakClientConfiguration.getClientId(),
+                keycloakClientConfiguration.getClientSecret())
+                .tokenManager()
+                .getAccessToken();
     }
 }
-    /*
-    public static String getCreatedId(Response response) {
-        URI location = response.getLocation();
-        if (!response.getStatusInfo().equals(Response.Status.CREATED)) {
-            Response.StatusType statusInfo = response.getStatusInfo();
-            throw new RuntimeException("Create method returned status " +
-                    statusInfo.getReasonPhrase() + " (Code: " + statusInfo.getStatusCode() + "); expected status: Created (201)");
-        }
-        if (location == null) {
-            return null;
-        }
-        String path = location.getPath();
-        return path.substring(path.lastIndexOf('/') + 1);
-    }
-    */
-
-/*
-    //final String createdId = keycloak.getCreatedId(response);
-
-    CredentialRepresentation newCredential = new CredentialRepresentation();
-    UserResource userResource = keycloak.realm("realm").users().get(createdId);
-        newCredential.setType(CredentialRepresentation.PASSWORD);
-        newCredential.setValue(password);
-        newCredential.setTemporary(false);
-        userResource.resetPassword(newCredential);
-        return HttpStatus.CREATED.value();
-*/
