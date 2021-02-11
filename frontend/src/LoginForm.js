@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import PropTypes from 'prop-types'
 import {loginUser} from './UserAPI'
 
 
@@ -54,8 +53,6 @@ export default function LoginForm({ setToken }) {
             </div>
         </div >
     );
-    LoginForm.propTypes = {
-        setToken: PropTypes.func.isRequired
-    }
+    
 }
 
