@@ -27,6 +27,7 @@ public class User {
     @NonNull
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Transient
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
