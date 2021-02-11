@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
-import Input from './Input';
-import Button from './Button';
-import PopUp from './PopUp';
-import { postUser } from './UserAPI';
+import Input from '../Input';
+import Button from '../Button';
+import PopUp from '../PopUp';
 
 const schema = yup.object().shape({
   email: yup
@@ -15,33 +14,17 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("A jelszó kötelező!")
-    .min(5, "Legalább 5 karakteres jelszó kell!"),
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+      "A jelszó minimum 8 karakter hosszú, tartalmaznia kell kis- és nagybetűt, valamint számot!"
+    ),
   confirmPassword: yup
     .string()
     .required("Add meg a jelszót még egyszer!")
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-function SaveEmployee() {
-  const [sent, setSent] = useState(false);
-  const [sentSuccessfully, setSentSuccessfully] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState('');
-
-  async function postData(values) {
-    try {
-      const response = await postUser(values);
-      if (response.status === 201) {
-        setPopUpMessage('Munkavállaló sikeresen létrehozva');
-        setSentSuccessfully(true);
-      } else {
-        setPopUpMessage('A létrehozás sikertelen');
-      }
-    } catch (error) {
-      setPopUpMessage('A létrehozás sikertelen');
-    }
-    setSent(true);
-  }
-
+function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title, name, email}) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -51,21 +34,22 @@ function SaveEmployee() {
                 body={popUpMessage} 
                 sentSuccessfully={sentSuccessfully}
                 setSent={setSent} 
+                path={path}
               />}
           <Formik
             initialValues={{
-              name: '',
-              email: '',
+              name: name || '',
+              email: email || '',
               password: '',
               confirmPassword: ''
             }}
             validationSchema={schema}
             onSubmit={values => {
-              postData(values);
+              sendData(values);
             }}
           >
             <Form>
-              <h1 className='text-center'>Új munkavállaló</h1>
+              <h1 className='text-center'>{title}</h1>
               <Input name='name' label='Név' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
@@ -84,4 +68,4 @@ function SaveEmployee() {
   )
 }
 
-export default SaveEmployee;
+export default EmployeeForm;

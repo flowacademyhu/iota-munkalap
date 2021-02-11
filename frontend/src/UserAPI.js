@@ -1,5 +1,4 @@
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter'
 
 var mock = new MockAdapter(axios);
 
@@ -29,16 +28,24 @@ function getUsers() {
         .get(`/users`);
 }
 
-mock.onPost().reply(200);
-
 function login(values) {
     return api2
         .post(`/login`, values);
 }
 
 function postUser(values) {
-  return api
-      .post(`/users`, values);
+    return api
+        .post(`/users`, values);
 }
 
-export { getUsers, postUser, login, loginUser };
+function getUser(id) {
+    return api
+        .get(`/users/${id}`);
+}
+
+function putUser(id, values) {
+    return api
+        .put(`/users/${id}`, values);
+}
+
+export { getUsers, postUser, putUser, login, getUser };
