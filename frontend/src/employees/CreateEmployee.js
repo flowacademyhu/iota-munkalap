@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { postUser } from '../UserAPI';
-import EmployeeForm from './EmployeeForm';
+import CreateEmployeeForm from './CreateEmployeeForm';
 
 function CreateEmployee() {
   const [sent, setSent] = useState(false);
@@ -23,7 +23,7 @@ function CreateEmployee() {
   }
 
   return (
-    <EmployeeForm 
+    <CreateEmployeeForm 
       sent={sent} 
       setSent={setSent} 
       sentSuccessfully={sentSuccessfully} 
@@ -31,6 +31,7 @@ function CreateEmployee() {
       sendData={postData}
       path='new'
       title='Új munkatárs létrehozása'
+      newEmployee={true}
     />
   );
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import {login} from "./UserAPI"
 import * as yup from "yup";
+import { loginUser } from './UserAPI'
+
 
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
@@ -18,7 +19,13 @@ const schema = yup.object().shape({
         .min(8, "A jelszó legalább 8 karakter legyen!")
 });
 
-export default function LoginForm() {
+export default function LoginForm({ setToken }) {
+
+    const handleSubmit = async (values) => {
+        const  accessToken  = await loginUser(values);
+        setToken(accessToken);
+    }
+
     return (
         <div className="container loginform">
             <div className="row">
@@ -29,12 +36,9 @@ export default function LoginForm() {
                             password: ""
                         }}
                         validationSchema={schema}
-                        onSubmit={async values => {
-                            const result = await login(values);
-                            console.log(result); 
-                        }}
+                        onSubmit={handleSubmit}
                     >
-                        <Form>
+                        <Form >
                             <h3 className="my-5 text-center">Bejelentkezés</h3>
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
@@ -49,5 +53,6 @@ export default function LoginForm() {
             </div>
         </div >
     );
+
 }
 
