@@ -5,7 +5,6 @@ import MenuItem from './Menu-item';
 import TableListOfEmployees from './employees/TableListOfEmployees';
 import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
-import LoginForm from './LoginForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 
@@ -13,7 +12,8 @@ import './style.css';
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Redirect
 } from "react-router-dom";
 
 export default function Page() {
@@ -47,7 +47,7 @@ export default function Page() {
                     <Worksheet />
                 </Route>
                 <Route path='/'>
-                    <LoginForm />
+                    <Redirect to='/partners' />
                 </Route>
             </Switch>
 
