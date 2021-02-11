@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import {loginUser} from './UserAPI'
+import { loginUser } from './UserAPI'
 
 
 import EmailInput from "./EmailInput";
@@ -22,8 +22,8 @@ const schema = yup.object().shape({
 export default function LoginForm({ setToken }) {
 
     const handleSubmit = async (values) => {
-        const token = await loginUser(values);
-        setToken(token);
+        const { accessToken } = await loginUser(values);
+        setToken(accessToken.acces_token);
     }
 
     return (
@@ -53,6 +53,6 @@ export default function LoginForm({ setToken }) {
             </div>
         </div >
     );
-    
+
 }
 
