@@ -1,5 +1,7 @@
 import React from 'react';
 import useUsers from '../hooks/useUsers';
+import { Link } from 'react-router-dom';
+import EditButton from '../EditButton';
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
@@ -24,6 +26,11 @@ export default function TableListOfEmployees() {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.active}</td>
+                  <td>
+                    <Link to={`/employees/update/${user.id}`}>
+                      <EditButton />
+                    </Link>
+                  </td>
                 </tr>
               ))
             )

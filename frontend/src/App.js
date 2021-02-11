@@ -1,14 +1,12 @@
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css';
 import './App.css';
 import Page from './Page';
-import React from 'react';
 
 function App() {
-
-
   return (
-
       <Page/>
-    
   );
 }
 
