@@ -3,7 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 
 var mock = new MockAdapter(axios);
 
-mock.onPost('/login').reply(200, {token: '12345'});
+mock.onPost('/login').reply(200, { access_token: '12345' });
 
 
 
@@ -21,7 +21,7 @@ const api3 = axios.create({
 
 async function loginUser(credentials) {
     const result = await api3.post('/login', credentials);
-    return result.data.token;
+    return result.data.access_token;
 }
 
 function getUsers() {
@@ -49,4 +49,11 @@ function putUser(id, values) {
         .put(`/users/${id}`, values);
 }
 
-export { getUsers, postUser, putUser, login, getUser };
+export {
+    getUsers,
+    postUser,
+    putUser,
+    login,
+    getUser,
+    loginUser,
+};
