@@ -20,7 +20,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    private static final String NEW_NAME = "Széchenyi István";
+    private static final String NEW_FIRSTNAME = "István";
+    private static final String NEW_LASTNAME = "Széchenyi";
     private static final String NEW_EMAIL = "pista@pista.hu";
     private static final Long REGISTRATION_ID = 111L;
 
@@ -41,26 +42,33 @@ class UserServiceTest {
 
         assertThat(result, notNullValue());
         assertThat(result.getId(), is(REGISTRATION_ID));
-        assertThat(result.getName(), is(NEW_NAME));
+        assertThat(result.getFirst_name(), is(NEW_FIRSTNAME));
+        assertThat(result.getLast_name(), is(NEW_LASTNAME));
         assertThat(result.getEmail(), is(NEW_EMAIL));
         verifyNoMoreInteractions(userRepository);
     }
 
     @Test
     public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
-        User userData = User.builder().email("elhasalamailem.hu").name("Görgey").build();
+        User userData = User.builder().email("elhasalamailem.hu").first_name("József").last_name("Ferenc").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("").name("Görgey").build();
+        User userData = User.builder().email("").first_name("József").last_name("Ferenc").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
     @Test
-    public void givenMissingNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").name("").build();
+    public void givenMissingFirstNameUser_whenSavingUser_ThenThrowException() {
+        User userData = User.builder().email("joazemail@orulok.hu").first_name("").last_name("Dugonics").build();
+        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+    }
+
+    @Test
+    public void givenMissingLastNameUser_whenSavingUser_ThenThrowException() {
+        User userData = User.builder().email("joazemail@orulok.hu").first_name("Tivadar").last_name("").build();
         assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
     }
 
@@ -75,7 +83,8 @@ class UserServiceTest {
     private User givenProperUserObject() {
         User user = new User();
         user.setEmail(NEW_EMAIL);
-        user.setName(NEW_NAME);
+        user.setFirst_name(NEW_FIRSTNAME);
+        user.setLast_name(NEW_LASTNAME);
         return user;
     }
 }
