@@ -29,15 +29,15 @@ public class KeycloakClientService {
     private final KeycloakPropertiesConfiguration keycloakPropertiesConfiguration;
     private final Keycloak keycloak;
 
-    public int createAccount(User importedUser) throws WorksheetUserException {
+    public void createAccount(User importedUser) throws WorksheetUserException {
         CredentialRepresentation credential = createCredentials(importedUser.getPassword());
         RealmResource ourRealm = keycloak.realm(keycloakPropertiesConfiguration.getRealm2());
         RolesResource roleList = ourRealm.roles();
         UsersResource everyOne = ourRealm.users();
         RoleRepresentation roleToUse = roleList.get(keycloakPropertiesConfiguration.getUserRole()).toRepresentation();
         javax.ws.rs.core.Response response = keycloak.realm(keycloakPropertiesConfiguration.getRealm2()).users().create(
-            createUserRepresentation(importedUser.getFirst_name(), importedUser.getLast_name(),
-            importedUser.getEmail(), credential)
+                createUserRepresentation(importedUser.getFirst_name(), importedUser.getLast_name(),
+                        importedUser.getEmail(), credential)
         );
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource oneUser = everyOne.get(userId);
@@ -46,7 +46,6 @@ public class KeycloakClientService {
         if (status != HttpStatus.CREATED.value()) {
             throw new WorksheetUsernameTakenException("Username taken!", HttpStatus.CONFLICT);
         }
-        return HttpStatus.CREATED.value();
     }
 
     public CredentialRepresentation createCredentials(String password) {
