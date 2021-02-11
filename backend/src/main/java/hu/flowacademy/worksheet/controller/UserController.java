@@ -25,7 +25,7 @@ public class UserController {
 
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws WorksheetUserException {
         User user = User.builder()
                 .name(userOperationDTO.getName())
