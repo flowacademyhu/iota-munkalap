@@ -42,33 +42,33 @@ class UserServiceTest {
 
         assertThat(result, notNullValue());
         assertThat(result.getId(), is(REGISTRATION_ID));
-        assertThat(result.getFirst_name(), is(NEW_FIRSTNAME));
-        assertThat(result.getLast_name(), is(NEW_LASTNAME));
+        assertThat(result.getFirstName(), is(NEW_FIRSTNAME));
+        assertThat(result.getLastName(), is(NEW_LASTNAME));
         assertThat(result.getEmail(), is(NEW_EMAIL));
         verifyNoMoreInteractions(userRepository);
     }
 
     @Test
     public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email("elhasalamailem.hu").first_name("József").last_name("Ferenc").build();
+        User userData = User.builder().email("elhasalamailem.hu").firstName("József").lastName("Ferenc").build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("").first_name("József").last_name("Ferenc").build();
+        User userData = User.builder().email("").firstName("József").lastName("Ferenc").build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingFirstNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").first_name("").last_name("Dugonics").build();
+        User userData = User.builder().email("joazemail@orulok.hu").firstName("").lastName("Dugonics").build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingLastNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").first_name("Tivadar").last_name("").build();
+        User userData = User.builder().email("joazemail@orulok.hu").firstName("Tivadar").lastName("").build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
@@ -83,8 +83,8 @@ class UserServiceTest {
     private User givenProperUserObject() {
         User user = new User();
         user.setEmail(NEW_EMAIL);
-        user.setFirst_name(NEW_FIRSTNAME);
-        user.setLast_name(NEW_LASTNAME);
+        user.setFirstName(NEW_FIRSTNAME);
+        user.setLastName(NEW_LASTNAME);
         return user;
     }
 }

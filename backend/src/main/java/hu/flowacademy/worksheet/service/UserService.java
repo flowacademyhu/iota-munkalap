@@ -31,10 +31,10 @@ public class UserService {
     }
 
     private void validateUser(User user) throws ValidationException {
-        if (!StringUtils.hasText(user.getFirst_name())) {
+        if (!StringUtils.hasText(user.getFirstName())) {
             throw new ValidationException("Username null or empty String");
         }
-        if (!StringUtils.hasText(user.getLast_name())) {
+        if (!StringUtils.hasText(user.getLastName())) {
             throw new ValidationException("Username null or empty String");
         }
         if (!StringUtils.hasText(user.getEmail())) {

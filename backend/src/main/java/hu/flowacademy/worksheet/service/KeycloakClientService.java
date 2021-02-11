@@ -32,7 +32,7 @@ public class KeycloakClientService {
         RealmResource ourRealm = keycloak.realm(keycloakPropertiesConfiguration.getRealm2());
         RoleRepresentation roleToUse = ourRealm.roles().get(keycloakPropertiesConfiguration.getUserRole()).toRepresentation();
         javax.ws.rs.core.Response response = keycloak.realm(keycloakPropertiesConfiguration.getRealm2()).users().create(
-                createUserRepresentation(importedUser.getFirst_name(), importedUser.getLast_name(),
+                createUserRepresentation(importedUser.getFirstName(), importedUser.getLastName(),
                         importedUser.getEmail(), credential)
         );
         String userId = CreatedResponseUtil.getCreatedId(response);
