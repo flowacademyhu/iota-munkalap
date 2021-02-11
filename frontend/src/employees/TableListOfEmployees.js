@@ -31,8 +31,7 @@ export default function TableListOfEmployees() {
                         <Button
                         onClick={() => putUserInactive(user.id)}
                         type="button"
-                        className="btn-close"
-                        arialLabel="Close" 
+                        className="btn btn-danger"
                         text="Inaktiválás"
                         />
 
