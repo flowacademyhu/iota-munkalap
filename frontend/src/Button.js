@@ -1,13 +1,9 @@
 import React from 'react'
 
-function Button({ text, onClick, type, className, arialLabel, disabled }) {
+function Button({text, ...props}) {
   return (
     <button 
-    onClick={onClick} 
-    disabled={disabled}
-    type={type} 
-    className={className} 
-    aria-label={arialLabel}
+    {...props}
     >
       {text}
       </button>
