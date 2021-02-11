@@ -2,7 +2,7 @@ package hu.flowacademy.worksheet.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class WorksheetUsernameTakenException extends WorksheetUserException{
+public class WorksheetUsernameTakenException extends ValidationException {
     public WorksheetUsernameTakenException(String message) {
         super(message);
     }

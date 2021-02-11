@@ -2,7 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
-import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
 
-    public User saveUser(@NonNull User user) throws WorksheetUserException {
+    public User saveUser(@NonNull User user) throws ValidationException {
         validateUser(user);
         user.setRole(Role.USER);
         user.setEnabled(true);
@@ -30,18 +30,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    private void validateUser(User user) throws WorksheetUserException {
+    private void validateUser(User user) throws ValidationException {
         if (!StringUtils.hasText(user.getFirst_name())) {
-            throw new WorksheetUserException("Username null or empty String");
+            throw new ValidationException("Username null or empty String");
         }
         if (!StringUtils.hasText(user.getLast_name())) {
-            throw new WorksheetUserException("Username null or empty String");
+            throw new ValidationException("Username null or empty String");
         }
         if (!StringUtils.hasText(user.getEmail())) {
-            throw new WorksheetUserException("Missing Email");
+            throw new ValidationException("Missing Email");
         }
         if (!EmailValidator.getInstance().isValid(user.getEmail())) {
-            throw new WorksheetUserException("Invalid Email");
+            throw new ValidationException("Invalid Email");
         }
     }
 }

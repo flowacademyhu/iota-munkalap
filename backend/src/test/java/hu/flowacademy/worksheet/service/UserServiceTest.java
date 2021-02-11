@@ -1,7 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
-import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void givenUserObject_whenSavingUser_thenGreatSuccess() throws WorksheetUserException {
+    public void givenUserObject_whenSavingUser_thenGreatSuccess() throws ValidationException {
         givenUniquePerson();
         User userData = givenProperUserObject();
         User result = userService.saveUser(userData);
@@ -49,27 +49,27 @@ class UserServiceTest {
     }
 
     @Test
-    public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws WorksheetUserException {
+    public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws ValidationException {
         User userData = User.builder().email("elhasalamailem.hu").first_name("József").last_name("Ferenc").build();
-        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("").first_name("József").last_name("Ferenc").build();
-        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingFirstNameUser_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("joazemail@orulok.hu").first_name("").last_name("Dugonics").build();
-        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingLastNameUser_whenSavingUser_ThenThrowException() {
         User userData = User.builder().email("joazemail@orulok.hu").first_name("Tivadar").last_name("").build();
-        assertThrows(WorksheetUserException.class, () -> userService.saveUser(userData));
+        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     private void givenUniquePerson() {

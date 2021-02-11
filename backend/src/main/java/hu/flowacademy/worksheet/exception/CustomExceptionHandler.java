@@ -20,8 +20,8 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(List.of(e.getLocalizedMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(WorksheetUserException.class)
-    public final ResponseEntity<Object> handleUserException(WorksheetUserException ex) {
+    @ExceptionHandler(ValidationException.class)
+    public final ResponseEntity<Object> handleUserException(ValidationException ex) {
         log.error("ExceptionHandler Message: {}", ex.getLocalizedMessage());
         return new ResponseEntity<>(List.of(ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }

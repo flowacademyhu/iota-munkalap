@@ -2,7 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.entity.User;
-import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.KeycloakClientService;
 import hu.flowacademy.worksheet.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class UserController {
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed("admin")
-    public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws WorksheetUserException {
+    public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws ValidationException {
         User user = User.builder()
                 .first_name(userOperationDTO.getFirstName())
                 .last_name(userOperationDTO.getLastName())

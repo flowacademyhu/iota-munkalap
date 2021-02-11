@@ -3,15 +3,13 @@ package hu.flowacademy.worksheet.service;
 import hu.flowacademy.worksheet.configuration.KeycloakClientConfiguration;
 import hu.flowacademy.worksheet.configuration.KeycloakPropertiesConfiguration;
 import hu.flowacademy.worksheet.entity.User;
-import hu.flowacademy.worksheet.exception.WorksheetUserException;
+import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.exception.WorksheetUsernameTakenException;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.resource.RealmResource;
-import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UserResource;
-import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
@@ -29,7 +27,7 @@ public class KeycloakClientService {
     private final KeycloakPropertiesConfiguration keycloakPropertiesConfiguration;
     private final Keycloak keycloak;
 
-    public void createAccount(User importedUser) throws WorksheetUserException {
+    public void createAccount(User importedUser) throws ValidationException {
         CredentialRepresentation credential = createCredentials(importedUser.getPassword());
         RealmResource ourRealm = keycloak.realm(keycloakPropertiesConfiguration.getRealm2());
         RoleRepresentation roleToUse = ourRealm.roles().get(keycloakPropertiesConfiguration.getUserRole()).toRepresentation();
