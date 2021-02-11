@@ -8,11 +8,7 @@ mock.onPost('/login').reply(200, { access_token: '12345' });
 
 
 const api = axios.create({
-    baseURL: `https://jsonplaceholder.typicode.com/`,
-})
-
-const api2 = axios.create({
-    baseURL: `http://localhost:8080/api/users/`,
+    baseURL: `http://localhost:8080/api`,
 })
 
 const api3 = axios.create({
@@ -31,11 +27,6 @@ async function loginUser(credentials) {
 function getUsers() {
     return api
         .get(`/users`);
-}
-
-function login(credentials) {
-    return api
-        .post(`/login`, credentials);
 }
 
 function postUser(credentials) {
@@ -57,4 +48,4 @@ function getUser(id) {
         .get(`/users/${id}`);
 }
 
-export { getUsers, postUser, putUser, login, putUserInactive, getUser };
+export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser };
