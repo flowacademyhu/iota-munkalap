@@ -29,7 +29,7 @@ export default function TableListOfEmployees() {
                   <td>{user.email}</td>
                   {user.isActive
                     ? <td className="d-flex justify-content-between">
-                      Active
+                      Aktív
                       <Link to={`/employees/update/${user.id}`}>
                         <EditButton />
                       </Link>
