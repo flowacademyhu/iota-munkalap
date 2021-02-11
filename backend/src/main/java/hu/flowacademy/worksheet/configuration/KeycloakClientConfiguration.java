@@ -27,7 +27,8 @@ public class KeycloakClientConfiguration {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
     @Value("${keycloakBackendClient.token-url}")
-    private String tokenUrl;
+    private String tokenUrlEnding;
+    private String tokenUrl = buildUrl(serverUrl, realm2, tokenUrlEnding);
 
     @Bean
     public Keycloak keycloak() {
@@ -39,5 +40,9 @@ public class KeycloakClientConfiguration {
                 .password(adminPassword)
                 .clientId(clientId)
                 .build();
+    }
+
+    private String buildUrl(String serverUrl, String realm2, String tokenUrlEnding) {
+        return serverUrl + realm2 + tokenUrlEnding;
     }
 }

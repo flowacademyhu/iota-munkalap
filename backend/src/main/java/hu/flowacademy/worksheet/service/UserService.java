@@ -15,7 +15,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-@AllArgsConstructor
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
