@@ -33,11 +33,11 @@ public class KeycloakClientService {
         CredentialRepresentation credential = createCredentials(importedUser.getPassword());
         UserRepresentation user = createUserRepresentation(importedUser.getFirst_name(),
                 importedUser.getLast_name(), importedUser.getEmail(), credential);
-        RealmResource ourRealm = keycloak.realm("worksheet");
+        RealmResource ourRealm = keycloak.realm(keycloakPropertiesConfiguration.getRealm2());
         RolesResource roleList = ourRealm.roles();
         UsersResource everyOne = ourRealm.users();
-        RoleRepresentation roleToUse = roleList.get("worksheetuser").toRepresentation();
-        javax.ws.rs.core.Response response = keycloak.realm("worksheet").users().create(user);
+        RoleRepresentation roleToUse = roleList.get(keycloakPropertiesConfiguration.getUserRole()).toRepresentation();
+        javax.ws.rs.core.Response response = keycloak.realm(keycloakPropertiesConfiguration.getRealm2()).users().create(user);
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource oneUser = everyOne.get(userId);
         oneUser.roles().realmLevel().add(List.of(roleToUse));
