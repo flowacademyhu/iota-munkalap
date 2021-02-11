@@ -24,22 +24,23 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, path}) {
+function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
+  title, name, email }) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {sent 
-            && <PopUp 
-                body={popUpMessage} 
-                sentSuccessfully={sentSuccessfully}
-                setSent={setSent} 
-                path={path}
-              />}
+          {sent
+            && <PopUp
+              body={popUpMessage}
+              sentSuccessfully={sentSuccessfully}
+              setSent={setSent}
+              path={path}
+            />}
           <Formik
             initialValues={{
-              name: '',
-              email: '',
+              name: name || '',
+              email: email || '',
               password: '',
               confirmPassword: ''
             }}
@@ -49,7 +50,7 @@ function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, 
             }}
           >
             <Form>
-              <h1 className='text-center'>Új munkavállaló</h1>
+              <h1 className='text-center'>{title}</h1>
               <Input name='name' label='Név' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
@@ -64,8 +65,8 @@ function EmployeeForm({sent, setSent, sentSuccessfully, popUpMessage, sendData, 
           </Formik>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
-export default EmployeeForm;
+export default CreateEmployeeForm;

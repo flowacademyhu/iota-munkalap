@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { postUser } from '../UserAPI';
-import EmployeeForm from './EmployeeForm';
+import CreateEmployeeForm from './CreateEmployeeForm';
 
-function SaveEmployee() {
+function CreateEmployee() {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
@@ -23,15 +23,17 @@ function SaveEmployee() {
   }
 
   return (
-    <EmployeeForm 
+    <CreateEmployeeForm 
       sent={sent} 
       setSent={setSent} 
       sentSuccessfully={sentSuccessfully} 
       popUpMessage={popUpMessage} 
       sendData={postData}
       path='new'
+      title='Új munkatárs létrehozása'
+      newEmployee={true}
     />
   );
 }
 
-export default SaveEmployee;
+export default CreateEmployee;

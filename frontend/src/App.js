@@ -1,29 +1,21 @@
 import LoginForm from './LoginForm';
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SaveEmployee from './employees/SaveEmployee';
-import UpdateEmployee from './employees/UpdateEmployee';
 import './style.css';
-import TableListOfEmployees from './employees/TableListOfEmployees';
+import useToken from './hooks/useToken';
+import './App.css';
+import Page from './Page';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function App() {
+function App() {
+
+  const { token, setToken } = useToken();
+  if (!token) {
+    return <LoginForm setToken={setToken} />
+  }
+
   return (
-    <Router>
-      <Switch>
-        <Route path='/employees/new'>
-          <SaveEmployee />
-        </Route>
-        <Route path='/employees/update'>
-          <UpdateEmployee id='1' />
-        </Route>
-        <Route path='/employees'>
-          <TableListOfEmployees />
-        </Route>
-        <Route path='/'>
-          <LoginForm />
-        </Route>
-      </Switch>
-    </Router>
+    <Page />
   );
 }
+
+export default App;
