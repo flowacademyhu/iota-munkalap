@@ -3,6 +3,10 @@ import MockAdapter from 'axios-mock-adapter'
 
 var mock = new MockAdapter(axios);
 
+mock.onPost('/login').reply(200, {token: '12345'});
+
+
+
 const api = axios.create({
     baseURL: `https://jsonplaceholder.typicode.com/`,
 })
@@ -10,6 +14,15 @@ const api = axios.create({
 const api2 = axios.create({
     baseURL: `http://localhost:8080/api/users/`,
 })
+
+const api3 = axios.create({
+    baseURL: `https://reqres.in/api/`
+})
+
+async function loginUser(credentials) {
+    const result = await api3.post('/login', credentials);
+    return result.data.token;
+}
 
 function getUsers() {
     return api
@@ -28,4 +41,4 @@ function postUser(values) {
       .post(`/users`, values);
 }
 
-export { getUsers, postUser, login };
+export { getUsers, postUser, login, loginUser };
