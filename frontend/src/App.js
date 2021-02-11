@@ -13,20 +13,6 @@ export default function App() {
   }
 
   return (
-    <Router>
-      <Switch>
-        <Route path='/addemployee'>
-          <SaveEmployee />
-        </Route>
-        <Route path='/employees'>
-          <TableListOfEmployees />
-        </Route>
-        <Route path='/'>
-          <LoginForm />
-        </Route>
-      </Switch>
-    </Router>
+    <Page />
   );
 }
-
-export default App;
