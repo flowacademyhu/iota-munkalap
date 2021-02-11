@@ -2,15 +2,19 @@ import React from 'react';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
+import FilterEmployees from './FilterEmployees'
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
 
   return (
+   
     <div className="border border-secondary">
+       <FilterEmployees/>
       <div className="container-fluid">
         <table className="table">
           <thead>
+         
             <tr>
               <th scope="col">#</th>
               <th scope="col">Név</th>
@@ -42,5 +46,6 @@ export default function TableListOfEmployees() {
         </table>
       </div>
     </div>
+
   );
 }
