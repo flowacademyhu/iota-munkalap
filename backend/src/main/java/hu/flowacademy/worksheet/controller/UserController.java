@@ -38,6 +38,8 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+
+    //Loginoláskor a Keycloakhoz indít továbbhívást.
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
