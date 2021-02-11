@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.KeycloakClientConfiguration;
+import hu.flowacademy.worksheet.configuration.KeycloakPropertiesConfiguration;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
 import hu.flowacademy.worksheet.exception.WorksheetUsernameTakenException;
@@ -25,6 +26,7 @@ import java.util.List;
 public class KeycloakClientService {
 
     private final KeycloakClientConfiguration keycloakClientConfiguration;
+    private final KeycloakPropertiesConfiguration keycloakPropertiesConfiguration;
     private final Keycloak keycloak;
 
     public int createAccount(User importedUser) throws WorksheetUserException {
@@ -67,11 +69,11 @@ public class KeycloakClientService {
 
     public AccessTokenResponse login(String email, String password) {
         return Keycloak.getInstance(
-                keycloakClientConfiguration.getServerUrl(),
-                keycloakClientConfiguration.getRealm2(),
+                keycloakPropertiesConfiguration.getServerUrl(),
+                keycloakPropertiesConfiguration.getRealm2(),
                 email, password,
-                keycloakClientConfiguration.getClientId(),
-                keycloakClientConfiguration.getClientSecret())
+                keycloakPropertiesConfiguration.getClientId(),
+                keycloakPropertiesConfiguration.getClientSecret())
                 .tokenManager()
                 .getAccessToken();
     }
