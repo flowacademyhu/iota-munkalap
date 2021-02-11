@@ -20,9 +20,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    private String first_name;
+    @JsonProperty("first_name")
+    private String firstName;
     @NonNull
-    private String last_name;
+    @JsonProperty("last_name")
+    private String lastName;
     @Column(unique = true, nullable = false)
     @NonNull
     private String email;
