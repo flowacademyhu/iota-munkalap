@@ -1,18 +1,17 @@
 import axios from 'axios';
 import MockAdapter from "axios-mock-adapter";
 
-var mock = new MockAdapter(axios);
-
-mock.onPost('/login').reply(200, { access_token: '12345' });
-
-
-
-const api = axios.create({
-    baseURL: `http://localhost:8080/api`,
-})
 
 const api3 = axios.create({
     baseURL: `https://reqres.in/api/`
+})
+
+var mock = new MockAdapter(api3);
+mock.onPost('/login').reply(200, { access_token: '12345' });
+
+
+const api = axios.create({
+    baseURL: `https://jsonplaceholder.typicode.com/`,
 })
 
 async function loginUser(credentials) {
