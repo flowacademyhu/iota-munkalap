@@ -13,7 +13,8 @@ import './style.css';
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Redirect
 } from "react-router-dom";
 
 export default function Page() {
@@ -47,7 +48,7 @@ export default function Page() {
                     <Worksheet />
                 </Route>
                 <Route path='/'>
-                    <LoginForm />
+                    <Redirect to='/partners' />
                 </Route>
             </Switch>
 
