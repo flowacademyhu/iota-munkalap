@@ -23,7 +23,7 @@ public class User {
 
     @NonNull
     private String name;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     @NonNull
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

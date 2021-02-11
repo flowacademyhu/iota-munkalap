@@ -38,14 +38,11 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-
     //Loginoláskor a Keycloakhoz indít továbbhívást.
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
     public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
-
     }
-
 }
