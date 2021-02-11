@@ -4,7 +4,6 @@ import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
 import hu.flowacademy.worksheet.repository.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;

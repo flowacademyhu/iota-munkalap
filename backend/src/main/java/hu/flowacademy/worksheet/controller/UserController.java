@@ -1,18 +1,14 @@
 package hu.flowacademy.worksheet.controller;
 
-import hu.flowacademy.worksheet.dto.LoginResponseDTO;
 import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
 import hu.flowacademy.worksheet.service.KeycloakClientService;
 import hu.flowacademy.worksheet.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.keycloak.admin.client.Keycloak;
-import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
