@@ -1,12 +1,9 @@
 import LoginForm from './LoginForm';
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import SaveEmployee from './SaveEmployee';
 import './style.css';
-import TableListOfEmployees from './employees/TableListOfEmployees';
 import useToken from './hooks/useToken';
-
+import Page from './Page';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
 
@@ -24,7 +21,12 @@ export default function App() {
         <Route path='/employees'>
           <TableListOfEmployees />
         </Route>
+        <Route path='/'>
+          <LoginForm />
+        </Route>
       </Switch>
     </Router>
   );
 }
+
+export default App;
