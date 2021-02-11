@@ -1,24 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import { Formik, Form } from "formik";
-import {login} from "./UserAPI"
 import * as yup from "yup";
 import PropTypes from 'prop-types'
+import {loginUser} from './UserAPI'
+
 
 import EmailInput from "./EmailInput";
 import PasswordInput from "./PasswordInput";
 import Button from "./Button";
-
-async function loginUser(credentials) {
-    return fetch('http://localhost:8080/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(credentials)
-    })
-      .then(data => data.json())
-   }
-
 
 const schema = yup.object().shape({
     email: yup
@@ -31,20 +20,12 @@ const schema = yup.object().shape({
         .min(8, "A jelszó legalább 8 karakter legyen!")
 });
 
-export default function LoginForm({setToken}) {
+export default function LoginForm({ setToken }) {
 
-//     const [username, setUserName] = useState();
-//   const [password, setPassword] = useState();
-
-  const handleSubmit = async (values) => {
-    e.preventDefault();
-    const token = await loginUser({
-     // email,
-      //password
-      values
-    });
-    setToken(token);
-  }
+    const handleSubmit = async (values) => {
+        const token = await loginUser(values);
+        setToken(token);
+    }
 
     return (
         <div className="container loginform">
@@ -56,11 +37,7 @@ export default function LoginForm({setToken}) {
                             password: ""
                         }}
                         validationSchema={schema}
-                        onSubmit={(e, values) => {
-                          //  const result = await login(values);
-                           // console.log(result); 
-                            handleSubmit(values)
-                        }}
+                        onSubmit={handleSubmit}
                     >
                         <Form >
                             <h3 className="my-5 text-center">Bejelentkezés</h3>
@@ -78,6 +55,7 @@ export default function LoginForm({setToken}) {
         </div >
     );
     LoginForm.propTypes = {
-        setToken: PropTypes.func.isRequired }
+        setToken: PropTypes.func.isRequired
+    }
 }
 
