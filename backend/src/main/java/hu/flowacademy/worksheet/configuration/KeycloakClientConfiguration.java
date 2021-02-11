@@ -1,19 +1,21 @@
 package hu.flowacademy.worksheet.configuration;
 
-import hu.flowacademy.worksheet.service.KeycloakClientService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 @Configuration
 @Getter
 @RequiredArgsConstructor
+@Import(KeycloakPropertiesConfiguration.class)
 public class KeycloakClientConfiguration {
 
+    @Autowired
     private final KeycloakPropertiesConfiguration keycloakPropertiesConfiguration;
 
     @Bean
