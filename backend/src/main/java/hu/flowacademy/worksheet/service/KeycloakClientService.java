@@ -75,7 +75,7 @@ public class KeycloakClientService {
         String[] namesToUse = nameChecker(name);
         user.setLastName(namesToUse[0]);
         user.setFirstName(namesToUse[1]);
-        user.setUsername(user.getLastName().toLowerCase(Locale.ROOT) + email);
+        user.setUsername(user.getLastName().toLowerCase(Locale.ROOT) + email); //Kijavíta j csak email
         user.setCredentials(List.of(credential));
         user.setEnabled(true);
         user.setEmail(email);
