@@ -23,7 +23,6 @@ export default function LoginForm({ setToken }) {
 
     const handleSubmit = async (values) => {
         const  accessToken  = await loginUser(values);
-        console.log(accessToken);
         setToken(accessToken);
     }
 
