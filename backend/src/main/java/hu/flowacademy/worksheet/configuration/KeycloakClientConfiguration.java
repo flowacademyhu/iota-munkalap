@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Getter
-public class KeycloakClientConfiguration { //Keycloack Configuration holder és behúzni a Servicebe
+public class KeycloakClientConfiguration {
     @Value("${keycloakBackendClient.server-url}")
     private String serverUrl;
     @Value("${keycloakBackendClient.realm}")
