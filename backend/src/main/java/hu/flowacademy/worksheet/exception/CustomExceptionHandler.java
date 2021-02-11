@@ -1,4 +1,4 @@
-package hu.flowacademy.worksheet.exceptionHandler;
+package hu.flowacademy.worksheet.exception;
 
 
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
