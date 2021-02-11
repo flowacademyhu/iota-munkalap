@@ -6,13 +6,13 @@ import './App.css';
 import Page from './Page';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+function App() {
 
   const { token, setToken } = useToken();
   if (!token) {
     return <LoginForm setToken={setToken} />
   }
 
-function App() {
   return (
     <Page />
   );
