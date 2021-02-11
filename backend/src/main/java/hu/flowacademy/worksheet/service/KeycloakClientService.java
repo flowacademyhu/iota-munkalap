@@ -30,7 +30,8 @@ public class KeycloakClientService {
 
     public int createAccount(User importedUser) throws WorksheetUserException {
         CredentialRepresentation credential = createCredentials(importedUser.getPassword());
-        UserRepresentation user = createUserRepresentation(importedUser.getName(), importedUser.getEmail(), credential);
+        UserRepresentation user = createUserRepresentation(importedUser.getFirst_name(),
+                importedUser.getLast_name(), importedUser.getEmail(), credential);
         RealmResource ourRealm = keycloak.realm("worksheet");
         RolesResource roleList = ourRealm.roles();
         UsersResource everyOne = ourRealm.users();
@@ -46,22 +47,6 @@ public class KeycloakClientService {
         return HttpStatus.CREATED.value();
     }
 
-    private String[] nameChecker(String name) {
-        String[] out = new String[2];
-        String[] namesToRegister = name.split(" ");
-        out[0] = namesToRegister[0];
-        if (namesToRegister.length < 2) {
-            out[1] = "User";
-        } else {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 1; i < namesToRegister.length; i++) {
-                builder.append(namesToRegister[i]).append(" ");
-            }
-            out[1] = builder.toString();
-        }
-        return out;
-    }
-
     public CredentialRepresentation createCredentials(String password) {
         CredentialRepresentation credential = new CredentialRepresentation();
         credential.setType(CredentialRepresentation.PASSWORD);
@@ -70,12 +55,11 @@ public class KeycloakClientService {
         return credential;
     }
 
-    public UserRepresentation createUserRepresentation(String name, String email, CredentialRepresentation credential) {
+    public UserRepresentation createUserRepresentation(String firstName, String lastName, String email, CredentialRepresentation credential) {
         UserRepresentation user = new UserRepresentation();
-        String[] namesToUse = nameChecker(name);
-        user.setLastName(namesToUse[0]);
-        user.setFirstName(namesToUse[1]);
-        user.setUsername(user.getLastName().toLowerCase(Locale.ROOT) + email);
+        user.setLastName(lastName);
+        user.setFirstName(firstName);
+        user.setUsername(email);
         user.setCredentials(List.of(credential));
         user.setEnabled(true);
         user.setEmail(email);

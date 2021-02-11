@@ -27,7 +27,8 @@ public class UserController {
     @RolesAllowed("admin")
     public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws WorksheetUserException {
         User user = User.builder()
-                .name(userOperationDTO.getName())
+                .first_name(userOperationDTO.getFirst_name())
+                .last_name(userOperationDTO.getLast_name())
                 .email(userOperationDTO.getEmail())
                 .password(userOperationDTO.getPassword())
                 .build();

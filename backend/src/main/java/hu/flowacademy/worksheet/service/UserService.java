@@ -31,7 +31,10 @@ public class UserService {
     }
 
     private void validateUser(User user) throws WorksheetUserException {
-        if (!StringUtils.hasText(user.getName())) {
+        if (!StringUtils.hasText(user.getFirst_name())) {
+            throw new WorksheetUserException("Username null or empty String");
+        }
+        if (!StringUtils.hasText(user.getLast_name())) {
             throw new WorksheetUserException("Username null or empty String");
         }
         if (!StringUtils.hasText(user.getEmail())) {
