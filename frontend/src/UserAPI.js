@@ -28,5 +28,9 @@ function putUserInactive(id) {
     return api
         .put(`/users/${id}`, {"isActive": false});
 }
+function getUser(id) {
+    return api
+        .get(`/users/${id}`);
+}
 
 export { getUsers, postUser, putUser, login, putUserInactive };
