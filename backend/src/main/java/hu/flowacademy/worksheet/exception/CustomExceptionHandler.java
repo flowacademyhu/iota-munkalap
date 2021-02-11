@@ -16,13 +16,13 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception e) {
-        log.info("ExceptionHandler Message: {}", e.getLocalizedMessage());
+        log.error("ExceptionHandler Message: {}", e.getLocalizedMessage());
         return new ResponseEntity<>(List.of(e.getLocalizedMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(WorksheetUserException.class)
     public final ResponseEntity<Object> handleUserException(WorksheetUserException ex) {
-        log.info("ExceptionHandler Message: {}", ex.getLocalizedMessage());
+        log.error("ExceptionHandler Message: {}", ex.getLocalizedMessage());
         return new ResponseEntity<>(List.of(ex.getLocalizedMessage()), HttpStatus.NOT_FOUND);
     }
 }
