@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import EmployeeForm from './EmployeeForm';
+import UpdateEmployeeForm from './UpdateEmployeeForm';
 import { putUser, getUser } from '../UserAPI';
 import { useParams } from 'react-router-dom';
 
@@ -42,7 +42,7 @@ function UpdateEmployee() {
   return (
     <>
       {userData.loaded &&
-        <EmployeeForm
+        <UpdateEmployeeForm
           sent={sent}
           setSent={setSent}
           sentSuccessfully={sentSuccessfully}
