@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.KeycloakClientConfiguration;
-import hu.flowacademy.worksheet.dto.LoginResponseDTO;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.WorksheetUserException;
 import hu.flowacademy.worksheet.exception.WorksheetUsernameTakenException;
@@ -16,19 +15,9 @@ import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
-import javax.ws.rs.core.Response;
-import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -37,11 +26,8 @@ import java.util.Locale;
 @Service
 public class KeycloakClientService {
 
-    private RestTemplate restTemplate = new RestTemplate();
-
     private final KeycloakClientConfiguration keycloakClientConfiguration;
     private final Keycloak keycloak;
-
 
     public int createAccount(User importedUser) throws WorksheetUserException {
         CredentialRepresentation credential = createCredentials(importedUser.getPassword());
