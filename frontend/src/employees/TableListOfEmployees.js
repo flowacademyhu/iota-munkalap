@@ -42,7 +42,7 @@ export default function TableListOfEmployees() {
                     </td>
                     :
                     <td className="d-flex justify-content-between">
-                      Inactive
+                      Inaktív
                       <Link to={`/employees/update/${user.id}`}>
                         <EditButton />
                       </Link>
