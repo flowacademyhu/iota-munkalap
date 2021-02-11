@@ -42,8 +42,7 @@ public class KeycloakClientService {
         String userId = CreatedResponseUtil.getCreatedId(response);
         UserResource oneUser = everyOne.get(userId);
         oneUser.roles().realmLevel().add(List.of(roleToUse));
-        final int status = response.getStatus();
-        if (status != HttpStatus.CREATED.value()) {
+        if (response.getStatus() != HttpStatus.CREATED.value()) {
             throw new WorksheetUsernameTakenException("Username taken!", HttpStatus.CONFLICT);
         }
     }
