@@ -9,8 +9,6 @@ export default function LogOut() {
         setToken("")
         window.location.reload();
     };
-
-
-
+    
     return <span onClick={logout}>Kijelentkezés</span>;
 };
