@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByEmailFirstNameLastName(@QueryParam("q") String q) {
+    public List<User> findUserByEmailFirstNameLastName(@RequestParam(value = "q") String q) {
         return userService.findUserByNameAndEmail(q,q,q);
     }
 }
