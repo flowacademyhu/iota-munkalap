@@ -46,7 +46,7 @@ public class UserService {
         }
     }
 
-    public List<User> findUserByNameAndEmail(String emailPart, String firstNamePart, String lastNamePart) {
-        return userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike(emailPart, firstNamePart, lastNamePart);
+    public List<User> findUserByNameAndEmail(String searchPart) {
+        return userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike(searchPart, searchPart, searchPart);
     }
 }
