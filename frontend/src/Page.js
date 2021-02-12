@@ -7,7 +7,6 @@ import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-import { Link } from 'react-router-dom';
 import LogOut from './LogOut';
 
 import {
@@ -19,15 +18,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-
-
-
 export default function Page({ setToken }) {
-
-
-    function logout() {
-        return <LogOut />
-    }
 
     return (
 
