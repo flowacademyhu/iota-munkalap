@@ -7,11 +7,16 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +48,20 @@ public class UserService {
         if (!EmailValidator.getInstance().isValid(user.getEmail())) {
             throw new ValidationException("Invalid Email");
         }
+    }
+
+    public List<User> listRegistrations(Pageable pageable) {
+
+        Page<User> userPage = userRepository.findAll(pageable);
+
+        return userPage.getContent();
+    }
+
+    public List<User> listRegistrations() {
+        return userRepository.findAll(Sort.by("createdAt").descending());
+    }
+
+    public List<User> listRegistrations(String orderBy) {
+        return userRepository.findAll(Sort.by(orderBy).descending());
     }
 }
