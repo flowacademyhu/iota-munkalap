@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import javax.ws.rs.core.NoContentException;
 import java.time.LocalDateTime;
 
 @Service
@@ -30,6 +31,14 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User update(User user) {
+        validateUpdate(user);
+
+        userRepository.update(user.getUser(), user.getId());
+        return userRepository.findById(user.getId())
+                .orElseThrow(() -> new NoContentException("User id:" + user.getId()));
+    }
+
     private void validateUser(User user) throws ValidationException {
         if (!StringUtils.hasText(user.getFirstName())) {
             throw new ValidationException("Username null or empty String");
@@ -44,4 +53,19 @@ public class UserService {
             throw new ValidationException("Invalid Email");
         }
     }
+
+    private void validateUpdate(User user) {
+        if (!StringUtils.hasText(user.getId())) {
+            throw new ValidationException("Not user id, orr null");
+        }
+        if (!StringUtils.hasText(user.getUser())) {
+            throw new ValidationException("User is empty string or null");
+        }
+        if (!StringUtils.hasText(user.getPassword()) {
+
+        }
+
+    }
+
+
 }
