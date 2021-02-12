@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.QueryParam;
 import java.util.List;
 
 @RequiredArgsConstructor
