@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
@@ -72,12 +74,36 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
+    @Test
+    public void givenActiveStatus_whenFilteringForActiveUsers_ThenReturnWithListOfActiveUsers() throws ValidationException {
+        givenRepoWithUser();
+        List<User> result = userService.getActiveUsers(true);
+
+        org.hamcrest.MatcherAssert.assertThat( result.get(0).isEnabled(), is(true));
+    }
+
+    @Test
+    public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws ValidationException {
+        givenRepoWithUser();
+        List<User> result = userService.findUserByNameAndEmail("pista");
+
+        org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
+    }
+
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
             return input;
         });
+    }
+
+    private void givenRepoWithUser() throws ValidationException {
+        givenUniquePerson();
+        User userData = givenProperUserObject();
+        User result = userService.saveUser(userData);
+        when(userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike("pista",
+                "pista", "pista")).thenReturn(List.of(result));
     }
 
     private User givenProperUserObject() {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -35,11 +36,23 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<User> ListActiveUsers(@RequestParam(value = "status") Boolean active) throws ValidationException {
+        return userService.getActiveUsers(active);
+    }
+
     //Loginoláskor a Keycloakhoz indít továbbhívást.
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     @PermitAll
     public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
+    }
+
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
+        return userService.findUserByNameAndEmail(q);
     }
 }

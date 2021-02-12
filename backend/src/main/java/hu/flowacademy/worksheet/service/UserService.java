@@ -12,6 +12,9 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,18 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User>  getActiveUsers(@NonNull boolean active) throws ValidationException {
+        List<User> users = userRepository.findAll();
+        return active ? users
+                    .stream()
+                    .filter(User::isEnabled)
+                    .collect(Collectors.toList())
+                : users
+                    .stream()
+                    .filter(User -> !User.isEnabled())
+                    .collect(Collectors.toList());
+    }
+
     private void validateUser(User user) throws ValidationException {
         if (!StringUtils.hasText(user.getFirstName())) {
             throw new ValidationException("Username null or empty String");
@@ -43,5 +58,9 @@ public class UserService {
         if (!EmailValidator.getInstance().isValid(user.getEmail())) {
             throw new ValidationException("Invalid Email");
         }
+    }
+
+    public List<User> findUserByNameAndEmail(String searchPart) {
+        return userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike(searchPart, searchPart, searchPart);
     }
 }
