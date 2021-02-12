@@ -77,7 +77,7 @@ class UserServiceTest {
     @Test
     public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws ValidationException {
         givenRepoWithUser();
-        List<User> result = userService.findUserByNameAndEmail("pista", "pista", "pista");
+        List<User> result = userService.findUserByNameAndEmail("pista");
 
         org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
     }
