@@ -3,7 +3,7 @@ import useToken from './hooks/useToken'
 
 export default function LogOut() {
 
-    const { token, setToken } = useToken();
+    const { setToken } = useToken();
 
     function logout() {
         setToken("")
