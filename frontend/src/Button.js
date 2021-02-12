@@ -1,8 +1,12 @@
 import React from 'react'
 
-function Button({ text, onClick, type }) {
+function Button({text, ...props}) {
   return (
-    <button className="rounded bg-success text-light" onClick={onClick} type={type}>{text}</button>
+    <button className='rounded bg-success text-light my-3 mx-5'
+    {...props}
+    >
+      {text}
+      </button>
   );
 }
 

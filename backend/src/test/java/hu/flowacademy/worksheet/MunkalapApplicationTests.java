@@ -1,4 +1,4 @@
-package hu.flowacademy.munkalap;
+package hu.flowacademy.worksheet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
