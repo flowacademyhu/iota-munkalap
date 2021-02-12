@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +44,9 @@ public class UserService {
         if (!EmailValidator.getInstance().isValid(user.getEmail())) {
             throw new ValidationException("Invalid Email");
         }
+    }
+
+    public List<User> findUserByNameAndEmail(String emailPart, String firstNamePart, String lastNamePart) {
+        return userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike(emailPart, firstNamePart, lastNamePart);
     }
 }
