@@ -9,8 +9,7 @@ export default function useToken() {
   const [token, setToken] = useState(getToken());
 
   function saveToken(token) {
-    console.log("savetoken")
-    if (token === null) {
+    if (!token) {
       sessionStorage.clear('acces_token');
       setToken("")
       return;
