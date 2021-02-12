@@ -1,22 +1,19 @@
 import React from "react";
-import logo from './img/uj_logo.png';
-import tools from './img/tools.png';
-import MenuItem from './Menu-item';
-import TableListOfEmployees from './employees/TableListOfEmployees';
-import CreateEmployee from './employees/CreateEmployee';
-import UpdateEmployee from './employees/UpdateEmployee';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './style.css';
-import LogOut from './LogOut';
-
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Redirect
 } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
+import logo from './img/uj_logo.png';
+import tools from './img/tools.png';
+import MenuItem from './Menu-item';
+import TableListOfEmployees from './employees/TableListOfEmployees';
+import CreateEmployee from './employees/CreateEmployee';
+import UpdateEmployee from './employees/UpdateEmployee';
+import './style.css';
+import LogOut from './LogOut';
 
 export default function Page() {
 
@@ -25,26 +22,26 @@ export default function Page() {
         <Router>
 
             <div className="row bg-light">
-                <img className="col-auto mt-3 ml-3" src={logo} alt="ingo stop logo" width="135" height="49" />
-                <div className="col">
+                <img className="col-auto mt-3 ml-3 logo" src={logo} alt="ingo stop logo" />
+                <div className="col p-0">
                     <div className="row align-items-center h-100">
-                        <div className="col-auto"> <MenuItem name="Munkavállalók" link="/employees" /></div>
-                        <div className="col-auto"><MenuItem name="Partnerek" link="/partners" /></div>
-                        <div className="col-auto"><MenuItem name="Munkalapok" link="/worksheets" /></div>
+                        <div className="col p-0"> <MenuItem name="Munkavállalók" link="/employees" /></div>
+                        <div className="col p-0"><MenuItem name="Partnerek" link="/partners" /></div>
+                        <div className="col p-0"><MenuItem name="Munkalapok" link="/worksheets" /></div>
                     </div>
                 </div>
-                <div className="col-auto">
-                    <Dropdown>
-                        <Dropdown.Toggle className="bg-transparent border-light" id="dropdown-basic">
-                            <img src={tools} alt="ingo stop logo" width="49" height="49"/>
-                        </Dropdown.Toggle>
 
-                        <Dropdown.Menu>
-                            <Dropdown.Item><LogOut/></Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
+                <Dropdown className="col-auto">
+                    <Dropdown.Toggle className="bg-transparent border-light" id="dropdown-basic">
+                        <img src={tools} alt="ingo stop logo" className="settingsLogo" />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item><LogOut /></Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </div>
+
 
 
             <hr />
@@ -65,9 +62,6 @@ export default function Page() {
                 </Route>
                 <Route path="/worksheets">
                     <Worksheet />
-                </Route>
-                <Route path='#/action-1'>
-                    <LogOut />
                 </Route>
                 <Route path='/'>
                     <Redirect to='/partners' />
