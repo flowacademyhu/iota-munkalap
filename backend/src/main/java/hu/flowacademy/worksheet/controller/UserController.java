@@ -47,7 +47,7 @@ public class UserController {
     @GetMapping("/users")
     @RolesAllowed("admin")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByEmailFirstNameLastName(@RequestParam(value = "q") String q) {
+    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
         return userService.findUserByNameAndEmail(q);
     }
 }
