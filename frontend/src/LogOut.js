@@ -1,11 +1,6 @@
 import React from "react";
 import useToken from './hooks/useToken'
 
-import {
-    Redirect
-} from "react-router-dom";
-
-
 export default function LogOut() {
 
     const {token, setToken} = useToken();
@@ -14,12 +9,7 @@ export default function LogOut() {
         sessionStorage.clear('acces_token');
         setToken("")
         window.location.reload();
-
     };
-
-    if (token === null) {
-        return <Redirect to="/" push={true} />
-    }
 
     return <span onClick={() => logout()}>Kijelentkezés</span>;
 };
