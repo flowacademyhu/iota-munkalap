@@ -24,7 +24,7 @@ export default function Page() {
 
         <Router>
 
-            <div className="row menu">
+            <div className="row bg-light">
                 <img className="col-auto mt-3 ml-3" src={logo} alt="ingo stop logo" width="135" height="49" />
                 <div className="col">
                     <div className="row align-items-center h-100">
