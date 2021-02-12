@@ -7,7 +7,8 @@ import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
-
+import { Link } from 'react-router-dom';
+import LogOut from './LogOut';
 
 import {
     BrowserRouter as Router,
@@ -15,18 +16,46 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from 'react-bootstrap/Dropdown';
 
-export default function Page() {
+
+
+
+export default function Page({ setToken }) {
+
+
+    function logout() {
+        return <LogOut />
+    }
+
     return (
 
         <Router>
-            <div className="d-flex justify-content-around">
-                <img src={logo} alt="ingo stop logo" width="135" height="49" />
-                <MenuItem name="Munkavállalók" link="/employees" />
-                <MenuItem name="Partnerek" link="/partners" />
-                <MenuItem name="Munkalapok" link="/worksheets" />
-                <img src={tools} alt="ingo stop logo" width="49" height="49" />
+
+            <div className="row menu">
+                <img className="col-auto mt-3 ml-3" src={logo} alt="ingo stop logo" width="135" height="49" />
+                <div className="col">
+                    <div className="row align-items-center h-100">
+                        <div className="col-auto"> <MenuItem name="Munkavállalók" link="/employees" /></div>
+                        <div className="col-auto"><MenuItem name="Partnerek" link="/partners" /></div>
+                        <div className="col-auto"><MenuItem name="Munkalapok" link="/worksheets" /></div>
+                    </div>
+                </div>
+                <div className="col-auto">
+                    <Dropdown>
+                        <Dropdown.Toggle className="bg-transparent border-light" id="dropdown-basic">
+                            <img src={tools} alt="ingo stop logo" width="49" height="49"/>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu>
+                            <Dropdown.Item><LogOut setToken={setToken} /></Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
             </div>
+
+
             <hr />
 
 
@@ -45,6 +74,9 @@ export default function Page() {
                 </Route>
                 <Route path="/worksheets">
                     <Worksheet />
+                </Route>
+                <Route path='#/action-1'>
+                    <LogOut />
                 </Route>
                 <Route path='/'>
                     <Redirect to='/partners' />
