@@ -9,6 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -24,6 +30,11 @@ class UserServiceTest {
     private static final String NEW_LASTNAME = "Széchenyi";
     private static final String NEW_EMAIL = "pista@pista.hu";
     private static final Long REGISTRATION_ID = 111L;
+
+    private static final String NEW_FIRSTNAME2 = "Istv";
+    private static final String NEW_LASTNAME2 = "Széche";
+    private static final String NEW_EMAIL2 = "pia@pipsa.hu";
+    private static final Long REGISTRATION_ID2 = 11L;
 
     @Mock
     private UserRepository userRepository;
@@ -46,6 +57,32 @@ class UserServiceTest {
         assertThat(result.getLastName(), is(NEW_LASTNAME));
         assertThat(result.getEmail(), is(NEW_EMAIL));
         verifyNoMoreInteractions(userRepository);
+    }
+
+    @Test
+    public void givenADefaultSortedListOfEmployees_whenGettingAListOfEmployees_ThenReturnWithListContainingSortedUsers() throws ValidationException {
+        givenRepoWithTwoUsers();
+        List<User> result = userService.listRegistrations();
+
+
+        org.hamcrest.MatcherAssert.assertThat(result.size(), is(2));
+        org.hamcrest.MatcherAssert.assertThat(result.get(0).getId(), is(REGISTRATION_ID2));
+
+    }
+
+    @Test
+    public void givenAFirstNameSortedListOfEmployees_whenGettingAListOfEmployees_ThenReturnWithListContainingSortedUsers() throws ValidationException {
+        givenRepoWithTwoUsersFirstName();
+        List<User> result2 = userService.listRegistrations("firstName");
+        org.hamcrest.MatcherAssert.assertThat(result2.get(0).getFirstName(), is(NEW_FIRSTNAME));
+    }
+    @Test
+
+    public void givenAFirstNameSortedListOfEmployeesWithPaging1_whenGettingAListOfEmployees_ThenReturnWithListWithSizeOfOne() throws ValidationException {
+        userRepository = givenRepoWithTwoUsersForPaging();
+        Pageable pageable = PageRequest.of(1, 1);
+        List<User> result2 = userService.listRegistrations(pageable);
+        org.hamcrest.MatcherAssert.assertThat(result2.size(), is(1));
     }
 
     @Test
@@ -72,10 +109,45 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
+    private void givenRepoWithTwoUsers() throws ValidationException {
+        List<User> users = givenRepoSkeleton();
+        when(userRepository.findAll(Sort.by("createdAt").descending())).thenReturn(users);
+    }
+
+    private void givenRepoWithTwoUsersFirstName() throws ValidationException {
+        List<User> users = givenRepoSkeleton();
+        when(userRepository.findAll(Sort.by("firstName").descending())).thenReturn(users);
+    }
+
+    private UserRepository givenRepoWithTwoUsersForPaging() throws ValidationException {
+        List<User> users = givenRepoSkeleton();
+        Pageable pageable = PageRequest.of(1, 1);
+        userRepository.save(users.get(0));
+        userRepository.save(users.get(1));
+        return userRepository;
+    }
+
+    private List<User> givenRepoSkeleton() throws ValidationException {
+        givenUniquePerson2();
+        User userData2 = givenProperUserObject2();
+        User userData = givenProperUserObject();
+        User result2 = userService.saveUser(userData2);
+        User result = userService.saveUser(userData);
+        return List.of(result, result2);
+    }
+
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
+            return input;
+        });
+    }
+
+    private void givenUniquePerson2() {
+        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
+            User input = invocationOnMock.getArgument(0);
+            input.setId(REGISTRATION_ID2);
             return input;
         });
     }
@@ -86,5 +158,13 @@ class UserServiceTest {
         user.setFirstName(NEW_FIRSTNAME);
         user.setLastName(NEW_LASTNAME);
         return user;
+    }
+    private User givenProperUserObject2() {
+        User user2 = new User();
+        user2.setEmail(NEW_EMAIL2);
+        user2.setFirstName(NEW_FIRSTNAME2);
+        user2.setLastName(NEW_LASTNAME2);
+        user2.setCreatedAt(LocalDateTime.now());
+        return user2;
     }
 }

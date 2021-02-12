@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "com.flow.paging")
+@ConfigurationProperties(prefix = "hu.flowacademy.worksheet.paging")
 public class PagingProperties {
 
     private int defaultLimit;

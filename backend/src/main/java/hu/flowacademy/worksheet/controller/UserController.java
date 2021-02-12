@@ -50,19 +50,18 @@ public class UserController {
     private final PagingProperties pagingProperties;
 
     @RolesAllowed("admin")
-    @GetMapping("/alluser")
+    @GetMapping("/users")
     public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                        @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                        @RequestParam(value = "order_by", required = false) Optional<String> order_by) {
-        List<User> registrationList;
         if (page.isPresent()) {
-            registrationList = userService.listRegistrations(
+            return userService.listRegistrations(
                     PageRequest.of(page.get(), limit.orElse(pagingProperties.getDefaultLimit())));
-        } else if (order_by.isPresent()){
-            registrationList = userService.listRegistrations(order_by.get());
-        } else {
-            registrationList = userService.listRegistrations();
         }
-        return registrationList;
+        if (order_by.isPresent()){
+            return userService.listRegistrations(order_by.get());
+        }
+
+        return userService.listRegistrations();
     }
 }

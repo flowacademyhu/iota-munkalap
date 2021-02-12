@@ -51,9 +51,7 @@ public class UserService {
     }
 
     public List<User> listRegistrations(Pageable pageable) {
-
         Page<User> userPage = userRepository.findAll(pageable);
-
         return userPage.getContent();
     }
 
