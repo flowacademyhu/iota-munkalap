@@ -75,6 +75,14 @@ class UserServiceTest {
     }
 
     @Test
+    public void givenActiveStatus_whenFilteringForActiveUsers_ThenReturnWithListOfActiveUsers() throws ValidationException {
+        givenRepoWithUser();
+        List<User> result = userService.getActiveUsers(true);
+
+        org.hamcrest.MatcherAssert.assertThat( result.get(0).isEnabled(), is(true));
+    }
+
+    @Test
     public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws ValidationException {
         givenRepoWithUser();
         List<User> result = userService.findUserByNameAndEmail("pista");

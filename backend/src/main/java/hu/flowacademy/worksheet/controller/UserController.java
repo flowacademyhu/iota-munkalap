@@ -36,6 +36,12 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<User> ListActiveUsers(@RequestParam(value = "status") Boolean active) throws ValidationException {
+        return userService.getActiveUsers(active);
+    }
+
     //Loginoláskor a Keycloakhoz indít továbbhívást.
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)

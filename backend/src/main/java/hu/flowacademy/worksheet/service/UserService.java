@@ -12,7 +12,9 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,18 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
         keycloakClientService.createAccount(user);
         return userRepository.save(user);
+    }
+
+    public List<User>  getActiveUsers(@NonNull boolean active) throws ValidationException {
+        List<User> users = userRepository.findAll();
+        return active ? users
+                    .stream()
+                    .filter(User::isEnabled)
+                    .collect(Collectors.toList())
+                : users
+                    .stream()
+                    .filter(User -> !User.isEnabled())
+                    .collect(Collectors.toList());
     }
 
     private void validateUser(User user) throws ValidationException {
