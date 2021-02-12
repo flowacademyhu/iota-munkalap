@@ -12,6 +12,7 @@ export default function LogOut() {
 
     function logout() {
         sessionStorage.clear('acces_token');
+        setToken("")
         window.location.reload();
 
     };
