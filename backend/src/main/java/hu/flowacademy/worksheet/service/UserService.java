@@ -54,8 +54,8 @@ public class UserService {
         }
     }
 
-    private void validateUpdate(User user) {
-        if (!StringUtils.hasText(user.getId())) {
+    private void validateUpdate(User user) throws ValidationException {
+        if (user.getId() == null) {
             throw new ValidationException("Not user id, orr null");
         }
         if (!StringUtils.hasText(user.getUser())) {
