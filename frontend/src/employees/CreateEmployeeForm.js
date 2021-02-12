@@ -53,13 +53,13 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
           >
             <Form>
               <h1 className='text-center'>{title}</h1>
-              <Input name='first_name' label='Név' type='text' />
-              <Input name='last_name' label='Név' type='text' />
+              <Input name='first_name' label='Vezetéknév' type='text' />
+              <Input name='last_name' label='Keresztnév' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
               <div className='buttons'>
-                <Link to='/employees'>
+                <Link className='undo' to='/employees'>
                   <Button text='Mégse' />
                 </Link>
                 <Button text='Mentés' type='submit' />

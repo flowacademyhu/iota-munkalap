@@ -5,6 +5,10 @@
   font-size: 30px;
 }
 
+.undo {
+  padding: 0%;
+}
+
 .container.loginform {
   background-color: rgba(211, 211, 211, 0.876);
 }
