@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
+import javax.ws.rs.QueryParam;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -41,5 +43,11 @@ public class UserController {
     @PermitAll
     public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
+    }
+
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<User> findUserByEmailFirstNameLastName(@QueryParam("q") String q) {
+        return userService.findUserByNameAndEmail(q,q,q);
     }
 }
