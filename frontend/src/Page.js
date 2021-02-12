@@ -18,7 +18,7 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export default function Page({ setToken }) {
+export default function Page() {
 
     return (
 
@@ -40,7 +40,7 @@ export default function Page({ setToken }) {
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
-                            <Dropdown.Item><LogOut setToken={setToken} /></Dropdown.Item>
+                            <Dropdown.Item><LogOut/></Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
