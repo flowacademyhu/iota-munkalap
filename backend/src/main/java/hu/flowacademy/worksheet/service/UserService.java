@@ -7,8 +7,6 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -23,10 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
 
-    private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
     public User saveUser(@NonNull User user) throws ValidationException {
-        log.info("User mki vagy?: {}", user.toString());
         validateUser(user);
         user.setRole(Role.USER);
         user.setEnabled(true);
@@ -36,7 +31,6 @@ public class UserService {
     }
 
     private void validateUser(User user) throws ValidationException {
-        log.info("User ki vagy?: {}", user.toString());
         if (!StringUtils.hasText(user.getFirstName())) {
             throw new ValidationException("Username null or empty String");
         }

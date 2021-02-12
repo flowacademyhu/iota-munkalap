@@ -7,8 +7,6 @@ import hu.flowacademy.worksheet.service.KeycloakClientService;
 import hu.flowacademy.worksheet.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.AccessTokenResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +23,10 @@ public class UserController {
 
     private final KeycloakClientService keycloakClientService;
 
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
-
     @PostMapping("/users")
     @ResponseStatus(HttpStatus.CREATED)
     //@RolesAllowed("superadmin")
     public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws ValidationException {
-        log.info("User vagy?: {}", userOperationDTO.toString());
         User user = User.builder()
                 .firstName(userOperationDTO.getFirstName())
                 .lastName(userOperationDTO.getLastName())
@@ -47,7 +42,6 @@ public class UserController {
     @PermitAll
     public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         AccessTokenResponse accessTokenResponse = keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
-        log.info("TOKENÜNK: {}", accessTokenResponse.toString());
         return accessTokenResponse;
     }
 }
