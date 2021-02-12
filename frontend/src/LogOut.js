@@ -20,5 +20,5 @@ export default function LogOut({setToken}) {
         return <Redirect to="/" push={true} />
     }
 
-    return <span onClick={logout}>LogOut</span>;
+    return <span onClick={logout}>Kijelentkezés</span>;
 };
