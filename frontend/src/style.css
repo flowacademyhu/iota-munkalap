@@ -22,6 +22,10 @@
   justify-content: space-around;
 }
 
+.buttons button {
+  height: auto;
+}
+
 .flex-container {
   display: flex;
   flex-direction: row;
