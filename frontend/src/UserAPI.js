@@ -37,4 +37,11 @@ function getUser(id) {
         .get(`/users/${id}`);
 }
 
-export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser };
+export { 
+    getUsers, 
+    postUser, 
+    putUser, 
+    putUserInactive, 
+    getUser, 
+    loginUser 
+};
