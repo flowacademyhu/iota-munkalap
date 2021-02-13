@@ -38,7 +38,8 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
             />}
           <Formik
             initialValues={{
-              name: '',
+              first_name: '',
+              last_name: '',
               email: '',
               password: '',
               confirmPassword: ''
@@ -50,7 +51,8 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
           >
             <Form>
               <h1 className='text-center'>{title}</h1>
-              <Input name='name' label='Név' type='text' />
+              <Input name='first_name' label='Név' type='text' />
+              <Input name='last_name' label='Név' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
