@@ -138,7 +138,7 @@ class UserServiceTest {
     @Test
     public void givenMissingLastNameUser_whenUpdatingUser_ThenThrowException() {
         User userData = User.builder().email("joazemail@orulok.hu").firstName("Tivadar").lastName("").build();
-        assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID , userData));
+        assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
     private void givenUniquePerson() {
@@ -178,5 +178,4 @@ class UserServiceTest {
         user.setLastName(UPDATE_LASTNAME);
         return user;
     }
-
 }

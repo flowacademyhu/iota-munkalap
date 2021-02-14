@@ -44,6 +44,7 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
+    @RolesAllowed("admin")
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
         return userService.update(id, user);
     }
