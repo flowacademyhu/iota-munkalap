@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
@@ -24,6 +26,10 @@ class UserServiceTest {
     private static final String NEW_LASTNAME = "Széchenyi";
     private static final String NEW_EMAIL = "pista@pista.hu";
     private static final Long REGISTRATION_ID = 111L;
+
+    private static final String UPDATE_FIRSTNAME = "Görgey";
+    private static final String UPDATE_LASTNAME = "Artúr";
+    private static final String UPDATE_EMAIL = "gorgey@gorgey.hu";
 
     @Mock
     private UserRepository userRepository;
@@ -72,6 +78,30 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
+    @Test
+    public void givenNewUserObject_whenUpdateUser_thenUserUpdated() throws ValidationException {
+        givenExistingUserRegistration();
+        User newUser = givenUpdateProperUserObject();
+
+        User updatedUser = userService.update(REGISTRATION_ID, newUser);
+
+        assertThat(updatedUser, notNullValue());
+        assertThat(updatedUser.getFirstName(), is(newUser.getFirstName()));
+        assertThat(updatedUser.getLastName(), is(newUser.getLastName()));
+        assertThat(updatedUser.getEmail(), is(newUser.getEmail()));
+    }
+
+    private void givenExistingUserRegistration() {
+        User existingUser = new User();
+        existingUser.setFirstName(givenProperUserObject().getFirstName());
+        existingUser.setLastName(givenProperUserObject().getLastName());
+        existingUser.setEmail(givenProperUserObject().getEmail());
+        existingUser.setId(REGISTRATION_ID);
+        when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
@@ -87,5 +117,36 @@ class UserServiceTest {
         user.setLastName(NEW_LASTNAME);
         return user;
     }
+
+    private User givenUpdateProperUserObject() {
+        User user = new User();
+        user.setEmail(UPDATE_EMAIL);
+        user.setFirstName(UPDATE_FIRSTNAME);
+        user.setLastName(UPDATE_LASTNAME);
+        return user;
+    }
+
 }
 
+/*    // Itt nyúltam bele:
+
+
+    // Itt nyúltam bele:
+
+    @Test
+    public void givenANonExistingRegistration_whenCallingUpdatePerson_thenExceptionThrown() {
+        givenANonExistingPersonRegistration();
+        Person newPerson = givenANewPerson();
+
+
+        MissingRegistrationException thrown = assertThrows(MissingRegistrationException.class, () -> service.updateRegistration(REGISTRATION_ID, newPerson));
+
+        assertThat(thrown, notNullValue());
+        assertThat(thrown.getHttpStatus(), is(HttpStatus.NOT_FOUND));
+    }*/
+
+/*    // Itt írtam bele:
+    private void givenANonExistingPersonRegistration() {
+        when(registrationRepository.findById(REGISTRATION_ID)).thenReturn(Optional.empty());
+    }
+*/
