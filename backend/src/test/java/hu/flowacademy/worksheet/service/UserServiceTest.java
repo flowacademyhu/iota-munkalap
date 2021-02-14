@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
-import hu.flowacademy.worksheet.exception.CustomExceptionHandler;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -10,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
@@ -100,14 +98,50 @@ class UserServiceTest {
         givenANonExistingUserRegistration();
         User newUser = givenUpdateProperUserObject();
 
-        Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID,  newUser));
+        Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, newUser));
 
         assertThat(thrown, notNullValue());
         assertThat(thrown.getMessage(), is("No value present"));
 
     }
 
-       private void givenUniquePerson() {
+    @Test
+    public void givenNullId_whenUpdatingUser_ThenThrowException() throws ValidationException {
+        User userData = User.builder().email("mukodik@ateszt.hu").firstName("József").lastName("Ferenc").build();
+        assertThrows(Exception.class, () -> userService.update(null, userData));
+    }
+
+    @Test
+    public void givenEmptyId_whenUpdatingUser_ThenThrowException() throws ValidationException {
+        User userData = User.builder().email("mukodik@ateszt.hu").firstName("József").lastName("Ferenc").build();
+        assertThrows(Exception.class, () -> userService.update(-100L, userData));
+    }
+
+    @Test
+    public void givenInvalidEmailUser_whenUpdatingUser_ThenThrowException() throws ValidationException {
+        User userData = User.builder().email("elhasalamailem.hu").firstName("József").lastName("Ferenc").build();
+        assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, userData));
+    }
+
+    @Test
+    public void givenInvalidEmailUserWithEmptyString_whenUpdatingUser_ThenThrowException() {
+        User userData = User.builder().email("").firstName("József").lastName("Ferenc").build();
+        assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
+    }
+
+    @Test
+    public void givenMissingFirstNameUser_whenUpdatingUser_ThenThrowException() {
+        User userData = User.builder().email("joazemail@orulok.hu").firstName("").lastName("Dugonics").build();
+        assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
+    }
+
+    @Test
+    public void givenMissingLastNameUser_whenUpdatingUser_ThenThrowException() {
+        User userData = User.builder().email("joazemail@orulok.hu").firstName("Tivadar").lastName("").build();
+        assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID , userData));
+    }
+
+    private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
@@ -134,7 +168,7 @@ class UserServiceTest {
     }
 
     private void givenANonExistingUserRegistration() {
-    when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.empty());
+        when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.empty());
     }
 
     private User givenUpdateProperUserObject() {
