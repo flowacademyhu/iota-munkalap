@@ -14,7 +14,7 @@ const schema = yup.object().shape({
 });
 
 function UpdateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
-  title, name, email }) {
+  title, first_name, last_name, email }) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -28,7 +28,8 @@ function UpdateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
             />}
           <Formik
             initialValues={{
-              name: name || '',
+              first_name: first_name || '',
+              last_name: last_name || '',
               email: email || ''
             }}
             validationSchema={schema}
@@ -38,7 +39,8 @@ function UpdateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
           >
             <Form>
               <h1 className='text-center'>{title}</h1>
-              <Input name='name' label='Név' type='text' />
+              <Input name='first_name' label='Vezetéknév' type='text' />
+              <Input name='last_name' label='Keresztnév' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <div className='buttons'>
                 <Link to='/employees'>
