@@ -9,11 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -64,7 +66,6 @@ class UserServiceTest {
         givenRepoWithTwoUsers();
         List<User> result = userService.listRegistrations();
 
-
         org.hamcrest.MatcherAssert.assertThat(result.size(), is(2));
         org.hamcrest.MatcherAssert.assertThat(result.get(0).getId(), is(REGISTRATION_ID2));
 
@@ -79,8 +80,10 @@ class UserServiceTest {
     @Test
 
     public void givenAFirstNameSortedListOfEmployeesWithPaging1_whenGettingAListOfEmployees_ThenReturnWithListWithSizeOfOne() throws ValidationException {
-        userRepository = givenRepoWithTwoUsersForPaging();
-        Pageable pageable = PageRequest.of(1, 1);
+        givenRepoWithTwoUsersForPaging();
+        System.out.println("nyihahak foldjen");
+        System.out.println(userRepository.findById(11L));
+        Pageable pageable = PageRequest.of(0, 1);
         List<User> result2 = userService.listRegistrations(pageable);
         org.hamcrest.MatcherAssert.assertThat(result2.size(), is(1));
     }
@@ -119,12 +122,10 @@ class UserServiceTest {
         when(userRepository.findAll(Sort.by("firstName").descending())).thenReturn(users);
     }
 
-    private UserRepository givenRepoWithTwoUsersForPaging() throws ValidationException {
+    private void givenRepoWithTwoUsersForPaging() throws ValidationException {
         List<User> users = givenRepoSkeleton();
-        Pageable pageable = PageRequest.of(1, 1);
-        userRepository.save(users.get(0));
-        userRepository.save(users.get(1));
-        return userRepository;
+        Pageable pageable = PageRequest.of(0, 1);
+        when(userService.listRegistrations(pageable)).thenReturn(List.of(users.get(0)));
     }
 
     private List<User> givenRepoSkeleton() throws ValidationException {
