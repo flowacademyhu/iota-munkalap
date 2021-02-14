@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import javax.ws.rs.core.NoContentException;
 import java.time.LocalDateTime;
 
 @Service
@@ -31,12 +30,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User update(User user) {
+    public User update(Long id, User user) throws ValidationException {
         validateUpdate(user);
-
-        userRepository.update(user.getUser(), user.getId());
-        return userRepository.findById(user.getId())
-                .orElseThrow(() -> new NoContentException("User id:" + user.getId()));
+        User updatedUser = userRepository.findById(id).get();
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setEmail(user.getEmail());
+        return userRepository.save(updatedUser);
     }
 
     private void validateUser(User user) throws ValidationException {
@@ -55,17 +55,17 @@ public class UserService {
     }
 
     private void validateUpdate(User user) throws ValidationException {
-        if (user.getId() == null) {
-            throw new ValidationException("Not user id, orr null");
+        if (!(user.getId() == null)) {
+            throw new ValidationException("Not user id, or null");
         }
-        if (!StringUtils.hasText(user.getUser())) {
-            throw new ValidationException("User is empty string or null");
+        if (!StringUtils.hasText(user.getFirstName())) {
+            throw new ValidationException("User firstName is empty or null");
         }
-        if (!StringUtils.hasText(user.getPassword()) {
-
+        if (!StringUtils.hasText(user.getLastName())) {
+            throw new ValidationException("User lastName is empty or null");
         }
-
+        if (!StringUtils.hasText(user.getEmail())) {
+            throw new ValidationException("Not user id, or null");
+        }
     }
-
-
 }

@@ -43,14 +43,8 @@ public class UserController {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
     }
 
-    @PutMapping("/users/{user_id}")
-    public User update(@PathVariable Long id, @RequestBody UserOperationDTO userOperationDTO) {
-        return userService.update(
-                User.builder().id(id)
-                        .firstName(userOperationDTO.getFirstName())
-                        .lastName(userOperationDTO.getLastName())
-                        .email(userOperationDTO.getEmail())
-                        .password(userOperationDTO.getPassword())
-                        .build();
+    @PutMapping("/users/{id}")
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
+        return userService.update(id, user);
     }
 }
