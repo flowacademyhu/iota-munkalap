@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.exception.CustomExceptionHandler;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.Optional;
 
@@ -85,24 +87,27 @@ class UserServiceTest {
 
         User updatedUser = userService.update(REGISTRATION_ID, newUser);
 
+        Mockito.verify(userRepository, times(1)).save(updatedUser);
         assertThat(updatedUser, notNullValue());
         assertThat(updatedUser.getFirstName(), is(newUser.getFirstName()));
         assertThat(updatedUser.getLastName(), is(newUser.getLastName()));
         assertThat(updatedUser.getEmail(), is(newUser.getEmail()));
+        verifyNoMoreInteractions(userRepository);
     }
 
-    private void givenExistingUserRegistration() {
-        User existingUser = new User();
-        existingUser.setFirstName(givenProperUserObject().getFirstName());
-        existingUser.setLastName(givenProperUserObject().getLastName());
-        existingUser.setEmail(givenProperUserObject().getEmail());
-        existingUser.setId(REGISTRATION_ID);
-        when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.of(existingUser));
-        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    @Test
+    public void givenNonExistingUserObject_whenUpdateUser_thenThrowException() {
+        givenANonExistingUserRegistration();
+        User newUser = givenUpdateProperUserObject();
+
+        Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID,  newUser));
+
+        assertThat(thrown, notNullValue());
+        assertThat(thrown.getMessage(), is("No value present"));
+
     }
 
-
-    private void givenUniquePerson() {
+       private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
@@ -118,6 +123,20 @@ class UserServiceTest {
         return user;
     }
 
+    private void givenExistingUserRegistration() {
+        User existingUser = new User();
+        existingUser.setFirstName(givenProperUserObject().getFirstName());
+        existingUser.setLastName(givenProperUserObject().getLastName());
+        existingUser.setEmail(givenProperUserObject().getEmail());
+        existingUser.setId(REGISTRATION_ID);
+        when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.of(existingUser));
+        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private void givenANonExistingUserRegistration() {
+    when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.empty());
+    }
+
     private User givenUpdateProperUserObject() {
         User user = new User();
         user.setEmail(UPDATE_EMAIL);
@@ -127,26 +146,3 @@ class UserServiceTest {
     }
 
 }
-
-/*    // Itt nyúltam bele:
-
-
-    // Itt nyúltam bele:
-
-    @Test
-    public void givenANonExistingRegistration_whenCallingUpdatePerson_thenExceptionThrown() {
-        givenANonExistingPersonRegistration();
-        Person newPerson = givenANewPerson();
-
-
-        MissingRegistrationException thrown = assertThrows(MissingRegistrationException.class, () -> service.updateRegistration(REGISTRATION_ID, newPerson));
-
-        assertThat(thrown, notNullValue());
-        assertThat(thrown.getHttpStatus(), is(HttpStatus.NOT_FOUND));
-    }*/
-
-/*    // Itt írtam bele:
-    private void givenANonExistingPersonRegistration() {
-        when(registrationRepository.findById(REGISTRATION_ID)).thenReturn(Optional.empty());
-    }
-*/
