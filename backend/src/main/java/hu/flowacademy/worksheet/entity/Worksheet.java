@@ -1,5 +1,8 @@
 package hu.flowacademy.worksheet.entity;
 
+import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
+import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
+import hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +22,12 @@ public class Worksheet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     //private Partner partner; szükséges lesz hozzá egy Partner osztály
+    @Enumerated(EnumType.STRING)
+    private TypeOfWork typeOfWork;
+    @Enumerated(EnumType.STRING)
+    private AssetSettlement assetSettlement;
+    @Enumerated(EnumType.STRING)
+    private WorkingTimeAccounting workingTimeAccounting;
 
 
 }
@@ -26,7 +35,8 @@ public class Worksheet {
 /*
 ID
 Partner: név, cím, elérhetőség (ha lesz már törzsadat)
-Munkavégzés jellege: Telepítés, Javítás, Karbantartás, Egyéb (utolsó szabad szöveges, kitöltendő)
+
+
 Eszköz elszámolás módja: Térítéses, Garanciális
 Munkaidő elszámolás módja: Térítéses, Garanciális
 Létszám: int fő
