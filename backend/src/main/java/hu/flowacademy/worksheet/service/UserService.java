@@ -7,6 +7,8 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
@@ -32,7 +36,8 @@ public class UserService {
 
     public User update(Long id, User user) throws ValidationException {
         validateUpdate(user);
-        User updatedUser = userRepository.findById(id).get();
+        User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null: " + user.getId()));
+        log.error("Id is null, or invalid: {}", user.getId());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setEmail(user.getEmail());
