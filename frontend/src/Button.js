@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Button({text, ...props}) {
+function Button({text, moreClassName = '', ...props}) {
   return (
-    <button className='rounded bg-success text-light my-3 mx-5'
+    <button className={`rounded bg-success text-light my-3 mx-5 ${moreClassName}`}
     {...props}
     >
       {text}
