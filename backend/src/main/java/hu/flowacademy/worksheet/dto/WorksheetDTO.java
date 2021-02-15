@@ -7,11 +7,6 @@ import hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Lob;
 
 @Data
 @NoArgsConstructor
