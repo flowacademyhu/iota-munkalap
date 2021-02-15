@@ -1,12 +1,11 @@
 import axios from 'axios';
-
+import MockAdapter from "axios-mock-adapter";
 
 const api3 = axios.create({
     baseURL: `https://reqres.in/api/`
 })
 
 var mock = new MockAdapter(api3);
-mock.onPost('/login').reply(200, { access_token: '12345' });
 
 mock.onGet(`/users`).reply(200, {
     "id": 2,
@@ -61,6 +60,11 @@ function getWorkSheets() {
         .get(`worksheets`);
 }
 
+function postWorkSheet(credentials) {
+    return api
+        .post(`/worksheets`, credentials);
+}
+
 function postUser(credentials) {
     return api
         .post(`/users`, credentials);
@@ -94,4 +98,5 @@ export {
     loginUser,
     searchUser,
     getWorkSheets,
+    postWorkSheet,
 };
