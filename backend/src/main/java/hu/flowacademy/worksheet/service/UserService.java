@@ -50,6 +50,10 @@ public class UserService {
         }
     }
 
+    public List<User> findUserByNameAndEmail(String searchPart) {
+        return userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike(searchPart, searchPart, searchPart);
+    }
+
     public List<User> listRegistrations(Pageable pageable) {
         Page<User> userPage = userRepository.findAll(pageable);
         return userPage.getContent();
