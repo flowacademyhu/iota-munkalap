@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +51,7 @@ public class UserService {
         return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart, searchPart, searchPart);
     }
 
-    public User getUserById(Long userId) throws ValidationException {
-        return userRepository.findById(userId).orElseThrow(() -> new ValidationException("No user with this id"));
+    public Optional<User> getUserById(Long userId) throws ValidationException {
+        return userRepository.findById(userId);
     }
 }

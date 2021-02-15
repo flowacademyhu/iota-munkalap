@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -52,12 +53,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     @RolesAllowed("admin")
-    public UserOperationDTO getUserById(@PathVariable("id") Long userId) throws ValidationException {
-        User registeredUser = userService.getUserById(userId);
-        UserOperationDTO answer = new UserOperationDTO();
-        answer.setFirstName(registeredUser.getFirstName());
-        answer.setLastName(registeredUser.getLastName());
-        answer.setEmail(registeredUser.getEmail());
-        return answer;
+    public Optional<User> getUserById(@PathVariable("id") Long userId) throws ValidationException {
+        return userService.getUserById(userId);
     }
 }
