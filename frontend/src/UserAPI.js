@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: `/api/`,
+    baseURL: `/api/`
 })
 
 async function loginUser(credentials) {
@@ -10,7 +10,7 @@ async function loginUser(credentials) {
         return result.data.access_token;
     } catch (error) {
         alert('A belépés sikertelen.');
-    }   
+    }
 }
 
 function getUsers() {
@@ -30,18 +30,18 @@ function putUser(id, credentials) {
 
 function putUserInactive(id) {
     return api
-        .put(`/users/${id}`, {"isActive": false});
+        .put(`/users/${id}`, { "isActive": false });
 }
 function getUser(id) {
     return api
         .get(`/users/${id}`);
 }
 
-export { 
-    getUsers, 
-    postUser, 
-    putUser, 
-    putUserInactive, 
-    getUser, 
-    loginUser 
+export {
+    getUsers,
+    postUser,
+    putUser,
+    putUserInactive,
+    getUser,
+    loginUser
 };
