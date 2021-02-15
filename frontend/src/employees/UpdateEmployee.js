@@ -50,8 +50,8 @@ function UpdateEmployee() {
           sendData={putData}
           path='update'
           title='Adatok módosítása'
-          first_name={userData.firstName}
-          last_name={userData.lastName}
+          firstName={userData.firstName}
+          lastName={userData.lastName}
           email={userData.email}
         />}
     </>
