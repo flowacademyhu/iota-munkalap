@@ -31,7 +31,6 @@ function CreateEmployee() {
       sendData={postData}
       path='new'
       title='Új munkatárs létrehozása'
-      newEmployee={true}
     />
   );
 }

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import MockAdapter from "axios-mock-adapter";
 
 
 const api3 = axios.create({
@@ -35,7 +34,7 @@ mock.onGet(`/users`).reply(200, {
 
 
 const api = axios.create({
-    baseURL: `https://jsonplaceholder.typicode.com/`,
+    baseURL: `/api/`,
 })
 
 const api2 = axios.create({
@@ -45,7 +44,7 @@ const api2 = axios.create({
 
 async function loginUser(credentials) {
     try {
-        const result = await api3.post('/login', credentials);
+        const result = await api.post('/login', credentials);
         return result.data.access_token;
     } catch (error) {
         alert('A belépés sikertelen.');
