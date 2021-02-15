@@ -107,7 +107,7 @@ class UserServiceTest {
         Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, newUser));
 
         assertThat(thrown, notNullValue());
-        assertThat(thrown.getMessage(), is("The id is null: null"));
+        assertThat(thrown.getMessage(), is("The id is null or not real: null"));
 
     }
 
