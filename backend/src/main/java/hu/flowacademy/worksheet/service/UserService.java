@@ -49,4 +49,8 @@ public class UserService {
     public List<User> findUserByNameAndEmail(String searchPart) {
         return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart, searchPart, searchPart);
     }
+
+    public User getUserById(Long userId) throws ValidationException {
+        return userRepository.findById(userId).orElseThrow(() -> new ValidationException("No user with this id"));
+    }
 }

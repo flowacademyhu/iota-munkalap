@@ -49,4 +49,15 @@ public class UserController {
     public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
         return userService.findUserByNameAndEmail(q);
     }
+
+    @GetMapping("/users/{id}")
+    @RolesAllowed("admin")
+    public UserOperationDTO getUserById(@PathVariable("id") Long userId) throws ValidationException {
+        User registeredUser = userService.getUserById(userId);
+        UserOperationDTO answer = new UserOperationDTO();
+        answer.setFirstName(registeredUser.getFirstName());
+        answer.setLastName(registeredUser.getLastName());
+        answer.setEmail(registeredUser.getEmail());
+        return answer;
+    }
 }
