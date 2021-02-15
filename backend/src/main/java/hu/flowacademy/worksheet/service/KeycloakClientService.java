@@ -62,6 +62,11 @@ public class KeycloakClientService {
         return user;
     }
 
+    public void setUserStatus(User user) {
+        RealmResource ourRealm = keycloak.realm(keycloakPropertiesConfiguration.getRealm2());
+        ourRealm.users().search(user.getEmail()).get(0).setEnabled(user.isEnabled());
+    }
+
     public AccessTokenResponse login(String email, String password) {
         return Keycloak.getInstance(
                 keycloakPropertiesConfiguration.getServerUrl(),
