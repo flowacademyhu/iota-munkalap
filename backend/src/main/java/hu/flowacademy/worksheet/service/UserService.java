@@ -11,8 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.text.Normalizer;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +54,14 @@ public class UserService {
     }
 
     public List<User> findUserByNameAndEmail(String searchPart) {
-        return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart, searchPart, searchPart);
+        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
+                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
+    }
+
+    private boolean filterContains(String searchPart, User user) {
+        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart))||
+                stripAccents(user.getLastName()).contains(stripAccents(searchPart))||
+                user.getEmail().contains(stripAccents(searchPart));
     }
 }
