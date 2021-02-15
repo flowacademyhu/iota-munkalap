@@ -49,4 +49,10 @@ public class UserController {
     public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
         return userService.findUserByNameAndEmail(q);
     }
+
+    @PostMapping("/users/{id}")
+    public User setUserStatus(@PathVariable ("id") Long id,
+                              @RequestParam(value = "status") String status) throws ValidationException {
+        return userService.setUserActivity(id, status);
+    }
 }
