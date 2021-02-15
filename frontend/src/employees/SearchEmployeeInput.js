@@ -5,13 +5,11 @@ import { searchUser } from "../UserAPI";
 
 export default function SearchEmployeeInput(props) {
 
-    const [filter, setFilter] = useState("");
+    const [value, setValue] = useState("");
 
     function handleChange(event) {
-        setFilter(event.target.value);
-        searchUser(filter.toLowerCase());
-        console.log(filter.toLowerCase())
+        searchUser(event.target.value.toLowerCase()); 
     }
 
-    return <Input value={filter} onChange={handleChange} type="text" placeholder="Keresés" {...props} />;
+    return <Input value={value} onChange={handleChange} type="text" placeholder="Keresés" {...props} />;
 }
