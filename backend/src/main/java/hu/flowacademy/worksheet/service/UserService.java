@@ -11,12 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.text.Normalizer;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.regex.Pattern;
+
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.stripAccents;
@@ -63,5 +61,9 @@ public class UserService {
         return stripAccents(user.getFirstName()).contains(stripAccents(searchPart))||
                 stripAccents(user.getLastName()).contains(stripAccents(searchPart))||
                 user.getEmail().contains(stripAccents(searchPart));
+    }
+
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
     }
 }
