@@ -22,6 +22,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
+    private static final String TEST_FIRSTNAME = "Lajos";
+    private static final String TEST_LASTNAME = "Széchenyi";
+    private static final String TEST_EMAIL = "kossuth@lajos.hu";
+    private static final String INVALID_TEST_EMAIL = "kossuthlajos.hu";
+    private static final String EMPTY_STRING = "";
+
     private static final String NEW_FIRSTNAME = "István";
     private static final String NEW_LASTNAME = "Széchenyi";
     private static final String NEW_EMAIL = "pista@pista.hu";
@@ -56,25 +62,25 @@ class UserServiceTest {
 
     @Test
     public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email("elhasalamailem.hu").firstName("József").lastName("Ferenc").build();
+        User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("").firstName("József").lastName("Ferenc").build();
+        User userData = User.builder().email(EMPTY_STRING).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingFirstNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").firstName("").lastName("Dugonics").build();
+        User userData = User.builder().email(TEST_EMAIL).firstName(EMPTY_STRING).lastName(TEST_LASTNAME).build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
     public void givenMissingLastNameUser_whenSavingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").firstName("Tivadar").lastName("").build();
+        User userData = User.builder().email(TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(EMPTY_STRING).build();
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
@@ -107,37 +113,37 @@ class UserServiceTest {
 
     @Test
     public void givenNullId_whenUpdatingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email("mukodik@ateszt.hu").firstName("József").lastName("Ferenc").build();
+        User userData = User.builder().email(TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(Exception.class, () -> userService.update(null, userData));
     }
 
     @Test
-    public void givenEmptyId_whenUpdatingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email("mukodik@ateszt.hu").firstName("József").lastName("Ferenc").build();
+    public void givenInvalidId_whenUpdatingUser_ThenThrowException() throws ValidationException {
+        User userData = User.builder().email(TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(Exception.class, () -> userService.update(-100L, userData));
     }
 
     @Test
     public void givenInvalidEmailUser_whenUpdatingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email("elhasalamailem.hu").firstName("József").lastName("Ferenc").build();
+        User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
     @Test
     public void givenInvalidEmailUserWithEmptyString_whenUpdatingUser_ThenThrowException() {
-        User userData = User.builder().email("").firstName("József").lastName("Ferenc").build();
+        User userData = User.builder().email(EMPTY_STRING).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
     @Test
     public void givenMissingFirstNameUser_whenUpdatingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").firstName("").lastName("Dugonics").build();
+        User userData = User.builder().email(TEST_EMAIL).firstName(EMPTY_STRING).lastName(TEST_LASTNAME).build();
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
     @Test
     public void givenMissingLastNameUser_whenUpdatingUser_ThenThrowException() {
-        User userData = User.builder().email("joazemail@orulok.hu").firstName("Tivadar").lastName("").build();
+        User userData = User.builder().email(TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(EMPTY_STRING).build();
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
