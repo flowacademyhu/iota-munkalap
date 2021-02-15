@@ -84,10 +84,6 @@ function getUser(id) {
         .get(`/users/${id}`);
 }
 
-function searchUser(string) {
-    return api
-        .get(`/users/${string}`);
-}
 
 export {
     getUsers,
@@ -96,7 +92,6 @@ export {
     putUserInactive,
     getUser,
     loginUser,
-    searchUser,
     getWorkSheets,
     postWorkSheet,
 };
