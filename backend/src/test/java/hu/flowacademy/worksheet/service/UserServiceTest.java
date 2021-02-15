@@ -60,32 +60,24 @@ class UserServiceTest {
 
     @Test
     public void shouldReturnUsersSorted() {
-        // given
         Sort sortByCreatedAt = Sort.by("createdAt").descending();
         List<User> users = List.of(
                 givenProperUserObject(),
                 givenProperUserObject2()
         );
         when(userRepository.findAll(eq(sortByCreatedAt))).thenReturn(users);
-        // when
         List<User> sortedUsers = userService.listRegistrations("createdAt");
-        // then
         assertEquals(users, sortedUsers);
         verify(userRepository).findAll(eq(sortByCreatedAt));
     }
 
     @Test
-    public void shouldReturnUsersPaged() throws ValidationException {
-        // given: felsetupoljuk a testet: adjunk vissza Page-elt usereeket
+    public void shouldReturnUsersPaged() {
         givenRepoWithTwoUsersForPaging();
         Pageable pageable = PageRequest.of(0, 1);
-        // when
         List<User> pagedUserList = userService.listRegistrations(pageable);
-        // then
         verify(userRepository).findAll(eq(pageable));
-        // assert: tartalmak (userek listája) egyeznek
         assertThat(pagedUserList.size(), is(1));
-
     }
 
     @Test
@@ -123,29 +115,12 @@ class UserServiceTest {
         when(userRepository.findAll(eq(pageable))).thenReturn(pagedUsers);
     }
 
-    private List<User> givenRepoSkeleton() {
-        givenUniquePerson2();
-        User userData2 = givenProperUserObject2();
-        User userData = givenProperUserObject();
-        User result2 = userRepository.save(userData2);
-        User result = userRepository.save(userData);
-        return List.of(result, result2);
-    }
-
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
             return input;
         });
-    }
-
-    private void givenRepoWithUser() throws ValidationException {
-        givenUniquePerson();
-        User userData = givenProperUserObject();
-        User result = userService.saveUser(userData);
-        when(userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining("pista",
-                "pista", "pista")).thenReturn(List.of(result));
     }
 
     private User givenProperUserObject() {
