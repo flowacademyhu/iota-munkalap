@@ -22,7 +22,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
-
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
 
@@ -57,10 +56,6 @@ public class UserService {
     public List<User> listRegistrations(Pageable pageable) {
         Page<User> userPage = userRepository.findAll(pageable);
         return userPage.getContent();
-    }
-
-    public List<User> listRegistrations() {
-        return userRepository.findAll(Sort.by("createdAt").descending());
     }
 
     public List<User> listRegistrations(String orderBy) {

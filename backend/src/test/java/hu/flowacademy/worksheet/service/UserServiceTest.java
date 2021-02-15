@@ -9,11 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -22,13 +18,13 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-
     private static final String NEW_FIRSTNAME = "István";
     private static final String NEW_LASTNAME = "Széchenyi";
     private static final String NEW_EMAIL = "pista@pista.hu";
@@ -63,29 +59,33 @@ class UserServiceTest {
     }
 
     @Test
-    public void givenADefaultSortedListOfEmployees_whenGettingAListOfEmployees_ThenReturnWithListContainingSortedUsers() throws ValidationException {
-        givenRepoWithTwoUsers();
-        List<User> result = userService.listRegistrations();
-
-        org.hamcrest.MatcherAssert.assertThat(result.size(), is(2));
-        org.hamcrest.MatcherAssert.assertThat(result.get(0).getId(), is(REGISTRATION_ID2));
-
+    public void shouldReturnUsersSorted() {
+        // given
+        Sort sortByCreatedAt = Sort.by("createdAt").descending();
+        List<User> users = List.of(
+                givenProperUserObject(),
+                givenProperUserObject2()
+        );
+        when(userRepository.findAll(eq(sortByCreatedAt))).thenReturn(users);
+        // when
+        List<User> sortedUsers = userService.listRegistrations("createdAt");
+        // then
+        assertEquals(users, sortedUsers);
+        verify(userRepository).findAll(eq(sortByCreatedAt));
     }
 
     @Test
-    public void givenAFirstNameSortedListOfEmployees_whenGettingAListOfEmployees_ThenReturnWithListContainingSortedUsers() throws ValidationException {
-        givenRepoWithTwoUsersFirstName();
-        List<User> result2 = userService.listRegistrations("firstName");
-        org.hamcrest.MatcherAssert.assertThat(result2.get(0).getFirstName(), is(NEW_FIRSTNAME));
-    }
-    @Test
-
-    public void givenAFirstNameSortedListOfEmployeesWithPaging1_whenGettingAListOfEmployees_ThenReturnWithListWithSizeOfOne() throws ValidationException {
+    public void shouldReturnUsersPaged() throws ValidationException {
+        // given: felsetupoljuk a testet: adjunk vissza Page-elt usereeket
         givenRepoWithTwoUsersForPaging();
-        System.out.println(userRepository.findById(11L));
+        Pageable pageable = PageRequest.of(0, 1);
+        // when
+        List<User> pagedUserList = userService.listRegistrations(pageable);
+        // then
+        verify(userRepository).findAll(eq(pageable));
+        // assert: tartalmak (userek listája) egyeznek
+        assertThat(pagedUserList.size(), is(1));
 
-
-        //org.hamcrest.MatcherAssert.assertThat(result2.size(), is(1));
     }
 
     @Test
@@ -112,23 +112,18 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
-    private void givenRepoWithTwoUsers() throws ValidationException {
-        List<User> users = givenRepoSkeleton();
-        when(userRepository.findAll(Sort.by("createdAt").descending())).thenReturn(users);
+    private void givenRepoWithTwoUsersForPaging() {
+        List<User> users = new ArrayList<>();
+        users.add(givenProperUserObject());
+        users.add(givenProperUserObject2());
+        Pageable pageable = PageRequest.of(0, 1);
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), users.size());
+        Page<User> pagedUsers = new PageImpl<User>(users.subList(start, end), pageable, users.size());
+        when(userRepository.findAll(eq(pageable))).thenReturn(pagedUsers);
     }
 
-    private void givenRepoWithTwoUsersFirstName() throws ValidationException {
-        List<User> users = givenRepoSkeleton();
-        when(userRepository.findAll(Sort.by("firstName").descending())).thenReturn(users);
-    }
-
-    private void givenRepoWithTwoUsersForPaging() throws ValidationException {
-        List<User> users = givenRepoSkeleton();
-        Pageable pageable = PageRequest.of(0,1 );
-        when(userService.listRegistrations(pageable)).thenReturn(List.of(users.get(0)));
-    }
-
-    private List<User> givenRepoSkeleton() throws ValidationException {
+    private List<User> givenRepoSkeleton() {
         givenUniquePerson2();
         User userData2 = givenProperUserObject2();
         User userData = givenProperUserObject();

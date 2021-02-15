@@ -53,15 +53,15 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                        @RequestParam(value = "limit", required = false) Optional<Integer> limit,
-                                       @RequestParam(value = "order_by", required = false) Optional<String> order_by) {
+                                       @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
         if (page.isPresent()) {
             return userService.listRegistrations(
                     PageRequest.of(page.get(), limit.orElse(pagingProperties.getDefaultLimit())));
         }
-        if (order_by.isPresent()){
-            return userService.listRegistrations(order_by.get());
+        if (orderBy.isPresent()){
+            return userService.listRegistrations(orderBy.get());
         }
 
-        return userService.listRegistrations();
+        return userService.listRegistrations("createdAt");
     }
 }
