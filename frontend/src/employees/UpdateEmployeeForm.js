@@ -7,6 +7,12 @@ import Button from '../Button';
 import PopUp from '../PopUp';
 
 const schema = yup.object().shape({
+  firstName: yup
+    .string()
+    .required("A vezetéknév kötelező!"),
+  lastName: yup
+    .string()
+    .required("A keresztnév kötelező!"),
   email: yup
     .string()
     .required("Az email kötelező!")
