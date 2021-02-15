@@ -13,17 +13,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "user_custom")
+@Table(name = "userCustom")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @JsonProperty("first_name")
     private String firstName;
     @NonNull
-    @JsonProperty("last_name")
     private String lastName;
     @Column(unique = true, nullable = false)
     @NonNull
