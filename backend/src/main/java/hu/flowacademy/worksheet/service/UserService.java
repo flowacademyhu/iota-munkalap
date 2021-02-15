@@ -34,7 +34,7 @@ public class UserService {
 
     public User update(Long id, User user) throws ValidationException {
         validateUpdate(user);
-        User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null: " + user.getId()));
+        User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + user.getId()));
         log.error("Id is null, or invalid: {}", user.getId());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
