@@ -82,8 +82,6 @@
 			<artifactId>keycloak-admin-client</artifactId>
 			<version>12.0.1</version>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
