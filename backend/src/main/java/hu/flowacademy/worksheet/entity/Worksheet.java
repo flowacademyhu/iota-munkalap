@@ -1,9 +1,6 @@
 package hu.flowacademy.worksheet.entity;
 
-import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
-import hu.flowacademy.worksheet.enumCustom.TypeOfPayment;
-import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
-import hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting;
+import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -51,6 +48,8 @@ public class Worksheet {
     private String workerSignature;
     @NonNull
     private String proofOfEmployment;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 }
 
