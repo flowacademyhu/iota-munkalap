@@ -64,4 +64,10 @@ public class UserController {
 
         return userService.listRegistrations("createdAt");
     }
+
+    @GetMapping("/users")
+    @ResponseStatus(HttpStatus.FOUND)
+    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
+        return userService.findUserByNameAndEmail(q);
+    }
 }
