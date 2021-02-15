@@ -24,8 +24,7 @@ const schema = yup.object().shape({
     .oneOf([yup.ref("password")], "A két jelszó nem egyezik meg!")
 });
 
-function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
-  title, name, email }) {
+function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title }) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -39,8 +38,9 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
             />}
           <Formik
             initialValues={{
-              name: name || '',
-              email: email || '',
+              firstName: '',
+              lastName: '',
+              email: '',
               password: '',
               confirmPassword: ''
             }}
@@ -51,15 +51,16 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
           >
             <Form>
               <h1 className='text-center'>{title}</h1>
-              <Input name='name' label='Név' type='text' />
+              <Input name='firstName' label='Vezetéknév' type='text' />
+              <Input name='lastName' label='Keresztnév' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
               <div className='buttons'>
                 <Link to='/employees'>
-                  <Button text='Mégse' />
+                  <Button text='Mégse' moreClassName='h-auto' />
                 </Link>
-                <Button text='Mentés' type='submit' />
+                <Button text='Mentés' type='submit' moreClassName='h-auto' />
               </div>
             </Form>
           </Formik>

@@ -110,7 +110,7 @@ class UserServiceTest {
         givenUniquePerson();
         User userData = givenProperUserObject();
         User result = userService.saveUser(userData);
-        when(userRepository.findByEmailLikeOrFirstNameLikeOrLastNameLike("pista",
+        when(userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining("pista",
                 "pista", "pista")).thenReturn(List.of(result));
     }
 
