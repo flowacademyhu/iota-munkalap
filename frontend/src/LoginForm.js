@@ -43,10 +43,8 @@ export default function LoginForm({ setToken }) {
                             <EmailInput label="Email cím" name="email" />
                             <PasswordInput label="Jelszó" name="password" />
                             <div className="my-5 d-flex justify-content-center">
-                                <Button type="submit" text="Bejelentkezés" />
+                                <Button type="submit" text="Bejelentkezés" className='' />
                             </div>
-
-
                         </Form>
                     </Formik>
                 </div>

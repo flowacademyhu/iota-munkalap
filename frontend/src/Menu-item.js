@@ -4,7 +4,9 @@ import {NavLink} from "react-router-dom";
 
 export default function MenuItem(props) {
     return (
-    <NavLink to={props.link} activeClassName="selectedLink"><Button variant="success">{props.name}</Button></NavLink>
+    <NavLink to={props.link} activeClassName="selectedLink">
+        <Button variant="success" className=''>{props.name}</Button>
+    </NavLink>
     );
 
 }
