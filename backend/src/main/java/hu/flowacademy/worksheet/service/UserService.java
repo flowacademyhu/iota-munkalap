@@ -55,7 +55,7 @@ public class UserService {
     }
 
     private void validateUpdate(User user) throws ValidationException {
-        if (!(user.getId() == null)) {
+        if (user.getId() != null) {
             throw new ValidationException("Not existing user id, or null");
         }
         if (!StringUtils.hasText(user.getFirstName())) {
