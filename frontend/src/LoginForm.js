@@ -45,8 +45,6 @@ export default function LoginForm({ setToken }) {
                             <div className="my-5 d-flex justify-content-center">
                                 <Button type="submit" text="Bejelentkezés" />
                             </div>
-
-
                         </Form>
                     </Formik>
                 </div>
