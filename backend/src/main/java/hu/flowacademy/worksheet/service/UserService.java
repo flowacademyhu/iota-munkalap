@@ -6,7 +6,6 @@ import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -14,7 +13,6 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -35,7 +33,6 @@ public class UserService {
     public User update(Long id, User user) throws ValidationException {
         validateUpdate(user);
         User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + user.getId()));
-        log.error("Id is null, or invalid: {}", user.getId());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setEmail(user.getEmail());
