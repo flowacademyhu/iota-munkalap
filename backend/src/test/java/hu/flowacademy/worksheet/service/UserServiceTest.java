@@ -140,12 +140,12 @@ class UserServiceTest {
         });
     }
 
-    private void givenUniquePerson2() {
-        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
-            User input = invocationOnMock.getArgument(0);
-            input.setId(REGISTRATION_ID2);
-            return input;
-        });
+    private void givenRepoWithUser() throws ValidationException {
+        givenUniquePerson();
+        User userData = givenProperUserObject();
+        User result = userService.saveUser(userData);
+        when(userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining("pista",
+                "pista", "pista")).thenReturn(List.of(result));
     }
 
     private User givenProperUserObject() {

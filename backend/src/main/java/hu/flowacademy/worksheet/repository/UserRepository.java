@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByEmailLikeOrFirstNameLikeOrLastNameLike(String emailPart, String firstNamePart, String lastNamePart);
+    List<User> findByEmailContainingOrFirstNameContainingOrLastNameContaining(String emailPart, String firstNamePart, String lastNamePart);
 }
