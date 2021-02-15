@@ -47,23 +47,17 @@ public class UserController {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
     }
 
-    private final PagingProperties pagingProperties;
-
     @RolesAllowed("admin")
-    @GetMapping("/users")
+    @GetMapping("/listusers")
     public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                        @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                        @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
-        if (page.isPresent()) {
-            return userService.listRegistrations(
-                    PageRequest.of(page.get(), limit.orElse(pagingProperties.getDefaultLimit())));
-        }
-            return userService.listRegistrations(orderBy.orElse("createdAt"));
+            return userService.listRegistrations(page,limit,orderBy);
     }
 
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
+    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") Optional<String> q) {
         return userService.findUserByNameAndEmail(q);
     }
 }

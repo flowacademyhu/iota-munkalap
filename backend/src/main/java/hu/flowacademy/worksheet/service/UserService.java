@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -7,7 +8,9 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.keycloak.jose.jwk.JWK;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,7 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +27,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
+    private final PagingProperties pagingProperties;
 
     public User saveUser(@NonNull User user) throws ValidationException {
         validateUser(user);
@@ -48,16 +53,16 @@ public class UserService {
         }
     }
 
-    public List<User> findUserByNameAndEmail(String searchPart) {
-        return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart, searchPart, searchPart);
+    public List<User> findUserByNameAndEmail(Optional<String> searchPart) {
+        return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart.get(), searchPart.get(), searchPart.get());
     }
 
-    public List<User> listRegistrations(Pageable pageable) {
-        Page<User> userPage = userRepository.findAll(pageable);
-        return userPage.getContent();
-    }
+    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
+           Page<User> userPage = userRepository
+                    .findAll(PageRequest.of(page.orElse(0)
+                            , limit.orElse(pagingProperties.getDefaultLimit())
+                            , Sort.by(orderBy.orElse("createdAt")).descending()));
+           return userPage.getContent();
 
-    public List<User> listRegistrations(String orderBy) {
-        return userRepository.findAll(Sort.by(orderBy).descending());
     }
 }

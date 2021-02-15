@@ -26,8 +26,8 @@ spring:
 keycloakBackendClient:
   realm: master
   client-id: admin-cli
-  adminusername: gyanyim
-  adminpassword: snxTZr9$5GGnS7w
+  adminusername: admin
+  adminpassword: admin
   user-role: worksheetuser
 
 keycloak:
