@@ -45,6 +45,12 @@ public class UserController {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
     }
 
+    @PutMapping("/users/{id}")
+    @RolesAllowed("admin")
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
+        return userService.update(id, user);
+    }
+
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
     public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
@@ -55,5 +61,6 @@ public class UserController {
     @RolesAllowed("admin")
     public Optional<User> getUserById(@PathVariable("id") Long userId) {
         return userService.getUserById(userId);
+
     }
 }
