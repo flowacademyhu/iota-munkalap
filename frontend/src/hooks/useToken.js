@@ -9,12 +9,17 @@ export default function useToken() {
   const [token, setToken] = useState(getToken());
 
   function saveToken(token) {
+    if (!token) {
+      sessionStorage.clear('acces_token');
+      setToken("")
+      return;
+    }
     sessionStorage.setItem('token', token);
     setToken(token);
   };
 
   return {
     setToken: saveToken,
-    token
+    token,
   }
 }

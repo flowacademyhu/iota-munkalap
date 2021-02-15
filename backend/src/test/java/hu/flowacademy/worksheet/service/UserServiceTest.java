@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -147,12 +148,28 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
+    public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws
+            ValidationException {
+        givenRepoWithUser();
+        List<User> result = userService.findUserByNameAndEmail("pista");
+
+        org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
+    }
+
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
             input.setId(REGISTRATION_ID);
             return input;
         });
+    }
+
+    private void givenRepoWithUser() throws ValidationException {
+        givenUniquePerson();
+        User userData = givenProperUserObject();
+        User result = userService.saveUser(userData);
+        when(userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%p_st_%",
+                "%p_st_%", "%p_st_%")).thenReturn(List.of(result));
     }
 
     private User givenProperUserObject() {
