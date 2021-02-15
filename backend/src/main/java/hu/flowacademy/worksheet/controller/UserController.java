@@ -58,11 +58,7 @@ public class UserController {
             return userService.listRegistrations(
                     PageRequest.of(page.get(), limit.orElse(pagingProperties.getDefaultLimit())));
         }
-        if (orderBy.isPresent()){
-            return userService.listRegistrations(orderBy.get());
-        }
-
-        return userService.listRegistrations("createdAt");
+            return userService.listRegistrations(orderBy.orElse("createdAt"));
     }
 
     @GetMapping("/users")
