@@ -9,7 +9,7 @@ function PopUp({ body, sentSuccessfully, setSent, path }) {
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
         <Link to={sentSuccessfully ? '/employees' : `/employees/${path}`}>
-          <Button onClick={() => setSent(false)} className='h-auto' text='OK' />
+          <Button onClick={() => setSent(false)} moreClassName='h-auto' text='OK' />
         </Link>
       </Modal.Footer>
     </Modal>

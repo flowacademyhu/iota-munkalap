@@ -44,9 +44,9 @@ function UpdateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
               <Input name='email' label='E-mail' type='email' />
               <div className='buttons'>
                 <Link to='/employees'>
-                  <Button text='Mégse' className='h-auto' />
+                  <Button text='Mégse' moreClassName='h-auto' />
                 </Link>
-                <Button text='Mentés' type='submit' className='h-auto' />
+                <Button text='Mentés' type='submit' moreClassName='h-auto' />
               </div>
             </Form>
           </Formik>
