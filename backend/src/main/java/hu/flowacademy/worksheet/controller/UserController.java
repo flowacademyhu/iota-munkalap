@@ -53,7 +53,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     @RolesAllowed("admin")
-    public Optional<User> getUserById(@PathVariable("id") Long userId) throws ValidationException {
+    public Optional<User> getUserById(@PathVariable("id") Long userId) {
         return userService.getUserById(userId);
     }
 }

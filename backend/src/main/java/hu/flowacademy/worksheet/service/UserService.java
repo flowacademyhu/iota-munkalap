@@ -51,7 +51,7 @@ public class UserService {
         return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart, searchPart, searchPart);
     }
 
-    public Optional<User> getUserById(Long userId) throws ValidationException {
+    public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
 }
