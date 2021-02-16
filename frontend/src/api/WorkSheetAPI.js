@@ -19,7 +19,7 @@ mock.onGet("/worksheets").reply(200, workSheets)
     .onAny()
     .passThrough();
 
-mock.onPost("/worksheets").reply(200);
+//mock.onPost("/worksheets").reply(200);
 
 
 function getWorkSheets() {
@@ -30,7 +30,7 @@ function getWorkSheets() {
 
 
 function postWorkSheet(credentials) {
-    return api3
+    return api
         .post(`/worksheets`, credentials);
 }
 export {
