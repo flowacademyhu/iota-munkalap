@@ -54,7 +54,6 @@ public class UserController {
 
     @RolesAllowed("admin")
     @GetMapping("/users")
-    @ResponseStatus(HttpStatus.FOUND)
     public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                        @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                        @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
