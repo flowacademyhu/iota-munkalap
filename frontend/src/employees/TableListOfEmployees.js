@@ -21,7 +21,7 @@ export default function TableListOfEmployees() {
                 <th scope="col">#</th>
                 <th scope="col">Név</th>
                 <th scope="col">E-mail</th>
-                <th scope="col">Aktiv</th>
+                <th scope="col">Státusz</th>
               </tr>
             </thead>
             <tbody>
@@ -31,7 +31,7 @@ export default function TableListOfEmployees() {
                     <th scope="row">{user.id}</th>
                     <td>{user.lastName} {user.firstName}</td>
                     <td>{user.email}</td>
-                    {user.isActive
+                    {user.enabled
                       ? <td className="d-flex justify-content-between">
                         Aktív
                       <Link to={`/employees/update/${user.id}`}>
