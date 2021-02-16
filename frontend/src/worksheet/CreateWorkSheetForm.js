@@ -12,11 +12,6 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
 
   const [value, setValue] = useState("");
 
-  function handleChange(param) {
-    setValue(param);
-
-  }
-
   const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
   { id: 2, label: "Javítás", value: "repair" },
   { id: 3, label: "Karbantartás", value: "maintenance" },
@@ -65,32 +60,45 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               sendData(values);
             }}
           >
-            <Form>
-              <h1 className='text-center'>{title}</h1>
-              <Input name='partner' label='Partner' type='text' />
-              <SelectInput handleChange={handleChange} name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
-              {value === 'other' &&
-                <Input name='typeOfWork' label='Egyéb' type='text' />}
-              <SelectInput handleChange={handleChange} name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
-              <SelectInput handleChange={handleChange} name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
-              <Input name='numberOfEmployees' label='Létszám' type='number' />
-              <Input name='overheadHour' label='Rezsióra' type='number' />
-              <Input name='deliveryKm' label='Kiszállítás' type='number' />
-              <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
-              <Input name='description' label='Elvégzett munka leírása' type='text' />
-              <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
-              <SelectInput handleChange={handleChange} name='typeOfPayment' label='Fizetés módja' container={itemList4} />
-              <Input name='localDateTime' label='Kelt' />
-              <Input name='workerSignature' label='Munkát végezte' placeholder="IDE KELL E-ALÁIRÁS" />
-              <Input name='proofOfEmployment' label='munkavégzést igazolja' placeholder='IDE KELL MÉG EGY E-ALÁÍRÁS' />
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+              /* and other goodies */
+            }) => {
+              console.log(values)
+              return (
+                <Form>
+                  <h1 className='text-center'>{title}</h1>
+                  <Input name='partner' label='Partner' type='text' />
+                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
+                  {value === 'other' &&
+                    <Input name='typeOfWork' label='Egyéb' type='text' />}
+                  <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
+                  <SelectInput  name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
+                  <Input name='numberOfEmployees' label='Létszám' type='number' />
+                  <Input name='overheadHour' label='Rezsióra' type='number' />
+                  <Input name='deliveryKm' label='Kiszállítás' type='number' />
+                  <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
+                  <Input name='description' label='Elvégzett munka leírása' type='text' />
+                  <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
+                  <SelectInput name='typeOfPayment' label='Fizetés módja' container={itemList4} />
+                  <Input name='localDateTime' label='Kelt' disabled/>
+                  <Input name='workerSignature' label='Munkát végezte' placeholder="IDE KELL E-ALÁIRÁS" />
+                  <Input name='proofOfEmployment' label='munkavégzést igazolja' placeholder='IDE KELL MÉG EGY E-ALÁÍRÁS' />
 
-              <div className='buttons'>
-                <Link to='/worksheets'>
-                  <Button text='Mégse' moreClassName='h-auto' />
-                </Link>
-                <Button text='Mentés' type='submit' moreClassName='h-auto' />
-              </div>
-            </Form>
+                  <div className='buttons'>
+                    <Link to='/worksheets'>
+                      <Button text='Mégse' moreClassName='h-auto' />
+                    </Link>
+                    <Button text='Mentés' type='submit' moreClassName='h-auto' />
+                  </div>
+                </Form>)
+            }}
           </Formik>
         </div>
       </div>
