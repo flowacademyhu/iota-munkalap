@@ -1,14 +1,8 @@
 import React from 'react';
-
-const worksheets = [
-  { id: '1', creater: 'employee1', date: '2020.12.01.', partner: 'partner1', type: 'type1', state: 'state1' },
-  { id: '2', creater: 'employee2', date: '2020.08.11.', partner: 'partner2', type: 'type2', state: 'state2' },
-  { id: '3', creater: 'employee3', date: '2000.12.01.', partner: 'partner3', type: 'type3', state: 'state3' },
-  { id: '4', creater: 'employee4', date: '2010.08.11.', partner: 'partner4', type: 'type4', state: 'state4' }
-
-];
+import useWorkSheets from '../hooks/useWorkSheets';
 
 export default function TableListOfWorkSheets() {
+  const { workSheets } = useWorkSheets();
   return (
     <>
       <div className="border border-secondary">
@@ -26,8 +20,8 @@ export default function TableListOfWorkSheets() {
             </thead>
 
             <tbody>
-              {worksheets ? (
-                worksheets.map(worksheet => (
+              {workSheets ? (
+                workSheets.map(worksheet => (
                   <tr key={worksheet.id}>
                     <th scope="row">{worksheet.id}</th>
                     <td>{worksheet.creater}</td>
