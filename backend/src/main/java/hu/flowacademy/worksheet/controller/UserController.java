@@ -8,7 +8,6 @@ import hu.flowacademy.worksheet.service.KeycloakClientService;
 import hu.flowacademy.worksheet.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.representations.AccessTokenResponse;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,17 +53,13 @@ public class UserController {
     }
 
     @RolesAllowed("admin")
-    @GetMapping("/listusers")
-    public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
-                                       @RequestParam(value = "limit", required = false) Optional<Integer> limit,
-                                       @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
-            return userService.listRegistrations(page,limit,orderBy);
-    }
-
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") Optional<String> q) {
-        return userService.findUserByNameAndEmail(q);
+    public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                       @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                                       @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                                       @RequestParam(value = "q", required = false) Optional<String> q) {
+            return userService.listRegistrations( page, limit, orderBy, q);
     }
 
     @GetMapping("/users/{id}")

@@ -84,27 +84,27 @@ public class UserService {
         String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
         return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
                 .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
-    public List<User> findUserByNameAndEmail(Optional<String> searchPart) {
-        return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart.get(), searchPart.get(), searchPart.get());
     }
 
     private boolean filterContains(String searchPart, User user) {
-        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
-                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
+        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart))||
+                stripAccents(user.getLastName()).contains(stripAccents(searchPart))||
                 user.getEmail().contains(stripAccents(searchPart));
     }
+}
 
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
+        public Optional<User> getUserById (Long userId){
+            return userRepository.findById(userId);
 
-    }
+        }
 
-    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
-           Page<User> userPage = userRepository
+        public List<User> listRegistrations
+        (Optional < Integer > page, Optional < Integer > limit, Optional < String > orderBy){
+            Page<User> userPage = userRepository
                     .findAll(PageRequest.of(page.orElse(0)
                             , limit.orElse(pagingProperties.getDefaultLimit())
                             , Sort.by(orderBy.orElse("createdAt")).descending()));
-           return userPage.getContent();
+            return userPage.getContent();
 
-    }
+        }
 }
