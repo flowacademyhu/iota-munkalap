@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import { loginUser } from './UserAPI'
+import { loginUser } from './api/UserAPI'
 
 
 import EmailInput from "./EmailInput";

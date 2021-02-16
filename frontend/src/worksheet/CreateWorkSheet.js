@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postWorkSheet } from '../WorkSheetAPI';
+import { postWorkSheet } from '../api/WorkSheetAPI';
 import CreateWorkSheetForm from './CreateWorkSheetForm';
 
 function CreateWorkSheet() {
