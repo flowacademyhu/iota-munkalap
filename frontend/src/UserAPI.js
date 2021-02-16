@@ -13,7 +13,7 @@ async function loginUser(credentials) {
     }   
 }
 
-function getUsers() {
+function getUsers(status) {
     return api
         .get(`api/users?status=${status}`);
         //Ez tedd a pathhez: users?status=${status}&page=${page}&q=${q}
