@@ -11,6 +11,7 @@ import UpdateEmployee from './employees/UpdateEmployee';
 import Header from './Header';
 import Menu from './Menu';
 import './style.css';
+import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
 
 export default function Page() {
     return (
@@ -36,7 +37,7 @@ export default function Page() {
                     <Partners />
                 </Route>
                 <Route path="/worksheets">
-                    <Worksheet />
+                    <TableListOfWorkSheets />
                 </Route>
                 <Route path='/'>
                     <Redirect to='/partners' />
@@ -54,10 +55,3 @@ function Partners() {
     );
 }
 
-function Worksheet() {
-    return (
-        <div>
-            <h2>Munkalapok</h2>
-        </div>
-    );
-}
