@@ -19,9 +19,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
@@ -80,31 +77,30 @@ public class UserService {
         }
     }
 
-    public List<User> findUserByNameAndEmail(String searchPart) {
-        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
-                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
-    }
-
     private boolean filterContains(String searchPart, User user) {
-        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart))||
-                stripAccents(user.getLastName()).contains(stripAccents(searchPart))||
+        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
+                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
                 user.getEmail().contains(stripAccents(searchPart));
     }
-}
 
-        public Optional<User> getUserById (Long userId){
-            return userRepository.findById(userId);
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
 
-        }
+    }
 
-        public List<User> listRegistrations
-        (Optional < Integer > page, Optional < Integer > limit, Optional < String > orderBy){
-            Page<User> userPage = userRepository
-                    .findAll(PageRequest.of(page.orElse(0)
-                            , limit.orElse(pagingProperties.getDefaultLimit())
-                            , Sort.by(orderBy.orElse("createdAt")).descending()));
-            return userPage.getContent();
-
-        }
+    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
+        return searchPart.map(s -> {
+            String pattern = "%" + searchPart.get().replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+            PageRequest pageRequest = PageRequest.of(page.orElse(0),
+                    limit.orElse(pagingProperties.getDefaultLimit()),
+                    Sort.by(orderBy.orElse("createdAt")).descending());
+            Page<User> userList = userRepository
+                    .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
+            System.out.println(userList.getContent());
+            return userList.getContent();
+        }).orElse(userRepository
+                .findAll(PageRequest.of(page.orElse(0),
+                        limit.orElse(pagingProperties.getDefaultLimit()),
+                        Sort.by(orderBy.orElse("createdAt")).descending())).getContent());
+    }
 }

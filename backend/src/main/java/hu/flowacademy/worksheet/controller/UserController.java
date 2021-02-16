@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.controller;
 
-import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.ValidationException;
