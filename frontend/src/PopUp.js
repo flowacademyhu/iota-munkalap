@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import { Link } from 'react-router-dom';
+import Button from './Button';
 
 function PopUp({ body, sentSuccessfully, setSent, path }) {
   return (
@@ -8,7 +9,7 @@ function PopUp({ body, sentSuccessfully, setSent, path }) {
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
         <Link to={sentSuccessfully ? '/employees' : `/employees/${path}`}>
-          <button onClick={() => setSent(false)}>OK</button>
+          <Button onClick={() => setSent(false)} moreClassName='h-auto' text='OK' />
         </Link>
       </Modal.Footer>
     </Modal>
