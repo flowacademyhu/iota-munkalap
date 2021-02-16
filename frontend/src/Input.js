@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from "formik";
 
-function Input({ label, type, placeholder, ...props }) {
+function Input({ label, type, placeholder, min, ...props }) {
   const [field, meta] = useField(props);
   const { name } = props;
   const { error, touched } = meta;
@@ -16,6 +16,7 @@ function Input({ label, type, placeholder, ...props }) {
         id={name}
         type={type}
         placeholder={placeholder}
+        min={min}
         className={`form-control ${showError ? "is-invalid" : ""}`}
       />
       {showError && <div className="invalid-feedback">{error}</div>}
