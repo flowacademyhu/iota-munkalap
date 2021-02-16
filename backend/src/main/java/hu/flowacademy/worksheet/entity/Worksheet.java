@@ -4,6 +4,7 @@ import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Blob;
 
 @Data
 @NoArgsConstructor
@@ -16,8 +17,9 @@ public class Worksheet {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "worksheet_id")
-    private String id;
-    @Column(name="partner")
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name="partner_id")
     private Partner partner;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work")
@@ -34,22 +36,22 @@ public class Worksheet {
     private float overheadHour;
     @Column(name = "delivery_km")
     private float deliveryKm;
-    @Column(name = "account serial number", nullable = false)
+    @Column(name = "account_serial_number", nullable = false)
     private String accountSerialNumber;
     @Lob
     @Column(name = "description")
     private String description;
     @Column(name = "used_material")
     private String usedMaterial;
-    @Column(name = "tpye_of_payment")
+    @Column(name = "type_of_payment")
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
     @Column(name = "local_date_time")
     private String localDateTime;
     @Column(name = "worker_signature")
-    private String workerSignature;
+    private Blob workerSignature;
     @Column(name = "proof_of_employment")
-    private String proofOfEmployment;
+    private Blob proofOfEmployment;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private WorksheetStatus worksheetStatus;
 }

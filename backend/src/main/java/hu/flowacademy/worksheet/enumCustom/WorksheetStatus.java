@@ -1,7 +1,7 @@
 package hu.flowacademy.worksheet.enumCustom;
 
-public enum Status {
+public enum WorksheetStatus {
     CREATED,
-    REPORTEDREADY,
+    REPORTED,
     CLOSED
 }
