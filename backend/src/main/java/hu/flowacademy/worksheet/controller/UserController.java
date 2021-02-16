@@ -52,10 +52,14 @@ public class UserController {
         return userService.update(id, user);
     }
 
+    @RolesAllowed("admin")
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
-        return userService.findUserByNameAndEmail(q);
+    public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                       @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                                       @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                                       @RequestParam(value = "q", required = false) Optional<String> q) {
+            return userService.listRegistrations( page, limit, orderBy, q);
     }
 
     @PutMapping("/users/{id}/{status}")

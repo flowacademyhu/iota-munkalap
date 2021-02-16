@@ -1,6 +1,12 @@
 server:
   port: 8081
 
+hu:
+  flowacademy:
+    worksheet:
+      paging:
+        defaultLimit: 1
+
 spring:
   datasource:
     url: jdbc:h2:file:./db/demo
@@ -20,8 +26,8 @@ spring:
 keycloakBackendClient:
   realm: master
   client-id: admin-cli
-  adminusername: gyanyim
-  adminpassword: snxTZr9$5GGnS7w
+  adminusername: admin
+  adminpassword: admin
   user-role: worksheetuser
 
 keycloak:
