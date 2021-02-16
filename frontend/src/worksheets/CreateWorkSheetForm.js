@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
@@ -40,7 +40,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             initialValues={{
               partner: '',
               typeOfWork: itemList1[1].label,
-              // typeOfWorkOther: '',
+              typeOfWorkOther: '',
               assetSettlement: itemList2[1].label,
               workingTimeAccounting: itemList3[1].label,
               numberOfEmployees: 0,
@@ -57,6 +57,10 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             }}
             validationSchema={schema}
             onSubmit={values => {
+              if (values.typeOfWork !== 'other') {
+                delete values.typeOfWorkOther
+              }
+              console.log(values);
               sendData(values);
             }}
           >
@@ -74,14 +78,14 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
                 <Form>
                   <h1 className='text-center'>{title}</h1>
                   <Input name='partner' label='Partner' type='text' />
-                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1}/>
+                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
                   { values.typeOfWork === "other" &&
                     <Input name='typeOfWorkOther' label='Egyéb' type='text' />}
                   <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
-                  <SelectInput  name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
-                  <Input name='numberOfEmployees' label='Létszám' type='number' />
-                  <Input name='overheadHour' label='Rezsióra' type='number' />
-                  <Input name='deliveryKm' label='Kiszállítás' type='number' />
+                  <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
+                  <Input name='numberOfEmployees' label='Létszám' type='number' min='0' />
+                  <Input name='overheadHour' label='Rezsióra' type='number' min='0' />
+                  <Input name='deliveryKm' label='Kiszállítás' type='number' min='0' />
                   <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
                   <Input name='description' label='Elvégzett munka leírása' type='text' />
                   <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
