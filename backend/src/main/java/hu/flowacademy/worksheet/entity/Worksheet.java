@@ -48,9 +48,9 @@ public class Worksheet {
     @Column(name = "type_of_payment", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
-    @Column(name = "local_date_time", nullable = false)
+    @Column(name = "createdAt", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
     @Column(name = "worker_signature", nullable = false)
     private String workerSignature;
     @Column(name = "proof_of_employment", nullable = false)

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class WorksheetService {
     public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
         validateWorksheet(worksheet);
         worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        worksheet.setCreatedAt(LocalDateTime.now());
         return worksheetRepository.save(worksheet);
     }
 
