@@ -62,15 +62,7 @@ function getUsers() {
         .get(`/users`);
 }
 
-function getWorkSheets() {
-    return api
-        .get(`worksheets`);
-}
 
-function postWorkSheet(credentials) {
-    return api
-        .post(`/worksheets`, credentials);
-}
 
 function postUser(credentials) {
     return api
@@ -97,5 +89,5 @@ export {
     putUser,
     putUserInactive,
     getUser,
-    loginUser
+    loginUser,
 };
