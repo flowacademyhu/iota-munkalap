@@ -5,7 +5,7 @@ export default function SelectInput({handleChange, label, container, ...props })
     
     return (
         <div className='form-group my-4'>
-            <Form>
+            
                 <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{label}</Form.Label>
                     <Form.Control onChange={(event) => handleChange(event.target.value)} as="select" custom>
@@ -14,7 +14,7 @@ export default function SelectInput({handleChange, label, container, ...props })
                         ))}
                     </Form.Control>
                 </Form.Group>
-            </Form>
+            
         </div>
     )
 }
