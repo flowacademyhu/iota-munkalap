@@ -33,7 +33,7 @@ public class WorksheetController {
                 .description(worksheetDTO.getDescription())
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
-                .createdAt(worksheetDTO.getLocalDateTime())
+                .createdAt(worksheetDTO.getCreatedAt())
                 .workerSignature(worksheetDTO.getWorkerSignature())
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
