@@ -9,6 +9,14 @@ export default function schema() {
     typeOfWork: yup
       .string()
       .required("Munkavégzés jellegének megadása kötelező!"),
+
+    typeOfWorkOther: yup
+      .string()
+      .when('typeOfWork', {
+        is: 'other',
+        then: yup.string().required("Munkavégzés jellegének megadása kötelező!"),
+        otherwise: yup.string().max(0),
+      }),
     assetSettlement: yup
       .string()
       .required("Eszköz elszámolásának módját kötelező megadni!"),
@@ -38,9 +46,6 @@ export default function schema() {
     typeOfPayment: yup
       .string()
       .required("Fizetési mód megadása kötelező!"),
-    date: yup
-      .string()
-      .required("Dátum megadása kötelező!"),
     workerSignature: yup
       .string()
       .required("Aláírás kötelező!"),
