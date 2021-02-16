@@ -23,7 +23,7 @@ public class WorksheetDTO {
     private String description;
     private String usedMaterial;
     private TypeOfPayment typeOfPayment;
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
     private String workerSignature;
     private String proofOfEmployment;
     private WorksheetStatus worksheetStatus;
