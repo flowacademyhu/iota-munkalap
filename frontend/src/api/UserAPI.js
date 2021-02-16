@@ -1,6 +1,4 @@
-import getApi from './getApi';
-
-let api = getApi();
+import api from './createApi';
 
 async function loginUser(credentials) {
     try {
