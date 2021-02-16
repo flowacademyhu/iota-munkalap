@@ -3,7 +3,7 @@ import useWorkSheets from '../hooks/useWorkSheets';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
 import Button from '../Button';
-import { putUserInactive } from '..api/UserAPI';
+import { putUserInactive } from '../api/UserAPI';
 import { Formik, Form } from "formik";
 
 

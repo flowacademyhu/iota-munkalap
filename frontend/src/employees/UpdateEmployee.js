@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UpdateEmployeeForm from './UpdateEmployeeForm';
-import { putUser, getUser } from '..api/UserAPI';
+import { putUser, getUser } from '../api/UserAPI';
 import { useParams } from 'react-router-dom';
 
 function UpdateEmployee() {
