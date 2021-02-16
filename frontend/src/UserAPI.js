@@ -15,7 +15,7 @@ async function loginUser(credentials) {
 
 function getUsers() {
     return api
-        .get(`/users`);
+        .get(`/users/`);
 }
 
 function postUser(credentials) {

@@ -17,7 +17,7 @@ function FilterUsers({status, onStatusChange}) {
     // if (e === inactive) { e = false }
     // if (e === "all") { e = null }
     //String to boolean
-  }
+  
 
     // let title = "Mind"
     // console.log(status)
@@ -29,7 +29,7 @@ function FilterUsers({status, onStatusChange}) {
     
   return (
     <div>
-    <select onChange={handleInputChange}>
+    <select class="btn btn-success" onChange={handleInputChange}>
       <option value="true" >Aktív</option>
       <option value="false">Inaktív</option>
       <option selected value="">Mind</option>

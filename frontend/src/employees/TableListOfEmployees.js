@@ -7,15 +7,17 @@ import { putUserInactive } from '../UserAPI';
 import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
-  const [name, setStatus] = useState("");
+  const [status, setStatus] = useState("");
   const { users } = useUsers();
 
   return (
     <>
+      <div className = "d-flex justify-content-around align-items-start" >
       <Link to={`/employees/new`}>
         <Button text='Új munkavállaló létrehozása' />
       </Link>
       <FilterUsers  status = {status} onStatusChange = {setStatus}/>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover">
