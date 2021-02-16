@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postUser } from '../UserAPI';
+import { postUser } from '../api/UserAPI';
 import CreateEmployeeForm from './CreateEmployeeForm';
 
 function CreateEmployee() {
