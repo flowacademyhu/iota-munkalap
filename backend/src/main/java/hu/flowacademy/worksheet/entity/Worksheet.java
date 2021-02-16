@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Worksheet {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid")
     @Column(name = "worksheet_id", nullable = false)
     private String id;
     @Column(name = "partner_id")
