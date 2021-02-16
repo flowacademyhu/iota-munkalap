@@ -29,7 +29,7 @@ export default function TableListOfEmployees() {
                 users.map(user => (
                   <tr key={user.id}>
                     <th scope="row">{user.id}</th>
-                    <td>{user.firstName} {user.lastName}</td>
+                    <td>{user.lastName} {user.firstName}</td>
                     <td>{user.email}</td>
                     {user.isActive
                       ? <td className="d-flex justify-content-between">

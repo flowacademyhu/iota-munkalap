@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,9 +45,22 @@ public class UserController {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
     }
 
+    @PutMapping("/users/{id}")
+    @RolesAllowed("admin")
+    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
+        return userService.update(id, user);
+    }
+
     @GetMapping("/users")
     @ResponseStatus(HttpStatus.FOUND)
     public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
         return userService.findUserByNameAndEmail(q);
+    }
+
+    @GetMapping("/users/{id}")
+    @RolesAllowed("admin")
+    public Optional<User> getUserById(@PathVariable("id") Long userId) {
+        return userService.getUserById(userId);
+
     }
 }
