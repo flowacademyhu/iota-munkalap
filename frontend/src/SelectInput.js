@@ -8,9 +8,9 @@ export default function SelectInput({handleChange, label, container, ...props })
             <Form>
                 <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{label}</Form.Label>
-                    <Form.Control as="select" custom>
+                    <Form.Control onChange={(event) => handleChange(event.target.value)} as="select" custom>
                         {container.map(oneItem => (
-                            <option onChange={() => handleChange(oneItem.value)} key={oneItem.id} value={oneItem.value}> {oneItem.label} </option>
+                            <option key={oneItem.id} value={oneItem.value}> {oneItem.label} </option>
                         ))}
                     </Form.Control>
                 </Form.Group>
