@@ -22,7 +22,7 @@ public class WorksheetController {
     @RolesAllowed({"admin", "user"})
     public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = Worksheet.builder()
-                .partner(worksheetDTO.getPartner())
+                //.partner(worksheetDTO.getPartner())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .assetSettlement(worksheetDTO.getAssetSettlement())
                 .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())

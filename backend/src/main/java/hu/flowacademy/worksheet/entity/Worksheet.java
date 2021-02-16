@@ -5,7 +5,6 @@ import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,9 +19,8 @@ public class Worksheet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "worksheet_id")
     private Long id;
-    @ManyToOne
-    @JoinColumn(name="partner_id")
-    private Partner partner;
+    @Column(name = "partner_id")
+    private String partnerId; // FIXME Change to many to one in the future.
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work")
     private TypeOfWork typeOfWork;
@@ -38,7 +36,7 @@ public class Worksheet {
     private float overheadHour;
     @Column(name = "delivery_km")
     private float deliveryKm;
-    @Column(name = "account_serial_number", nullable = false)
+    @Column(name = "account_serial_number", nullable = false) //NULLABLE JAVÍTÁS
     private String accountSerialNumber;
     @Lob
     @Column(name = "description")
@@ -52,9 +50,9 @@ public class Worksheet {
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime localDateTime;
     @Column(name = "worker_signature")
-    private Blob workerSignature;
+    private String workerSignature;
     @Column(name = "proof_of_employment")
-    private Blob proofOfEmployment;
+    private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
 }

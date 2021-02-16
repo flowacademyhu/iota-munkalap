@@ -25,9 +25,9 @@ public class WorksheetService {
     }
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-        if (worksheet.getPartner() == null) {
-            throw new ValidationException("Partner value is null");
-        }
+        //if (worksheet.getPartner() == null) {
+        //    throw new ValidationException("Partner value is null");
+        //}
         if (worksheet.getTypeOfWork() == null) {
             throw new ValidationException("Type of work value is null");
         }
@@ -60,9 +60,6 @@ public class WorksheetService {
         }
         if (worksheet.getProofOfEmployment() == null) {
             throw new ValidationException("Proof of Employment value is null");
-        }
-        if (worksheet.getWorksheetStatus() == null) {
-            throw new ValidationException("Worksheet status value is null");
         }
     }
 }
