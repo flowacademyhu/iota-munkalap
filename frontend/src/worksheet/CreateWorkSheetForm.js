@@ -6,17 +6,17 @@ import Button from '../Button';
 import PopUp from '../PopUp';
 import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
+import schema from './ValidationWorkSheet'
 
 function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
   title, name, email }) {
 
-    const [value, setValue] = useState("alma");
+    const [value, setValue] = useState("");
 
-    // function handleChange(param) {
-    //   setValue(param);
+    function handleChange(param) {
+      setValue(param);
 
-    // }
-
+    }
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
   { id: 2, label: "Javítás", value: "repair" },
@@ -56,11 +56,12 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               description: '',
               usedMaterial: '',
               typeOfPayment: '',
-              date: '',
+              localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
               status: '',
             }}
+            validationSchema={schema}
             onSubmit={values => {
               sendData(values);
             }}
@@ -68,29 +69,28 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             <Form>
               <h1 className='text-center'>{title}</h1>
               <Input name='partner' label='Partner' type='text' />
-              <SelectInput handleChange={setValue} name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
+              <SelectInput handleChange={handleChange} name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
               {value === 'other' &&
               <Input name='typeOfWork' label='Egyéb' type='text' />}
-              <div>{value}</div>
-              <SelectInput  name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
-              <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
+              <SelectInput handleChange={handleChange} name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
+              <SelectInput handleChange={handleChange} name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
               <Input name='numberOfEmployees' label='Létszám' type='number' />
               <Input name='overHeadHour' label='Rezsióra' type='number' />
               <Input name='delivery' label='Kiszállítás' type='number' />
               <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
               <Input name='description' label='Elvégzett munka leírása' type='text' />
               <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
-              <SelectInput name='typeOfPayment' label='Fizetés módja' container={itemList4} />
+              <SelectInput handleChange={handleChange} name='typeOfPayment' label='Fizetés módja' container={itemList4} />
               <div>Kelt: {getCurrentDate()} </div>
               <div>Munkát végezte: IDE KELL E-ALÁÍRÁS</div>
               <div>munkavégzést igazolja: IDE KELL MÉG EGY E-ALÁÍRÁS</div>
 
 
               <div className='buttons'>
-                <Link to='/employees'>
-                  <Button text='Mégse' />
+                <Link to='/worksheets'>
+                  <Button text='Mégse' moreClassName='h-auto' />
                 </Link>
-                <Button text='Mentés' type='submit' />
+                <Button text='Mentés' type='submit' moreClassName='h-auto' />
               </div>
             </Form>
           </Formik>
