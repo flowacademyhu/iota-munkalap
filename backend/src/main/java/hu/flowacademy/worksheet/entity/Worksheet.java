@@ -15,42 +15,41 @@ public class Worksheet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    //@NonNull
-    //private Partner partner; szükséges lesz hozzá egy Partner osztály
+    @Column(name = "worksheet_id")
+    private String id;
+    @Column(name="partner")
+    private Partner partner;
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @Column(name = "type_of_work")
     private TypeOfWork typeOfWork;
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @Column(name = "asset_settlement")
     private AssetSettlement assetSettlement;
     @Enumerated(EnumType.STRING)
-    @NonNull
+    @Column(name = "working_time_accounting")
     private WorkingTimeAccounting workingTimeAccounting;
-    @NonNull
-    private int numberOfEmployees = 1;
-    @NonNull
+    @Column(name = "number_of_employees", columnDefinition = "int default 1")
+    private int numberOfEmployees;
+    @Column(name = "overhead_hour", columnDefinition = "float default 1.0")
     private float overheadHour;
-    @NonNull
+    @Column(name = "delivery_km")
     private float deliveryKm;
+    @Column(name = "account serial number", nullable = false)
     private String accountSerialNumber;
-    @NonNull
     @Lob
+    @Column(name = "description")
     private String description;
-    @NonNull
+    @Column(name = "used_material")
     private String usedMaterial;
-    @NonNull
+    @Column(name = "tpye_of_payment")
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
-    @NonNull
-    private String date;
-    @NonNull
+    @Column(name = "local_date_time")
+    private String localDateTime;
+    @Column(name = "worker_signature")
     private String workerSignature;
-    @NonNull
+    @Column(name = "proof_of_employment")
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private Status status;
-
 }
-
-// Nem tudom, hogy az e-aláírások, hogyan lesznek tárolva, milyen típusban, egyelőre Stringnek állítottam!
