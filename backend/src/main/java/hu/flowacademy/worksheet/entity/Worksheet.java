@@ -3,6 +3,7 @@ package hu.flowacademy.worksheet.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class Worksheet {
 
     @Id
     @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "worksheet_id", nullable = false)
     private String id;
     @Column(name = "partner_id")
