@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getWorkSheets } from '../api/WorkSheetAPI';
 
-export default function useUsers() {
+export default function useWorkSheets() {
   const [workSheets, setWorkSheets] = useState();
   useEffect(() => {
-    async function updatePosts() {
+    async function updateWorkSheets() {
       const { data } = await getWorkSheets();
       setWorkSheets(data);
     }
-    updatePosts();
+    updateWorkSheets();
   }, []);
   return {
     workSheets

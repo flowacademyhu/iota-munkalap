@@ -14,8 +14,7 @@ import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
 import './style.css';
 import LogOut from './LogOut';
-import CreateWorkSheet from "./worksheet/CreateWorkSheet";
-import TableListOfWorkSheets from "./worksheet/TableListOfWorkSheets";
+import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
 
 export default function Page() {
 
