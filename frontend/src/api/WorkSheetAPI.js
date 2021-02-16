@@ -1,10 +1,11 @@
-import axios from 'axios';
+import getApi from './getApi';
 import MockAdapter from "axios-mock-adapter";
 
-const api = axios.create({
-    baseURL: `/api/`
-})
+let api = getApi();
 
+var mock = new MockAdapter(api);
+
+mock.onPost("/worksheets").reply(200);
 
 function getWorkSheets() {
     return api
