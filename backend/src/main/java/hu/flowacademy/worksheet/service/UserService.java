@@ -18,6 +18,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
@@ -25,6 +26,9 @@ import static org.apache.commons.lang3.StringUtils.stripAccents;
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
+    private final int DEFAULT_PAGE = 0;
+    private final String DEFAULT_ORDERBY = "createdAt";
+
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
     private final PagingProperties pagingProperties;
@@ -90,17 +94,16 @@ public class UserService {
 
     public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
         return searchPart.map(s -> {
-            String pattern = "%" + searchPart.get().replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-            PageRequest pageRequest = PageRequest.of(page.orElse(0),
+            String pattern = "%" + s.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+            PageRequest pageRequest = PageRequest.of(page.orElse(DEFAULT_PAGE),
                     limit.orElse(pagingProperties.getDefaultLimit()),
-                    Sort.by(orderBy.orElse("createdAt")).descending());
+                    Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending());
             Page<User> userList = userRepository
                     .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
-            System.out.println(userList.getContent());
-            return userList.getContent();
-        }).orElse(userRepository
+            return userList.getContent().stream().filter(user -> filterContains(s, user)).collect(Collectors.toList());
+        }).orElseGet(() -> userRepository
                 .findAll(PageRequest.of(page.orElse(0),
                         limit.orElse(pagingProperties.getDefaultLimit()),
-                        Sort.by(orderBy.orElse("createdAt")).descending())).getContent());
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
     }
 }
