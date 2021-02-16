@@ -15,7 +15,8 @@ async function loginUser(credentials) {
 
 function getUsers() {
     return api
-        .get(`/users/`);
+        .get(`api/users?status=${status}`);
+        //Ez tedd a pathhez: users?status=${status}&page=${page}&q=${q}
 }
 
 function postUser(credentials) {
