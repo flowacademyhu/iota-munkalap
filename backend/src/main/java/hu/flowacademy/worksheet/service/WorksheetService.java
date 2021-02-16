@@ -25,9 +25,9 @@ public class WorksheetService {
     }
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-        //if (worksheet.getPartner() == null) {
-        //    throw new ValidationException("Partner value is null");
-        //}
+        if (worksheet.getPartnerId() == null) {
+            throw new ValidationException("Partner value is null");
+        }
         if (worksheet.getTypeOfWork() == null) {
             throw new ValidationException("Type of work value is null");
         }
