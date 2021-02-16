@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -161,7 +162,7 @@ class UserServiceTest {
     @Test
     public void givenAnExistingUser_whenSettingActivity_thenActivityIsUpdated() throws ValidationException {
         givenExistingUser();
-        User result = userService.setUserActivity(REGISTRATION_ID, "inactive");
+        User result = userService.setUserActivity(REGISTRATION_ID, Status.inactive);
         Mockito.verify(userRepository, times(1)).save(result);
         assertThat(result, notNullValue());
         assertThat(result.isEnabled(), notNullValue());
