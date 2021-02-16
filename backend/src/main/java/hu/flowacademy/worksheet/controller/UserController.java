@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.KeycloakClientService;
 import hu.flowacademy.worksheet.service.UserService;
@@ -57,10 +58,15 @@ public class UserController {
         return userService.findUserByNameAndEmail(q);
     }
 
+    @PutMapping("/users/{id}/{status}")
+    public User setUserStatus(@PathVariable("id") Long id,
+                              @PathVariable(value = "status") Status status) throws ValidationException {
+        return userService.setUserActivity(id, status);
+    }
+
     @GetMapping("/users/{id}")
     @RolesAllowed("admin")
     public Optional<User> getUserById(@PathVariable("id") Long userId) {
         return userService.getUserById(userId);
-
     }
 }

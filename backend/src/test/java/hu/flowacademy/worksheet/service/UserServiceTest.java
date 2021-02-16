@@ -1,6 +1,8 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
 
@@ -156,6 +159,16 @@ class UserServiceTest {
         org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
     }
 
+    @Test
+    public void givenAnExistingUser_whenSettingActivity_thenActivityIsUpdated() throws ValidationException {
+        givenExistingUser();
+        User result = userService.setUserActivity(REGISTRATION_ID, Status.inactive);
+        Mockito.verify(userRepository, times(1)).save(result);
+        assertThat(result, notNullValue());
+        assertThat(result.isEnabled(), notNullValue());
+        assertThat(result.isEnabled(), is(false));
+    }
+
     private void givenUniquePerson() {
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> {
             User input = invocationOnMock.getArgument(0);
@@ -178,6 +191,16 @@ class UserServiceTest {
         user.setFirstName(NEW_FIRSTNAME);
         user.setLastName(NEW_LASTNAME);
         return user;
+    }
+
+    private void givenExistingUser() {
+        User user = givenProperUserObject();
+        user.setEnabled(true);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setRole(Role.USER);
+        user.setId(REGISTRATION_ID);
+        when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.of(user));
+        when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
     private void givenExistingUserRegistration() {
