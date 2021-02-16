@@ -4,6 +4,7 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,10 +12,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -83,6 +89,23 @@ class WorksheetServiceTest {
         verifyNoMoreInteractions(worksheetRepository);
 
     }
+
+    @Test
+    public void givenAnExistingWorksheet_whenSettingStatus_thenSetStatusToReported() throws ValidationException {
+        givenExistingWorksheet();
+        Worksheet result = worksheetService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
+        Mockito.verify(worksheetRepository, times(1)).save(result);
+        assertThat(result, notNullValue());
+        assertThat(result.getWorksheetStatus(), notNullValue());
+        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
+    }
+
+    private void givenExistingWorksheet() {
+        Worksheet worksheet = givenValidWorksheet();
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
 
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()
