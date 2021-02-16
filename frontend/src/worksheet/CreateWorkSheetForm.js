@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
@@ -9,8 +9,6 @@ import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
 
 function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title }) {
-
-  const [value, setValue] = useState("");
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
   { id: 2, label: "Javítás", value: "repair" },
@@ -40,16 +38,17 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
           <Formik
             initialValues={{
               partner: '',
-              typeOfWork: '',
-              assetSettlement: '',
-              workingTimeAccounting: '',
+              typeOfWork: itemList1[1].label,
+              // typeOfWorkOther: '',
+              assetSettlement: itemList2[1].label,
+              workingTimeAccounting: itemList3[1].label,
               numberOfEmployees: 0,
               overheadHour: 0,
               deliveryKm: 0,
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
-              typeOfPayment: '',
+              typeOfPayment: itemList4[1].label,
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
@@ -70,14 +69,13 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               isSubmitting,
               /* and other goodies */
             }) => {
-              console.log(values)
               return (
                 <Form>
                   <h1 className='text-center'>{title}</h1>
                   <Input name='partner' label='Partner' type='text' />
-                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
-                  {value === 'other' &&
-                    <Input name='typeOfWork' label='Egyéb' type='text' />}
+                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1}/>
+                  { values.typeOfWork === "other" &&
+                    <Input name='typeOfWorkOther' label='Egyéb' type='text' />}
                   <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
                   <SelectInput  name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
                   <Input name='numberOfEmployees' label='Létszám' type='number' />
@@ -87,7 +85,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
                   <Input name='description' label='Elvégzett munka leírása' type='text' />
                   <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
                   <SelectInput name='typeOfPayment' label='Fizetés módja' container={itemList4} />
-                  <Input name='localDateTime' label='Kelt' disabled/>
+                  <span>Kelt: {getCurrentDate()}</span>
                   <Input name='workerSignature' label='Munkát végezte' placeholder="IDE KELL E-ALÁIRÁS" />
                   <Input name='proofOfEmployment' label='munkavégzést igazolja' placeholder='IDE KELL MÉG EGY E-ALÁÍRÁS' />
 
