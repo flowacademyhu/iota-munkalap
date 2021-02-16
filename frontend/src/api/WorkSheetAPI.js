@@ -1,7 +1,6 @@
-import getApi from './getApi';
+import api from './createApi';
 import MockAdapter from "axios-mock-adapter";
 
-let api = getApi();
 var mock = new MockAdapter(api);
 
 const workSheets = [
@@ -11,7 +10,9 @@ const workSheets = [
   { id: '4', creater: 'employee4', date: '2010.08.11.', partner: 'partner4', type: 'type4', state: 'state4' }
 ]
 
-mock.onGet("/worksheets").reply(200, workSheets);
+mock.onGet("/worksheets").reply(200, workSheets)
+  .onAny()
+  .passThrough();
 
 function getWorkSheets() {
   return api
