@@ -93,9 +93,9 @@ public class UserService {
 
     }
 
-    public User setUserActivity(Long id, String status) throws ValidationException {
+    public User setUserActivity(Long id, Status status) throws ValidationException {
         User toChange = userRepository.findById(id).orElseThrow(()-> new ValidationException("No user with provided ID"));
-        toChange.setEnabled(status.toLowerCase().equals(Status.active.name()));
+        toChange.setEnabled(status == Status.active);
         keycloakClientService.setUserStatus(toChange);
         return userRepository.save(toChange);
     }
