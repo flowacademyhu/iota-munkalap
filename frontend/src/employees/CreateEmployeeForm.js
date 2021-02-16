@@ -7,6 +7,12 @@ import Button from '../Button';
 import PopUp from '../PopUp';
 
 const schema = yup.object().shape({
+  lastName: yup
+    .string()
+    .required("A vezetéknév kötelező!"),
+  firstName: yup
+    .string()
+    .required("A keresztnév kötelező!"),
   email: yup
     .string()
     .required("Az email kötelező!")
@@ -51,8 +57,8 @@ function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sen
           >
             <Form>
               <h1 className='text-center'>{title}</h1>
-              <Input name='firstName' label='Vezetéknév' type='text' />
-              <Input name='lastName' label='Keresztnév' type='text' />
+              <Input name='lastName' label='Vezetéknév' type='text' />
+              <Input name='firstName' label='Keresztnév' type='text' />
               <Input name='email' label='E-mail' type='email' />
               <Input name='password' label='Jelszó' type='password' />
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />

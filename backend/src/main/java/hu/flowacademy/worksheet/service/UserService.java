@@ -19,6 +19,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.stripAccents;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -36,6 +41,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User update(Long id, User user) throws ValidationException {
+        validateUpdate(user);
+        User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + user.getId()));
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setEmail(user.getEmail());
+        return userRepository.save(updatedUser);
+    }
+
     private void validateUser(User user) throws ValidationException {
         if (!StringUtils.hasText(user.getFirstName())) {
             throw new ValidationException("Username null or empty String");
@@ -51,8 +65,38 @@ public class UserService {
         }
     }
 
+    private void validateUpdate(User user) throws ValidationException {
+        if (user.getId() != null) {
+            throw new ValidationException("Not existing user id, or null");
+        }
+        if (!StringUtils.hasText(user.getFirstName())) {
+            throw new ValidationException("User firstName is empty or null");
+        }
+        if (!StringUtils.hasText(user.getLastName())) {
+            throw new ValidationException("User lastName is empty or null");
+        }
+        if (!StringUtils.hasText(user.getEmail())) {
+            throw new ValidationException("Not user id, or null");
+        }
+    }
+
+    public List<User> findUserByNameAndEmail(String searchPart) {
+        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
+                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
     public List<User> findUserByNameAndEmail(Optional<String> searchPart) {
         return userRepository.findByEmailContainingOrFirstNameContainingOrLastNameContaining(searchPart.get(), searchPart.get(), searchPart.get());
+    }
+
+    private boolean filterContains(String searchPart, User user) {
+        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
+                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
+                user.getEmail().contains(stripAccents(searchPart));
+    }
+
+    public Optional<User> getUserById(Long userId) {
+        return userRepository.findById(userId);
+
     }
 
     public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
