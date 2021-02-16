@@ -5,7 +5,7 @@ hu:
   flowacademy:
     worksheet:
       paging:
-        defaultLimit: 1
+        defaultLimit: 10
 
 spring:
   datasource:
@@ -26,8 +26,8 @@ spring:
 keycloakBackendClient:
   realm: master
   client-id: admin-cli
-  adminusername: admin
-  adminpassword: admin
+  adminusername: gyanyim
+  adminpassword: snxTZr9$5GGnS7w
   user-role: worksheetuser
 
 keycloak:
