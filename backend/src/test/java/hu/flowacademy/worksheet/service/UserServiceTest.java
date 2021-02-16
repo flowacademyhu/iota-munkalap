@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
@@ -40,6 +41,9 @@ class UserServiceTest {
     private UserRepository userRepository;
     @Mock
     private KeycloakClientService keycloakClientService;
+
+    @Mock
+    private PagingProperties pagingProperties;
 
     @InjectMocks
     private UserService userService;
@@ -112,7 +116,7 @@ class UserServiceTest {
         Pageable pageable = PageRequest.of(0, 1);
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), users.size());
-        Page<User> pagedUsers = new PageImpl<User>(users.subList(start, end), pageable, users.size());
+        Page<User> pagedUsers = new PageImpl<>(users.subList(start, end), pageable, users.size());
         when(userRepository.findAll(eq(pageable))).thenReturn(pagedUsers);
     }
 
