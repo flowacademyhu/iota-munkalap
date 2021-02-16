@@ -3,6 +3,7 @@ package hu.flowacademy.worksheet.service;
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
@@ -105,5 +106,12 @@ public class UserService {
                 .findAll(PageRequest.of(page.orElse(0),
                         limit.orElse(pagingProperties.getDefaultLimit()),
                         Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
+    }
+
+    public User setUserActivity(Long id, Status status) throws ValidationException {
+        User toChange = userRepository.findById(id).orElseThrow(()-> new ValidationException("No user with provided ID"));
+        toChange.setEnabled(status == Status.active);
+        keycloakClientService.setUserStatus(toChange);
+        return userRepository.save(toChange);
     }
 }

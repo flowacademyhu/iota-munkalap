@@ -1,8 +1,20 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: `/api/`,
+    baseURL: `/api/`
 })
+
+api.interceptors.request.use(
+    request => {
+        const token = sessionStorage.getItem('token');
+        if (token) {
+            request.headers = {...request.headers,  Authorization: 'Bearer ' + token}
+        }
+        return request;
+    }, error => {
+        return Promise.reject(error);
+    }
+)
 
 async function loginUser(credentials) {
     try {
@@ -10,7 +22,7 @@ async function loginUser(credentials) {
         return result.data.access_token;
     } catch (error) {
         alert('A belépés sikertelen.');
-    }   
+    }
 }
 
 function getUsers() {
@@ -30,18 +42,18 @@ function putUser(id, credentials) {
 
 function putUserInactive(id) {
     return api
-        .put(`/users/${id}`, {"isActive": false});
+        .put(`/users/${id}`, { "isActive": false });
 }
 function getUser(id) {
     return api
         .get(`/users/${id}`);
 }
 
-export { 
-    getUsers, 
-    postUser, 
-    putUser, 
-    putUserInactive, 
-    getUser, 
-    loginUser 
+export {
+    getUsers,
+    postUser,
+    putUser,
+    putUserInactive,
+    getUser,
+    loginUser
 };
