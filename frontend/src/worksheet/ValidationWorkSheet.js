@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export default function() {
+export default function schema() {
 
   const schema = yup.object().shape({
     partner: yup
@@ -39,10 +39,13 @@ export default function() {
       .string()
       .required("Fizetési mód megadása kötelező!"),
     date: yup
+      .string()
       .required("Dátum megadása kötelező!"),
     workerSignature: yup
+      .string()
       .required("Aláírás kötelező!"),
     proofOfEmployment: yup
+      .string()
       .required("Munkavégzés igazolása kötelező!"),
   });
 
