@@ -1,10 +1,12 @@
 package hu.flowacademy.worksheet.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -47,7 +49,8 @@ public class Worksheet {
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
     @Column(name = "local_date_time")
-    private String localDateTime;
+    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
+    private LocalDateTime localDateTime;
     @Column(name = "worker_signature")
     private Blob workerSignature;
     @Column(name = "proof_of_employment")

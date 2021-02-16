@@ -1,29 +1,43 @@
 package hu.flowacademy.worksheet.controller;
 
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Worksheet;
+import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api")
 public class WorksheetController {
 
-    //@PostMapping("/")
+    private final WorksheetService worksheetService;
 
-
-}
-
-/* @PostMapping("/users")
+    @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
-    @RolesAllowed("admin")
-    public User createUser(@RequestBody UserOperationDTO userOperationDTO) throws ValidationException {
-        User user = User.builder()
-                .firstName(userOperationDTO.getFirstName())
-                .lastName(userOperationDTO.getLastName())
-                .email(userOperationDTO.getEmail())
-                .password(userOperationDTO.getPassword())
+    @RolesAllowed({"admin", "user"})
+    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+        Worksheet worksheet = Worksheet.builder()
+                .partner(worksheetDTO.getPartner())
+                .typeOfWork(worksheetDTO.getTypeOfWork())
+                .assetSettlement(worksheetDTO.getAssetSettlement())
+                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
+                .overheadHour(worksheetDTO.getOverheadHour())
+                .deliveryKm(worksheetDTO.getDeliveryKm())
+                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
+                .description(worksheetDTO.getDescription())
+                .usedMaterial(worksheetDTO.getUsedMaterial())
+                .typeOfPayment(worksheetDTO.getTypeOfPayment())
+                .localDateTime(worksheetDTO.getLocalDateTime())
+                .workerSignature(worksheetDTO.getWorkerSignature())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment())
+                .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
-        return userService.saveUser(user);
-    }*/
+        return worksheetService.saveWorksheet(worksheet);
+    }
+}
