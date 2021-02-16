@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
 import Button from '../Button';
 import { putUserInactive } from '../UserAPI';
+import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
+  const [name, setStatus] = useState("");
   const { users } = useUsers();
 
   return (
@@ -13,6 +15,7 @@ export default function TableListOfEmployees() {
       <Link to={`/employees/new`}>
         <Button text='Új munkavállaló létrehozása' />
       </Link>
+      <FilterUsers  status = {status} onStatusChange = {setStatus}/>
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover">
