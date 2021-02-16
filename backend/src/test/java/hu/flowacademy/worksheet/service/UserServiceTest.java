@@ -124,9 +124,7 @@ class UserServiceTest {
     public void givenNewUserObject_whenUpdateUser_thenUserUpdated() throws ValidationException {
         givenExistingUserRegistration();
         User newUser = givenUpdateProperUserObject();
-
         User updatedUser = userService.update(REGISTRATION_ID, newUser);
-
         Mockito.verify(userRepository, times(1)).save(updatedUser);
         assertThat(updatedUser, notNullValue());
         assertThat(updatedUser.getFirstName(), is(newUser.getFirstName()));
@@ -139,12 +137,9 @@ class UserServiceTest {
     public void givenNonExistingUserObject_whenUpdateUser_thenThrowException() {
         givenANonExistingUserRegistration();
         User newUser = givenUpdateProperUserObject();
-
         Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, newUser));
-
         assertThat(thrown, notNullValue());
         assertThat(thrown.getMessage(), is("The id is null or not real: null"));
-
     }
 
     @Test
@@ -181,14 +176,6 @@ class UserServiceTest {
     public void givenMissingLastNameUser_whenUpdatingUser_ThenThrowException() {
         User userData = User.builder().email(TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(EMPTY_STRING).build();
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
-    }
-
-    public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws
-            ValidationException {
-        givenRepoWithUser();
-        List<User> result = userService.findUserByNameAndEmail("pista");
-
-        org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
     }
 
     @Test
