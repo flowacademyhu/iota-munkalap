@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import Input from '../Input';
@@ -8,15 +8,14 @@ import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
 
-function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
-  title, name, email }) {
+function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title }) {
 
-    const [value, setValue] = useState("");
+  const [value, setValue] = useState("");
 
-    function handleChange(param) {
-      setValue(param);
+  function handleChange(param) {
+    setValue(param);
 
-    }
+  }
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
   { id: 2, label: "Javítás", value: "repair" },
@@ -59,7 +58,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
-              status: '',
+              status: ''
             }}
             validationSchema={schema}
             onSubmit={values => {
@@ -71,20 +70,19 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               <Input name='partner' label='Partner' type='text' />
               <SelectInput handleChange={handleChange} name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
               {value === 'other' &&
-              <Input name='typeOfWork' label='Egyéb' type='text' />}
+                <Input name='typeOfWork' label='Egyéb' type='text' />}
               <SelectInput handleChange={handleChange} name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
               <SelectInput handleChange={handleChange} name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
               <Input name='numberOfEmployees' label='Létszám' type='number' />
-              <Input name='overHeadHour' label='Rezsióra' type='number' />
-              <Input name='delivery' label='Kiszállítás' type='number' />
+              <Input name='overheadHour' label='Rezsióra' type='number' />
+              <Input name='deliveryKm' label='Kiszállítás' type='number' />
               <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
               <Input name='description' label='Elvégzett munka leírása' type='text' />
               <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
               <SelectInput handleChange={handleChange} name='typeOfPayment' label='Fizetés módja' container={itemList4} />
-              <div>Kelt: {getCurrentDate()} </div>
-              <div>Munkát végezte: IDE KELL E-ALÁÍRÁS</div>
-              <div>munkavégzést igazolja: IDE KELL MÉG EGY E-ALÁÍRÁS</div>
-
+              <Input name='localDateTime' label='Kelt' />
+              <Input name='workerSignature' label='Munkát végezte' placeholder="IDE KELL E-ALÁIRÁS" />
+              <Input name='proofOfEmployment' label='munkavégzést igazolja' placeholder='IDE KELL MÉG EGY E-ALÁÍRÁS' />
 
               <div className='buttons'>
                 <Link to='/worksheets'>
