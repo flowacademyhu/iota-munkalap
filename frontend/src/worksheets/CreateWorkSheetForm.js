@@ -8,7 +8,7 @@ import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
 
-function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, title }) {
+function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
   { id: 2, label: "Javítás", value: "repair" },
@@ -33,6 +33,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               body={popUpMessage}
               sentSuccessfully={sentSuccessfully}
               setSent={setSent}
+              basePath={basePath}
               path={path}
             />}
           <Formik
