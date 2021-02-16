@@ -1,10 +1,17 @@
 import React from 'react';
 import useWorkSheets from '../hooks/useWorkSheets';
+import { Link } from 'react-router-dom';
+import Button from '../Button';
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets();
   return (
     <>
+      <div className="d-flex justify-content-between p-5">
+        <Link to={`/worksheets/new`}>
+          <Button className="h-auto" text='Új munkalap léptrehozása' />
+        </Link>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover text-center">
