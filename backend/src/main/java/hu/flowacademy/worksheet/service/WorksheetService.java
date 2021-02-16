@@ -64,4 +64,10 @@ public class WorksheetService {
             throw new ValidationException("Proof of Employment value is null");
         }
     }
+
+    public Worksheet finalizeWorksheet(String id) throws ValidationException {
+        Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
+        toChange.setWorksheetStatus(WorksheetStatus.REPORTED);
+        return worksheetRepository.save(toChange);
+    }
 }
