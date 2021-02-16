@@ -10,4 +10,9 @@ import java.util.regex.Pattern;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(String emailPart, String firstNamePart, String lastNamePart);
+
+
+    
+
+
 }

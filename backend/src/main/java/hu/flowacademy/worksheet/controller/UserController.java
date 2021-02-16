@@ -39,9 +39,11 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<User> ListActiveUsers(@RequestParam(value = "status") Boolean active) throws ValidationException {
-        return userService.getActiveUsers(active);
+    @PermitAll
+    public List<User> findAll(@RequestParam(name = "status", required = false) Optional<Boolean> status,
+                              @RequestParam(name = "page", required = false) Optional<Integer> page,
+                              @RequestParam(name = "q", required = false) Optional<String> q) {
+        return userService.filter(status, page, q);
     }
 
     //Loginoláskor a Keycloakhoz indít továbbhívást.
@@ -58,11 +60,11 @@ public class UserController {
         return userService.update(id, user);
     }
 
-    @GetMapping("/users")
-    @ResponseStatus(HttpStatus.FOUND)
-    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
-        return userService.findUserByNameAndEmail(q);
-    }
+//    @GetMapping("/users")
+//    @ResponseStatus(HttpStatus.FOUND)
+//    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
+//        return userService.findUserByNameAndEmail(q);
+//    }
 
     @PutMapping("/users/{id}/{status}")
     public User setUserStatus(@PathVariable("id") Long id,

@@ -8,6 +8,8 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,7 +22,10 @@ import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.enabled;
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.firstnameLastnameEmailContains;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
+
 
 @Service
 @RequiredArgsConstructor
@@ -78,17 +83,43 @@ public class UserService {
         }
     }
 
-    public List<User> findUserByNameAndEmail(String searchPart) {
-        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
-                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
-    }
 
+
+    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q) {
+        List<User> result = userRepository.findAll(
+                Specification
+                        .where(enabled(status))
+                        .and(firstnameLastnameEmailContains(
+                                q.map(searchPart -> "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%")
+                                )
+                        ),
+                PageRequest.of(page.orElse(0), 10)
+        ).getContent();
+        return q.map(searchPart ->
+                result.stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList()))
+                .orElse(result);
+    }
     private boolean filterContains(String searchPart, User user) {
         return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
                 stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
                 user.getEmail().contains(stripAccents(searchPart));
     }
+
+
+
+
+
+//    public List<User> findUserByNameAndEmail(String searchPart) {
+//        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+//        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
+//                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
+//    }
+//
+//    private boolean filterContains(String searchPart, User user) {
+//        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
+//                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
+//                user.getEmail().contains(stripAccents(searchPart));
+//    }
 
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
