@@ -105,7 +105,7 @@ jobs:
       - name: Run maven test
         run: mvn -B clean test
 
-  deploy_staging:
+  deploy-staging:
     name: Deploy to staging
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
