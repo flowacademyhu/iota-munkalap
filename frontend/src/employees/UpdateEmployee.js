@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import UpdateEmployeeForm from './UpdateEmployeeForm';
 import { putUser, getUser } from '../api/UserAPI';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import {PATH_VARIABLES} from '../worksheets/Const'
 
 function UpdateEmployee() {
   const [sent, setSent] = useState(false);
@@ -9,6 +10,13 @@ function UpdateEmployee() {
   const [popUpMessage, setPopUpMessage] = useState('');
   const { id } = useParams();
   const [userData, setUserData] = useState({});
+
+  let history = useHistory();
+
+  function handleClick() {
+    setSent(false);
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -30,8 +38,6 @@ function UpdateEmployee() {
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva');
         setSentSuccessfully(true);
-      } else {
-        setPopUpMessage('A módosítás sikertelen');
       }
     } catch (error) {
       setPopUpMessage('A módosítás sikertelen');
@@ -43,12 +49,11 @@ function UpdateEmployee() {
     <>
       {userData.loaded &&
         <UpdateEmployeeForm
+          handleClick={handleClick}
           sent={sent}
-          setSent={setSent}
           sentSuccessfully={sentSuccessfully}
           popUpMessage={popUpMessage}
           sendData={putData}
-          path='update'
           title='Adatok módosítása'
           user={userData}
         />}
