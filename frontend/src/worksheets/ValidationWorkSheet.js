@@ -9,7 +9,6 @@ export default function schema() {
     typeOfWork: yup
       .string()
       .required("Munkavégzés jellegének megadása kötelező!"),
-
     customTypeOfWork: yup
       .string()
       .when('typeOfWork', {
