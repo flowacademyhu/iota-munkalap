@@ -1,8 +1,9 @@
 import React from 'react';
 import { useJwt } from "react-jwt";
+import useToken from './hooks/useToken'
 
 function UserData() {
-  const token = sessionStorage.getItem('token');
+  const { token } = useToken();
   const { decodedToken } = useJwt(token);
   if (decodedToken) {
     return (
