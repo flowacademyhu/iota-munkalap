@@ -7,19 +7,19 @@ import GetUserData from './GetUserData';
 
 function Header() {
   return (
-    <div className="container p-0 m-0">
-      <div className='row align-items-center'>
-        <div className='col text-left'>
-          <img className="col-auto mt-3 ml-3 logo" src={logo} alt="ingo stop logo" />
+    <div className="container px-0 py-2 m-0">
+      <div className='row align-items-center m-0'>
+        <div className='col p-0'>
+          <img className="col-auto logo p-0 m-0" src={logo} alt="ingo stop logo" />
         </div>
 
-        <div className='col text-center h5'>
+        <div className='col text-center h5 p-0'>
           <GetUserData />
         </div>
 
-        <Dropdown className="col text-right">
-          <Dropdown.Toggle className="bg-transparent border-light text-right w-50" id="dropdown-basic">
-            <img src={tools} alt="ingo stop logo" className="settingsLogo" />
+        <Dropdown className="col text-right p-0">
+          <Dropdown.Toggle className="bg-transparent border-light w-auto p-0" id="dropdown-basic">
+            <img src={tools} alt="ingo stop logo" className="settingsLogo m-0 float-right" />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item><LogOut /></Dropdown.Item>
