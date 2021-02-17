@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { TYPE_OF_WORK } from './Const';
 
 export default function schema() {
 
@@ -12,7 +13,7 @@ export default function schema() {
     customTypeOfWork: yup
       .string()
       .when('typeOfWork', {
-        is: 'OTHER',
+        is: TYPE_OF_WORK.OTHER,
         then: yup.string().required("Munkavégzés jellegének megadása kötelező!"),
         otherwise: yup.string(),
       }),

@@ -7,13 +7,14 @@ import PopUp from '../PopUp';
 import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
+import {TYPE_OF_WORK} from './Const'
 
 function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
   { id: 2, label: "Javítás", value: "REPAIR" },
   { id: 3, label: "Karbantartás", value: "MAINTENANCE" },
-  { id: 4, label: "Egyéb", value: "OTHER" }]
+  { id: 4, label: "Egyéb", value: TYPE_OF_WORK.OTHER }]
 
   const itemList2 = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
   { id: 2, label: "Garanciális", value: "WARRANTY" }]
@@ -69,7 +70,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
                   <h1 className='text-center'>{title}</h1>
                   <Input name='partnerId' label='Partner' type='text' />
                   <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
-                  { values.typeOfWork === "OTHER" &&
+                  { values.typeOfWork === TYPE_OF_WORK.OTHER &&
                     <Input name='customTypeOfWork' label='Egyéb' type='text' />}
                   <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
                   <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
