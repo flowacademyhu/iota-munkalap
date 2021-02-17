@@ -58,7 +58,9 @@ public class UserController {
                                        @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                        @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
                                        @RequestParam(value = "q", required = false) Optional<String> q) {
-            return userService.listRegistrations( page, limit, orderBy, q);
+            List<User> userList = userService.listRegistrations( page, limit, orderBy, q);
+        System.out.println(userList);
+        return userList;
     }
 
     @PutMapping("/users/{id}/{status}")
