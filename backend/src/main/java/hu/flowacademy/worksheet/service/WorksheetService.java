@@ -22,9 +22,6 @@ public class WorksheetService {
 
     public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
         validateWorksheet(worksheet);
-        if (worksheet.getTypeOfWork() == TypeOfWork.OTHER) {
-            worksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
-        }
         worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
         worksheet.setCreatedAt(LocalDateTime.now());
         return worksheetRepository.save(worksheet);

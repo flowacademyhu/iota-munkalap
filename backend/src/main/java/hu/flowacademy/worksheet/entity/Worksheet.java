@@ -24,7 +24,7 @@ public class Worksheet {
     @Column(name = "partner_id")
     private String partnerId; // FIXME Change to many to one in the future.
     @Enumerated(EnumType.STRING)
-    @Column(name = "type_of_work")
+    @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;
     private String customTypeOfWork;
     @Enumerated(EnumType.STRING)
