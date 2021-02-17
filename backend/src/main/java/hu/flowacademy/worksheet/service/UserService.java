@@ -99,7 +99,7 @@ public class UserService {
                                 )
                         ),
 
-                PageRequest.of(page.orElse(0), pagingLimit, Sort.Direction.valueOf(pagingOrderBy))
+                PageRequest.of(page.orElse(0), pagingLimit, Sort.Direction.valueOf(pagingOrderBy)) //mod here
         ).getContent();
         return q.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart, user))
