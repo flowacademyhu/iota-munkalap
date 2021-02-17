@@ -9,20 +9,20 @@ import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
 import {TYPE_OF_WORK} from './Const'
 
-function CreateWorkSheetForm({ sent, setSent, handleClick, popUpMessage, sendData, title }) {
+function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title }) {
 
-  const itemList1 = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
+  const typeOfWorkList = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
   { id: 2, label: "Javítás", value: "REPAIR" },
   { id: 3, label: "Karbantartás", value: "MAINTENANCE" },
   { id: 4, label: "Egyéb", value: TYPE_OF_WORK.OTHER }]
 
-  const itemList2 = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
+  const assetSettlementList = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
   { id: 2, label: "Garanciális", value: "WARRANTY" }]
 
-  const itemList3 = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
+  const workingTimeAccountingList = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
   { id: 2, label: "Garanciális", value: "WARRANTY" }]
 
-  const itemList4 = [{ id: 1, label: "Készpénz", value: "CASH" },
+  const typeOfPaymentList = [{ id: 1, label: "Készpénz", value: "CASH" },
   { id: 2, label: "Átutalás", value: "BANKTRANSFER" }]
 
   return (
@@ -66,18 +66,18 @@ function CreateWorkSheetForm({ sent, setSent, handleClick, popUpMessage, sendDat
                 <Form>
                   <h1 className='text-center'>{title}</h1>
                   <Input name='partnerId' label='Partner' type='text' />
-                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
+                  <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={typeOfWorkList} />
                   { values.typeOfWork === TYPE_OF_WORK.OTHER &&
                     <Input name='customTypeOfWork' label='Egyéb' type='text' />}
-                  <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
-                  <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
+                  <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={assetSettlementList} />
+                  <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={workingTimeAccountingList} />
                   <Input name='numberOfEmployees' label='Létszám' type='number' min='0' />
                   <Input name='overheadHour' label='Rezsióra' type='number' min='0' />
                   <Input name='deliveryKm' label='Kiszállítás' type='number' min='0' />
                   <Input name='accountSerialNumber' label='A munkalaphoz tartozó számla sorszáma' type='text' />
                   <Input name='description' label='Elvégzett munka leírása' type='text' />
                   <Input name='usedMaterial' label='Felhasznált anyagok' type='text' />
-                  <SelectInput name='typeOfPayment' label='Fizetés módja' container={itemList4} />
+                  <SelectInput name='typeOfPayment' label='Fizetés módja' container={typeOfPaymentList} />
                   <span>Kelt: {getCurrentDate()}</span>
                   <Input name='workerSignature' label='Munkát végezte' placeholder="IDE KELL E-ALÁIRÁS" />
                   <Input name='proofOfEmployment' label='munkavégzést igazolja' placeholder='IDE KELL MÉG EGY E-ALÁÍRÁS' />
