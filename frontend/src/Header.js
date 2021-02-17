@@ -3,13 +3,9 @@ import logo from './img/uj_logo.png';
 import tools from './img/tools.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LogOut from './LogOut';
-import { useJwt } from "react-jwt";
+import GetUserData from './GetUserData';
 
 function Header() {
-  const token = sessionStorage.getItem('token');
-  const { decodedToken, isExpired } = useJwt(token);
-  console.log(decodedToken);
-
   return (
     <div className="container p-0 m-0">
       <div className='row align-items-center'>
@@ -18,8 +14,7 @@ function Header() {
         </div>
 
         <div className='col text-center h5'>
-          <div>{decodedToken.name}</div>
-          <div>{decodedToken.email}</div>
+          <GetUserData />
         </div>
 
         <Dropdown className="col text-right">
