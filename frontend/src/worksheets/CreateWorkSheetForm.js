@@ -33,7 +33,6 @@ function CreateWorkSheetForm({ sent, setSent, handleClick, popUpMessage, sendDat
             && <PopUp
               handleClick={handleClick}
               body={popUpMessage}
-              setSent={setSent}
             />}
           <Formik
             initialValues={{
