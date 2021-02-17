@@ -24,6 +24,7 @@ public class WorksheetController {
         Worksheet worksheet = Worksheet.builder()
                 .partnerId(worksheetDTO.getPartnerId())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
+                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
                 .assetSettlement(worksheetDTO.getAssetSettlement())
                 .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
                 .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
