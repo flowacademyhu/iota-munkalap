@@ -15,7 +15,7 @@ import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -28,7 +28,8 @@ import static org.mockito.Mockito.*;
 class WorksheetServiceTest {
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
-    private static final TypeOfWork TYPE_OF_WORK = INSTALLATION;
+    private static final TypeOfWork TYPE_OF_WORK = OTHER;
+    private static final String CUSTOM_TYPE_OF_WORK = "Egyéb javítás";
     private static final AssetSettlement ASSET_SETTLEMENT = WARRANTY;
     private static final WorkingTimeAccounting WORKING_TIME_ACCOUNTING = REPAYMENT;
     private static final int NUMBER_OF_EMPLOYEES = 3;
@@ -54,6 +55,7 @@ class WorksheetServiceTest {
                 .id(worksheet.getId())
                 .partnerId(WORKSHEET_ID)
                 .typeOfWork(TYPE_OF_WORK)
+                .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
                 .numberOfEmployees(NUMBER_OF_EMPLOYEES)
@@ -108,6 +110,7 @@ class WorksheetServiceTest {
         return Worksheet.builder()
                 .partnerId(WORKSHEET_ID)
                 .typeOfWork(TYPE_OF_WORK)
+                .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
                 .numberOfEmployees(NUMBER_OF_EMPLOYEES)
