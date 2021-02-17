@@ -1,7 +1,7 @@
 import React from 'react';
 import { useJwt } from "react-jwt";
 
-function GetUserData() {
+function UserData() {
   const token = sessionStorage.getItem('token');
   const { decodedToken } = useJwt(token);
   if (decodedToken) {
@@ -17,4 +17,4 @@ function GetUserData() {
   }
 }
 
-export default GetUserData;
+export default UserData;

@@ -3,7 +3,7 @@ import logo from './img/uj_logo.png';
 import tools from './img/tools.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LogOut from './LogOut';
-import GetUserData from './GetUserData';
+import UserData from './UserData';
 
 function Header() {
   return (
@@ -14,7 +14,7 @@ function Header() {
         </div>
 
         <div className='col text-center h5 p-0'>
-          <GetUserData />
+          <UserData />
         </div>
 
         <Dropdown className='col text-right p-0'>
