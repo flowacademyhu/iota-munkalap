@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.enumCustom.Status;
@@ -11,8 +12,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
@@ -37,14 +40,23 @@ class UserServiceTest {
     private static final String NEW_EMAIL = "pista@pista.hu";
     private static final Long REGISTRATION_ID = 111L;
 
+    private static final String NEW_FIRSTNAME2 = "Feri";
+    private static final String NEW_LASTNAME2 = "Mao";
+    private static final String NEW_EMAIL2 = "moo@moo.hu";
+    private static final Long REGISTRATION_ID2 = 11L;
+
     private static final String UPDATE_FIRSTNAME = "Görgey";
     private static final String UPDATE_LASTNAME = "Artúr";
     private static final String UPDATE_EMAIL = "gorgey@gorgey.hu";
 
     @Mock
     private UserRepository userRepository;
+
     @Mock
     private KeycloakClientService keycloakClientService;
+
+    @Mock
+    private PagingProperties pagingProperties;
 
     @InjectMocks
     private UserService userService;
@@ -65,9 +77,9 @@ class UserServiceTest {
     }
 
     @Test
-    public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() throws ValidationException {
-        User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
-        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
+    public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() {
+            User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
+            assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
@@ -88,13 +100,31 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
+    @Test
+    public void shouldReturnUsersPaged() {
+        givenRepoWithAUserForPaging();
+        List<User> pagedUserList = userService.listRegistrations(Optional.of(0), Optional.of(1), Optional.of("createdAt"), Optional.of("Mao"));
+        verify(userRepository).findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%M__%",
+                "%M__%", "%M__%", PAGEABLE);
+        assertThat(pagedUserList.size(), is(1));
+    }
+
+    private void givenRepoWithAUserForPaging() {
+        List<User> users = new ArrayList<>();
+        users.add(givenProperUserObject2());
+        int start = (int) PAGEABLE.getOffset();
+        int end = Math.min((start + PAGEABLE.getPageSize()), users.size());
+        Page<User> pagedUsers = new PageImpl<>(users.subList(start, end), PAGEABLE, users.size());
+        when(userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%M__%",
+                "%M__%", "%M__%", PAGEABLE)).thenReturn(pagedUsers);
+    }
+
     @Test
     public void givenNewUserObject_whenUpdateUser_thenUserUpdated() throws ValidationException {
         givenExistingUserRegistration();
         User newUser = givenUpdateProperUserObject();
-
         User updatedUser = userService.update(REGISTRATION_ID, newUser);
-
         Mockito.verify(userRepository, times(1)).save(updatedUser);
         assertThat(updatedUser, notNullValue());
         assertThat(updatedUser.getFirstName(), is(newUser.getFirstName()));
@@ -107,12 +137,9 @@ class UserServiceTest {
     public void givenNonExistingUserObject_whenUpdateUser_thenThrowException() {
         givenANonExistingUserRegistration();
         User newUser = givenUpdateProperUserObject();
-
         Exception thrown = assertThrows(Exception.class, () -> userService.update(REGISTRATION_ID, newUser));
-
         assertThat(thrown, notNullValue());
         assertThat(thrown.getMessage(), is("The id is null or not real: null"));
-
     }
 
     @Test
@@ -151,23 +178,6 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.update(REGISTRATION_ID, userData));
     }
 
-    public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws
-            ValidationException {
-    public void givenInactiveStatus_whenFilteringForInactiveUsers_ThenReturnWithListOfInactiveUsers() throws ValidationException {
-        givenRepoWithUser();
-        List<User> result = userService.getActiveUsers(true);
-
-        org.hamcrest.MatcherAssert.assertThat( result.get(0).isEnabled(), is(false));
-    }
-
-    @Test
-    public void givenParameterThatCanBeFound_whenSearchingDbForUser_ThenReturnWithListContainingUsers() throws ValidationException {
-        givenRepoWithUser();
-        List<User> result = userService.findUserByNameAndEmail("pista");
-
-        org.hamcrest.MatcherAssert.assertThat(result.size(), is(1));
-    }
-
     @Test
     public void givenAnExistingUser_whenSettingActivity_thenActivityIsUpdated() throws ValidationException {
         givenExistingUser();
@@ -186,14 +196,6 @@ class UserServiceTest {
         });
     }
 
-    private void givenRepoWithUser() throws ValidationException {
-        givenUniquePerson();
-        User userData = givenProperUserObject();
-        User result = userService.saveUser(userData);
-        when(userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%p_st_%",
-                "%p_st_%", "%p_st_%")).thenReturn(List.of(result));
-    }
-
     private User givenProperUserObject() {
         User user = new User();
         user.setEmail(NEW_EMAIL);
@@ -210,6 +212,15 @@ class UserServiceTest {
         user.setId(REGISTRATION_ID);
         when(userRepository.findById(REGISTRATION_ID)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private User givenProperUserObject2() {
+        User user2 = new User();
+        user2.setEmail(NEW_EMAIL2);
+        user2.setFirstName(NEW_FIRSTNAME2);
+        user2.setLastName(NEW_LASTNAME2);
+        user2.setCreatedAt(LocalDateTime.now());
+        return user2;
     }
 
     private void givenExistingUserRegistration() {

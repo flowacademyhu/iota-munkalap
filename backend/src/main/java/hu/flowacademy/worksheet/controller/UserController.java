@@ -42,8 +42,10 @@ public class UserController {
     @PermitAll
     public List<User> findAll(@RequestParam(name = "status", required = false) Optional<Boolean> status,
                               @RequestParam(name = "page", required = false) Optional<Integer> page,
+                              @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                              @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
                               @RequestParam(name = "q", required = false) Optional<String> q) {
-        return userService.filter(status, page, q);
+        return userService.filter(status, page, q, limit, orderBy);
     }
 
     //Loginoláskor a Keycloakhoz indít továbbhívást.
@@ -59,12 +61,6 @@ public class UserController {
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
         return userService.update(id, user);
     }
-
-//    @GetMapping("/users")
-//    @ResponseStatus(HttpStatus.FOUND)
-//    public List<User> findUserByNameOrEmail(@RequestParam(value = "q") String q) {
-//        return userService.findUserByNameAndEmail(q);
-//    }
 
     @PutMapping("/users/{id}/{status}")
     public User setUserStatus(@PathVariable("id") Long id,

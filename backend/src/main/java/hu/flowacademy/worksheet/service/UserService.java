@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.enumCustom.Status;
@@ -10,17 +11,17 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.UserSpecification.enabled;
 import static hu.flowacademy.worksheet.service.filter.UserSpecification.firstnameLastnameEmailContains;
@@ -31,9 +32,12 @@ import static org.apache.commons.lang3.StringUtils.stripAccents;
 @RequiredArgsConstructor
 @Transactional
 public class UserService {
+    private final int DEFAULT_PAGE = 0;
+    private final String DEFAULT_ORDERBY = "createdAt";
 
     private final UserRepository userRepository;
     private final KeycloakClientService keycloakClientService;
+    private final PagingProperties pagingProperties;
 
     public User saveUser(@NonNull User user) throws ValidationException {
         validateUser(user);
@@ -83,9 +87,7 @@ public class UserService {
         }
     }
 
-
-
-    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q) {
+    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q, Optional<Integer> limit, Optional<String> orderBy) {
         List<User> result = userRepository.findAll(
                 Specification
                         .where(enabled(status))
@@ -99,27 +101,27 @@ public class UserService {
                 result.stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList()))
                 .orElse(result);
     }
+
+    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
+        return searchPart.map(s -> {
+            String pattern = "%" + s.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+            PageRequest pageRequest = PageRequest.of(page.orElse(DEFAULT_PAGE),
+                    limit.orElse(pagingProperties.getDefaultLimit()),
+                    Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending());
+            Page<User> userList = userRepository
+                    .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
+            return userList.getContent().stream().filter(user -> filterContains(s, user)).collect(Collectors.toList());
+        }).orElseGet(() -> userRepository
+                .findAll(PageRequest.of(page.orElse(0),
+                        limit.orElse(pagingProperties.getDefaultLimit()),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
+    }
+
     private boolean filterContains(String searchPart, User user) {
         return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
                 stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
                 user.getEmail().contains(stripAccents(searchPart));
     }
-
-
-
-
-
-//    public List<User> findUserByNameAndEmail(String searchPart) {
-//        String pattern = "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-//        return userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern)
-//                .stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList());
-//    }
-//
-//    private boolean filterContains(String searchPart, User user) {
-//        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
-//                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
-//                user.getEmail().contains(stripAccents(searchPart));
-//    }
 
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
