@@ -20,4 +20,13 @@ public class UserSpecification {
                 .map(enabled -> criteriaBuilder.equal(root.get("enabled"), enabled))
                 .orElse(null);
     }
+
+    public static Specification<User> buildSpecification(Optional<Boolean> status, Optional<String> q) {
+        return Specification
+                .where(enabled(status))
+                .and(firstnameLastnameEmailContains(
+                        q.map(searchPart -> "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%")
+                        )
+                );
+    }
 }

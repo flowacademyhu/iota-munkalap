@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
 
 import java.util.Optional;
 
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.enabled;
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.firstnameLastnameEmailContains;
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.*;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 
@@ -89,12 +88,7 @@ public class UserService {
 
     public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q, Optional<Integer> limit, Optional<String> orderBy) {
         List<User> result = userRepository.findAll(
-                Specification
-                        .where(enabled(status))
-                        .and(firstnameLastnameEmailContains(
-                                q.map(searchPart -> "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%")
-                                )
-                        ),
+                buildSpecification(status, q),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending()) //mod here
         ).getContent();
         return q.map(searchPart ->
