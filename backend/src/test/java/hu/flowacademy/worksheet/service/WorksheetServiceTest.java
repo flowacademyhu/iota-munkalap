@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -11,10 +12,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -82,6 +89,22 @@ class WorksheetServiceTest {
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
 
+    }
+
+    @Test
+    public void givenAnExistingWorksheet_whenFinalize_thenSetStatusToReported() throws ValidationException {
+        givenExistingWorksheet();
+        Worksheet result = worksheetService.finalizeWorksheet(WORKSHEET_ID);
+        Mockito.verify(worksheetRepository, times(1)).save(result);
+        assertThat(result, notNullValue());
+        assertThat(result.getWorksheetStatus(), notNullValue());
+        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.REPORTED));
+    }
+
+    private void givenExistingWorksheet() {
+        Worksheet worksheet = givenValidWorksheet();
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
     private Worksheet givenValidWorksheet() {

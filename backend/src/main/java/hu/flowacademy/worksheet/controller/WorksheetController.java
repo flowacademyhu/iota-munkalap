@@ -40,4 +40,11 @@ public class WorksheetController {
                 .build();
         return worksheetService.saveWorksheet(worksheet);
     }
+
+    @PutMapping("/worksheets/{id}/finalize")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+        return worksheetService.finalizeWorksheet(id);
+    }
+
 }
