@@ -104,24 +104,23 @@ public class UserService {
         return q.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart, user))
                         .collect(Collectors.toList()))
-
                         .orElse(result);
     }
 
-    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
-        return searchPart.map(s -> {
-            String pattern = "%" + s.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-            PageRequest pageRequest = PageRequest.of(page.orElse(DEFAULT_PAGE),
-                    limit.orElse(pagingProperties.getDefaultLimit()),
-                    Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending());
-            Page<User> userList = userRepository
-                    .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
-            return userList.getContent().stream().filter(user -> filterContains(s, user)).collect(Collectors.toList());
-        }).orElseGet(() -> userRepository
-                .findAll(PageRequest.of(page.orElse(0),
-                        limit.orElse(pagingProperties.getDefaultLimit()),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
-    }
+//    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
+//        return searchPart.map(s -> {
+//            String pattern = "%" + s.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
+//            PageRequest pageRequest = PageRequest.of(page.orElse(DEFAULT_PAGE),
+//                    limit.orElse(pagingProperties.getDefaultLimit()),
+//                    Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending());
+//            Page<User> userList = userRepository
+//                    .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
+//            return userList.getContent().stream().filter(user -> filterContains(s, user)).collect(Collectors.toList());
+//        }).orElseGet(() -> userRepository
+//                .findAll(PageRequest.of(page.orElse(0),
+//                        limit.orElse(pagingProperties.getDefaultLimit()),
+//                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
+//    }
 
     private boolean filterContains(String searchPart, User user) {
         return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
