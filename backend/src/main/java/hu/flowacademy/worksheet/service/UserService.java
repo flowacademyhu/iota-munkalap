@@ -88,6 +88,9 @@ public class UserService {
     }
 
     public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q, Optional<Integer> limit, Optional<String> orderBy) {
+        Integer pagingLimit = limit.get();
+        String pagingOrderBy = orderBy.get();
+
         List<User> result = userRepository.findAll(
                 Specification
                         .where(enabled(status))
@@ -95,11 +98,14 @@ public class UserService {
                                 q.map(searchPart -> "%" + searchPart.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%")
                                 )
                         ),
-                PageRequest.of(page.orElse(0), 10)
+
+                PageRequest.of(page.orElse(0), pagingLimit, Sort.Direction.valueOf(pagingOrderBy))
         ).getContent();
         return q.map(searchPart ->
-                result.stream().filter(user -> filterContains(searchPart, user)).collect(Collectors.toList()))
-                .orElse(result);
+                result.stream().filter(user -> filterContains(searchPart, user))
+                        .collect(Collectors.toList()))
+
+                        .orElse(result);
     }
 
     public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
