@@ -25,8 +25,9 @@ function CreateEmployee() {
       }
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen');
+    } finally {
+      setSent(true);
     }
-    setSent(true);
   }
 
   return (
