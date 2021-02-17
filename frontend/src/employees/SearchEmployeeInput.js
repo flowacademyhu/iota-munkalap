@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
 import Input from "../Input";
-import { searchUser } from "../UserAPI";
+import { getUsers } from "../api/UserAPI";
 
 export default function SearchEmployeeInput(props) {
-
+    const {label, name, setForceRefresh, forceRefresh, users} = props
     const [value, setValue] = useState("");
 
     function handleChange(event) {
-        searchUser(event.target.value.toLowerCase()); 
+        setValue(event.target.value)
+        setForceRefresh(!forceRefresh)
+        getUsers(event.target.value.toLowerCase());
+        console.log(users)
     }
 
-    return <Input value={value} onChange={handleChange} type="text" placeholder="Keresés" {...props} />;
+    return <Input value={value} onChange={event =>handleChange(event)} type="text" placeholder="Keresés" name={name} label={label} />;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
@@ -10,6 +10,7 @@ import { Formik, Form } from "formik";
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
+  const [forceRefresh, setForceRefresh] = useState(false)
 
   return (
     <>
@@ -21,7 +22,7 @@ export default function TableListOfEmployees() {
         </span>
         <Formik class="form-inline">
           <Form>
-            <SearchEmployeeInput label="Munkatárs keresése" name="searchEmployee" />
+            <SearchEmployeeInput label="Munkatárs keresése" name="searchEmployee" setForceRefresh={setForceRefresh} forceRefresh={forceRefresh} users={users}/>
           </Form>
         </Formik>
       </div>
