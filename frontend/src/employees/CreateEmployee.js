@@ -14,7 +14,6 @@ function CreateEmployee() {
   function handleClick() {
     setSent(false);
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
-
   }
 
   async function postData(values) {
