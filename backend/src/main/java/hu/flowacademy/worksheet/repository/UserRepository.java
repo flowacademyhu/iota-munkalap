@@ -1,12 +1,12 @@
 package hu.flowacademy.worksheet.repository;
 
 import hu.flowacademy.worksheet.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    List<User> findByEmailContainingOrFirstNameContainingOrLastNameContaining(String emailPart, String firstNamePart, String lastNamePart);
+    Page<User> findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(String emailPart, String firstNamePart, String lastNamePart, Pageable pageable);
 }

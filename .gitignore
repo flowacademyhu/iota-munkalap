@@ -62,6 +62,9 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
+# IJ idea
+.idea
+
 # dotenv environment variables file
 .env
 
