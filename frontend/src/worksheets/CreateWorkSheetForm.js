@@ -12,9 +12,9 @@ import {TYPE_OF_WORK} from './Const'
 function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title }) {
 
   const typeOfWorkList = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
-  { id: 2, label: "Javítás", value: "REPAIR" },
-  { id: 3, label: "Karbantartás", value: "MAINTENANCE" },
-  { id: 4, label: "Egyéb", value: TYPE_OF_WORK.OTHER }]
+  { label: "Javítás", value: "REPAIR" },
+  { label: "Karbantartás", value: "MAINTENANCE" },
+  { label: "Egyéb", value: TYPE_OF_WORK.OTHER }]
 
   const assetSettlementList = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
   { id: 2, label: "Garanciális", value: "WARRANTY" }]
