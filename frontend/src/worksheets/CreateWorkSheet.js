@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { postWorkSheet } from '../api/WorkSheetAPI';
 import { PATH_VARIABLES } from './Const';
 import CreateWorkSheetForm from './CreateWorkSheetForm';
-import {useHistory} from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 function CreateWorkSheet() {
-  
+
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
@@ -14,7 +14,7 @@ function CreateWorkSheet() {
 
   function handleClick() {
     setSent(false);
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`) 
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
   async function postData(values) {
@@ -23,21 +23,20 @@ function CreateWorkSheet() {
       if (response.status === 201) {
         setPopUpMessage('Munkalap sikeresen létrehozva');
         setSentSuccessfully(true);
-      } else {
-        setPopUpMessage('A létrehozás sikertelen');
       }
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen');
+    } finally {
+      setSent(true);
     }
-    setSent(true);
   }
 
   return (
     <CreateWorkSheetForm
       handleClick={handleClick}
-      sent={sent} 
+      sent={sent}
       sentSuccessfully={sentSuccessfully}
-      popUpMessage={popUpMessage} 
+      popUpMessage={popUpMessage}
       sendData={postData}
       title='Új munkalap létrehozása'
     />
