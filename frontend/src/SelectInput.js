@@ -2,7 +2,6 @@ import React from "react";
 import Form from 'react-bootstrap/Form';
 import { useField } from "formik";
 
-
 export default function SelectInput({ handleChange, label, container, ...props }) {
     const [field, meta] = useField(props);
     const { error, touched } = meta;
