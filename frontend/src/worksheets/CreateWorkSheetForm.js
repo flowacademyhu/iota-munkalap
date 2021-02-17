@@ -10,19 +10,19 @@ import schema from './ValidationWorkSheet'
 
 function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
 
-  const itemList1 = [{ id: 1, label: "Telepítés", value: "installation" },
-  { id: 2, label: "Javítás", value: "repair" },
-  { id: 3, label: "Karbantartás", value: "maintenance" },
-  { id: 4, label: "Egyéb", value: "other" }]
+  const itemList1 = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
+  { id: 2, label: "Javítás", value: "REPAIR" },
+  { id: 3, label: "Karbantartás", value: "MAINTENANCE" },
+  { id: 4, label: "Egyéb", value: "OTHER" }]
 
-  const itemList2 = [{ id: 1, label: "Térítéses", value: "repayment" },
-  { id: 2, label: "Garanciális", value: "warranty" }]
+  const itemList2 = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
+  { id: 2, label: "Garanciális", value: "WARRANTY" }]
 
-  const itemList3 = [{ id: 1, label: "Térítéses", value: "repayment" },
-  { id: 2, label: "Garanciális", value: "warranty" }]
+  const itemList3 = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
+  { id: 2, label: "Garanciális", value: "WARRANTY" }]
 
-  const itemList4 = [{ id: 1, label: "Készpénz", value: "cash" },
-  { id: 2, label: "Átutalás", value: "transfer" }]
+  const itemList4 = [{ id: 1, label: "Készpénz", value: "CASH" },
+  { id: 2, label: "Átutalás", value: "BANKTRANSFER" }]
 
   return (
     <div className="container my-5">
@@ -38,18 +38,18 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             />}
           <Formik
             initialValues={{
-              partner: '',
-              typeOfWork: itemList1[1].label,
-              typeOfWorkOther: '',
-              assetSettlement: itemList2[1].label,
-              workingTimeAccounting: itemList3[1].label,
+              partnerId: '',
+              typeOfWork: itemList1[1].value,
+              customTypeOfWork: '',
+              assetSettlement: itemList2[1].value,
+              workingTimeAccounting: itemList3[1].value,
               numberOfEmployees: 0,
               overheadHour: 0,
               deliveryKm: 0,
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
-              typeOfPayment: itemList4[1].label,
+              typeOfPayment: itemList4[1].value,
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
@@ -57,9 +57,9 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             }}
             validationSchema={schema}
             onSubmit={values => {
-              if (values.typeOfWork !== 'other') {
-                delete values.typeOfWorkOther
-              }
+              // if (values.typeOfWork !== 'OTHER') {
+              //   delete values.typeOfWorkOther
+              // }
               console.log(values);
               sendData(values);
             }}
@@ -77,10 +77,10 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
               return (
                 <Form>
                   <h1 className='text-center'>{title}</h1>
-                  <Input name='partner' label='Partner' type='text' />
+                  <Input name='partnerId' label='Partner' type='text' />
                   <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
-                  { values.typeOfWork === "other" &&
-                    <Input name='typeOfWorkOther' label='Egyéb' type='text' />}
+                  { values.typeOfWork === "OTHER" &&
+                    <Input name='customTypeOfWork' label='OTHER' type='text' />}
                   <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
                   <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
                   <Input name='numberOfEmployees' label='Létszám' type='number' min='0' />
