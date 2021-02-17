@@ -11,7 +11,7 @@ export default function TableListOfEmployees() {
   return (
     <>
       <Link to={`/employees/new`}>
-        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto' />
+        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
       </Link>
       <div className="border border-secondary">
         <div className="container-fluid">
