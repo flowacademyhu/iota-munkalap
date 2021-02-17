@@ -32,9 +32,9 @@ export default function TableListOfEmployees() {
                     <th scope="row">{user.id}</th>
                     <td>{user.lastName} {user.firstName}</td>
                     <td>{user.email}</td>
-                    {user.enabled &&
-                      <td>Aktív</td>
-                    }
+                    <td>
+                      {user.enabled ? 'Aktív' : 'Inaktív'}
+                    </td>
                     <td className='d-flex justify-content-around align-items-center'>
                       <Link to={`/employees/update/${user.id}`}>
                         <EditButton />
