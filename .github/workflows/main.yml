@@ -17,7 +17,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build_frontend:
+  build-frontend:
     runs-on: ubuntu-latest
     name: Build frontend
     defaults:
@@ -79,7 +79,7 @@ jobs:
     name: Deploy to staging
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [build_frontend, build-backend]
+    needs: [build-frontend, build-backend]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
