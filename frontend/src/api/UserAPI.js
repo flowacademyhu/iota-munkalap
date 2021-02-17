@@ -26,7 +26,7 @@ function putUser(id, credentials) {
 
 function putUserInactive(id) {
     return api
-        .put(`/users/${id}`, { "isActive": false });
+        .put(`/users/${id}/inactive`);
 }
 function getUser(id) {
     return api
