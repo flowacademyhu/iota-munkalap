@@ -39,17 +39,17 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
           <Formik
             initialValues={{
               partnerId: '',
-              typeOfWork: itemList1[1].value,
+              typeOfWork: itemList1[0].value,
               customTypeOfWork: '',
-              assetSettlement: itemList2[1].value,
-              workingTimeAccounting: itemList3[1].value,
+              assetSettlement: itemList2[0].value,
+              workingTimeAccounting: itemList3[0].value,
               numberOfEmployees: 0,
               overheadHour: 0,
               deliveryKm: 0,
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
-              typeOfPayment: itemList4[1].value,
+              typeOfPayment: itemList4[0].value,
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
@@ -61,7 +61,8 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             }}
           >
             {({
-              values
+              values,
+
             }) => {
               return (
                 <Form>
