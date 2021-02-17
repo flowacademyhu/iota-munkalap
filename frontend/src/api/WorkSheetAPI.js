@@ -17,7 +17,6 @@ mock.onGet("/worksheets").reply(200, workSheets)
 function getWorkSheets() {
     return api
         .get(`/worksheets`);
-
 };
 
 function postWorkSheet(credentials) {
@@ -27,5 +26,4 @@ function postWorkSheet(credentials) {
 export {
     getWorkSheets,
     postWorkSheet,
-
 }
