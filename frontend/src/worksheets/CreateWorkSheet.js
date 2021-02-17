@@ -14,9 +14,7 @@ function CreateWorkSheet() {
 
   function handleClick() {
     setSent(false);
-    sentSuccessfully 
-    ? history.push(`/${PATH_VARIABLES.BASEPATH_WORKSHEET}`) 
-    : history.push(`/${PATH_VARIABLES.BASEPATH_WORKSHEET}/${PATH_VARIABLES.ENDPATH1_WORKSHEET}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`) 
   }
 
   async function postData(values) {
@@ -38,7 +36,6 @@ function CreateWorkSheet() {
     <CreateWorkSheetForm
       handleClick={handleClick}
       sent={sent} 
-      setSent={setSent} 
       sentSuccessfully={sentSuccessfully}
       popUpMessage={popUpMessage} 
       sendData={postData}
