@@ -80,6 +80,7 @@ public class WorksheetService {
         Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + worksheet.getId()));
         updatedWorksheet.setPartnerId(worksheet.getPartnerId());
         updatedWorksheet.setTypeOfWork(worksheet.getTypeOfWork());
+        updatedWorksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
         updatedWorksheet.setAssetSettlement(worksheet.getAssetSettlement());
         updatedWorksheet.setWorkingTimeAccounting(worksheet.getWorkingTimeAccounting());
         updatedWorksheet.setNumberOfEmployees(worksheet.getNumberOfEmployees());
@@ -100,6 +101,9 @@ public class WorksheetService {
         }
         if (worksheet.getTypeOfWork() == null) {
             throw new ValidationException("Type of work value is null");
+        }
+        if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && StringUtils.hasText(worksheet.getCustomTypeOfWork())) {
+            throw new ValidationException("Type Of Work Other value is null or empty String.");
         }
         if (worksheet.getAssetSettlement() == null) {
             throw new ValidationException("Asset settlement value is null");

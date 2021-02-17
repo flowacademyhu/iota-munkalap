@@ -32,7 +32,7 @@ class WorksheetServiceTest {
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
     private static final TypeOfWork TYPE_OF_WORK = INSTALLATION;
-    //private static final TypeOfWork TYPE_OF_WORK_OTHER = OTHER;
+    private static final TypeOfWork TYPE_OF_WORK_OTHER = OTHER;
     private static final String CUSTOM_TYPE_OF_WORK = "Egyéb javítás";
     private static final AssetSettlement ASSET_SETTLEMENT = WARRANTY;
     private static final WorkingTimeAccounting WORKING_TIME_ACCOUNTING = REPAYMENT;
@@ -49,6 +49,8 @@ class WorksheetServiceTest {
     private static final String UPDATED_WORKSHEET_ID = "MunkalapIdUpdated";
     private static final String UPDATED_PARTNER_ID = "PartnerIdUpdated";
     private static final TypeOfWork UPDATED_TYPE_OF_WORK = REPAIR;
+    private static final TypeOfWork UPDATED_TYPE_OF_WORK_OTHER = OTHER;
+    private static final String UPDATED_CUSTOM_TYPE_OF_WORK = "További javítás";
     private static final AssetSettlement UPDATED_ASSET_SETTLEMENT = AssetSettlement.REPAYMENT;
     private static final WorkingTimeAccounting UPDATED_WORKING_TIME_ACCOUNTING = WorkingTimeAccounting.WARRANTY;
     private static final int UPDATED_NUMBER_OF_EMPLOYEES = 4;
@@ -73,7 +75,7 @@ class WorksheetServiceTest {
         when(worksheetRepository.save(any())).thenReturn(Worksheet.builder()
                 .id(worksheet.getId())
                 .partnerId(PARTNER_ID)
-                .typeOfWork(TYPE_OF_WORK)
+                .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
@@ -129,6 +131,7 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet, notNullValue());
         assertThat(updatedWorksheet.getPartnerId(), is(newWorksheet.getPartnerId()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
+        assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
         assertThat(updatedWorksheet.getWorkingTimeAccounting(), is(newWorksheet.getWorkingTimeAccounting()));
         assertThat(updatedWorksheet.getNumberOfEmployees(), is(newWorksheet.getNumberOfEmployees()));
@@ -159,7 +162,7 @@ class WorksheetServiceTest {
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()
                 .partnerId(PARTNER_ID)
-                .typeOfWork(TYPE_OF_WORK)
+                .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
@@ -179,7 +182,8 @@ class WorksheetServiceTest {
         Worksheet worksheet = new Worksheet();
         worksheet.setId(UPDATED_WORKSHEET_ID);
         worksheet.setPartnerId(UPDATED_PARTNER_ID);
-        worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK);
+        worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK_OTHER);
+        worksheet.setCustomTypeOfWork(UPDATED_CUSTOM_TYPE_OF_WORK);
         worksheet.setAssetSettlement(UPDATED_ASSET_SETTLEMENT);
         worksheet.setWorkingTimeAccounting(UPDATED_WORKING_TIME_ACCOUNTING);
         worksheet.setNumberOfEmployees(UPDATED_NUMBER_OF_EMPLOYEES);
