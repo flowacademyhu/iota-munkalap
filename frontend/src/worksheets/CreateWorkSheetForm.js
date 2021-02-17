@@ -7,7 +7,7 @@ import PopUp from '../PopUp';
 import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
-import {TYPE_OF_WORK} from './Const'
+import {TYPE_OF_WORK} from '../Const'
 
 function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title }) {
 
@@ -37,17 +37,17 @@ function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title 
           <Formik
             initialValues={{
               partnerId: '',
-              typeOfWork: itemList1[0].value,
+              typeOfWork: typeOfWorkList[0].value,
               customTypeOfWork: '',
-              assetSettlement: itemList2[0].value,
-              workingTimeAccounting: itemList3[0].value,
+              assetSettlement: assetSettlementList[0].value,
+              workingTimeAccounting: workingTimeAccountingList[0].value,
               numberOfEmployees: 0,
               overheadHour: 0,
               deliveryKm: 0,
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
-              typeOfPayment: itemList4[0].value,
+              typeOfPayment: typeOfPaymentList[0].value,
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',

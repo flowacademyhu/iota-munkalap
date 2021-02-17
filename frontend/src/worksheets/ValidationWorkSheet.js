@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { TYPE_OF_WORK } from './Const';
+import { TYPE_OF_WORK } from '../Const';
 
 export default function schema() {
 

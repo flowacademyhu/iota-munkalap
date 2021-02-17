@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import UpdateEmployeeForm from './UpdateEmployeeForm';
 import { putUser, getUser } from '../api/UserAPI';
 import { useParams, useHistory } from 'react-router-dom';
-import { PATH_VARIABLES } from '../worksheets/Const'
+import { PATH_VARIABLES } from '../Const'
 
 function UpdateEmployee() {
   const [sent, setSent] = useState(false);

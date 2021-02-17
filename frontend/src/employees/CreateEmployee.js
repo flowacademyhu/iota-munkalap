@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { postUser } from '../api/UserAPI';
 import CreateEmployeeForm from './CreateEmployeeForm';
-import { PATH_VARIABLES } from '../worksheets/Const'
+import { PATH_VARIABLES } from '../Const'
 import { useHistory } from "react-router-dom"
 
 function CreateEmployee() {
