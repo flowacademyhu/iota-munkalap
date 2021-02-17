@@ -1,10 +1,6 @@
-export default function getCurrentDate(){
+import moment from "moment";
+import 'moment/locale/hu';
 
-    const separator = ".";
-    let newDate = new Date()
-    let date = newDate.getDate();
-    let month = newDate.getMonth() + 1;
-    let year = newDate.getFullYear();
-    
-    return `${year}${separator}${month<10?`0${month}`:`${month}`}${separator}${date}`
+export default function getCurrentDate(){
+    return moment().format('YYYY MMMM Do');
 }
