@@ -29,6 +29,7 @@ function CreateEmployee() {
       sentSuccessfully={sentSuccessfully} 
       popUpMessage={popUpMessage} 
       sendData={postData}
+      tablePath='employees'
       path='new'
       title='Új munkatárs létrehozása'
     />

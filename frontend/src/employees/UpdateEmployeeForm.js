@@ -20,13 +20,14 @@ const schema = yup.object().shape({
 });
 
 function UpdateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path,
-  title, user }) {
+  title, user, tablePath }) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent
             && <PopUp
+              tablePath={tablePath}
               body={popUpMessage}
               sentSuccessfully={sentSuccessfully}
               setSent={setSent}

@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import EditButton from '../EditButton';
 import useWorkSheets from '../hooks/useWorkSheets';
 
 export default function TableListOfWorkSheets() {
@@ -28,7 +30,12 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.date}</td>
                     <td>{worksheet.partner}</td>
                     <td>{worksheet.type}</td>
-                    <td>{worksheet.state}</td>
+                    <td>
+                      {worksheet.state}
+                      <Link to={`/worksheets/update/${worksheet.id}`}>
+                          <EditButton />
+                        </Link>
+                    </td>
                   </tr>
                 )))
                 :

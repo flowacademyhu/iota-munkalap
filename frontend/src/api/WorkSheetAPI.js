@@ -19,7 +19,12 @@ function getWorkSheets() {
       .get(`/worksheets`);
 }
 
+function putWorksheet(id, credentials) {
+    return api
+        .put(`/worksheets/${id}`, credentials);
+}
+
 export {
-  getWorkSheets,
+  getWorkSheets, putWorksheet
 };
 

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import UpdateEmployeeForm from './UpdateEmployeeForm';
-import { putUser, getUser } from '../api/UserAPI';
+import UpdateWorksheetForm from './UpdateWorksheetForm';
+import { putWorksheet, getWorksheets } from '../api/WorksheetAPI';
 import { useParams } from 'react-router-dom';
 
-function UpdateEmployee() {
+function UpdateWorksheet() {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
   const { id } = useParams();
-  const [userData, setUserData] = useState({});
+  const [worksheetData, setWorksheetData] = useState({});
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getUser(id);
-        setUserData({ ...response.data, loaded: true });
+        const response = await getWorksheets(id);
+        setWorksheetData({ ...response.data, loaded: true });
       } catch (error) {
-        setUserData({ loaded: true });
+        setWorksheetData({ loaded: true });
         setPopUpMessage('A módosítás sikertelen');
         setSent(true);
       }
@@ -26,9 +26,9 @@ function UpdateEmployee() {
 
   async function putData(values) {
     try {
-      const response = await putUser(id, values);
+      const response = await putWorksheet(id, values);
       if (response.status === 200) {
-        setPopUpMessage('Munkavállaló sikeresen módosítva');
+        setPopUpMessage('Munkalap sikeresen módosítva');
         setSentSuccessfully(true);
       } else {
         setPopUpMessage('A módosítás sikertelen');
@@ -41,20 +41,20 @@ function UpdateEmployee() {
 
   return (
     <>
-      {userData.loaded &&
-        <UpdateEmployeeForm
+      {worksheetData.loaded &&
+        <UpdateWorksheetForm
           sent={sent}
           setSent={setSent}
           sentSuccessfully={sentSuccessfully}
           popUpMessage={popUpMessage}
           sendData={putData}
-          tablePath='employees'
+          tablePath='worksheets'
           path='update'
           title='Adatok módosítása'
-          user={userData}
+          worksheet={worksheetData}
         />}
     </>
   );
 }
 
-export default UpdateEmployee;
+export default UpdateWorksheet;
