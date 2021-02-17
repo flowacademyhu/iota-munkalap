@@ -9,14 +9,7 @@ import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
 import {TYPE_OF_WORK} from './Const'
 
-function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
-
-  let history = useHistory();
-
-  function handleClick() {
-    setSent(false);
-    sentSuccessfully ? history.push(`/${basePath}`) : history.push(`/${basePath}/${path}`)
-  }
+function CreateWorkSheetForm({ sent, setSent, handleClick, popUpMessage, sendData, title }) {
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
   { id: 2, label: "Javítás", value: "REPAIR" },

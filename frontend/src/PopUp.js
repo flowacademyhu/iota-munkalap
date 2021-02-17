@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from "react-bootstrap/Modal";
 import Button from './Button';
 
-function PopUp({ body, setSent, handleClick }) {
+function PopUp({ body, handleClick }) {
   return (
     <Modal show={true}>
       <Modal.Body>{body}</Modal.Body>
