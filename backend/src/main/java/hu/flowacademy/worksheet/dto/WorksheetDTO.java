@@ -14,6 +14,7 @@ public class WorksheetDTO {
 
     private String partnerId;
     private TypeOfWork typeOfWork;
+    private String customTypeOfWork;
     private AssetSettlement assetSettlement;
     private WorkingTimeAccounting workingTimeAccounting;
     private int numberOfEmployees;
