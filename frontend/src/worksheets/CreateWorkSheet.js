@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { postWorkSheet } from '../api/WorkSheetAPI';
 import CreateWorkSheetForm from './CreateWorkSheetForm';
 
-function CreateWorkSheet() {
+function CreateWorkSheet({path, basePath, }) {
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
@@ -26,7 +26,7 @@ function CreateWorkSheet() {
     <CreateWorkSheetForm
       sent={sent} 
       setSent={setSent} 
-      sentSuccessfully={sentSuccessfully} 
+      sentSuccessfully={sentSuccessfully}
       popUpMessage={popUpMessage} 
       sendData={postData}
       basePath='worksheets'

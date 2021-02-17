@@ -1,16 +1,13 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
-import { Link } from 'react-router-dom';
 import Button from './Button';
 
-function PopUp({ body, sentSuccessfully, setSent, path, basePath }) {
+function PopUp({ body, setSent, handleClick }) {
   return (
     <Modal show={true}>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        <Link to={sentSuccessfully ? `/${basePath}` : `/${basePath}/${path}`}>
-          <Button onClick={() => setSent(false)} moreClassName='h-auto' text='OK' />
-        </Link>
+        <Button moreClassName='h-auto' text='OK' onClick={handleClick} />
       </Modal.Footer>
     </Modal>
   );

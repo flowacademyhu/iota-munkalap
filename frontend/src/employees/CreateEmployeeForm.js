@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as yup from 'yup';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from '../Input';
 import Button from '../Button';
 import PopUp from '../PopUp';
@@ -31,12 +31,21 @@ const schema = yup.object().shape({
 });
 
 function CreateEmployeeForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
+
+  let history = useHistory();
+
+  function handleClick() {
+    setSent(false);
+    sentSuccessfully ? history.push(`/${basePath}`) : history.push(`/${basePath}/${path}`)
+  }
+
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent
             && <PopUp
+            handleClick={handleClick}
               body={popUpMessage}
               sentSuccessfully={sentSuccessfully}
               setSent={setSent}

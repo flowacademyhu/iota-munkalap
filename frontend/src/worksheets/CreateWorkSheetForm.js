@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Input from '../Input';
 import Button from '../Button';
 import PopUp from '../PopUp';
@@ -10,6 +10,13 @@ import schema from './ValidationWorkSheet'
 import {TYPE_OF_WORK} from './Const'
 
 function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, sendData, path, basePath, title }) {
+
+  let history = useHistory();
+
+  function handleClick() {
+    setSent(false);
+    sentSuccessfully ? history.push(`/${basePath}`) : history.push(`/${basePath}/${path}`)
+  }
 
   const itemList1 = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
   { id: 2, label: "Javítás", value: "REPAIR" },
@@ -31,11 +38,9 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
         <div className="col-12">
           {sent
             && <PopUp
+              handleClick={handleClick}
               body={popUpMessage}
-              sentSuccessfully={sentSuccessfully}
               setSent={setSent}
-              basePath={basePath}
-              path={path}
             />}
           <Formik
             initialValues={{
