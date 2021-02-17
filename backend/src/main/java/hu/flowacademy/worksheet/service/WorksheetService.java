@@ -69,9 +69,9 @@ public class WorksheetService {
         }
     }
 
-    public Worksheet finalizeWorksheet(String id) throws ValidationException {
+    public Worksheet setStatusWorksheet(String id, WorksheetStatus status) throws ValidationException {
         Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
-        toChange.setWorksheetStatus(WorksheetStatus.REPORTED);
+        toChange.setWorksheetStatus(status);
         return worksheetRepository.save(toChange);
     }
 }

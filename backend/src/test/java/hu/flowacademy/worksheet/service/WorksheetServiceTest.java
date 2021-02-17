@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
@@ -88,17 +86,16 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
-
     }
 
     @Test
-    public void givenAnExistingWorksheet_whenFinalize_thenSetStatusToReported() throws ValidationException {
+    public void givenAnExistingWorksheet_whenSettingStatus_thenSetStatusToReported() throws ValidationException {
         givenExistingWorksheet();
-        Worksheet result = worksheetService.finalizeWorksheet(WORKSHEET_ID);
+        Worksheet result = worksheetService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
         Mockito.verify(worksheetRepository, times(1)).save(result);
         assertThat(result, notNullValue());
         assertThat(result.getWorksheetStatus(), notNullValue());
-        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.REPORTED));
+        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
     }
 
     private void givenExistingWorksheet() {

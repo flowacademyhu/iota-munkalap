@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
+import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +43,17 @@ public class WorksheetController {
         return worksheetService.saveWorksheet(worksheet);
     }
 
+    @PutMapping("/worksheets/{id}/close")
+    @RolesAllowed("admin")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Worksheet closeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+        return worksheetService.setStatusWorksheet(id, WorksheetStatus.CLOSED);
+    }
+
     @PutMapping("/worksheets/{id}/finalize")
     @ResponseStatus(HttpStatus.CREATED)
     public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
-        return worksheetService.finalizeWorksheet(id);
+        return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
 }
