@@ -27,7 +27,7 @@ async function loginUser(credentials) {
 
 function getUsers(status) {
     return api
-        .get(`api/users?status=${status}`);
+        .get(`api/users?status=${this.props.status}`);
         //Ez tedd a pathhez: users?status=${status}&page=${page}&q=${q}
 }
 

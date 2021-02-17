@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
@@ -7,8 +7,12 @@ import { putUserInactive } from '../UserAPI';
 import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
-  const [status, setStatus] = useState("");
-  const { users } = useUsers();
+  const [status, setStatus] = useState('true');
+  const { users } = useUsers({status});
+  
+  useEffect(() => {
+    setStatus(status);
+  }, [status]);
 
   return (
     <>
@@ -17,6 +21,7 @@ export default function TableListOfEmployees() {
         <Button text='Új munkavállaló létrehozása' />
       </Link>
       <FilterUsers  status = {status} onStatusChange = {setStatus}/>
+      <div>{status}</div>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">

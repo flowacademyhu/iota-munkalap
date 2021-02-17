@@ -1,7 +1,5 @@
 import React,{useState, useEffect, useCallback} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
 
 function FilterUsers({status, onStatusChange}) {
 
@@ -32,7 +30,7 @@ function FilterUsers({status, onStatusChange}) {
     <select class="btn btn-success" onChange={handleInputChange}>
       <option value="true" >Aktív</option>
       <option value="false">Inaktív</option>
-      <option selected value="">Mind</option>
+      <option value={null}>Mind</option>
       
     </select>
   </div>
