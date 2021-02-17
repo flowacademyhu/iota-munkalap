@@ -3,7 +3,7 @@ import { postWorkSheet } from '../api/WorkSheetAPI';
 import { PATH_VARIABLES } from './Const';
 import CreateWorkSheetForm from './CreateWorkSheetForm';
 
-function CreateWorkSheet({path, basePath, }) {
+function CreateWorkSheet() {
   
   const [sent, setSent] = useState(false);
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
