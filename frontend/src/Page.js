@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <Router>
       <header>
-        <div className="container p-0">
+        <div className='container p-0'>
           <Header />
           <Menu />
         </div>
@@ -25,20 +25,20 @@ export default function Page() {
 
       <main>
         <Switch>
-          <div className="container p-0">
+          <div className='container p-0'>
             <Route path='/employees/new'>
               <CreateEmployee />
             </Route>
             <Route path='/employees/update/:id'>
               <UpdateEmployee />
             </Route>
-            <Route exact path="/employees">
+            <Route exact path='/employees'>
               <TableListOfEmployees />
             </Route>
-            <Route path="/partners">
+            <Route path='/partners'>
               <Partners />
             </Route>
-            <Route path="/worksheets">
+            <Route path='/worksheets'>
               <TableListOfWorkSheets />
             </Route>
             <Route path='/'>
