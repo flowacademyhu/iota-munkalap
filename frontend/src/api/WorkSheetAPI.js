@@ -1,12 +1,7 @@
 import api from './createApi';
 import MockAdapter from "axios-mock-adapter";
-import axios from 'axios';
 
 var mock = new MockAdapter(api);
-
-const api3 = axios.create({
-    baseURL: `https://reqres.in/api/`
-})
 
 const workSheets = [
     { id: '1', creater: 'employee1', date: '2020.12.01.', partner: 'partner1', type: 'type1', state: 'state1' },
