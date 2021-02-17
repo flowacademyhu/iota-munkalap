@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import { loginUser } from './UserAPI'
+import { loginUser } from './api/UserAPI'
 
 
 import EmailInput from "./EmailInput";
@@ -45,8 +45,6 @@ export default function LoginForm({ setToken }) {
                             <div className="my-5 d-flex justify-content-center">
                                 <Button type="submit" text="Bejelentkezés" />
                             </div>
-
-
                         </Form>
                     </Formik>
                 </div>

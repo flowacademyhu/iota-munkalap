@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Import;
 @Import(KeycloakPropertiesConfiguration.class)
 public class KeycloakClientConfiguration {
 
-    @Autowired
     private final KeycloakPropertiesConfiguration keycloakPropertiesConfiguration;
 
     @Bean
@@ -23,10 +22,10 @@ public class KeycloakClientConfiguration {
         return KeycloakBuilder
                 .builder()
                 .serverUrl(keycloakPropertiesConfiguration.getServerUrl())
-                .realm(keycloakPropertiesConfiguration.getRealm())
+                .realm(keycloakPropertiesConfiguration.getMasterRealm())
                 .username(keycloakPropertiesConfiguration.getAdminUsername())
                 .password(keycloakPropertiesConfiguration.getAdminPassword())
-                .clientId(keycloakPropertiesConfiguration.getClientId())
+                .clientId(keycloakPropertiesConfiguration.getAdminClientId())
                 .build();
     }
 }

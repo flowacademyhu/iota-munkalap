@@ -1,26 +1,12 @@
-import axios from 'axios';
-import MockAdapter from "axios-mock-adapter";
-
-
-const api3 = axios.create({
-    baseURL: `https://reqres.in/api/`
-})
-
-var mock = new MockAdapter(api3);
-mock.onPost('/login').reply(200, { access_token: '12345' });
-
-
-const api = axios.create({
-    baseURL: `https://jsonplaceholder.typicode.com/`,
-})
+import api from './createApi';
 
 async function loginUser(credentials) {
     try {
-        const result = await api3.post('/login', credentials);
+        const result = await api.post('/login', credentials);
         return result.data.access_token;
     } catch (error) {
         alert('A belépés sikertelen.');
-    }   
+    }
 }
 
 function getUsers() {
@@ -40,11 +26,18 @@ function putUser(id, credentials) {
 
 function putUserInactive(id) {
     return api
-        .put(`/users/${id}`, {"isActive": false});
+        .put(`/users/${id}`, { "isActive": false });
 }
 function getUser(id) {
     return api
         .get(`/users/${id}`);
 }
 
-export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser };
+export {
+    getUsers,
+    postUser,
+    putUser,
+    putUserInactive,
+    getUser,
+    loginUser
+};

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UpdateEmployeeForm from './UpdateEmployeeForm';
-import { putUser, getUser } from '../UserAPI';
+import { putUser, getUser } from '../api/UserAPI';
 import { useParams } from 'react-router-dom';
 
 function UpdateEmployee() {
@@ -50,8 +50,7 @@ function UpdateEmployee() {
           sendData={putData}
           path='update'
           title='Adatok módosítása'
-          name={userData.name}
-          email={userData.email}
+          user={userData}
         />}
     </>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { postUser } from '../UserAPI';
+import { postUser } from '../api/UserAPI';
 import CreateEmployeeForm from './CreateEmployeeForm';
 
 function CreateEmployee() {
@@ -31,7 +31,6 @@ function CreateEmployee() {
       sendData={postData}
       path='new'
       title='Új munkatárs létrehozása'
-      newEmployee={true}
     />
   );
 }
