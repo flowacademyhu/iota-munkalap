@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Worksheet;
+import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
@@ -32,6 +33,9 @@ public class WorksheetService {
         }
         if (worksheet.getTypeOfWork() == null) {
             throw new ValidationException("Type of work value is null");
+        }
+        if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && StringUtils.hasText(worksheet.getCustomTypeOfWork())) {
+            throw new ValidationException("Type Of Work Other value is null or empty String.");
         }
         if (worksheet.getAssetSettlement() == null) {
             throw new ValidationException("Asset settlement value is null");
