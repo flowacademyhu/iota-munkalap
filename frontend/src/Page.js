@@ -1,17 +1,12 @@
 import React from "react";
 import {
   BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
 } from "react-router-dom";
-import TableListOfEmployees from './employees/TableListOfEmployees';
-import CreateEmployee from './employees/CreateEmployee';
-import UpdateEmployee from './employees/UpdateEmployee';
+
 import Header from './Header';
 import Menu from './Menu';
 import './style.css';
-import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
+import Routing from './Routing';
 
 export default function Page() {
   return (
@@ -22,40 +17,9 @@ export default function Page() {
           <Menu />
         </div>
       </header>
-
       <main>
-        <Switch>
-          <div className='col-12'>
-            <Route path='/employees/new'>
-              <CreateEmployee />
-            </Route>
-            <Route path='/employees/update/:id'>
-              <UpdateEmployee />
-            </Route>
-            <Route exact path='/employees'>
-              <TableListOfEmployees />
-            </Route>
-            <Route path='/partners'>
-              <Partners />
-            </Route>
-            <Route path='/worksheets'>
-              <TableListOfWorkSheets />
-            </Route>
-            <Route path='/'>
-              <Redirect to='/partners' />
-            </Route>
-          </div>
-        </Switch>
+        <Routing />
       </main>
     </Router>
   );
 }
-
-function Partners() {
-  return (
-    <div>
-      <h2>Partnerek</h2>
-    </div>
-  );
-}
-
