@@ -5,17 +5,13 @@ import useToken from './hooks/useToken'
 function UserData() {
   const { token } = useToken();
   const { decodedToken } = useJwt(token);
-  if (decodedToken) {
-    return (
-      <>
-        <div>{decodedToken.name}</div>
-        <div>{decodedToken.email}</div>
-      </>
-    );
-  }
-  else {
-    return <div></div>
-  }
+
+  return (
+    <>
+      <div>{decodedToken?.name || ''}</div>
+      <div>{decodedToken?.email || ''}</div>
+    </>
+  );
 }
 
 export default UserData;
