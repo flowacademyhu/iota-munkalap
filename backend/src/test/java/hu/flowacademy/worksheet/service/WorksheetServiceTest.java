@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -12,13 +11,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
-import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.*;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.REPAIR;
+import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.REPAYMENT;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,6 +29,7 @@ import static org.mockito.Mockito.*;
 class WorksheetServiceTest {
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
+    private static final String PARTNER_ID = "Partner_id1";
     private static final TypeOfWork TYPE_OF_WORK = INSTALLATION;
     private static final AssetSettlement ASSET_SETTLEMENT = WARRANTY;
     private static final WorkingTimeAccounting WORKING_TIME_ACCOUNTING = REPAYMENT;
@@ -42,6 +42,21 @@ class WorksheetServiceTest {
     private static final TypeOfPayment TYPE_OF_PAYMENT = CASH;
     private static final String WORKER_SIGNATURE = "Nagy Lajos";
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
+
+    private static final String UPDATED_WORKSHEET_ID = "MunkalapIdUpdated";
+    private static final String UPDATED_PARTNER_ID = "PartnerIdUpdated";
+    private static final TypeOfWork UPDATED_TYPE_OF_WORK = REPAIR;
+    private static final AssetSettlement UPDATED_ASSET_SETTLEMENT = AssetSettlement.REPAYMENT;
+    private static final WorkingTimeAccounting UPDATED_WORKING_TIME_ACCOUNTING = WorkingTimeAccounting.WARRANTY;
+    private static final int UPDATED_NUMBER_OF_EMPLOYEES = 4;
+    private static final float UPDATED_OVERHEAD_HOUR = 4.0F;
+    private static final float UPDATED_DELIVERY_KM = 35.0F;
+    private static final String UPDATED_ACCOUNT_SERIAL_NUMBER = "Szerelés sorszáma 11";
+    private static final String UPDATED_DESCRIPTION = "Szerelés a nagy objektumnál";
+    private static final String UPDATED_USED_MATERIAL = "vezeték, szög, tipni, lemezek";
+    private static final TypeOfPayment UPDATED_TYPE_OF_PAYMENT = BANKTRANSFER;
+    private static final String UPDATED_WORKER_SIGNATURE = "Luxemburgi Zsigmond";
+    private static final String UPDATED_PROOF_OF_EMPLOYMENT = "Hunyadi János";
 
     @Mock
     private WorksheetRepository worksheetRepository;
@@ -88,7 +103,6 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
-
     }
 
     @Test
@@ -101,15 +115,46 @@ class WorksheetServiceTest {
         assertThat(result.getWorksheetStatus(), is(WorksheetStatus.REPORTED));
     }
 
+    @Test
+    public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
+        givenExistingWorksheetWhenUpdate();
+        Worksheet newWorksheet = givenUpdateProperWorksheetObject();
+        Worksheet updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
+
+        Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
+        assertThat(updatedWorksheet, notNullValue());
+        assertThat(updatedWorksheet.getPartnerId(), is(newWorksheet.getPartnerId()));
+        assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
+        assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
+        assertThat(updatedWorksheet.getWorkingTimeAccounting(), is(newWorksheet.getWorkingTimeAccounting()));
+        assertThat(updatedWorksheet.getNumberOfEmployees(), is(newWorksheet.getNumberOfEmployees()));
+        assertThat(updatedWorksheet.getOverheadHour(), is(newWorksheet.getOverheadHour()));
+        assertThat(updatedWorksheet.getDeliveryKm(), is(newWorksheet.getDeliveryKm()));
+        assertThat(updatedWorksheet.getAccountSerialNumber(), is(newWorksheet.getAccountSerialNumber()));
+        assertThat(updatedWorksheet.getDescription(), is(newWorksheet.getDescription()));
+        assertThat(updatedWorksheet.getUsedMaterial(), is(newWorksheet.getUsedMaterial()));
+        assertThat(updatedWorksheet.getTypeOfPayment(), is(newWorksheet.getTypeOfPayment()));
+        assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature()));
+        assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment()));
+        verifyNoMoreInteractions(worksheetRepository);
+    }
+
     private void givenExistingWorksheet() {
         Worksheet worksheet = givenValidWorksheet();
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
+    private void givenExistingWorksheetWhenUpdate() {
+        Worksheet worksheet = givenValidWorksheet();
+        worksheet.setId(WORKSHEET_ID);
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()
-                .partnerId(WORKSHEET_ID)
+                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
@@ -123,5 +168,24 @@ class WorksheetServiceTest {
                 .workerSignature(WORKER_SIGNATURE)
                 .proofOfEmployment(PROOF_OF_EMPLOYMENT)
                 .build();
+    }
+
+    private Worksheet givenUpdateProperWorksheetObject() {
+        Worksheet worksheet = new Worksheet();
+        worksheet.setId(UPDATED_WORKSHEET_ID);
+        worksheet.setPartnerId(UPDATED_PARTNER_ID);
+        worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK);
+        worksheet.setAssetSettlement(UPDATED_ASSET_SETTLEMENT);
+        worksheet.setWorkingTimeAccounting(UPDATED_WORKING_TIME_ACCOUNTING);
+        worksheet.setNumberOfEmployees(UPDATED_NUMBER_OF_EMPLOYEES);
+        worksheet.setOverheadHour(UPDATED_OVERHEAD_HOUR);
+        worksheet.setDeliveryKm(UPDATED_DELIVERY_KM);
+        worksheet.setAccountSerialNumber(UPDATED_ACCOUNT_SERIAL_NUMBER);
+        worksheet.setDescription(UPDATED_DESCRIPTION);
+        worksheet.setUsedMaterial(UPDATED_USED_MATERIAL);
+        worksheet.setTypeOfPayment(UPDATED_TYPE_OF_PAYMENT);
+        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE);
+        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT);
+        return worksheet;
     }
 }
