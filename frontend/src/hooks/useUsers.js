@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getUsers } from '../UserAPI';
 
 export default function useUsers(status) {
@@ -9,8 +9,11 @@ export default function useUsers(status) {
       setUsers(data);
     }
     updatePosts();
-  }, []);
+  }, [status]);
   return {
     users
   }
+
+
+
 }

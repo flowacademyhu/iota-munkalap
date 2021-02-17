@@ -8,7 +8,7 @@ import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
   const [status, setStatus] = useState('true');
-  const { users } = useUsers({status});
+  const { users } = useUsers(status);
   
   useEffect(() => {
     setStatus(status);
