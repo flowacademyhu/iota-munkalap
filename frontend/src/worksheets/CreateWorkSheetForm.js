@@ -11,19 +11,19 @@ import {TYPE_OF_WORK} from './Const'
 
 function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title }) {
 
-  const typeOfWorkList = [{ id: 1, label: "Telepítés", value: "INSTALLATION" },
+  const typeOfWorkList = [{ label: "Telepítés", value: "INSTALLATION" },
   { label: "Javítás", value: "REPAIR" },
   { label: "Karbantartás", value: "MAINTENANCE" },
   { label: "Egyéb", value: TYPE_OF_WORK.OTHER }]
 
-  const assetSettlementList = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
-  { id: 2, label: "Garanciális", value: "WARRANTY" }]
+  const assetSettlementList = [{ label: "Térítéses", value: "REPAYMENT" },
+  { label: "Garanciális", value: "WARRANTY" }]
 
-  const workingTimeAccountingList = [{ id: 1, label: "Térítéses", value: "REPAYMENT" },
-  { id: 2, label: "Garanciális", value: "WARRANTY" }]
+  const workingTimeAccountingList = [{ label: "Térítéses", value: "REPAYMENT" },
+  { label: "Garanciális", value: "WARRANTY" }]
 
-  const typeOfPaymentList = [{ id: 1, label: "Készpénz", value: "CASH" },
-  { id: 2, label: "Átutalás", value: "BANKTRANSFER" }]
+  const typeOfPaymentList = [{ label: "Készpénz", value: "CASH" },
+  { label: "Átutalás", value: "BANKTRANSFER" }]
 
   return (
     <div className="container my-5">
