@@ -57,10 +57,6 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             }}
             validationSchema={schema}
             onSubmit={values => {
-              // if (values.typeOfWork !== 'OTHER') {
-              //   delete values.typeOfWorkOther
-              // }
-              console.log(values);
               sendData(values);
             }}
           >
@@ -80,7 +76,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
                   <Input name='partnerId' label='Partner' type='text' />
                   <SelectInput name='typeOfWork' label='Munkavégzés jellege' container={itemList1} />
                   { values.typeOfWork === "OTHER" &&
-                    <Input name='customTypeOfWork' label='OTHER' type='text' />}
+                    <Input name='customTypeOfWork' label='Egyéb' type='text' />}
                   <SelectInput name='assetSettlement' label='Eszközök elszámolás módja' container={itemList2} />
                   <SelectInput name='workingTimeAccounting' label='Munkaidő elszámolás módja' container={itemList3} />
                   <Input name='numberOfEmployees' label='Létszám' type='number' min='0' />
