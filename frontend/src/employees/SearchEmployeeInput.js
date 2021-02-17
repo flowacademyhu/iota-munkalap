@@ -9,9 +9,9 @@ export default function SearchEmployeeInput(props) {
 
     function handleChange(event) {
         setValue(event.target.value)
-        setForceRefresh(!forceRefresh)
         getUsers(event.target.value.toLowerCase());
         console.log(users)
+        setForceRefresh(!forceRefresh)
     }
 
     return <Input value={value} onChange={event =>handleChange(event)} type="text" placeholder="Keresés" name={name} label={label} />;
