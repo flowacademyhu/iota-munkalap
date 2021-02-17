@@ -7,7 +7,7 @@ import PopUp from '../PopUp';
 import SelectInput from '../SelectInput'
 import getCurrentDate from './Date';
 import schema from './ValidationWorkSheet'
-import {TYPE_OF_WORK} from '../Const'
+import { TYPE_OF_WORK } from '../Const'
 
 function CreateWorkSheetForm({ sent, handleClick, popUpMessage, sendData, title }) {
 
