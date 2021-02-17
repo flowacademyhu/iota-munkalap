@@ -4,7 +4,6 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -87,7 +86,6 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
-
     }
 
     @Test
@@ -105,7 +103,6 @@ class WorksheetServiceTest {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
-
 
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()

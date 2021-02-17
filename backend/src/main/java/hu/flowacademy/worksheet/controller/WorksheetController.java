@@ -48,4 +48,11 @@ public class WorksheetController {
     public Worksheet closeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.CLOSED);
     }
+
+    @PutMapping("/worksheets/{id}/finalize")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+        return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
+    }
+
 }
