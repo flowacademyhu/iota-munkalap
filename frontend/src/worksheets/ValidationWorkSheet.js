@@ -47,12 +47,11 @@ export default function schema() {
       .required("Fizetési mód megadása kötelező!"),
     workerSignature: yup
       .string()
-    .required("Aláírás kötelező!"),
+      .required("Aláírás kötelező!"),
     proofOfEmployment: yup
       .string()
       .required("Munkavégzés igazolása kötelező!"),
   });
 
   return schema;
-
 }
