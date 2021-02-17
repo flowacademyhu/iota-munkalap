@@ -39,8 +39,6 @@ function CreateWorkSheet() {
       sentSuccessfully={sentSuccessfully}
       popUpMessage={popUpMessage} 
       sendData={postData}
-      basePath='worksheets'
-      path='new'
       title='Új munkalap létrehozása'
     />
   );
