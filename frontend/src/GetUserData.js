@@ -3,7 +3,7 @@ import { useJwt } from "react-jwt";
 
 function GetUserData() {
   const token = sessionStorage.getItem('token');
-  const { decodedToken, isExpired } = useJwt(token);
+  const { decodedToken } = useJwt(token);
   if (decodedToken) {
     return (
       <>
