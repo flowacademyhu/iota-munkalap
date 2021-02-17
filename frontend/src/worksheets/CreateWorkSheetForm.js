@@ -61,14 +61,7 @@ function CreateWorkSheetForm({ sent, setSent, sentSuccessfully, popUpMessage, se
             }}
           >
             {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-              /* and other goodies */
+              values
             }) => {
               return (
                 <Form>
