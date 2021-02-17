@@ -69,7 +69,7 @@ class WorksheetServiceTest {
         var worksheet = givenValidWorksheet();
         when(worksheetRepository.save(any())).thenReturn(Worksheet.builder()
                 .id(worksheet.getId())
-                .partnerId(WORKSHEET_ID)
+                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
