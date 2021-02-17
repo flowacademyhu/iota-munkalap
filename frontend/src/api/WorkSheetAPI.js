@@ -14,15 +14,11 @@ mock.onGet("/worksheets").reply(200, workSheets)
     .onAny()
     .passThrough();
 
-//mock.onPost("/worksheets").reply(200);
-
-
 function getWorkSheets() {
     return api
         .get(`/worksheets`);
 
 };
-
 
 function postWorkSheet(credentials) {
     return api
@@ -33,4 +29,3 @@ export {
     postWorkSheet,
 
 }
-
