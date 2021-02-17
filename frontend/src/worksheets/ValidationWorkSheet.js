@@ -3,17 +3,17 @@ import * as yup from 'yup';
 export default function schema() {
 
   const schema = yup.object().shape({
-    partner: yup
+    partnerId: yup
       .string()
       .required("Partner megadása kötelező!"),
     typeOfWork: yup
       .string()
       .required("Munkavégzés jellegének megadása kötelező!"),
 
-    typeOfWorkOther: yup
+    customTypeOfWork: yup
       .string()
       .when('typeOfWork', {
-        is: 'other',
+        is: 'OTHER',
         then: yup.string().required("Munkavégzés jellegének megadása kötelező!"),
         otherwise: yup.string(),
       }),
