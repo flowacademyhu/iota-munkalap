@@ -16,33 +16,35 @@ import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
 export default function Page() {
     return (
         <Router>
-            <div className="container p-0">
-                <Header />
-                <Menu />
-            </div>
+            <header>
+                <div className="container p-0">
+                    <Header />
+                    <Menu />
+                </div>
+            </header>
 
-            <hr />
-
-            <Switch>
-                <Route path='/employees/new'>
-                    <CreateEmployee />
-                </Route>
-                <Route path='/employees/update/:id'>
-                    <UpdateEmployee />
-                </Route>
-                <Route exact path="/employees">
-                    <TableListOfEmployees />
-                </Route>
-                <Route path="/partners">
-                    <Partners />
-                </Route>
-                <Route path="/worksheets">
-                    <TableListOfWorkSheets />
-                </Route>
-                <Route path='/'>
-                    <Redirect to='/partners' />
-                </Route>
-            </Switch>
+            <main>
+                <Switch>
+                    <Route path='/employees/new'>
+                        <CreateEmployee />
+                    </Route>
+                    <Route path='/employees/update/:id'>
+                        <UpdateEmployee />
+                    </Route>
+                    <Route exact path="/employees">
+                        <TableListOfEmployees />
+                    </Route>
+                    <Route path="/partners">
+                        <Partners />
+                    </Route>
+                    <Route path="/worksheets">
+                        <TableListOfWorkSheets />
+                    </Route>
+                    <Route path='/'>
+                        <Redirect to='/partners' />
+                    </Route>
+                </Switch>
+            </main>
         </Router>
     );
 }

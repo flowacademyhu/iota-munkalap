@@ -1,15 +1,21 @@
 import React from 'react';
-import MenuItem from './Menu-item';
+import { NavLink } from 'react-router-dom';
 
 function Menu() {
   return (
-    <div className="container p-0">
-      <div className='row align-items-center'>
-        <div className="col"> <MenuItem name="Munkavállalók" link="/employees" /></div>
-        <div className="col"><MenuItem name="Partnerek" link="/partners" /></div>
-        <div className="col"><MenuItem name="Munkalapok" link="/worksheets" /></div>
-      </div>
-    </div>
+    <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified" >
+      <ul className="navbar-nav w-100">
+        <li className="nav-item">
+          <NavLink className='nav-link font-weight-bold' activeClassName='active' to='/employees'>Munkavállalók</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className='nav-link font-weight-bold' activeClassName='active' to='/worksheets'>Munkalapok</NavLink>
+        </li>
+        <li className="nav-item">
+          <NavLink className='nav-link font-weight-bold' activeClassName='active' to='/partners'>Partnerek</NavLink>
+        </li>
+      </ul>
+    </nav>
   );
 }
 

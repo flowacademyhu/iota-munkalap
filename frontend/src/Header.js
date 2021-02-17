@@ -6,7 +6,7 @@ import LogOut from './LogOut';
 
 function Header() {
   return (
-    <div className="container p-0">
+    <div className="container p-0 m-0">
       <div className='row align-items-center'>
         <div className='col text-left'>
           <img className="col-auto mt-3 ml-3 logo" src={logo} alt="ingo stop logo" />
