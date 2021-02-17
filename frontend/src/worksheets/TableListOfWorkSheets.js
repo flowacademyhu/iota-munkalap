@@ -9,7 +9,7 @@ export default function TableListOfWorkSheets() {
     <>
       <div className="d-flex justify-content-between p-5">
         <Link to={`/worksheets/new`}>
-          <Button className="h-auto" text='Új munkalap léptrehozása' />
+          <Button text='Új munkalap létrehozása' />
         </Link>
       </div>
       <div className="border border-secondary">
