@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <Router>
       <header>
-        <div className='container p-0'>
+        <div className='col-12'>
           <Header />
           <Menu />
         </div>
@@ -25,7 +25,7 @@ export default function Page() {
 
       <main>
         <Switch>
-          <div className='container p-0'>
+          <div className='col-12'>
             <Route path='/employees/new'>
               <CreateEmployee />
             </Route>
