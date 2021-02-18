@@ -76,22 +76,8 @@ public class WorksheetService {
     }
 
     public Worksheet update(String id, Worksheet worksheet) throws ValidationException {
-        validateUpdatedWorksheet(worksheet);
         Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheet.getId()));
-        updatedWorksheet.setPartnerId(worksheet.getPartnerId());
-        updatedWorksheet.setTypeOfWork(worksheet.getTypeOfWork());
-        updatedWorksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
-        updatedWorksheet.setAssetSettlement(worksheet.getAssetSettlement());
-        updatedWorksheet.setWorkingTimeAccounting(worksheet.getWorkingTimeAccounting());
-        updatedWorksheet.setNumberOfEmployees(worksheet.getNumberOfEmployees());
-        updatedWorksheet.setOverheadHour(worksheet.getOverheadHour());
-        updatedWorksheet.setDeliveryKm(worksheet.getDeliveryKm());
-        updatedWorksheet.setAccountSerialNumber(worksheet.getAccountSerialNumber());
-        updatedWorksheet.setDescription(worksheet.getDescription());
-        updatedWorksheet.setUsedMaterial(worksheet.getUsedMaterial());
-        updatedWorksheet.setTypeOfPayment(worksheet.getTypeOfPayment());
-        updatedWorksheet.setWorkerSignature(worksheet.getWorkerSignature());
-        updatedWorksheet.setProofOfEmployment(worksheet.getProofOfEmployment());
+        addedWorksheet(id, worksheet);
         return worksheetRepository.save(updatedWorksheet);
     }
 
@@ -132,5 +118,25 @@ public class WorksheetService {
         if (worksheet.getProofOfEmployment() == null) {
             throw new ValidationException("Proof of Employment value is null");
         }
+    }
+
+    private void addedWorksheet(String id, Worksheet worksheet) throws ValidationException {
+        validateUpdatedWorksheet(worksheet);
+        Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheet.getId()));
+        updatedWorksheet.setPartnerId(worksheet.getPartnerId());
+        updatedWorksheet.setTypeOfWork(worksheet.getTypeOfWork());
+        updatedWorksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
+        updatedWorksheet.setAssetSettlement(worksheet.getAssetSettlement());
+        updatedWorksheet.setWorkingTimeAccounting(worksheet.getWorkingTimeAccounting());
+        updatedWorksheet.setNumberOfEmployees(worksheet.getNumberOfEmployees());
+        updatedWorksheet.setOverheadHour(worksheet.getOverheadHour());
+        updatedWorksheet.setDeliveryKm(worksheet.getDeliveryKm());
+        updatedWorksheet.setAccountSerialNumber(worksheet.getAccountSerialNumber());
+        updatedWorksheet.setDescription(worksheet.getDescription());
+        updatedWorksheet.setUsedMaterial(worksheet.getUsedMaterial());
+        updatedWorksheet.setTypeOfPayment(worksheet.getTypeOfPayment());
+        updatedWorksheet.setWorkerSignature(worksheet.getWorkerSignature());
+        updatedWorksheet.setProofOfEmployment(worksheet.getProofOfEmployment());
+        worksheetRepository.save(updatedWorksheet);
     }
 }
