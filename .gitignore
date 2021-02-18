@@ -67,3 +67,5 @@ node_modules/
 
 # dotenv environment variables file
 .env
+
+backend/db/demo.mv.db
