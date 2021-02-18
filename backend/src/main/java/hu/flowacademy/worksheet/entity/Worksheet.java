@@ -1,9 +1,11 @@
 package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,7 +60,8 @@ public class Worksheet {
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
-    @Column(name = "name_of_the_creator", nullable = false)
-    private String nameOfTheCreator;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private User nameOfTheCreator;
 
 }

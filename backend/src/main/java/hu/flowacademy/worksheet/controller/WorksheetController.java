@@ -1,9 +1,12 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.repository.UserRepository;
+import hu.flowacademy.worksheet.service.UserService;
 import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
 import org.keycloak.KeycloakPrincipal;
@@ -21,11 +24,13 @@ import java.util.Optional;
 public class WorksheetController {
 
     private final WorksheetService worksheetService;
+    private final UserRepository userRepository;
 
     @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
     public Worksheet createWorksheet(Authentication authentication, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+        User creater = userRepository.findFirstByEmail(getUserEmail(authentication));
         Worksheet worksheet = Worksheet.builder()
                 .partnerId(worksheetDTO.getPartnerId())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
@@ -43,7 +48,7 @@ public class WorksheetController {
                 .workerSignature(worksheetDTO.getWorkerSignature())
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
-                .nameOfTheCreator(getNameFromAuthentication(authentication))
+                .nameOfTheCreator(creater)
                 .build();
         return worksheetService.saveWorksheet(worksheet);
     }
@@ -74,4 +79,9 @@ public class WorksheetController {
         String lastName = ((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext().getToken().getFamilyName();
         return firstName + " " + lastName;
     }
+
+    private String getUserEmail(Authentication authentication) {
+        return ((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext().getToken().getEmail();
+    }
+
 }
