@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { postUser } from '../api/UserAPI';
-import CreateEmployeeForm from './CreateEmployeeForm';
+import React, { useState } from 'react'
+import { postUser } from '../api/UserAPI'
+import CreateEmployeeForm from './CreateEmployeeForm'
 import { PATH_VARIABLES } from '../Const'
-import { useHistory } from "react-router-dom"
+import { useHistory } from 'react-router-dom'
 
 function CreateEmployee() {
-  const [sent, setSent] = useState(false);
-  const [sentSuccessfully, setSentSuccessfully] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState('');
+  const [sent, setSent] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
+  const [popUpMessage, setPopUpMessage] = useState('')
 
-  const history = useHistory();
+  const history = useHistory()
 
   function handleClick() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
@@ -17,15 +17,15 @@ function CreateEmployee() {
 
   async function postData(values) {
     try {
-      const response = await postUser(values);
+      const response = await postUser(values)
       if (response.status === 201) {
-        setPopUpMessage('Munkavállaló sikeresen létrehozva');
-        setSentSuccessfully(true);
+        setPopUpMessage('Munkavállaló sikeresen létrehozva')
+        setSentSuccessfully(true)
       }
     } catch (error) {
-      setPopUpMessage('A létrehozás sikertelen');
+      setPopUpMessage('A létrehozás sikertelen')
     } finally {
-      setSent(true);
+      setSent(true)
     }
   }
 
@@ -35,9 +35,9 @@ function CreateEmployee() {
       sent={sent}
       popUpMessage={popUpMessage}
       sendData={postData}
-      title='Új munkatárs létrehozása'
+      title="Új munkatárs létrehozása"
     />
-  );
+  )
 }
 
-export default CreateEmployee;
+export default CreateEmployee
