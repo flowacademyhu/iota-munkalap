@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getUsers } from '../api/UserAPI';
+import { getUsers } from '../UserAPI';
 
 export default function useUsers(status) {
   const [users, setUsers] = useState();

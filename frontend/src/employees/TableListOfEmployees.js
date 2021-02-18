@@ -3,7 +3,7 @@ import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
 import Button from '../Button';
-import { putUserInactive } from '../api/UserAPI';
+import { putUserInactive } from '../UserAPI';
 import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
