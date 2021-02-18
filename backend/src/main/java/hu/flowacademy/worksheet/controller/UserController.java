@@ -38,6 +38,16 @@ public class UserController {
         return userService.saveUser(user);
     }
 
+    @GetMapping("/users")
+    @RolesAllowed("admin")
+    public List<User> findAll(@RequestParam(name = "status", required = false) Optional<Boolean> status,
+                              @RequestParam(name = "page", required = false) Optional<Integer> page,
+                              @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                              @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                              @RequestParam(name = "searchCriteria", required = false) Optional<String> searchCriteria) {
+        return userService.filter(status, page, searchCriteria, limit, orderBy);
+    }
+
     //Loginoláskor a Keycloakhoz indít továbbhívást.
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
@@ -50,15 +60,6 @@ public class UserController {
     @RolesAllowed("admin")
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
         return userService.update(id, user);
-    }
-
-    @RolesAllowed("admin")
-    @GetMapping("/users")
-    public List<User> getRegistrations(@RequestParam(value = "page", required = false) Optional<Integer> page,
-                                       @RequestParam(value = "limit", required = false) Optional<Integer> limit,
-                                       @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
-                                       @RequestParam(value = "q", required = false) Optional<String> q) {
-            return userService.listRegistrations( page, limit, orderBy, q);
     }
 
     @PutMapping("/users/{id}/{status}")

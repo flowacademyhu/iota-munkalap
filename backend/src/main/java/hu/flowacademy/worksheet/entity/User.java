@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder(toBuilder = true)
-@Table(name = "userCustom")
+@Table(indexes = @Index(name = "namingIndex", columnList = "firstName, lastName"), name = "userCustom" )
 public class User {
 
     @Id

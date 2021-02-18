@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { postUser } from '../api/UserAPI'
-import CreateEmployeeForm from './CreateEmployeeForm'
+import { postWorkSheet } from '../api/WorkSheetAPI'
 import { PATH_VARIABLES } from '../Const'
+import CreateWorkSheetForm from './CreateWorkSheetForm'
 import { useHistory } from 'react-router-dom'
 
-function CreateEmployee() {
+function CreateWorkSheet() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
@@ -12,14 +12,14 @@ function CreateEmployee() {
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
   async function postData(values) {
     try {
-      const response = await postUser(values)
+      const response = await postWorkSheet(values)
       if (response.status === 201) {
-        setPopUpMessage('Munkavállaló sikeresen létrehozva')
+        setPopUpMessage('Munkalap sikeresen létrehozva')
         setSentSuccessfully(true)
       }
     } catch (error) {
@@ -30,14 +30,14 @@ function CreateEmployee() {
   }
 
   return (
-    <CreateEmployeeForm
+    <CreateWorkSheetForm
       handleClick={handleClick}
       sent={sent}
       popUpMessage={popUpMessage}
       sendData={postData}
-      title="Új munkatárs létrehozása"
+      title="Új munkalap létrehozása"
     />
   )
 }
 
-export default CreateEmployee
+export default CreateWorkSheet
