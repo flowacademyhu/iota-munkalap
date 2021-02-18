@@ -1,20 +1,21 @@
 import React from 'react'
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom'
-import Dropdown from 'react-bootstrap/Dropdown'
-import logo from './img/uj_logo.png'
-import tools from './img/tools.png'
-import MenuItem from './Menu-item'
-import TableListOfEmployees from './employees/TableListOfEmployees'
-import CreateEmployee from './employees/CreateEmployee'
-import UpdateEmployee from './employees/UpdateEmployee'
-import './style.css'
-import LogOut from './LogOut'
-import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
+import logo from './img/uj_logo.png';
+import tools from './img/tools.png';
+import MenuItem from './Menu-item';
+import TableListOfEmployees from './employees/TableListOfEmployees';
+import CreateEmployee from './employees/CreateEmployee';
+import UpdateEmployee from './employees/UpdateEmployee';
+import './style.css';
+import LogOut from './LogOut';
+import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
+import CreateWorkSheet from './worksheets/CreateWorkSheet'
 
 export default function Page() {
   return (
@@ -58,28 +59,33 @@ export default function Page() {
 
       <hr />
 
-      <Switch>
-        <Route path="/employees/new">
-          <CreateEmployee />
-        </Route>
-        <Route path="/employees/update/:id">
-          <UpdateEmployee />
-        </Route>
-        <Route exact path="/employees">
-          <TableListOfEmployees />
-        </Route>
-        <Route path="/partners">
-          <Partners />
-        </Route>
-        <Route path="/worksheets">
-          <TableListOfWorkSheets />
-        </Route>
-        <Route path="/">
-          <Redirect to="/partners" />
-        </Route>
-      </Switch>
-    </Router>
-  )
+
+            <Switch>
+                <Route path='/employees/new'>
+                    <CreateEmployee />
+                </Route>
+                <Route path='/employees/update/:id'>
+                    <UpdateEmployee />
+                </Route>
+                <Route exact path="/employees">
+                    <TableListOfEmployees />
+                </Route>
+                <Route path="/partners">
+                    <Partners />
+                </Route>
+                <Route path="/worksheets/new">
+                    <CreateWorkSheet />
+                </Route>
+                <Route path="/worksheets">
+                    <TableListOfWorkSheets />
+                </Route>
+                <Route path='/'>
+                    <Redirect to='/partners' />
+                </Route>
+            </Switch>
+
+        </Router>
+    );
 }
 
 function Partners() {

@@ -15,28 +15,16 @@ const schema = yup.object().shape({
     .email('Nem megfelelő email cím!'),
 })
 
-function UpdateEmployeeForm({
-  sent,
-  setSent,
-  sentSuccessfully,
-  popUpMessage,
-  sendData,
-  path,
-  title,
-  user,
-}) {
+function UpdateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title, user }) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {sent && (
-            <PopUp
+          {sent
+            && <PopUp
+              handleClick={handleClick}
               body={popUpMessage}
-              sentSuccessfully={sentSuccessfully}
-              setSent={setSent}
-              path={path}
-            />
-          )}
+            />}
           <Formik
             initialValues={{
               firstName: user.firstName || '',
