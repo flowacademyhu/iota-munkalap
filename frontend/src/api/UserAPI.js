@@ -9,6 +9,16 @@ async function loginUser(credentials) {
     }
 }
 
+function getUsers() {
+    return api
+        .get(`/users`);
+}
+
+function getWorkSheets() {
+    return api
+        .get(`worksheets`);
+}
+
 function postUser(credentials) {
     return api
         .post(`/users`, credentials);

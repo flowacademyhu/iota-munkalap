@@ -7,7 +7,6 @@ import { getUsers, putUserInactive } from '../api/UserAPI';
 import SearchEmployeeInput from './SearchEmployeeInput';
 import { Formik, Form } from "formik";
 
-
 export default function TableListOfEmployees() {
   const { users, setUsers } = useUsers();
   const [forceRefresh, setForceRefresh] = useState(false)
@@ -22,7 +21,7 @@ export default function TableListOfEmployees() {
       <div className="d-flex justify-content-between p-5">
         <span>
           <Link to={`/employees/new`}>
-            <Button className="h-auto" text='Új munkavállaló létrehozása' />
+        <Button text='Új munkavállaló létrehozása' />
           </Link>
         </span>
         <Formik class="form-inline">
