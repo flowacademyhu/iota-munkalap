@@ -10,7 +10,7 @@ export default function useToken() {
 
   function saveToken(token) {
     if (!token) {
-      sessionStorage.clear('acces_token');
+      sessionStorage.clear('token');
       setToken("")
       return;
     }
