@@ -9,10 +9,9 @@ function CreateEmployee() {
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
-  let history = useHistory();
+  const history = useHistory();
 
   function handleClick() {
-    setSent(false);
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
   }
 
@@ -34,7 +33,6 @@ function CreateEmployee() {
     <CreateEmployeeForm
       handleClick={handleClick}
       sent={sent}
-      sentSuccessfully={sentSuccessfully}
       popUpMessage={popUpMessage}
       sendData={postData}
       title='Új munkatárs létrehozása'

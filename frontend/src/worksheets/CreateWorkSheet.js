@@ -10,10 +10,9 @@ function CreateWorkSheet() {
   const [sentSuccessfully, setSentSuccessfully] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState('');
 
-  let history = useHistory();
+  const history = useHistory();
 
   function handleClick() {
-    setSent(false);
     sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
@@ -35,7 +34,6 @@ function CreateWorkSheet() {
     <CreateWorkSheetForm
       handleClick={handleClick}
       sent={sent}
-      sentSuccessfully={sentSuccessfully}
       popUpMessage={popUpMessage}
       sendData={postData}
       title='Új munkalap létrehozása'

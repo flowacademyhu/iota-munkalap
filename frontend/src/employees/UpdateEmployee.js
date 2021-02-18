@@ -11,10 +11,9 @@ function UpdateEmployee() {
   const { id } = useParams();
   const [userData, setUserData] = useState({});
 
-  let history = useHistory();
+  const history = useHistory();
 
   function handleClick() {
-    setSent(false);
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
   }
 
@@ -52,7 +51,6 @@ function UpdateEmployee() {
         <UpdateEmployeeForm
           handleClick={handleClick}
           sent={sent}
-          sentSuccessfully={sentSuccessfully}
           popUpMessage={popUpMessage}
           sendData={putData}
           title='Adatok módosítása'
