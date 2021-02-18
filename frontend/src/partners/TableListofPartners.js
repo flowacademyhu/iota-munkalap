@@ -1,10 +1,8 @@
-import React from 'react';
+import React from 'react'
 import LoadingScreen from '../LoadingScreen'
 
 function TableListofPartners() {
-  return (
-    <LoadingScreen/>
-  )
+  return <LoadingScreen />
 }
 
-export default TableListofPartners;
+export default TableListofPartners

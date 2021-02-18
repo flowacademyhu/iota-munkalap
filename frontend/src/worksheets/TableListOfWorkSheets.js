@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 import React from 'react';
 import useWorkSheets from '../hooks/useWorkSheets';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
 import LoadingScreen from '../LoadingScreen';
-
-=======
-import React from 'react'
-import useWorkSheets from '../hooks/useWorkSheets'
-import { Link } from 'react-router-dom'
-import Button from '../Button'
->>>>>>> master
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()

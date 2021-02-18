@@ -1,9 +1,9 @@
-import React from 'react';
-import logo from './img/uj_logo.png';
-import Dropdown from 'react-bootstrap/Dropdown';
-import LogOut from './LogOut';
-import UserData from './UserData';
-import ToolsButton from './ToolsButton';
+import React from 'react'
+import logo from './img/uj_logo.png'
+import Dropdown from 'react-bootstrap/Dropdown'
+import LogOut from './LogOut'
+import UserData from './UserData'
+import ToolsButton from './ToolsButton'
 
 function Header() {
   return (
@@ -21,9 +21,12 @@ function Header() {
           <UserData />
         </div>
 
-        <Dropdown className='col text-right p-0'>
-          <Dropdown.Toggle className='bg-transparent border-light w-auto p-0' id='dropdown-basic'>
-          <ToolsButton />
+        <Dropdown className="col text-right p-0">
+          <Dropdown.Toggle
+            className="bg-transparent border-light w-auto p-0"
+            id="dropdown-basic"
+          >
+            <ToolsButton />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item>

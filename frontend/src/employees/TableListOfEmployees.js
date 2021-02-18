@@ -1,10 +1,10 @@
-import React from 'react';
-import useUsers from '../hooks/useUsers';
-import { Link } from 'react-router-dom';
-import EditButton from '../EditButton';
-import Button from '../Button';
-import { putUserInactive } from '../api/UserAPI';
-import LoadingScreen from '../LoadingScreen';
+import React from 'react'
+import useUsers from '../hooks/useUsers'
+import { Link } from 'react-router-dom'
+import EditButton from '../EditButton'
+import Button from '../Button'
+import { putUserInactive } from '../api/UserAPI'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfEmployees() {
   const { users } = useUsers()
@@ -50,10 +50,10 @@ export default function TableListOfEmployees() {
                       )}
                     </td>
                   </tr>
-                  )))
-                  :
-                <LoadingScreen/>
-                }
+                ))
+              ) : (
+                <LoadingScreen />
+              )}
             </tbody>
           </table>
         </div>

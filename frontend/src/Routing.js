@@ -1,14 +1,10 @@
-import React from 'react';
-import {
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
-import TableListOfEmployees from './employees/TableListOfEmployees';
-import CreateEmployee from './employees/CreateEmployee';
-import UpdateEmployee from './employees/UpdateEmployee';
-import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
-import TableListofPartners from './partners/TableListofPartners';
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import TableListOfEmployees from './employees/TableListOfEmployees'
+import CreateEmployee from './employees/CreateEmployee'
+import UpdateEmployee from './employees/UpdateEmployee'
+import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
+import TableListofPartners from './partners/TableListofPartners'
 
 function Routing() {
   return (
@@ -23,7 +19,7 @@ function Routing() {
         <Route exact path="/employees">
           <TableListOfEmployees />
         </Route>
-        <Route path='/partners'>
+        <Route path="/partners">
           <TableListofPartners />
         </Route>
         <Route path="/worksheets">
@@ -36,6 +32,5 @@ function Routing() {
     </Switch>
   )
 }
-
 
 export default Routing
