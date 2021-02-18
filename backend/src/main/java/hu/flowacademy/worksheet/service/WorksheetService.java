@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -7,18 +8,26 @@ import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class WorksheetService {
 
+    private final int DEFAULT_PAGE = 0;
+    private final String DEFAULT_ORDERBY = "createdAt";
+
     private final WorksheetRepository worksheetRepository;
+    private final PagingProperties pagingProperties;
 
     public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
         validateWorksheet(worksheet);
@@ -73,5 +82,12 @@ public class WorksheetService {
         Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
         toChange.setWorksheetStatus(status);
         return worksheetRepository.save(toChange);
+    }
+
+    public List<Worksheet> listWorksheets(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
+        return worksheetRepository
+                .findAll(PageRequest.of(page.orElse(0),
+                        limit.orElse(pagingProperties.getDefaultLimit()),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent();
     }
 }

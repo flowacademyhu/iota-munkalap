@@ -61,9 +61,7 @@ public class WorksheetController {
     @GetMapping("/worksheet")
     public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
-                                            @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
-                                            @RequestParam(value = "searchCriteria", required = false) Optional<String> searchCriteria) {
-        return worksheetService.listWorksheets(page, limit, orderBy, searchCriteria);
+                                            @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
+        return worksheetService.listWorksheets(page, limit, orderBy);
     }
 }
-
