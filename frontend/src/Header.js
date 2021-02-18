@@ -4,6 +4,7 @@ import tools from './img/tools.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LogOut from './LogOut';
 import UserData from './UserData';
+import ToolsButton from './ToolsButton';
 
 function Header() {
   return (
@@ -19,7 +20,7 @@ function Header() {
 
         <Dropdown className='col text-right p-0'>
           <Dropdown.Toggle className='bg-transparent border-light w-auto p-0' id='dropdown-basic'>
-            <img src={tools} alt='ingo stop logo' className='settingsLogo m-0 float-right' />
+          <ToolsButton />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item><LogOut /></Dropdown.Item>
