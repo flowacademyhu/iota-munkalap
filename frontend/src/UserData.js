@@ -1,8 +1,8 @@
-import React from 'react';
-import GetDecodedToken from './GetDecodedToken';
+import React from 'react'
+import GetDecodedToken from './GetDecodedToken'
 
 function UserData() {
-  const decodedToken = GetDecodedToken();
+  const decodedToken = GetDecodedToken()
   return (
     <>
       <div>{decodedToken?.name || ''}</div>
