@@ -11,7 +11,8 @@ function useUsers() {
     updateUsers();
   }, []);
   return {
-    users
+    users,
+    setUsers
   }
 }
 

@@ -24,9 +24,13 @@ function putUser(id, credentials) {
         .put(`/users/${id}`, credentials);
 }
 
-function putUserInactive(id) {
-    return api
-        .put(`/users/${id}/inactive`);
+async function putUserInactive(id) {
+    try {
+        return await api.put(`/users/${id}/inactive`);
+    } catch (error) {
+        alert('A művelet sikertelen.');
+        return false;
+    }
 }
 function getUser(id) {
     return api

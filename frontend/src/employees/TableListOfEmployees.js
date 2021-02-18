@@ -1,11 +1,19 @@
 import React from 'react';
+import { putUserInactive } from '../api/UserAPI';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
 import EmployeeListRow from './EmployeeListRow'
+import { getUsers } from '../api/UserAPI';
 
 export default function TableListOfEmployees() {
-  const { users } = useUsers();
+  const { users, setUsers } = useUsers();
+
+ async function updater(user) {
+    await putUserInactive(user.id)
+    const userNew = await getUsers();
+    setUsers(userNew.data);
+   }
 
   return (
     <>
@@ -26,7 +34,7 @@ export default function TableListOfEmployees() {
             <tbody>
               {users ? (
                 users.map(user => (
-                  <EmployeeListRow user={user}/>    
+                  <EmployeeListRow user={user} key={user.id} updater={() => updater(user)}/>    
                 )))
                 :
                 <tr>
