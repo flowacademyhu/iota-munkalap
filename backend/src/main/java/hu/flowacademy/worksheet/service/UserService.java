@@ -9,20 +9,22 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.*;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
+
 
 @Service
 @RequiredArgsConstructor
@@ -83,6 +85,22 @@ public class UserService {
         }
     }
 
+    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<User> result = collectUsersByCriteria(status, page, searchCriteria, limit, orderBy);
+        return searchCriteria.map(searchPart ->
+                result.stream().filter(user -> filterContains(searchPart, user))
+                        .collect(Collectors.toList()))
+                        .orElse(result);
+    }
+
+    private List<User> collectUsersByCriteria(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<User> result = userRepository.findAll(
+                buildSpecification(status, searchCriteria),
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+        ).getContent();
+        return result;
+    }
+
     private boolean filterContains(String searchPart, User user) {
         return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
                 stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
@@ -92,21 +110,6 @@ public class UserService {
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
 
-    }
-
-    public List<User> listRegistrations(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy, Optional<String> searchPart) {
-        return searchPart.map(s -> {
-            String pattern = "%" + s.replaceAll("[aáeéiíoóöőuúüű]", "_") + "%";
-            PageRequest pageRequest = PageRequest.of(page.orElse(DEFAULT_PAGE),
-                    limit.orElse(pagingProperties.getDefaultLimit()),
-                    Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending());
-            Page<User> userList = userRepository
-                    .findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase(pattern, pattern, pattern, pageRequest);
-            return userList.getContent().stream().filter(user -> filterContains(s, user)).collect(Collectors.toList());
-        }).orElseGet(() -> userRepository
-                .findAll(PageRequest.of(page.orElse(0),
-                        limit.orElse(pagingProperties.getDefaultLimit()),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent());
     }
 
     public User setUserActivity(Long id, Status status) throws ValidationException {
