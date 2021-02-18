@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface WorksheetRepository extends JpaRepository<Worksheet, String> {
-    List<Worksheet>findByCreatedAtBetween(LocalDateTime maxTime, LocalDateTime minTime);
+    List<Worksheet>findByCreatedAtBetween(LocalDateTime minTime, LocalDateTime maxTime);
 }
