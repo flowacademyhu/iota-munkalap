@@ -77,7 +77,7 @@ public class WorksheetService {
 
     public Worksheet update(String id, Worksheet worksheet) throws ValidationException {
         validateUpdatedWorksheet(worksheet);
-        Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + worksheet.getId()));
+        Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheet.getId()));
         updatedWorksheet.setPartnerId(worksheet.getPartnerId());
         updatedWorksheet.setTypeOfWork(worksheet.getTypeOfWork());
         updatedWorksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
