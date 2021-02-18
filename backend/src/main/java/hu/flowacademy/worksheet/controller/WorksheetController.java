@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,14 +48,22 @@ public class WorksheetController {
     @PutMapping("/worksheets/{id}/close")
     @RolesAllowed("admin")
     @ResponseStatus(HttpStatus.CREATED)
-    public Worksheet closeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+    public Worksheet closeWorksheet(@PathVariable(value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.CLOSED);
     }
 
     @PutMapping("/worksheets/{id}/finalize")
     @ResponseStatus(HttpStatus.CREATED)
-    public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+    public Worksheet finalizeWorksheet(@PathVariable(value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
+    @GetMapping("/worksheet")
+    public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                            @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                                            @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                                            @RequestParam(value = "searchCriteria", required = false) Optional<String> searchCriteria) {
+        return worksheetService.listWorksheets(page, limit, orderBy, searchCriteria);
+    }
 }
+
