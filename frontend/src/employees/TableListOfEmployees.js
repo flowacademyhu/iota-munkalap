@@ -1,28 +1,33 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import useUsers from '../hooks/useUsers';
 import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
 import Button from '../Button';
-import { putUserInactive } from '../api/UserAPI';
+import { getUsers, putUserInactive } from '../api/UserAPI';
 import SearchEmployeeInput from './SearchEmployeeInput';
 import { Formik, Form } from "formik";
 
 
 export default function TableListOfEmployees() {
-  const { users } = useUsers();
+  const { users, setUsers } = useUsers();
   const [forceRefresh, setForceRefresh] = useState(false)
+
+  async function refreshUsers(path) {
+    const response = await getUsers(path)
+    setUsers(response.data)
+  }
 
   return (
     <>
       <div className="d-flex justify-content-between p-5">
         <span>
-        <Link to={`/employees/new`}>
-          <Button className="h-auto" text='Új munkavállaló létrehozása' />
-        </Link>
+          <Link to={`/employees/new`}>
+            <Button className="h-auto" text='Új munkavállaló létrehozása' />
+          </Link>
         </span>
         <Formik class="form-inline">
           <Form>
-            <SearchEmployeeInput label="Munkatárs keresése" name="searchEmployee" setForceRefresh={setForceRefresh} forceRefresh={forceRefresh} users={users}/>
+            <SearchEmployeeInput refreshUsers={refreshUsers} label="Munkatárs keresése" name="searchEmployee" setForceRefresh={setForceRefresh} forceRefresh={forceRefresh} users={users} />
           </Form>
         </Formik>
       </div>
