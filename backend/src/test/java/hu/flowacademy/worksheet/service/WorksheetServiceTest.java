@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -12,12 +11,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -30,7 +28,8 @@ import static org.mockito.Mockito.*;
 class WorksheetServiceTest {
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
-    private static final TypeOfWork TYPE_OF_WORK = INSTALLATION;
+    private static final TypeOfWork TYPE_OF_WORK = OTHER;
+    private static final String CUSTOM_TYPE_OF_WORK = "Egyéb javítás";
     private static final AssetSettlement ASSET_SETTLEMENT = WARRANTY;
     private static final WorkingTimeAccounting WORKING_TIME_ACCOUNTING = REPAYMENT;
     private static final int NUMBER_OF_EMPLOYEES = 3;
@@ -56,6 +55,7 @@ class WorksheetServiceTest {
                 .id(worksheet.getId())
                 .partnerId(WORKSHEET_ID)
                 .typeOfWork(TYPE_OF_WORK)
+                .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
                 .numberOfEmployees(NUMBER_OF_EMPLOYEES)
@@ -88,17 +88,16 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
-
     }
 
     @Test
-    public void givenAnExistingWorksheet_whenFinalize_thenSetStatusToReported() throws ValidationException {
+    public void givenAnExistingWorksheet_whenSettingStatus_thenSetStatusToReported() throws ValidationException {
         givenExistingWorksheet();
-        Worksheet result = worksheetService.finalizeWorksheet(WORKSHEET_ID);
+        Worksheet result = worksheetService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
         Mockito.verify(worksheetRepository, times(1)).save(result);
         assertThat(result, notNullValue());
         assertThat(result.getWorksheetStatus(), notNullValue());
-        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.REPORTED));
+        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
     }
 
     private void givenExistingWorksheet() {
@@ -111,6 +110,7 @@ class WorksheetServiceTest {
         return Worksheet.builder()
                 .partnerId(WORKSHEET_ID)
                 .typeOfWork(TYPE_OF_WORK)
+                .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
                 .numberOfEmployees(NUMBER_OF_EMPLOYEES)
