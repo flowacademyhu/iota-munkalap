@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
 import Input from "../Input";
-import { getUsers } from "../api/UserAPI";
-import useUsers from "../hooks/useUsers";
-
 
 export default function SearchEmployeeInput(props) {
     const { label, name, setForceRefresh, forceRefresh, refreshUsers } = props
