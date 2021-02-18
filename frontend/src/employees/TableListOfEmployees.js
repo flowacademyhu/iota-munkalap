@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import EditButton from '../EditButton';
 import Button from '../Button';
 import { putUserInactive } from '../api/UserAPI';
+import LoadingScreen from '../LoadingScreen';
 
 export default function TableListOfEmployees() {
   const { users } = useUsers();
@@ -49,12 +50,10 @@ export default function TableListOfEmployees() {
                       }
                     </td>
                   </tr>
-                )))
-                :
-                <tr>
-                  <td>Loading...</td>
-                </tr>
-              }
+                  )))
+                  :
+                <LoadingScreen/>
+                }
             </tbody>
           </table>
         </div>

@@ -2,6 +2,8 @@ import React from 'react';
 import useWorkSheets from '../hooks/useWorkSheets';
 import { Link } from 'react-router-dom';
 import Button from '../Button';
+import LoadingScreen from '../LoadingScreen';
+
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets();
@@ -39,9 +41,8 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 )))
                 :
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <LoadingScreen/>
+
               }
             </tbody>
 

@@ -8,6 +8,7 @@ import TableListOfEmployees from './employees/TableListOfEmployees';
 import CreateEmployee from './employees/CreateEmployee';
 import UpdateEmployee from './employees/UpdateEmployee';
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets';
+import TableListofPartners from './partners/TableListofPartners';
 
 function Routing() {
   return (
@@ -23,7 +24,7 @@ function Routing() {
           <TableListOfEmployees />
         </Route>
         <Route path='/partners'>
-          <Partners />
+          <TableListofPartners />
         </Route>
         <Route path='/worksheets'>
           <TableListOfWorkSheets />
@@ -36,12 +37,5 @@ function Routing() {
   );
 }
 
-function Partners() {
-  return (
-    <div>
-      <h2>Partnerek</h2>
-    </div>
-  );
-}
 
 export default Routing;

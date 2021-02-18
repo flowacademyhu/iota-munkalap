@@ -1,6 +1,5 @@
 import React from 'react';
 import logo from './img/uj_logo.png';
-import tools from './img/tools.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import LogOut from './LogOut';
 import UserData from './UserData';
