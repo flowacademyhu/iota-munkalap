@@ -28,5 +28,6 @@ public class WorksheetDTO {
     private String workerSignature;
     private String proofOfEmployment;
     private WorksheetStatus worksheetStatus;
+    private String nameOfTheCreator;
 
 }
