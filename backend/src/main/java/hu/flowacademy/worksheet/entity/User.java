@@ -1,15 +1,12 @@
 package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import hu.flowacademy.worksheet.enumCustom.Role;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,8 +34,4 @@ public class User {
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "nameOfTheCreator")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private List<Worksheet> orderList;
 }
