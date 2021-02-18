@@ -6,7 +6,9 @@ import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
+import org.keycloak.KeycloakPrincipal;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -23,7 +25,7 @@ public class WorksheetController {
     @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
-    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+    public Worksheet createWorksheet(Authentication authentication, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = Worksheet.builder()
                 .partnerId(worksheetDTO.getPartnerId())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
@@ -41,6 +43,7 @@ public class WorksheetController {
                 .workerSignature(worksheetDTO.getWorkerSignature())
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
+                .nameOfTheCreator(getNameFromAuthentication(authentication))
                 .build();
         return worksheetService.saveWorksheet(worksheet);
     }
@@ -63,5 +66,12 @@ public class WorksheetController {
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
         return worksheetService.listWorksheets(page, limit, orderBy);
+    }
+
+
+    private String getNameFromAuthentication(Authentication authentication) {
+        String firstName = ((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext().getToken().getGivenName();
+        String lastName = ((KeycloakPrincipal) authentication.getPrincipal()).getKeycloakSecurityContext().getToken().getFamilyName();
+        return firstName + " " + lastName;
     }
 }
