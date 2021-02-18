@@ -81,6 +81,6 @@ public class WorksheetService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         LocalDateTime dateTimeMax = LocalDateTime.parse(maxTime, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(minTime, formatter);
-        return worksheetRepository.findByCreatedAtBetween(dateTimeMax, dateTimeMin);
+        return worksheetRepository.findByCreatedAtBetween(dateTimeMin, dateTimeMax);
     }
 }
