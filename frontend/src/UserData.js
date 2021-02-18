@@ -1,11 +1,8 @@
 import React from 'react';
-import { useJwt } from "react-jwt";
-import useToken from './hooks/useToken'
+import GetDecodedToken from './GetDecodedToken';
 
 function UserData() {
-  const { token } = useToken();
-  const { decodedToken } = useJwt(token);
-
+  const decodedToken = GetDecodedToken();
   return (
     <>
       <div>{decodedToken?.name || ''}</div>
