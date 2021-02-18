@@ -113,7 +113,7 @@ class WorksheetServiceTest {
         LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
         Mockito.verify(worksheetRepository, times(1))
-                .findByCreatedAtLessThanMaxTimeAndCreatedAtMoreThanMinTime(dateTimeMax, dateTimeMin);
+                .findByCreatedAtBetween(dateTimeMax, dateTimeMin);
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
         assertThat(result.get(0).getPartnerId(), is(WORKSHEET_ID));
         assertThat(result.size(), is(1));
@@ -131,7 +131,7 @@ class WorksheetServiceTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
-        when(worksheetRepository.findByCreatedAtLessThanMaxTimeAndCreatedAtMoreThanMinTime(dateTimeMax, dateTimeMin)).thenReturn(List.of(worksheet));
+        when(worksheetRepository.findByCreatedAtBetween(dateTimeMax, dateTimeMin)).thenReturn(List.of(worksheet));
     }
 
     private Worksheet givenValidWorksheet() {
