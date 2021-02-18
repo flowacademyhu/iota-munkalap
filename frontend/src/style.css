@@ -46,16 +46,16 @@ img {
   vertical-align: middle;
 }
 
-#Outer { 
+#Outer {
   height: 100vh;
-  position: relative; 
-} 
+  position: relative;
+}
 
-.image-container { 
-  position: absolute; 
-  margin: auto; 
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0; 
-} 
+.image-container {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
