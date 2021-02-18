@@ -1,44 +1,33 @@
-import api from './createApi';
+import api from './createApi'
 
 async function loginUser(credentials) {
-    try {
-        const result = await api.post('/login', credentials);
-        return result.data.access_token;
-    } catch (error) {
-        alert('A belépés sikertelen.');
-    }
-}
-
-function getUsers(status) {
-    return api
-        .get(`api/users?status=${status}`);
-        //Ez tedd a pathhez: users?status=${status}&page=${page}&q=${q}&sort_by={sortBy}
+  try {
+    const result = await api.post('/login', credentials)
+    return result.data.access_token
+  } catch (error) {
+    alert('A belépés sikertelen.')
+  }
 }
 
 function postUser(credentials) {
-    return api
-        .post(`/users`, credentials);
+  return api.post(`/users`, credentials)
 }
 
 function putUser(id, credentials) {
-    return api
-        .put(`/users/${id}`, credentials);
+  return api.put(`/users/${id}`, credentials)
 }
 
 function putUserInactive(id) {
-    return api
-        .put(`/users/${id}`, { "isActive": false });
+  return api.put(`/users/${id}`, { isActive: false })
 }
 function getUser(id) {
-    return api
-        .get(`/users/${id}`);
+  return api.get(`/users/${id}`)
 }
 
-export {
-    getUsers,
-    postUser,
-    putUser,
-    putUserInactive,
-    getUser,
-    loginUser
-};
+function getUsers(string) {
+  return string !== undefined
+    ? api.get(`/users/?searchCriteria=${string}`)
+    : api.get(`/users`)
+}
+
+export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }

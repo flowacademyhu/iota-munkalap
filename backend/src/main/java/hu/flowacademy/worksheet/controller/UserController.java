@@ -39,13 +39,13 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @PermitAll
+    @RolesAllowed("admin")
     public List<User> findAll(@RequestParam(name = "status", required = false) Optional<Boolean> status,
                               @RequestParam(name = "page", required = false) Optional<Integer> page,
                               @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                               @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
-                              @RequestParam(name = "q", required = false) Optional<String> q) {
-        return userService.filter(status, page, q, limit, orderBy);
+                              @RequestParam(name = "searchCriteria", required = false) Optional<String> searchCriteria) {
+        return userService.filter(status, page, searchCriteria, limit, orderBy);
     }
 
     //Loginoláskor a Keycloakhoz indít továbbhívást.
