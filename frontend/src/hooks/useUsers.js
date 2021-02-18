@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getUsers } from '../api/UserAPI'
 
-<<<<<<< HEAD
 function useUsers() {
   const [users, setUsers] = useState()
   useEffect(() => {
@@ -18,18 +17,3 @@ function useUsers() {
 }
 
 export default useUsers
-=======
-export default function useUsers() {
-  const [users, setUsers] = useState()
-  useEffect(() => {
-    async function updatePosts() {
-      const { data } = await getUsers()
-      setUsers(data)
-    }
-    updatePosts()
-  }, [])
-  return {
-    users,
-  }
-}
->>>>>>> master

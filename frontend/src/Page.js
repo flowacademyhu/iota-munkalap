@@ -1,11 +1,5 @@
 import React from 'react'
-<<<<<<< HEAD
-import {
-  BrowserRouter as Router,
-} from "react-router-dom";
-=======
 import { BrowserRouter as Router } from 'react-router-dom'
->>>>>>> master
 
 import Header from './Header'
 import Menu from './Menu'

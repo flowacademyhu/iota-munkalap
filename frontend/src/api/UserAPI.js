@@ -21,7 +21,6 @@ function putUser(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-<<<<<<< HEAD
 async function putUserInactive(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
@@ -29,10 +28,6 @@ async function putUserInactive(id) {
     alert('A művelet sikertelen.')
     return false
   }
-=======
-function putUserInactive(id) {
-  return api.put(`/users/${id}`, { isActive: false })
->>>>>>> master
 }
 function getUser(id) {
   return api.get(`/users/${id}`)

@@ -25,11 +25,6 @@ const schema = yup.object().shape({
     .required('Add meg a jelszót még egyszer!')
     .oneOf([yup.ref('password')], 'A két jelszó nem egyezik meg!'),
 })
-<<<<<<< HEAD
-
-function CreateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title }) {
-=======
->>>>>>> master
 
 function CreateEmployeeForm({
   sent,
