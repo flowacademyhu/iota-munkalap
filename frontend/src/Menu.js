@@ -5,7 +5,7 @@ import GetDecodedToken from './GetDecodedToken';
 function Menu() {
   const isAdmin = GetDecodedToken()?.resource_access.worksheetclient.roles.includes('admin');
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified mb-3 p-0" >
+    <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified mb-3 p-0">
       <ul className="navbar-nav w-100">
         {isAdmin &&
           <li className="nav-item border-right border-white p-2">
@@ -13,14 +13,26 @@ function Menu() {
           </li>
         }
         <li className="nav-item p-2">
-          <NavLink className='nav-link font-weight-bold' activeClassName='active' to='/worksheets'>Munkalapok</NavLink>
+          <NavLink
+            className="nav-link font-weight-bold"
+            activeClassName="active"
+            to="/worksheets"
+          >
+            Munkalapok
+          </NavLink>
         </li>
         <li className="nav-item border-left border-white p-2">
-          <NavLink className='nav-link font-weight-bold' activeClassName='active' to='/partners'>Partnerek</NavLink>
+          <NavLink
+            className="nav-link font-weight-bold"
+            activeClassName="active"
+            to="/partners"
+          >
+            Partnerek
+          </NavLink>
         </li>
       </ul>
     </nav>
-  );
+  )
 }
 
-export default Menu;
+export default Menu

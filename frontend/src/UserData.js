@@ -8,7 +8,7 @@ function UserData() {
       <div>{decodedToken?.name || ''}</div>
       <div>{decodedToken?.email || ''}</div>
     </>
-  );
+  )
 }
 
-export default UserData;
+export default UserData

@@ -1,10 +1,10 @@
-import React from 'react';
-import useWorkSheets from '../hooks/useWorkSheets';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
+import React from 'react'
+import useWorkSheets from '../hooks/useWorkSheets'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets } = useWorkSheets();
+  const { workSheets } = useWorkSheets()
   return (
     <>
       <div className="d-flex justify-content-between p-1">
@@ -28,7 +28,7 @@ export default function TableListOfWorkSheets() {
 
             <tbody>
               {workSheets ? (
-                workSheets.map(worksheet => (
+                workSheets.map((worksheet) => (
                   <tr key={worksheet.id}>
                     <th scope="row">{worksheet.id}</th>
                     <td>{worksheet.creater}</td>
@@ -37,17 +37,16 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.type}</td>
                     <td>{worksheet.state}</td>
                   </tr>
-                )))
-                :
+                ))
+              ) : (
                 <tr>
                   <td>Loading...</td>
                 </tr>
-              }
+              )}
             </tbody>
-
           </table>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
