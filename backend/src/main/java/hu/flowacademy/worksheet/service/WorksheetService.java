@@ -77,7 +77,7 @@ public class WorksheetService {
         return worksheetRepository.save(toChange);
     }
 
-    public List<Worksheet> findByTimeInterval(String minTime, String maxTime) {
+    public List<Worksheet> findByTimeInterval(String maxTime, String minTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         LocalDateTime dateTimeMax = LocalDateTime.parse(maxTime, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(minTime, formatter);
