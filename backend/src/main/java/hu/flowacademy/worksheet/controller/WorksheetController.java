@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -54,6 +55,12 @@ public class WorksheetController {
     @ResponseStatus(HttpStatus.CREATED)
     public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
+    }
+
+    @GetMapping("worksheets")
+    public List<Worksheet> findByTimeInterval(@RequestParam (value = "maxTime") String maxTime,
+                                             @RequestParam (value = "minTime") String minTime) {
+        return worksheetService.findByTimeInterval(minTime, maxTime);
     }
 
 }
