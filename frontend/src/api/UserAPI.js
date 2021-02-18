@@ -10,8 +10,7 @@ async function loginUser(credentials) {
 }
 
 function getUsers() {
-    return api
-        .get(`/users`);
+  return api.get(`/users`)
 }
 
 function postUser(credentials) {
@@ -30,16 +29,9 @@ function getUser(id) {
 }
 
 function getUsers(string) {
-    return string !== undefined
-        ? api.get(`/users/?q=${string}`)
-        : api.get(`/users`)
+  return string !== undefined
+    ? api.get(`/users/?q=${string}`)
+    : api.get(`/users`)
 }
 
-export {
-    getUsers,
-    postUser,
-    putUser,
-    putUserInactive,
-    getUser,
-    loginUser,
-};
+export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }
