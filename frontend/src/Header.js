@@ -7,13 +7,17 @@ import ToolsButton from './ToolsButton';
 
 function Header() {
   return (
-    <div className='my-3'>
-      <div className='row align-items-center m-0'>
-        <div className='col p-0'>
-          <img className='col-auto logo p-0 m-0' src={logo} alt='ingo stop logo' />
+    <div className="my-3">
+      <div className="row align-items-center m-0">
+        <div className="col p-0">
+          <img
+            className="col-auto logo p-0 m-0"
+            src={logo}
+            alt="ingo stop logo"
+          />
         </div>
 
-        <div className='col text-center h5 p-0'>
+        <div className="col text-center h5 p-0">
           <UserData />
         </div>
 
@@ -22,12 +26,14 @@ function Header() {
           <ToolsButton />
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item><LogOut /></Dropdown.Item>
+            <Dropdown.Item>
+              <LogOut />
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
     </div>
-  );
+  )
 }
 
-export default Header;
+export default Header

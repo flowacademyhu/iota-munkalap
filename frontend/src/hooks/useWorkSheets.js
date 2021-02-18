@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { getWorkSheets } from '../api/WorkSheetAPI';
+import { useState, useEffect } from 'react'
+import { getWorkSheets } from '../api/WorkSheetAPI'
 
 export default function useWorkSheets() {
-  const [workSheets, setWorkSheets] = useState();
+  const [workSheets, setWorkSheets] = useState()
   useEffect(() => {
     async function updateWorkSheets() {
-      const { data } = await getWorkSheets();
-      setWorkSheets(data);
+      const { data } = await getWorkSheets()
+      setWorkSheets(data)
     }
-    updateWorkSheets();
-  }, []);
+    updateWorkSheets()
+  }, [])
   return {
-    workSheets
+    workSheets,
   }
 }

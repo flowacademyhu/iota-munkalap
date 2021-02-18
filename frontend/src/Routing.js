@@ -13,29 +13,29 @@ import TableListofPartners from './partners/TableListofPartners';
 function Routing() {
   return (
     <Switch>
-      <div className='col-12'>
-        <Route path='/employees/new'>
+      <div className="col-12">
+        <Route path="/employees/new">
           <CreateEmployee />
         </Route>
-        <Route path='/employees/update/:id'>
+        <Route path="/employees/update/:id">
           <UpdateEmployee />
         </Route>
-        <Route exact path='/employees'>
+        <Route exact path="/employees">
           <TableListOfEmployees />
         </Route>
         <Route path='/partners'>
           <TableListofPartners />
         </Route>
-        <Route path='/worksheets'>
+        <Route path="/worksheets">
           <TableListOfWorkSheets />
         </Route>
-        <Route path='/'>
-          <Redirect to='/partners' />
+        <Route path="/">
+          <Redirect to="/partners" />
         </Route>
       </div>
     </Switch>
-  );
+  )
 }
 
 
-export default Routing;
+export default Routing

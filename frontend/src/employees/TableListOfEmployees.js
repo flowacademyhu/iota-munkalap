@@ -7,12 +7,12 @@ import { putUserInactive } from '../api/UserAPI';
 import LoadingScreen from '../LoadingScreen';
 
 export default function TableListOfEmployees() {
-  const { users } = useUsers();
+  const { users } = useUsers()
 
   return (
     <>
       <Link to={`/employees/new`}>
-        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
+        <Button text="Új munkavállaló létrehozása" moreClassName="w-auto p-1" />
       </Link>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
@@ -28,26 +28,26 @@ export default function TableListOfEmployees() {
             </thead>
             <tbody>
               {users ? (
-                users.map(user => (
+                users.map((user) => (
                   <tr key={user.id}>
                     <th scope="row">{user.id}</th>
-                    <td>{user.lastName} {user.firstName}</td>
-                    <td>{user.email}</td>
                     <td>
-                      {user.enabled ? 'Aktív' : 'Inaktív'}
+                      {user.lastName} {user.firstName}
                     </td>
-                    <td className='d-flex justify-content-around align-items-center'>
+                    <td>{user.email}</td>
+                    <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
+                    <td className="d-flex justify-content-around align-items-center">
                       <Link to={`/employees/update/${user.id}`}>
                         <EditButton />
                       </Link>
-                      {user.enabled &&
+                      {user.enabled && (
                         <Button
                           onClick={() => putUserInactive(user.id)}
                           type="button"
                           className="btn btn-danger w-auto"
                           text="Inaktiválás"
                         />
-                      }
+                      )}
                     </td>
                   </tr>
                   )))
@@ -59,5 +59,5 @@ export default function TableListOfEmployees() {
         </div>
       </div>
     </>
-  );
+  )
 }

@@ -21,7 +21,6 @@
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: lightgray;
-  
 }
 
 img {
@@ -39,10 +38,11 @@ img {
 }
 
 .navbar-dark .navbar-nav .nav-link {
-  color: rgba(255,255,255,.7);
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.table td, .table th {
+.table td,
+.table th {
   vertical-align: middle;
 }
 
