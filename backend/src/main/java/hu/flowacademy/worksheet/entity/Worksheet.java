@@ -4,6 +4,7 @@ import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "worksheetCustom")
+@EntityListeners(AuditingEntityListener.class)
 public class Worksheet {
 
     @Id
