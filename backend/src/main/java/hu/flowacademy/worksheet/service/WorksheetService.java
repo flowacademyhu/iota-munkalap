@@ -126,9 +126,6 @@ public class WorksheetService {
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
         }
-        if (worksheet.getTypeOfWork() == null) {
-            throw new ValidationException("Type of work value is null");
-        }
         if (worksheet.getWorkerSignature() == null) {
             throw new ValidationException("Worker signature value is null");
         }
