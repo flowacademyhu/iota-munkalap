@@ -24,6 +24,7 @@ export default function LoginForm({ setToken }) {
     setToken(accessToken)
   }
 
+<<<<<<< HEAD
     return (
         <div className="container loginform">
             <div className="row">
@@ -50,4 +51,35 @@ export default function LoginForm({ setToken }) {
         </div >
     );
 
+=======
+  return (
+    <div className="container loginform">
+      <div className="row">
+        <div className="col-12">
+          <Formik
+            initialValues={{
+              email: '',
+              password: '',
+            }}
+            validationSchema={schema}
+            onSubmit={handleSubmit}
+          >
+            <Form>
+              <h3 className="my-5 text-center">Bejelentkezés</h3>
+              <EmailInput label="Email cím" name="email" />
+              <PasswordInput label="Jelszó" name="password" />
+              <div className="my-5 d-flex justify-content-center">
+                <Button
+                  type="submit"
+                  text="Bejelentkezés"
+                  moreClassName="w-auto"
+                />
+              </div>
+            </Form>
+          </Formik>
+        </div>
+      </div>
+    </div>
+  )
+>>>>>>> master
 }

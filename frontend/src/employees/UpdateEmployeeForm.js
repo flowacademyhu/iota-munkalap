@@ -15,16 +15,19 @@ const schema = yup.object().shape({
     .email('Nem megfelelő email cím!'),
 })
 
-function UpdateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title, user }) {
+function UpdateEmployeeForm({
+  sent,
+  handleClick,
+  popUpMessage,
+  sendData,
+  title,
+  user,
+}) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {sent
-            && <PopUp
-              handleClick={handleClick}
-              body={popUpMessage}
-            />}
+          {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
               firstName: user.firstName || '',
@@ -37,15 +40,19 @@ function UpdateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title, 
             }}
           >
             <Form>
-              <h1 className='text-center'>{title}</h1>
-              <Input name='lastName' label='Vezetéknév' type='text' />
-              <Input name='firstName' label='Keresztnév' type='text' />
-              <Input name='email' label='E-mail' type='email' />
-              <div className='buttons'>
-                <Link to='/employees'>
-                  <Button text='Mégse' moreClassName='h-auto w-auto p-2' />
+              <h1 className="text-center">{title}</h1>
+              <Input name="lastName" label="Vezetéknév" type="text" />
+              <Input name="firstName" label="Keresztnév" type="text" />
+              <Input name="email" label="E-mail" type="email" />
+              <div className="buttons">
+                <Link to="/employees">
+                  <Button text="Mégse" moreClassName="h-auto w-auto p-2" />
                 </Link>
-                <Button text='Mentés' type='submit' moreClassName='h-auto w-auto p-2' />
+                <Button
+                  text="Mentés"
+                  type="submit"
+                  moreClassName="h-auto w-auto p-2"
+                />
               </div>
             </Form>
           </Formik>

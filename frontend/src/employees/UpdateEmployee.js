@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import UpdateEmployeeForm from './UpdateEmployeeForm';
-import { putUser, getUser } from '../api/UserAPI';
-import { useParams, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import UpdateEmployeeForm from './UpdateEmployeeForm'
+import { putUser, getUser } from '../api/UserAPI'
+import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
 function UpdateEmployee() {
@@ -11,7 +11,7 @@ function UpdateEmployee() {
   const { id } = useParams()
   const [userData, setUserData] = useState({})
 
-  const history = useHistory();
+  const history = useHistory()
 
   function handleClick() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
@@ -35,13 +35,13 @@ function UpdateEmployee() {
     try {
       const response = await putUser(id, values)
       if (response.status === 200) {
-        setPopUpMessage('Munkavállaló sikeresen módosítva');
-        setSentSuccessfully(true);
+        setPopUpMessage('Munkavállaló sikeresen módosítva')
+        setSentSuccessfully(true)
       }
     } catch (error) {
-      setPopUpMessage('A módosítás sikertelen');
+      setPopUpMessage('A módosítás sikertelen')
     } finally {
-      setSent(true);
+      setSent(true)
     }
   }
 
@@ -53,7 +53,7 @@ function UpdateEmployee() {
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={putData}
-          title='Adatok módosítása'
+          title="Adatok módosítása"
           user={userData}
         />
       )}

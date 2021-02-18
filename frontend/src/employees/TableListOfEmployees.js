@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import { putUserInactive } from '../api/UserAPI'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
@@ -14,11 +15,21 @@ export default function TableListOfEmployees() {
     const userNew = await getUsers()
     setUsers(userNew.data)
   }
+=======
+import useUsers from '../hooks/useUsers'
+import { Link } from 'react-router-dom'
+import EditButton from '../EditButton'
+import Button from '../Button'
+import { putUserInactive } from '../api/UserAPI'
+
+export default function TableListOfEmployees() {
+  const { users } = useUsers()
+>>>>>>> master
 
   return (
     <>
       <Link to={`/employees/new`}>
-        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
+        <Button text="Új munkavállaló létrehozása" moreClassName="w-auto p-1" />
       </Link>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
@@ -35,11 +46,35 @@ export default function TableListOfEmployees() {
             <tbody>
               {users ? (
                 users.map((user) => (
+<<<<<<< HEAD
                   <EmployeeListRow
                     user={user}
                     key={user.id}
                     updater={() => updater(user)}
                   />
+=======
+                  <tr key={user.id}>
+                    <th scope="row">{user.id}</th>
+                    <td>
+                      {user.lastName} {user.firstName}
+                    </td>
+                    <td>{user.email}</td>
+                    <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
+                    <td className="d-flex justify-content-around align-items-center">
+                      <Link to={`/employees/update/${user.id}`}>
+                        <EditButton />
+                      </Link>
+                      {user.enabled && (
+                        <Button
+                          onClick={() => putUserInactive(user.id)}
+                          type="button"
+                          className="btn btn-danger w-auto"
+                          text="Inaktiválás"
+                        />
+                      )}
+                    </td>
+                  </tr>
+>>>>>>> master
                 ))
               ) : (
                 <tr>

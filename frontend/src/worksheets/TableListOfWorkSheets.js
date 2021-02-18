@@ -1,7 +1,7 @@
-import React from 'react';
-import useWorkSheets from '../hooks/useWorkSheets';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
+import React from 'react'
+import useWorkSheets from '../hooks/useWorkSheets'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -9,7 +9,7 @@ export default function TableListOfWorkSheets() {
     <>
       <div className="d-flex justify-content-between p-5">
         <Link to={`/worksheets/new`}>
-          <Button text='Új munkalap létrehozása' />
+          <Button text="Új munkalap létrehozása" />
         </Link>
       </div>
       <div className="border border-secondary">

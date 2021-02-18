@@ -25,18 +25,24 @@ const schema = yup.object().shape({
     .required('Add meg a jelszót még egyszer!')
     .oneOf([yup.ref('password')], 'A két jelszó nem egyezik meg!'),
 })
+<<<<<<< HEAD
 
 function CreateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title }) {
+=======
+>>>>>>> master
 
+function CreateEmployeeForm({
+  sent,
+  handleClick,
+  popUpMessage,
+  sendData,
+  title,
+}) {
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
-          {sent
-            && <PopUp
-              handleClick={handleClick}
-              body={popUpMessage}
-            />}
+          {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
               firstName: '',
@@ -51,17 +57,25 @@ function CreateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title }
             }}
           >
             <Form>
-              <h1 className='text-center'>{title}</h1>
-              <Input name='lastName' label='Vezetéknév' type='text' />
-              <Input name='firstName' label='Keresztnév' type='text' />
-              <Input name='email' label='E-mail' type='email' />
-              <Input name='password' label='Jelszó' type='password' />
-              <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
-              <div className='buttons'>
-                <Link to='/employees'>
-                  <Button text='Mégse' moreClassName='h-auto w-auto'/>
+              <h1 className="text-center">{title}</h1>
+              <Input name="lastName" label="Vezetéknév" type="text" />
+              <Input name="firstName" label="Keresztnév" type="text" />
+              <Input name="email" label="E-mail" type="email" />
+              <Input name="password" label="Jelszó" type="password" />
+              <Input
+                name="confirmPassword"
+                label="Jelszó még egyszer"
+                type="password"
+              />
+              <div className="buttons">
+                <Link to="/employees">
+                  <Button text="Mégse" moreClassName="h-auto w-auto" />
                 </Link>
-                <Button text='Mentés' type='submit' moreClassName='h-auto w-auto' />
+                <Button
+                  text="Mentés"
+                  type="submit"
+                  moreClassName="h-auto w-auto"
+                />
               </div>
             </Form>
           </Formik>

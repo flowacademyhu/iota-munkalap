@@ -9,9 +9,9 @@ export default function useToken() {
 
   function saveToken(token) {
     if (!token) {
-      sessionStorage.clear('token');
-      setToken("")
-      return;
+      sessionStorage.clear('token')
+      setToken('')
+      return
     }
     sessionStorage.setItem('token', token)
     setToken(token)
