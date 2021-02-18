@@ -37,15 +37,15 @@ function UpdateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title, 
             }}
           >
             <Form>
-              <h1 className="text-center">{title}</h1>
-              <Input name="lastName" label="Vezetéknév" type="text" />
-              <Input name="firstName" label="Keresztnév" type="text" />
-              <Input name="email" label="E-mail" type="email" />
-              <div className="buttons">
-                <Link to="/employees">
-                  <Button text="Mégse" moreClassName="h-auto" />
+              <h1 className='text-center'>{title}</h1>
+              <Input name='lastName' label='Vezetéknév' type='text' />
+              <Input name='firstName' label='Keresztnév' type='text' />
+              <Input name='email' label='E-mail' type='email' />
+              <div className='buttons'>
+                <Link to='/employees'>
+                  <Button text='Mégse' moreClassName='h-auto w-auto p-2' />
                 </Link>
-                <Button text="Mentés" type="submit" moreClassName="h-auto" />
+                <Button text='Mentés' type='submit' moreClassName='h-auto w-auto p-2' />
               </div>
             </Form>
           </Formik>

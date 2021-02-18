@@ -18,17 +18,18 @@ export default function TableListOfEmployees() {
   return (
     <>
       <Link to={`/employees/new`}>
-        <Button text="Új munkavállaló létrehozása" />
+        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
       </Link>
       <div className="border border-secondary">
-        <div className="container-fluid">
-          <table className="table table-hover">
+        <div className="container-fluid align-items-center">
+          <table className="table table-hover text-center">
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Név</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Státusz</th>
+                <th scope="col">Módosítás</th>
               </tr>
             </thead>
             <tbody>
