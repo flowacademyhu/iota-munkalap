@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
@@ -41,6 +44,8 @@ class WorksheetServiceTest {
     private static final TypeOfPayment TYPE_OF_PAYMENT = CASH;
     private static final String WORKER_SIGNATURE = "Nagy Lajos";
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
+    private static final String MIN_TIME = "1999.01.01 01:01:01";
+    private static final String MAX_TIME = "2999.01.01 01:01:01";
 
     @Mock
     private WorksheetRepository worksheetRepository;
@@ -100,10 +105,33 @@ class WorksheetServiceTest {
         assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
     }
 
+    @Test
+    public void givenAProperWorksheet_whenFilteringByDate_thenReturnItemInList() {
+        givenAProperTimedWorkSheet();
+        List<Worksheet> result = worksheetService.findByTimeInterval(MAX_TIME, MIN_TIME);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
+        LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
+        Mockito.verify(worksheetRepository, times(1))
+                .findByCreatedAtLessThanMaxTimeAndCreatedAtMoreThanMinTime(dateTimeMax, dateTimeMin);
+        assertThat(result.get(0).getId(), is(WORKSHEET_ID));
+        assertThat(result.get(0).getPartnerId(), is(WORKSHEET_ID));
+        assertThat(result.size(), is(1));
+    }
+
     private void givenExistingWorksheet() {
         Worksheet worksheet = givenValidWorksheet();
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private void givenAProperTimedWorkSheet() {
+        Worksheet worksheet = givenValidWorksheet();
+        worksheet.setId(WORKSHEET_ID);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
+        LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
+        when(worksheetRepository.findByCreatedAtLessThanMaxTimeAndCreatedAtMoreThanMinTime(dateTimeMax, dateTimeMin)).thenReturn(List.of(worksheet));
     }
 
     private Worksheet givenValidWorksheet() {
