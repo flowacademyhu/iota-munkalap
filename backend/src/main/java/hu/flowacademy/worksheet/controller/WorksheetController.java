@@ -60,7 +60,7 @@ public class WorksheetController {
     @GetMapping("worksheets")
     public List<Worksheet> findByTimeInterval(@RequestParam (value = "maxTime") String maxTime,
                                              @RequestParam (value = "minTime") String minTime) {
-        return worksheetService.findByTimeInterval(minTime, maxTime);
+        return worksheetService.findByTimeInterval(maxTime, minTime);
     }
 
 }
