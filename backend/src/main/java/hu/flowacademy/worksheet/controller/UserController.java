@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    @PermitAll
+    @RolesAllowed("admin")
     public List<User> findAll(@RequestParam(name = "status", required = false) Optional<Boolean> status,
                               @RequestParam(name = "page", required = false) Optional<Integer> page,
                               @RequestParam(value = "limit", required = false) Optional<Integer> limit,
