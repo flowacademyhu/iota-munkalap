@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.UserSpecification.*;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
@@ -84,12 +85,12 @@ public class UserService {
         }
     }
 
-    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> q, Optional<Integer> limit, Optional<String> orderBy) {
+    public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
         List<User> result = userRepository.findAll(
-                buildSpecification(status, q),
+                buildSpecification(status, searchCriteria),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending()) //mod here
         ).getContent();
-        return q.map(searchPart ->
+        return searchCriteria.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart, user))
                         .collect(Collectors.toList()))
                         .orElse(result);
