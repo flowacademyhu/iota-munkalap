@@ -1,8 +1,8 @@
-import React from 'react';
-import useWorkSheets from '../hooks/useWorkSheets';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
-import LoadingScreen from '../LoadingScreen';
+import React from 'react'
+import useWorkSheets from '../hooks/useWorkSheets'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -38,20 +38,10 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.type}</td>
                     <td>{worksheet.state}</td>
                   </tr>
-<<<<<<< HEAD
-                )))
-                :
-                <LoadingScreen/>
-
-              }
-=======
                 ))
               ) : (
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <LoadingScreen />
               )}
->>>>>>> master
             </tbody>
           </table>
         </div>
