@@ -24,11 +24,6 @@ export default function LoginForm({ setToken }) {
     setToken(accessToken)
   }
 
-    const handleSubmit = async (values) => {
-        const  accessToken  = await loginUser(values);
-        setToken(accessToken);
-    }
-
     return (
         <div className="container loginform">
             <div className="row">
