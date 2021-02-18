@@ -11,18 +11,16 @@ export default function EmployeeListRow({ user, updater }) {
         {user.lastName} {user.firstName}
       </td>
       <td>{user.email}</td>
-      <td>
-        {user.enabled ? "Aktív" : "Inaktív"}
-      </td>
+      <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
       <td className="d-flex justify-content-around">
-        {user.enabled &&
-          < Button
+        {user.enabled && (
+          <Button
             onClick={updater}
             type="button"
             className="btn btn-danger"
             text="Inaktiválás"
           />
-        }
+        )}
         <Link to={`/employees/update/${user.id}`}>
           <EditButton />
         </Link>
