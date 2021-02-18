@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
-
+import React from 'react'
 import Input from '../Input'
 
 export default function SearchEmployeeInput(props) {
-  const { label, name, setForceRefresh, forceRefresh, refreshUsers } = props
-  const [value, setValue] = useState('')
+  const { label, name, keyword, onChangeKeyword } = props
 
   function handleChange(event) {
-    setValue(event.target.value)
-    refreshUsers(event.target.value.toLowerCase())
-    setForceRefresh(!forceRefresh)
+    onChangeKeyword(event.target.value)
   }
 
   return (
     <Input
-      value={value}
+      value={keyword}
       onChange={(event) => handleChange(event)}
       type="text"
       placeholder="Keresés"
