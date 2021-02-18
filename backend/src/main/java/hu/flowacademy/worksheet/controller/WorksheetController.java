@@ -62,5 +62,4 @@ public class WorksheetController {
                                              @RequestParam (value = "minTime") String minTime) {
         return worksheetService.findByTimeInterval(maxTime, minTime);
     }
-
 }
