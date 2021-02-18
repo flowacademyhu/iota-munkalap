@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react'
 
-import Input from "./Input";
+import Input from './Input'
 
 export default function PasswordInput(props) {
-    return <Input type="password" placeholder="Jelszó" {...props} />;
+  return <Input type="password" placeholder="Jelszó" {...props} />
 }
-

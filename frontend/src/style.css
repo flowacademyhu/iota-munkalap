@@ -28,10 +28,11 @@
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: lightgray;
-  
 }
 
-.flex-container > NavLink, Button, MenuItem {
+.flex-container > NavLink,
+Button,
+MenuItem {
   width: 150px;
   height: 100%;
   background-color: green;

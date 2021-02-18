@@ -1,24 +1,24 @@
-import React from 'react';
-import { putUserInactive } from '../api/UserAPI';
-import useUsers from '../hooks/useUsers';
-import { Link } from 'react-router-dom';
-import Button from '../Button';
+import React from 'react'
+import { putUserInactive } from '../api/UserAPI'
+import useUsers from '../hooks/useUsers'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 import EmployeeListRow from './EmployeeListRow'
-import { getUsers } from '../api/UserAPI';
+import { getUsers } from '../api/UserAPI'
 
 export default function TableListOfEmployees() {
-  const { users, setUsers } = useUsers();
+  const { users, setUsers } = useUsers()
 
- async function updater(user) {
+  async function updater(user) {
     await putUserInactive(user.id)
-    const userNew = await getUsers();
-    setUsers(userNew.data);
-   }
+    const userNew = await getUsers()
+    setUsers(userNew.data)
+  }
 
   return (
     <>
       <Link to={`/employees/new`}>
-        <Button text='Új munkavállaló létrehozása' />
+        <Button text="Új munkavállaló létrehozása" />
       </Link>
       <div className="border border-secondary">
         <div className="container-fluid">
@@ -33,18 +33,22 @@ export default function TableListOfEmployees() {
             </thead>
             <tbody>
               {users ? (
-                users.map(user => (
-                  <EmployeeListRow user={user} key={user.id} updater={() => updater(user)}/>    
-                )))
-                :
+                users.map((user) => (
+                  <EmployeeListRow
+                    user={user}
+                    key={user.id}
+                    updater={() => updater(user)}
+                  />
+                ))
+              ) : (
                 <tr>
                   <td>Loading...</td>
                 </tr>
-              }
+              )}
             </tbody>
           </table>
         </div>
       </div>
     </>
-  );
+  )
 }

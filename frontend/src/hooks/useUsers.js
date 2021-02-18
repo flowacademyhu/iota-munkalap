@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { getUsers } from '../api/UserAPI';
+import { useState, useEffect } from 'react'
+import { getUsers } from '../api/UserAPI'
 
 function useUsers() {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState()
   useEffect(() => {
     async function updateUsers() {
-      const { data } = await getUsers();
-      setUsers(data);
+      const { data } = await getUsers()
+      setUsers(data)
     }
-    updateUsers();
-  }, []);
+    updateUsers()
+  }, [])
   return {
     users,
-    setUsers
+    setUsers,
   }
 }
 
-export default useUsers;
+export default useUsers
