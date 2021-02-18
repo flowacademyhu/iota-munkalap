@@ -1,11 +1,10 @@
 package hu.flowacademy.worksheet.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -52,7 +51,7 @@ public class Worksheet {
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
     @Column(name = "createdAt", nullable = false)
-    @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;
     @Column(name = "worker_signature", nullable = false)
     private String workerSignature;
@@ -60,8 +59,8 @@ public class Worksheet {
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private User nameOfTheCreator;
+    @CreatedBy
+    @ManyToOne
+    private User createdBy;
 
 }
