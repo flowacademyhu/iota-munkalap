@@ -1,60 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import UpdateWorksheetForm from './UpdateWorksheetForm';
-import { putWorksheet, getWorksheets } from '../api/WorksheetAPI';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import UpdateWorksheetForm from './UpdateWorksheetForm'
+import { getWorkSheets, putWorkSheet } from '../api/WorkSheetAPI'
+import { useParams, useHistory } from 'react-router-dom'
+import { PATH_VARIABLES } from '../Const'
 
 function UpdateWorksheet() {
-  const [sent, setSent] = useState(false);
-  const [sentSuccessfully, setSentSuccessfully] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState('');
-  const { id } = useParams();
-  const [worksheetData, setWorksheetData] = useState({});
+  const [sent, setSent] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
+  const [popUpMessage, setPopUpMessage] = useState('')
+  const { id } = useParams()
+  const [worksheetData, setWorksheetData] = useState({})
+
+  const history = useHistory()
+
+  function handleClick() {
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+  }
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getWorksheets(id);
-        setWorksheetData({ ...response.data, loaded: true });
+        const response = await getWorkSheets(id)
+        setWorksheetData({ ...response.data, loaded: true })
       } catch (error) {
-        setWorksheetData({ loaded: true });
-        setPopUpMessage('A módosítás sikertelen');
-        setSent(true);
+        setWorksheetData({ loaded: true })
+        setPopUpMessage('A módosítás sikertelen')
+        setSent(true)
       }
     }
-    fetchData();
-  }, [id]);
+    fetchData()
+  }, [id])
 
   async function putData(values) {
     try {
-      const response = await putWorksheet(id, values);
+      const response = await putWorkSheet(id, values)
       if (response.status === 200) {
-        setPopUpMessage('Munkalap sikeresen módosítva');
-        setSentSuccessfully(true);
-      } else {
-        setPopUpMessage('A módosítás sikertelen');
+        setPopUpMessage('Munkalap sikeresen módosítva')
+        setSentSuccessfully(true)
       }
     } catch (error) {
-      setPopUpMessage('A módosítás sikertelen');
+      setPopUpMessage('A módosítás sikertelen')
+    } finally {
+      setSent(true)
     }
-    setSent(true);
   }
 
   return (
     <>
-      {worksheetData.loaded &&
+      {worksheetData.loaded && (
         <UpdateWorksheetForm
+          handleClick={handleClick}
           sent={sent}
-          setSent={setSent}
-          sentSuccessfully={sentSuccessfully}
           popUpMessage={popUpMessage}
           sendData={putData}
-          tablePath='worksheets'
-          path='update'
-          title='Adatok módosítása'
+          title="Adatok módosítása"
           worksheet={worksheetData}
-        />}
+        />
+      )}
     </>
-  );
+  )
 }
 
-export default UpdateWorksheet;
+export default UpdateWorksheet

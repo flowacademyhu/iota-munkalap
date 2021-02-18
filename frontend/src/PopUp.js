@@ -1,19 +1,16 @@
-import React from 'react';
-import Modal from "react-bootstrap/Modal";
-import { Link } from 'react-router-dom';
-import Button from './Button';
+import React from 'react'
+import Modal from 'react-bootstrap/Modal'
+import Button from './Button'
 
-function PopUp({ body, sentSuccessfully, setSent, path, tablePath }) {
+function PopUp({ body, handleClick }) {
   return (
     <Modal show={true}>
       <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        <Link to={sentSuccessfully ? `/${tablePath}` : `/${tablePath}/${path}`}>
-          <Button onClick={() => setSent(false)} moreClassName='h-auto' text='OK' />
-        </Link>
+        <Button moreClassName="h-auto" text="OK" onClick={handleClick} />
       </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
-export default PopUp;
+export default PopUp
