@@ -58,4 +58,8 @@ public class Worksheet {
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
+    //TODO MANY-TO-ONE with User.
+    @Column(name = "name_of_the_creator", nullable = false)
+    private String nameOfTheCreator;
+
 }
