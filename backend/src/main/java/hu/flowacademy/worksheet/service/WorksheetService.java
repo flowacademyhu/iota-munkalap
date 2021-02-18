@@ -12,6 +12,8 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -73,5 +75,12 @@ public class WorksheetService {
         Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
         toChange.setWorksheetStatus(status);
         return worksheetRepository.save(toChange);
+    }
+
+    public List<Worksheet> findByTimeInterval(String minTime, String maxTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        LocalDateTime dateTimeMax = LocalDateTime.parse(maxTime, formatter);
+        LocalDateTime dateTimeMin = LocalDateTime.parse(minTime, formatter);
+        return worksheetRepository.findByCreatedAtLessThanMaxTimeAndCreatedAtMoreThanMinTime(dateTimeMax, dateTimeMin);
     }
 }
