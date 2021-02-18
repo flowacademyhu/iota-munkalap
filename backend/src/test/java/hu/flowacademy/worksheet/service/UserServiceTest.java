@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -106,17 +107,16 @@ class UserServiceTest {
     public void shouldReturnUsersPaged() {
         givenRepoWithAUserForPaging();
         List<User> pagedUserList = userService.filter(Optional.of(true), Optional.of(0), Optional.of("Mao"), Optional.of(1), Optional.of("createdAt"));
-        verify(userRepository).findAll(buildSpecification(Optional.of(true), Optional.of("Mao")), PAGEABLE);
+        verify(userRepository).findAll(any(Specification.class), eq(PAGEABLE));
         assertThat(pagedUserList.size(), is(1));
     }
-
     private void givenRepoWithAUserForPaging() {
         List<User> users = new ArrayList<>();
         users.add(givenProperUserObject2());
         int start = (int) PAGEABLE.getOffset();
         int end = Math.min((start + PAGEABLE.getPageSize()), users.size());
         Page<User> pagedUsers = new PageImpl<>(users.subList(start, end), PAGEABLE, users.size());
-        when(userRepository.findAll(buildSpecification(Optional.of(true), Optional.of("Mao")), PAGEABLE)).thenReturn(pagedUsers);
+        when(userRepository.findAll(any(Specification.class), eq(PAGEABLE))).thenReturn(pagedUsers);
     }
 
     @Test
