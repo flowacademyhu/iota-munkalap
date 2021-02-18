@@ -87,6 +87,35 @@ jobs:
       - name: Push Docker image
         run: docker push $IMAGE_NAME
 
+  build-keycloak:
+    name: Build Keycloak
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: backend/keycloak
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/keycloak:${{ github.sha }}
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup GCloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_EMAIL }}
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+
+      - name: Build Docker image
+        run: docker build . -t $IMAGE_NAME
+
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
+
   test-backend:
     name: Test backend
     runs-on: ubuntu-latest
@@ -109,7 +138,10 @@ jobs:
     name: Deploy to staging
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [build-frontend, build-backend, test-backend]
+    needs: [build-frontend, build-backend, build-keycloak, test-backend]
+    env:
+      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:${{ github.sha }}
+      KEYCLOAK_IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/keycloak:${{ github.sha }}
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2
@@ -121,8 +153,11 @@ jobs:
           service_account_email: ${{ secrets.GCP_EMAIL }}
           service_account_key: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Deploy to Cloud Run
+      - name: Deploy backend to Cloud Run
         run: gcloud run deploy ${{ secrets.GCP_APP_NAME }} --image=$IMAGE_NAME --platform managed --region europe-west1
+
+      - name: Deploy Keycloak to Cloud Run
+        run: gcloud run deploy keycloak --image=$KEYCLOAK_IMAGE_NAME --platform managed --region europe-west1
 
       - name: Get artifacts
         uses: actions/download-artifact@v2
