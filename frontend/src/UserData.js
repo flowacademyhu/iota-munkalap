@@ -2,7 +2,7 @@ import React from 'react'
 import useCurrentUser from './hooks/useCurrentUser'
 
 function UserData() {
-  const { name, email } = useCurrentUser();
+  const { name, email } = useCurrentUser()
   return (
     <>
       <div>{name || ''}</div>

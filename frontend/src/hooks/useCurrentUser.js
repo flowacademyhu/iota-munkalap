@@ -5,7 +5,7 @@ function useCurrentUser() {
   const { token } = useToken()
   const { decodedToken } = useJwt(token)
   const name = decodedToken?.family_name + ' ' + decodedToken?.given_name
-  const email = decodedToken?.email;
+  const email = decodedToken?.email
   const isAdmin = decodedToken?.resource_access.worksheetclient.roles.includes(
     'admin'
   )
@@ -16,4 +16,4 @@ function useCurrentUser() {
   }
 }
 
-export default useCurrentUser;
+export default useCurrentUser
