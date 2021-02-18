@@ -11,5 +11,5 @@ WORKDIR /keycloak
 COPY realm.json .
 COPY entrypoint.sh .
 
-ENTRYPOINT "/keycloak/entrypoint.sh"
+ENTRYPOINT ["/keycloak/entrypoint.sh"]
 
