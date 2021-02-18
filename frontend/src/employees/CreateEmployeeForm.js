@@ -63,9 +63,9 @@ function CreateEmployeeForm({ sent, handleClick, popUpMessage, sendData, title }
               <Input name='confirmPassword' label='Jelszó még egyszer' type='password' />
               <div className='buttons'>
                 <Link to='/employees'>
-                  <Button text='Mégse' moreClassName='h-auto' />
+                  <Button text='Mégse' moreClassName='h-auto w-auto'/>
                 </Link>
-                <Button text='Mentés' type='submit' moreClassName='h-auto' />
+                <Button text='Mentés' type='submit' moreClassName='h-auto w-auto' />
               </div>
             </Form>
           </Formik>

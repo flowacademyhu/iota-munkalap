@@ -1,10 +1,3 @@
-.button {
-  background-color: green;
-  color: white;
-  margin: 20px;
-  font-size: 30px;
-}
-
 .container.loginform {
   background-color: rgba(211, 211, 211, 0.876);
 }
@@ -31,12 +24,6 @@
   
 }
 
-.flex-container > NavLink, Button, MenuItem {
-  width: 150px;
-  height: 100%;
-  background-color: green;
-}
-
 img {
   margin: 10px;
 }
@@ -47,6 +34,14 @@ img {
 }
 
 .settingsLogo {
-  width: 49px;
-  height: 49px;
+  width: 35px;
+  height: 35px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255,255,255,.7);
+}
+
+.table td, .table th {
+  vertical-align: middle;
 }
