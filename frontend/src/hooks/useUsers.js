@@ -11,6 +11,7 @@ export default function useUsers() {
     updatePosts();
   }, []);
   return {
-    users
+    users,
+    setUsers
   }
 }
