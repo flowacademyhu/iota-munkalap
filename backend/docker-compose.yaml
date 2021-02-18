@@ -3,11 +3,11 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:12.0.2
     hostname: keycloak
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
     ports:
       - 8180:8080
+    entrypoint: "/keycloak/entrypoint.sh"
+    volumes:
+      - ./keycloak:/keycloak
   app:
     image: munkalap:latest
     build:
