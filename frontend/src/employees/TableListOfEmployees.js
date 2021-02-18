@@ -10,9 +10,11 @@ export default function TableListOfEmployees() {
 
   return (
     <>
-      <Link to={`/employees/new`}>
-        <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
-      </Link>
+      <div className="d-flex justify-content-between p-1">
+        <Link to={`/employees/new`}>
+          <Button text='Új munkavállaló létrehozása' moreClassName='w-auto p-1' />
+        </Link>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
           <table className="table table-hover text-center">
