@@ -6,9 +6,10 @@ import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
+import FilterUsers from './FilterUsers'
 
 export default function TableListOfEmployees() {
-  const { users, keyword, setKeyword } = useUsers()
+  const { users, keyword, setKeyword, status, setStatus } = useUsers()
 
   return (
     <>
@@ -28,6 +29,10 @@ export default function TableListOfEmployees() {
               onChangeKeyword={setKeyword}
               label="Munkatárs keresése"
               name="searchEmployee"
+            />
+            <FilterUsers 
+              status={status}
+              onStatusChange={setStatus}
             />
           </Form>
         </Formik>
