@@ -63,6 +63,7 @@ public class Worksheet {
     private WorksheetStatus worksheetStatus;
     @CreatedBy
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User createdBy;
 
 }
