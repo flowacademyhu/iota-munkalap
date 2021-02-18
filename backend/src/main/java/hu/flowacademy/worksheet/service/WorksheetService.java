@@ -75,10 +75,10 @@ public class WorksheetService {
         return worksheetRepository.save(toChange);
     }
 
-    public Worksheet update(String id, Worksheet worksheet) throws ValidationException {
-        Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheet.getId()));
-        addedWorksheet(id, worksheet);
-        return worksheetRepository.save(updatedWorksheet);
+    public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
+        validateUpdatedWorksheet(worksheetReceived);
+        Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
+        return addedWorksheet(worksheetReceived, worksheetToUpdate);
     }
 
     private void validateUpdatedWorksheet(Worksheet worksheet) throws ValidationException {
@@ -120,23 +120,22 @@ public class WorksheetService {
         }
     }
 
-    private void addedWorksheet(String id, Worksheet worksheet) throws ValidationException {
-        validateUpdatedWorksheet(worksheet);
-        Worksheet updatedWorksheet = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheet.getId()));
-        updatedWorksheet.setPartnerId(worksheet.getPartnerId());
-        updatedWorksheet.setTypeOfWork(worksheet.getTypeOfWork());
-        updatedWorksheet.setCustomTypeOfWork(worksheet.getCustomTypeOfWork());
-        updatedWorksheet.setAssetSettlement(worksheet.getAssetSettlement());
-        updatedWorksheet.setWorkingTimeAccounting(worksheet.getWorkingTimeAccounting());
-        updatedWorksheet.setNumberOfEmployees(worksheet.getNumberOfEmployees());
-        updatedWorksheet.setOverheadHour(worksheet.getOverheadHour());
-        updatedWorksheet.setDeliveryKm(worksheet.getDeliveryKm());
-        updatedWorksheet.setAccountSerialNumber(worksheet.getAccountSerialNumber());
-        updatedWorksheet.setDescription(worksheet.getDescription());
-        updatedWorksheet.setUsedMaterial(worksheet.getUsedMaterial());
-        updatedWorksheet.setTypeOfPayment(worksheet.getTypeOfPayment());
-        updatedWorksheet.setWorkerSignature(worksheet.getWorkerSignature());
-        updatedWorksheet.setProofOfEmployment(worksheet.getProofOfEmployment());
-        worksheetRepository.save(updatedWorksheet);
+    private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
+        validateUpdatedWorksheet(worksheetReceived);
+        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
+        worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
+        worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
+        worksheetToUpdate.setWorkingTimeAccounting(worksheetReceived.getWorkingTimeAccounting());
+        worksheetToUpdate.setNumberOfEmployees(worksheetReceived.getNumberOfEmployees());
+        worksheetToUpdate.setOverheadHour(worksheetReceived.getOverheadHour());
+        worksheetToUpdate.setDeliveryKm(worksheetReceived.getDeliveryKm());
+        worksheetToUpdate.setAccountSerialNumber(worksheetReceived.getAccountSerialNumber());
+        worksheetToUpdate.setDescription(worksheetReceived.getDescription());
+        worksheetToUpdate.setUsedMaterial(worksheetReceived.getUsedMaterial());
+        worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
+        worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
+        worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
+        return worksheetRepository.save(worksheetToUpdate);
     }
 }
