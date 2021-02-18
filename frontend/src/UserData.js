@@ -1,12 +1,12 @@
 import React from 'react'
-import GetDecodedToken from './GetDecodedToken'
+import useCurrentUser from './hooks/useCurrentUser'
 
 function UserData() {
-  const decodedToken = GetDecodedToken()
+  const { name, email } = useCurrentUser();
   return (
     <>
-      <div>{decodedToken?.name || ''}</div>
-      <div>{decodedToken?.email || ''}</div>
+      <div>{name || ''}</div>
+      <div>{email || ''}</div>
     </>
   )
 }
