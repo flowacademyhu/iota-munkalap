@@ -8,11 +8,6 @@ async function loginUser(credentials) {
         alert('A belépés sikertelen.');
     }
 }
-/*
-function getUsers() {
-    return api
-        .get(`/users`);
-}*/
 
 function postUser(credentials) {
     return api
@@ -34,10 +29,9 @@ function getUser(id) {
 }
 
 function getUsers(string) {
-    console.log("vmiu " + string)
     return string !== undefined
-    ? api.get(`/users/?q=${string}`)
-    : api.get(`/users`)
+        ? api.get(`/users/?q=${string}`)
+        : api.get(`/users`)
 }
 
 export {
@@ -47,5 +41,4 @@ export {
     putUserInactive,
     getUser,
     loginUser,
-    //searchUser,
 };
