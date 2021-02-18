@@ -60,7 +60,7 @@ public class WorksheetController {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
-    @GetMapping("/worksheet")
+    @GetMapping("/worksheets")
     public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
