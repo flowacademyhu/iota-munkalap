@@ -58,9 +58,6 @@ public class WorksheetService {
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
         }
-        if (worksheet.getTypeOfWork() == null) {
-            throw new ValidationException("Type of work value is null");
-        }
         if (worksheet.getWorkerSignature() == null) {
             throw new ValidationException("Worker signature value is null");
         }
@@ -76,52 +73,13 @@ public class WorksheetService {
     }
 
     public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
-        validateUpdatedWorksheet(worksheetReceived);
+        validateWorksheet(worksheetReceived);
         Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
         return addedWorksheet(worksheetReceived, worksheetToUpdate);
     }
 
-    private void validateUpdatedWorksheet(Worksheet worksheet) throws ValidationException {
-        if (worksheet.getPartnerId() == null) {
-            throw new ValidationException("Partner value is null");
-        }
-        if (worksheet.getTypeOfWork() == null) {
-            throw new ValidationException("Type of work value is null");
-        }
-        if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && StringUtils.hasText(worksheet.getCustomTypeOfWork())) {
-            throw new ValidationException("Type Of Work Other value is null or empty String.");
-        }
-        if (worksheet.getAssetSettlement() == null) {
-            throw new ValidationException("Asset settlement value is null");
-        }
-        if (worksheet.getWorkingTimeAccounting() == null) {
-            throw new ValidationException("Working Time Accounting value is null");
-        }
-        if (worksheet.getNumberOfEmployees() < 1) {
-            throw new ValidationException("The number of employees less then 1");
-        }
-        if (worksheet.getOverheadHour() < 1.0) {
-            throw new ValidationException("The overhead hour less then 1");
-        }
-        if (worksheet.getDeliveryKm() < 0) {
-            throw new ValidationException("The delivery km less then 0");
-        }
-        if (!StringUtils.hasText(worksheet.getDescription())) {
-            throw new ValidationException("Description is empty or null");
-        }
-        if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
-            throw new ValidationException("UsedMaterial is empty or null");
-        }
-        if (worksheet.getWorkerSignature() == null) {
-            throw new ValidationException("Worker signature value is null");
-        }
-        if (worksheet.getProofOfEmployment() == null) {
-            throw new ValidationException("Proof of Employment value is null");
-        }
-    }
-
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
-        validateUpdatedWorksheet(worksheetReceived);
+        validateWorksheet(worksheetReceived);
         worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
