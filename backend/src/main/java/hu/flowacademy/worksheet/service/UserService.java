@@ -86,14 +86,19 @@ public class UserService {
     }
 
     public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<User> result = userRepository.findAll(
-                buildSpecification(status, searchCriteria),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending()) //mod here
-        ).getContent();
+        List<User> result = collectUsersByCriteria(status, page, searchCriteria, limit, orderBy);
         return searchCriteria.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart, user))
                         .collect(Collectors.toList()))
                         .orElse(result);
+    }
+
+    private List<User> collectUsersByCriteria(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<User> result = userRepository.findAll(
+                buildSpecification(status, searchCriteria),
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+        ).getContent();
+        return result;
     }
 
     private boolean filterContains(String searchPart, User user) {
