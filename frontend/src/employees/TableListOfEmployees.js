@@ -1,20 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
 import EditButton from '../EditButton'
 import Button from '../Button'
-import { getUsers, putUserInactive } from '../api/UserAPI'
+import { putUserInactive } from '../api/UserAPI'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
 
 export default function TableListOfEmployees() {
-  const { users, setUsers } = useUsers()
-  const [forceRefresh, setForceRefresh] = useState(false)
-
-  async function refreshUsers(path) {
-    const response = await getUsers(path)
-    setUsers(response.data)
-  }
+  const { users, keyword, setKeyword } = useUsers()
 
   return (
     <>
@@ -30,12 +24,10 @@ export default function TableListOfEmployees() {
         <Formik class="form-inline">
           <Form>
             <SearchEmployeeInput
-              refreshUsers={refreshUsers}
+              keyword={keyword}
+              onChangeKeyword={setKeyword}
               label="Munkatárs keresése"
               name="searchEmployee"
-              setForceRefresh={setForceRefresh}
-              forceRefresh={forceRefresh}
-              users={users}
             />
           </Form>
         </Formik>
