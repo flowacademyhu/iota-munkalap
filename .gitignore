@@ -69,3 +69,7 @@ node_modules/
 .env
 
 backend/db/
+
+backend/src/main/java/hu/flowacademy/worksheet/controller/UserController.java
+
+backend/src/main/java/hu/flowacademy/worksheet/service/UserService.java
