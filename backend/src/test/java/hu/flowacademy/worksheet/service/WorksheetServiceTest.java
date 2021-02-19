@@ -108,10 +108,10 @@ class WorksheetServiceTest {
     @Test
     public void givenAProperWorksheet_whenFilteringByDate_thenReturnItemInList() {
         givenAProperTimedWorkSheet();
-        List<Worksheet> result = worksheetService.findByTimeInterval(MAX_TIME, MIN_TIME);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
+        List<Worksheet> result = worksheetService.findByTimeInterval(dateTimeMax, dateTimeMin);
         Mockito.verify(worksheetRepository, times(1))
                 .findByCreatedAtBetween(dateTimeMin, dateTimeMax);
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
