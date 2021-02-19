@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function FilterUsers(props) {
@@ -18,15 +18,23 @@ function FilterUsers(props) {
 
   return (
     <div>
-      <select
-        class="btn btn-success"
-        onChange={(event) => handleInputChange(event)}
-        name="filterEmployeebyActivity"
-      >
-        <option value="true">Aktív</option>
-        <option value="false">Inaktív</option>
-        <option value="">Mind</option>
-      </select>
+      <form>
+        <select
+          class="btn btn-success"
+          onChange={(event) => handleInputChange(event)}
+          name="filterEmployeebyActivity"
+        >
+          <option value="true" label="Aktív">
+            Aktív
+          </option>
+          <option value="false" label="Inaktív">
+            Inaktív
+          </option>
+          <option value="" label="Mind">
+            Mind
+          </option>
+        </select>
+      </form>
     </div>
   )
 }
