@@ -28,7 +28,6 @@ import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.REPAIR;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.REPAYMENT;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
-import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,10 +38,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class WorksheetServiceTest {
 
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
-
-    private final int DEFAULT_PAGE = 0;
-    private final String DEFAULT_ORDERBY = "createdAt";
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").ascending());
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
@@ -142,7 +138,7 @@ class WorksheetServiceTest {
 
     @Test
     public void givenAProperWorksheet_whenFilteringByDate_thenReturnItemInList() {
-        givenAProperTimedWorkSheet();
+        givenAProperWorkSheetForListing();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
         LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
         LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
@@ -152,23 +148,6 @@ class WorksheetServiceTest {
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
         assertThat(result.get(0).getPartnerId(), is(PARTNER_ID));
         assertThat(result.size(), is(1));
-    }
-
-    public void givenAnExistingWorksheet_whenListingTheWorksheets_thenListedWorksheets() throws ValidationException {
-        givenAnExistingWorksheetPaging();
-        List<Worksheet> pagedWorksheetList = worksheetService.collectWorksheetByCriteria(Optional
-                .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(LocalDateTime.MIN), Optional.of(LocalDateTime.MAX), Optional.of(1), Optional.of("createdAt"));
-        verify(worksheetRepository).findAll(PAGEABLE);
-        assertThat(pagedWorksheetList.size(), is(1));
-    }
-
-    private void givenAnExistingWorksheetPaging() {
-        List<Worksheet> worksheets = new ArrayList<>();
-        worksheets.add(givenValidWorksheet());
-        int start = (int) PAGEABLE.getOffset();
-        int end = Math.min((start + PAGEABLE.getPageSize()), worksheets.size());
-        Page<Worksheet> pagedWorksheets = new PageImpl<>(worksheets.subList(start, end), PAGEABLE, worksheets.size());
-        when(worksheetRepository.findAll(PAGEABLE)).thenReturn(pagedWorksheets);
     }
 
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
@@ -196,23 +175,23 @@ class WorksheetServiceTest {
     }
 
     private void givenExistingWorksheet() {
-        Worksheet worksheet = givenValidWorksheet();
-        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
-    private void givenAProperTimedWorkSheet() {
-        Worksheet worksheet = givenValidWorksheet();
-        worksheet.setId(WORKSHEET_ID);
-        Page<Worksheet> pagedUsers = new PageImpl<Worksheet>(List.of(worksheet), PAGEABLE, 1);
+    private void givenAProperWorkSheetForListing() {
+        Page<Worksheet> pagedUsers = new PageImpl<Worksheet>(List.of(givenWorksheetWithProperId()), PAGEABLE, 1);
         when(worksheetRepository.findAll(any(Specification.class), eq(PAGEABLE))).thenReturn(pagedUsers);
     }
 
     private void givenExistingWorksheetWhenUpdate() {
-        Worksheet worksheet = givenValidWorksheet();
-        worksheet.setId(WORKSHEET_ID);
-        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.findById(WORKSHEET_ID))
+                .thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private Worksheet givenWorksheetWithProperId() {
+        return givenValidWorksheet().toBuilder().id(WORKSHEET_ID).build();
     }
 
     private Worksheet givenValidWorksheet() {
