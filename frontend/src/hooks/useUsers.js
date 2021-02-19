@@ -3,13 +3,15 @@ import { getUsers } from '../api/UserAPI'
 
 export default function useUsers() {
   const [keyword, setKeyword] = useState('')
+  const [status, setStatus] = useState(null)
+
   const [users, setUsers] = useState()
   const updateUsers = useCallback(
     async function () {
-      const { data } = await getUsers(keyword.toLowerCase())
+      const { data } = await getUsers(keyword.toLowerCase(), status)
       setUsers(data)
     },
-    [keyword]
+    [keyword, status]
   )
 
   useEffect(() => {
@@ -21,5 +23,7 @@ export default function useUsers() {
     users,
     keyword,
     setKeyword,
+    status,
+    setStatus,
   }
 }

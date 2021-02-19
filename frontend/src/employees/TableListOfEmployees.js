@@ -5,10 +5,18 @@ import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
+import FilterUsers from './FilterUsers'
 import EmployeeListRow from './EmployeeListRow'
 
 export default function TableListOfEmployees() {
-  const { users, keyword, setKeyword, updateUsers } = useUsers()
+  const {
+    users,
+    keyword,
+    setKeyword,
+    updateUsers,
+    status,
+    setStatus,
+  } = useUsers()
 
   async function updater(user) {
     await putUserInactive(user.id)
@@ -17,15 +25,13 @@ export default function TableListOfEmployees() {
 
   return (
     <>
-      <div className="d-flex justify-content-between p-5">
-        <span>
-          <Link to={`/employees/new`}>
-            <Button
-              text="Új munkavállaló létrehozása"
-              moreClassName="w-auto p-1"
-            />
-          </Link>
-        </span>
+      <div className="d-flex flex-row justify-content-around p-5">
+        <Link to={`/employees/new`}>
+          <Button
+            text="Új munkavállaló létrehozása"
+            moreClassName="w-auto p-1"
+          />
+        </Link>
         <Formik class="form-inline">
           <Form>
             <SearchEmployeeInput
@@ -36,6 +42,7 @@ export default function TableListOfEmployees() {
             />
           </Form>
         </Formik>
+        <FilterUsers status={status} onStatusChange={setStatus} />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
