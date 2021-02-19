@@ -14,7 +14,7 @@ export default function useUsers() {
 
   useEffect(() => {
     updateUsers()
-  }, [keyword])
+  }, [keyword, updateUsers])
   return {
     updateUsers,
     setUsers,
