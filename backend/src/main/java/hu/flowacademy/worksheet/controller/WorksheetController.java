@@ -1,16 +1,20 @@
 package hu.flowacademy.worksheet.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -58,8 +62,14 @@ public class WorksheetController {
     }
 
     @GetMapping("worksheets")
-    public List<Worksheet> findByTimeInterval(@RequestParam (value = "maxTime") String maxTime,
-                                             @RequestParam (value = "minTime") String minTime) {
-        return worksheetService.findByTimeInterval(maxTime, minTime);
+    public List<Worksheet> findByTimeInterval(@DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "maxTime") Optional<LocalDateTime> maxTime,
+                                              @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "minTime") Optional<LocalDateTime> minTime) {
+        if (maxTime.isEmpty()) {
+            maxTime = Optional.of(LocalDateTime.MAX);
+        }
+        if (minTime.isEmpty()) {
+            minTime = Optional.of(LocalDateTime.MIN);
+        }
+        return worksheetService.findByTimeInterval(maxTime.get(), minTime.get());
     }
 }
