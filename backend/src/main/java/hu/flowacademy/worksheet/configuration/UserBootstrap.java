@@ -1,12 +1,14 @@
 package hu.flowacademy.worksheet.configuration;
 
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Component
@@ -24,6 +26,9 @@ public class UserBootstrap implements CommandLineRunner {
                         .email(SUPERADMIN_EMAIL)
                         .firstName(SUPERADMIN)
                         .lastName(SUPERADMIN)
+                        .role(Role.ADMIN)
+                        .enabled(true)
+                        .createdAt(LocalDateTime.now())
                         .build()));
     }
 }
