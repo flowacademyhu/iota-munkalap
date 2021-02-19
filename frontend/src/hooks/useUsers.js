@@ -3,7 +3,7 @@ import { getUsers } from '../api/UserAPI'
 
 export default function useUsers() {
   const [keyword, setKeyword] = useState('')
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(null)
 
   const [users, setUsers] = useState()
   useEffect(() => {
@@ -20,7 +20,4 @@ export default function useUsers() {
     status,
     setStatus,
   }
-
-
-
 }

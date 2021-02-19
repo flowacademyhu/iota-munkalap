@@ -5,14 +5,12 @@ function FilterUsers(props) {
   const { status, onStatusChange } = props
 
   const handleInputChange = (event) => {
-    onStatusChange(event.target.value)
-    if (event === 'true') {
-      event.target.value = true
-    }
-    if (event === 'false') {
-      event.target.value = false
+    if (event.target.value === 'true') {
+      onStatusChange(true)
+    } else if (event.target.value === 'false') {
+      onStatusChange(false)
     } else {
-      event.target.value = null
+      onStatusChange(null)
     }
   }
 
@@ -20,8 +18,9 @@ function FilterUsers(props) {
     <div>
       <form>
         <select
+          value={status === null ? '' : status ? 'true' : 'false'}
           class="btn btn-success"
-          onChange={(event) => handleInputChange(event)}
+          onChange={handleInputChange}
           name="filterEmployeebyActivity"
         >
           <option value="true" label="Aktív">
