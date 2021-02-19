@@ -4,7 +4,6 @@ import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
-import hu.flowacademy.worksheet.repository.UserRepository;
 import hu.flowacademy.worksheet.service.WorksheetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -60,10 +59,17 @@ public class WorksheetController {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
+
     @GetMapping("/worksheets")
     public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy) {
         return worksheetService.listWorksheets(page, limit, orderBy);
+    }
+
+    @PutMapping("/worksheets/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
+        return worksheetService.update(worksheetId, worksheet);
     }
 }

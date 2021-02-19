@@ -6,11 +6,11 @@ export default function useUsers() {
 
   const [users, setUsers] = useState()
   useEffect(() => {
-    async function updatePosts() {
+    async function updateUsers() {
       const { data } = await getUsers(keyword.toLowerCase())
       setUsers(data)
     }
-    updatePosts()
+    updateUsers()
   }, [keyword])
   return {
     users,

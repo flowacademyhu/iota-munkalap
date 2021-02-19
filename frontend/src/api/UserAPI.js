@@ -26,7 +26,7 @@ function getUser(id) {
 
 function getUsers(string) {
   return string !== undefined
-    ? api.get(`/users/?q=${string}`)
+    ? api.get(`/users/?searchCriteria=${string}`)
     : api.get(`/users`)
 }
 
