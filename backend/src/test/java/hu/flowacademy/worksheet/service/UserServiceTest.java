@@ -6,8 +6,6 @@ import hu.flowacademy.worksheet.enumCustom.Role;
 import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.UserRepository;
-import hu.flowacademy.worksheet.service.KeycloakClientService;
-import hu.flowacademy.worksheet.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
