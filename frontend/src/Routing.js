@@ -4,6 +4,7 @@ import TableListOfEmployees from './employees/TableListOfEmployees'
 import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
+import CreateWorkSheet from './worksheets/CreateWorkSheet'
 
 function Routing() {
   return (
@@ -18,10 +19,16 @@ function Routing() {
         <Route exact path="/employees">
           <TableListOfEmployees />
         </Route>
-        <Route path="/partners">
+        <Route exact path="/partners">
           <Partners />
         </Route>
-        <Route path="/worksheets">
+        <Route path="/worksheets/new">
+          <CreateWorkSheet />
+        </Route>
+        <Route path="/worksheets/update/:id">
+          <UpdateWorkSheet />
+        </Route>
+        <Route exact path="/worksheets">
           <TableListOfWorkSheets />
         </Route>
         <Route path="/">
@@ -36,6 +43,14 @@ function Partners() {
   return (
     <div>
       <h2>Partnerek</h2>
+    </div>
+  )
+}
+
+function UpdateWorkSheet() {
+  return (
+    <div>
+      <h2>UpdateWorkSheet</h2>
     </div>
   )
 }
