@@ -3,7 +3,7 @@ import EditButton from '../EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
-export default function EmployeeListRow({ user, updater }) {
+export default function EmployeeListRow({ user, onClick }) {
   return (
     <tr key={user.id}>
       <th scope="row">{user.id}</th>
@@ -15,7 +15,7 @@ export default function EmployeeListRow({ user, updater }) {
       <td className="d-flex justify-content-around">
         {user.enabled && (
           <Button
-            onClick={updater}
+            onClick={onClick}
             type="button"
             className="btn btn-danger"
             text="Inaktiválás"

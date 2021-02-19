@@ -8,7 +8,12 @@ import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
 
 export default function TableListOfEmployees() {
-  const { users, keyword, setKeyword } = useUsers()
+  const { users, keyword, setKeyword, updateUsers } = useUsers()
+
+  async function updater(user) {
+    await putUserInactive(user.id)
+    updateUsers()
+  }
 
   return (
     <>
@@ -60,7 +65,7 @@ export default function TableListOfEmployees() {
                       </Link>
                       {user.enabled && (
                         <Button
-                          onClick={() => putUserInactive(user.id)}
+                          onClick={() => updater(user)}
                           type="button"
                           className="btn btn-danger w-auto"
                           text="Inaktiválás"
