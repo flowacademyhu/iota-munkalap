@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -10,7 +11,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
@@ -28,6 +32,8 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class WorksheetServiceTest {
+
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
@@ -65,6 +71,8 @@ class WorksheetServiceTest {
 
     @Mock
     private WorksheetRepository worksheetRepository;
+    @Mock
+    private PagingProperties pagingProperties;
 
     @InjectMocks
     private WorksheetService worksheetService;
@@ -122,6 +130,22 @@ class WorksheetServiceTest {
     }
 
     @Test
+    public void givenAnExistingWorksheet_whenListingTheWorksheets_thenListedWorksheets() throws ValidationException {
+        givenAnExistingWorksheetPaging();
+        List<Worksheet> pagedWorksheetList = worksheetService.listWorksheets(Optional.of(0), Optional.of(1), Optional.of("createdAt"));
+        verify(worksheetRepository).findAll(PAGEABLE);
+        assertThat(pagedWorksheetList.size(), is(1));
+    }
+
+    private void givenAnExistingWorksheetPaging() {
+        List<Worksheet> worksheets = new ArrayList<>();
+        worksheets.add(givenValidWorksheet());
+        int start = (int) PAGEABLE.getOffset();
+        int end = Math.min((start + PAGEABLE.getPageSize()), worksheets.size());
+        Page<Worksheet> pagedWorksheets = new PageImpl<>(worksheets.subList(start, end), PAGEABLE, worksheets.size());
+        when(worksheetRepository.findAll(PAGEABLE)).thenReturn(pagedWorksheets);
+    }
+
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
