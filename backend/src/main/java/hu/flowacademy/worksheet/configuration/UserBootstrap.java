@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.configuration;
 
-
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
