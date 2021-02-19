@@ -84,7 +84,7 @@ public class WorksheetService {
 
     public List<Worksheet> listWorksheets(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
         return worksheetRepository
-                .findAll(PageRequest.of(page.orElse(0),
+                .findAll(PageRequest.of(page.orElse(DEFAULT_PAGE),
                         limit.orElse(pagingProperties.getDefaultLimit()),
                         Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent();
     }
