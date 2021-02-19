@@ -24,7 +24,7 @@ public class WorksheetController {
     @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
-    public Worksheet createWorksheet(Authentication authentication, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = Worksheet.builder()
                 .partnerId(worksheetDTO.getPartnerId())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
