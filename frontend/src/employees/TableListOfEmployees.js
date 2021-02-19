@@ -1,7 +1,7 @@
 import React from 'react'
-import { putUserInactive } from '../api/UserAPI'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
+import EditButton from '../EditButton'
 import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
 import SearchEmployeeInput from './SearchEmployeeInput'
@@ -9,12 +9,6 @@ import { Formik, Form } from 'formik'
 
 export default function TableListOfEmployees() {
   const { users, keyword, setKeyword } = useUsers()
-
-  async function updater(user) {
-    await putUserInactive(user.id)
-    const userNew = await getUsers()
-    setUsers(userNew.data)
-  }
 
   return (
     <>
@@ -53,11 +47,27 @@ export default function TableListOfEmployees() {
             <tbody>
               {users ? (
                 users.map((user) => (
-                  <EmployeeListRow
-                    user={user}
-                    key={user.id}
-                    updater={() => updater(user)}
-                  />
+                  <tr key={user.id}>
+                    <th scope="row">{user.id}</th>
+                    <td>
+                      {user.lastName} {user.firstName}
+                    </td>
+                    <td>{user.email}</td>
+                    <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
+                    <td className="d-flex justify-content-around align-items-center">
+                      <Link to={`/employees/update/${user.id}`}>
+                        <EditButton />
+                      </Link>
+                      {user.enabled && (
+                        <Button
+                          onClick={() => putUserInactive(user.id)}
+                          type="button"
+                          className="btn btn-danger w-auto"
+                          text="Inaktiválás"
+                        />
+                      )}
+                    </td>
+                  </tr>
                 ))
               ) : (
                 <tr>
