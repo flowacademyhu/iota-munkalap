@@ -61,11 +61,12 @@ public class WorksheetController {
     }
 
     @GetMapping("/worksheets")
+    @RolesAllowed({"admin", "user"})
     public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
-                                            @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "maxTime") Optional<LocalDateTime> maxTime,
-                                            @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "minTime") Optional<LocalDateTime> minTime,
+                                            @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "maxTime") Optional<LocalDateTime> maxTime,
+                                            @DateTimeFormat(pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "minTime") Optional<LocalDateTime> minTime,
                                             @RequestParam(value = "status", required = false) Optional<WorksheetStatus> status
     ) {
         return worksheetService.collectWorksheetByCriteria(status, page, minTime, maxTime, limit, orderBy);
