@@ -5,6 +5,7 @@ import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
+
   return (
     <>
       <div className="d-flex justify-content-between p-1">
@@ -28,14 +29,17 @@ export default function TableListOfWorkSheets() {
 
             <tbody>
               {workSheets ? (
-                workSheets.map((worksheet) => (
-                  <tr key={worksheet.id}>
-                    <th scope="row">{worksheet.id}</th>
-                    <td>{worksheet.creater}</td>
-                    <td>{worksheet.date}</td>
-                    <td>{worksheet.partner}</td>
-                    <td>{worksheet.type}</td>
-                    <td>{worksheet.state}</td>
+                workSheets.map((worksheet, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>
+                      {worksheet.createdBy.lastName}{' '}
+                      {worksheet.createdBy.firstName}
+                    </td>
+                    <td>{worksheet.createdAt}</td>
+                    <td>{worksheet.partnerId}</td>
+                    <td>{worksheet.typeOfWork}</td>
+                    <td>{worksheet.worksheetStatus}</td>
                   </tr>
                 ))
               ) : (

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "worksheetCustom")
+@EntityListeners(AuditingEntityListener.class)
 public class Worksheet {
 
     @Id
@@ -58,4 +61,8 @@ public class Worksheet {
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
+    @CreatedBy
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private User createdBy;
 }
