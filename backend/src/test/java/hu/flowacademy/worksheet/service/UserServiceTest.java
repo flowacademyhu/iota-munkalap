@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.buildSpecification;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
