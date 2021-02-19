@@ -9,8 +9,14 @@ import FilterUsers from './FilterUsers'
 import EmployeeListRow from './EmployeeListRow'
 
 export default function TableListOfEmployees() {
-  const { users, keyword, setKeyword, status, setStatus } = useUsers()
-  const { users, keyword, setKeyword, updateUsers } = useUsers()
+  const {
+    users,
+    keyword,
+    setKeyword,
+    updateUsers,
+    status,
+    setStatus,
+  } = useUsers()
 
   async function updater(user) {
     await putUserInactive(user.id)
