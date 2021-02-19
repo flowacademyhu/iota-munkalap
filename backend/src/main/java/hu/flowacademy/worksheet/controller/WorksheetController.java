@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.controller;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -51,25 +50,30 @@ public class WorksheetController {
     @PutMapping("/worksheets/{id}/close")
     @RolesAllowed("admin")
     @ResponseStatus(HttpStatus.CREATED)
-    public Worksheet closeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+    public Worksheet closeWorksheet(@PathVariable(value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.CLOSED);
     }
 
     @PutMapping("/worksheets/{id}/finalize")
     @ResponseStatus(HttpStatus.CREATED)
-    public Worksheet finalizeWorksheet(@PathVariable (value = "id") String id) throws ValidationException {
+    public Worksheet finalizeWorksheet(@PathVariable(value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
-    @GetMapping("worksheets")
-    public List<Worksheet> findByTimeInterval(@DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "maxTime") Optional<LocalDateTime> maxTime,
-                                              @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "minTime") Optional<LocalDateTime> minTime) {
-        if (maxTime.isEmpty()) {
-            maxTime = Optional.of(LocalDateTime.MAX);
-        }
-        if (minTime.isEmpty()) {
-            minTime = Optional.of(LocalDateTime.MIN);
-        }
-        return worksheetService.findByTimeInterval(maxTime.get(), minTime.get());
+    @GetMapping("/worksheets")
+    public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                            @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                                            @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                                            @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "maxTime") Optional<LocalDateTime> maxTime,
+                                            @DateTimeFormat (pattern = "yyyy.MM.dd HH:mm:ss") @RequestParam (value = "minTime") Optional<LocalDateTime> minTime,
+                                            @RequestParam(value = "status", required = false) Optional<WorksheetStatus> status
+    ) {
+        return worksheetService.collectWorksheetByCriteria(status, page, minTime, maxTime, limit, orderBy);
+    }
+
+    @PutMapping("/worksheets/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
+        return worksheetService.update(worksheetId, worksheet);
     }
 }
