@@ -4,7 +4,7 @@ import load from './img/Pulse-1s-200px.gif'
 function LoadingScreen() {
   return (
     <div id="Outer">
-      <img class="image-container" src={load} />
+      <img alt="" class="image-container" src={load} />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
+import LoadingScreen from './LoadingScreen'
 
 function Routing() {
   return (
@@ -41,3 +42,7 @@ function Routing() {
 }
 
 export default Routing
+
+function UpdateWorkSheet() {
+  return <LoadingScreen />
+}
