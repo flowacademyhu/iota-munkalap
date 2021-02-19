@@ -1,29 +1,34 @@
-import React,{useState, useEffect, useCallback} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect, useCallback } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function FilterUsers(props) {
   const { status, onStatusChange } = props
 
+  const handleInputChange = (event) => {
+    onStatusChange(event.target.value)
+    if (event === 'true') {
+      event.target.value = true
+    }
+    if (event === 'false') {
+      event.target.value = false
+    } else {
+      event.target.value = null
+    }
+  }
 
-  const handleInputChange = useCallback() {
-      onStatusChange(e.target.value);
-      if (e === "true") { e = true }
-      if (e === "false") { e = false }
-      else if (e === "") { e = null }
-    },
-    [onStatusChange]
-  );
-    
   return (
     <div>
-    <select class="btn btn-success" onChange={handleInputChange}>
-      <option value="true" >Aktív</option>
-      <option value="false">Inaktív</option>
-      <option value="">Mind</option>
-      
-    </select>
-  </div>
-  );
+      <select
+        class="btn btn-success"
+        onChange={(event) => handleInputChange(event)}
+        name="filterEmployeebyActivity"
+      >
+        <option value="true">Aktív</option>
+        <option value="false">Inaktív</option>
+        <option value="">Mind</option>
+      </select>
+    </div>
+  )
 }
 
-export default FilterUsers;
+export default FilterUsers

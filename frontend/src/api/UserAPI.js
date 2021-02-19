@@ -24,10 +24,10 @@ function getUser(id) {
   return api.get(`/users/${id}`)
 }
 
-function getUsers(string) {
+function getUsers(string, status) {
   return string !== undefined
-    ? api.get(`/users/?searchCriteria=${string}`)
-    : api.get(`/users`)
+    ? api.get(`/users/?status=${status}&searchCriteria=${string}`)
+    : api.get(`/users/?status=${status}`)
 }
 
 export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }

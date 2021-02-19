@@ -8,11 +8,11 @@ export default function useUsers() {
   const [users, setUsers] = useState()
   useEffect(() => {
     async function updateUsers() {
-      const { data } = await getUsers(keyword.toLowerCase())
+      const { data } = await getUsers(keyword.toLowerCase(), status)
       setUsers(data)
     }
     updateUsers()
-  }, [keyword])
+  }, [keyword, status])
   return {
     users,
     keyword,
