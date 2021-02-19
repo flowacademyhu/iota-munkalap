@@ -29,5 +29,4 @@ public class WorksheetDTO {
     private String proofOfEmployment;
     private WorksheetStatus worksheetStatus;
     private String createdBy;
-
 }
