@@ -203,11 +203,8 @@ class WorksheetServiceTest {
 
     private void givenAProperTimedWorkSheet() {
         Worksheet worksheet = givenValidWorksheet();
-        List<Worksheet> worksheets = new ArrayList<>();
         worksheet.setId(WORKSHEET_ID);
-        int start = (int) PAGEABLE.getOffset();
-        int end = Math.min((start + PAGEABLE.getPageSize()), worksheets.size());
-        Page<Worksheet> pagedUsers = new PageImpl<Worksheet>(worksheets.subList(start, end), PAGEABLE, worksheets.size());
+        Page<Worksheet> pagedUsers = new PageImpl<Worksheet>(List.of(worksheet), PAGEABLE, 1);
         when(worksheetRepository.findAll(any(Specification.class), eq(PAGEABLE))).thenReturn(pagedUsers);
     }
 
