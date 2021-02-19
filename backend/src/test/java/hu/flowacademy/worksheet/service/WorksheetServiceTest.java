@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.service;
 
-import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -71,8 +70,6 @@ class WorksheetServiceTest {
 
     @Mock
     private WorksheetRepository worksheetRepository;
-    @Mock
-    private PagingProperties pagingProperties;
 
     @InjectMocks
     private WorksheetService worksheetService;
