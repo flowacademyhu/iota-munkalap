@@ -1,15 +1,12 @@
 import React from 'react'
-import { useJwt } from 'react-jwt'
-import useToken from './hooks/useToken'
+import useCurrentUser from './hooks/useCurrentUser'
 
 function UserData() {
-  const { token } = useToken()
-  const { decodedToken } = useJwt(token)
-
+  const { name, email } = useCurrentUser()
   return (
     <>
-      <div>{decodedToken?.name || ''}</div>
-      <div>{decodedToken?.email || ''}</div>
+      <div>{name || ''}</div>
+      <div>{email || ''}</div>
     </>
   )
 }

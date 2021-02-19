@@ -17,8 +17,13 @@ function putUser(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-function putUserInactive(id) {
-  return api.put(`/users/${id}`, { isActive: false })
+async function putUserInactive(id) {
+  try {
+    return await api.put(`/users/${id}/inactive`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+    return false
+  }
 }
 function getUser(id) {
   return api.get(`/users/${id}`)
@@ -26,7 +31,7 @@ function getUser(id) {
 
 function getUsers(string) {
   return string !== undefined
-    ? api.get(`/users/?q=${string}`)
+    ? api.get(`/users/?searchCriteria=${string}`)
     : api.get(`/users`)
 }
 
