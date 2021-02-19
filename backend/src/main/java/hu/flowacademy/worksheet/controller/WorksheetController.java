@@ -56,4 +56,9 @@ public class WorksheetController {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
     }
 
+    @PutMapping("/worksheets/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
+        return worksheetService.update(worksheetId, worksheet);
+    }
 }
