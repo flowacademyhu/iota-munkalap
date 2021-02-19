@@ -5,7 +5,7 @@ import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
-import UpdateWorksheet from './worksheets/UpdateWorksheet'
+import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
 
 function Routing() {
   return (
@@ -44,14 +44,6 @@ function Partners() {
   return (
     <div>
       <h2>Partnerek</h2>
-    </div>
-  )
-}
-
-function UpdateWorkSheet() {
-  return (
-    <div>
-      <h2>UpdateWorkSheet</h2>
     </div>
   )
 }

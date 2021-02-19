@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import UpdateWorksheetForm from './UpdateWorksheetForm'
+import UpdateWorksheetForm from './UpdateWorkSheetForm'
 import { getWorkSheets, putWorkSheet } from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'

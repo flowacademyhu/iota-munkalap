@@ -18,7 +18,7 @@ const schema = yup.object().shape({
   usedMaterial: yup.string().required('A felhasznált anyag kötelező!'),
 })
 
-function UpdateWorksheetForm({
+function UpdateWorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
@@ -101,4 +101,4 @@ function UpdateWorksheetForm({
   )
 }
 
-export default UpdateWorksheetForm
+export default UpdateWorkSheetForm
