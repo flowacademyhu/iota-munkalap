@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
@@ -98,6 +100,21 @@ class WorksheetServiceTest {
         assertThat(result, notNullValue());
         assertThat(result.getWorksheetStatus(), notNullValue());
         assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
+    }
+
+    @Test
+    public void givenAProperWorksheet_whenFilteringByState_thenReturnItemInList() {
+        givenAProperStateWorkSheet();
+        List<Worksheet> result = worksheetService.filterByStatus(WorksheetStatus.CREATED);
+        Mockito.verify(worksheetRepository, times(1))
+                .findByWorksheetStatusLike(WorksheetStatus.CREATED);
+        assertThat(result.get(0).getId(), is(WORKSHEET_ID));
+    }
+
+    private void givenAProperStateWorkSheet() {
+        Worksheet worksheet = givenValidWorksheet();
+        worksheet.setId(WORKSHEET_ID);
+        when(worksheetRepository.findByWorksheetStatusLike(WorksheetStatus.CREATED)).thenReturn(List.of(worksheet));
     }
 
     private void givenExistingWorksheet() {
