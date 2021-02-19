@@ -1,10 +1,10 @@
 import React from 'react'
-import useWorkSheetsWithNumber from '../hooks/useWorkSheetsWithNumber'
+import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
-  const { workSheetsWithNumber } = useWorkSheetsWithNumber()
+  const { workSheets } = useWorkSheets()
 
   return (
     <>
@@ -28,18 +28,18 @@ export default function TableListOfWorkSheets() {
             </thead>
 
             <tbody>
-              {workSheetsWithNumber ? (
-                workSheetsWithNumber.map((worksheet) => (
-                  <tr key={worksheet.listId}>
-                    <th scope="row">{worksheet.listId}</th>
+              {workSheets ? (
+                workSheets.map((worksheet, index) => (
+                  <tr key={index}>
+                    <th scope="row">{index + 1}</th>
                     <td>
-                      {worksheet.givenData.createdBy.lastName}{' '}
-                      {worksheet.givenData.createdBy.firstName}
+                      {worksheet.createdBy.lastName}{' '}
+                      {worksheet.createdBy.firstName}
                     </td>
-                    <td>{worksheet.givenData.createdAt}</td>
-                    <td>{worksheet.givenData.partnerId}</td>
-                    <td>{worksheet.givenData.typeOfWork}</td>
-                    <td>{worksheet.givenData.worksheetStatus}</td>
+                    <td>{worksheet.createdAt}</td>
+                    <td>{worksheet.partnerId}</td>
+                    <td>{worksheet.typeOfWork}</td>
+                    <td>{worksheet.worksheetStatus}</td>
                   </tr>
                 ))
               ) : (
