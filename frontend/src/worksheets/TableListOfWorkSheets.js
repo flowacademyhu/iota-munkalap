@@ -7,9 +7,9 @@ export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
   return (
     <>
-      <div className="d-flex justify-content-between p-5">
+      <div className="d-flex justify-content-between p-1">
         <Link to={`/worksheets/new`}>
-          <Button text="Új munkalap létrehozása" />
+          <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
       <div className="border border-secondary">
