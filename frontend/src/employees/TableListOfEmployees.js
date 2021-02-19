@@ -5,15 +5,34 @@ import EditButton from '../EditButton'
 import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
 import LoadingScreen from '../LoadingScreen'
+import SearchEmployeeInput from './SearchEmployeeInput'
+import { Formik, Form } from 'formik'
 
 export default function TableListOfEmployees() {
-  const { users } = useUsers()
+  const { users, keyword, setKeyword } = useUsers()
 
   return (
     <>
-      <Link to={`/employees/new`}>
-        <Button text="Új munkavállaló létrehozása" moreClassName="w-auto p-1" />
-      </Link>
+      <div className="d-flex justify-content-between p-5">
+        <span>
+          <Link to={`/employees/new`}>
+            <Button
+              text="Új munkavállaló létrehozása"
+              moreClassName="w-auto p-1"
+            />
+          </Link>
+        </span>
+        <Formik class="form-inline">
+          <Form>
+            <SearchEmployeeInput
+              keyword={keyword}
+              onChangeKeyword={setKeyword}
+              label="Munkatárs keresése"
+              name="searchEmployee"
+            />
+          </Form>
+        </Formik>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
           <table className="table table-hover text-center">

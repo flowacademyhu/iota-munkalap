@@ -13,12 +13,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
 
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.buildSpecification;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.*;
@@ -28,6 +30,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").ascending());
 
     private static final String TEST_FIRSTNAME = "Lajos";
     private static final String TEST_LASTNAME = "Széchenyi";
@@ -78,8 +81,8 @@ class UserServiceTest {
 
     @Test
     public void givenInvalidEmailUser_whenSavingUser_ThenThrowException() {
-            User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
-            assertThrows(ValidationException.class, () -> userService.saveUser(userData));
+        User userData = User.builder().email(INVALID_TEST_EMAIL).firstName(TEST_FIRSTNAME).lastName(TEST_LASTNAME).build();
+        assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
     @Test
@@ -100,24 +103,20 @@ class UserServiceTest {
         assertThrows(ValidationException.class, () -> userService.saveUser(userData));
     }
 
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
     @Test
     public void shouldReturnUsersPaged() {
         givenRepoWithAUserForPaging();
-        List<User> pagedUserList = userService.listRegistrations(Optional.of(0), Optional.of(1), Optional.of("createdAt"), Optional.of("Mao"));
-        verify(userRepository).findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%M__%",
-                "%M__%", "%M__%", PAGEABLE);
+        List<User> pagedUserList = userService.filter(Optional.of(true), Optional.of(0), Optional.of("Mao"), Optional.of(1), Optional.of("createdAt"));
+        verify(userRepository).findAll(any(Specification.class), eq(PAGEABLE));
         assertThat(pagedUserList.size(), is(1));
     }
-
     private void givenRepoWithAUserForPaging() {
         List<User> users = new ArrayList<>();
         users.add(givenProperUserObject2());
         int start = (int) PAGEABLE.getOffset();
         int end = Math.min((start + PAGEABLE.getPageSize()), users.size());
         Page<User> pagedUsers = new PageImpl<>(users.subList(start, end), PAGEABLE, users.size());
-        when(userRepository.findByEmailLikeIgnoreCaseOrFirstNameLikeIgnoreCaseOrLastNameLikeIgnoreCase("%M__%",
-                "%M__%", "%M__%", PAGEABLE)).thenReturn(pagedUsers);
+        when(userRepository.findAll(any(Specification.class), eq(PAGEABLE))).thenReturn(pagedUsers);
     }
 
     @Test

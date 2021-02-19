@@ -5,6 +5,7 @@ import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
+import CreateWorkSheet from './worksheets/CreateWorkSheet'
 
 function Routing() {
   return (
@@ -22,7 +23,13 @@ function Routing() {
         <Route path="/partners">
           <TableListofPartners />
         </Route>
-        <Route path="/worksheets">
+        <Route path="/worksheets/new">
+          <CreateWorkSheet />
+        </Route>
+        <Route path="/worksheets/update/:id">
+          <UpdateWorkSheet />
+        </Route>
+        <Route exact path="/worksheets">
           <TableListOfWorkSheets />
         </Route>
         <Route path="/">

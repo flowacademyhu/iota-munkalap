@@ -58,9 +58,6 @@ public class WorksheetService {
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
         }
-        if (worksheet.getTypeOfWork() == null) {
-            throw new ValidationException("Type of work value is null");
-        }
         if (worksheet.getWorkerSignature() == null) {
             throw new ValidationException("Worker signature value is null");
         }
@@ -73,5 +70,30 @@ public class WorksheetService {
         Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
         toChange.setWorksheetStatus(status);
         return worksheetRepository.save(toChange);
+    }
+
+    public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
+        validateWorksheet(worksheetReceived);
+        Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
+        return addedWorksheet(worksheetReceived, worksheetToUpdate);
+    }
+
+    private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
+        validateWorksheet(worksheetReceived);
+        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
+        worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
+        worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
+        worksheetToUpdate.setWorkingTimeAccounting(worksheetReceived.getWorkingTimeAccounting());
+        worksheetToUpdate.setNumberOfEmployees(worksheetReceived.getNumberOfEmployees());
+        worksheetToUpdate.setOverheadHour(worksheetReceived.getOverheadHour());
+        worksheetToUpdate.setDeliveryKm(worksheetReceived.getDeliveryKm());
+        worksheetToUpdate.setAccountSerialNumber(worksheetReceived.getAccountSerialNumber());
+        worksheetToUpdate.setDescription(worksheetReceived.getDescription());
+        worksheetToUpdate.setUsedMaterial(worksheetReceived.getUsedMaterial());
+        worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
+        worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
+        worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
+        return worksheetRepository.save(worksheetToUpdate);
     }
 }
