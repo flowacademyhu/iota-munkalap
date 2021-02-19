@@ -1,10 +1,11 @@
 import React from 'react'
-import useWorkSheets from '../hooks/useWorkSheets'
+import useWorkSheetsWithNumber from '../hooks/useWorkSheetsWithNumber'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets } = useWorkSheets()
+  const { workSheetsWithNumber } = useWorkSheetsWithNumber()
+
   return (
     <>
       <div className="d-flex justify-content-between p-1">
@@ -27,15 +28,18 @@ export default function TableListOfWorkSheets() {
             </thead>
 
             <tbody>
-              {workSheets ? (
-                workSheets.map((worksheet) => (
-                  <tr key={worksheet.id}>
-                    <th scope="row">{worksheet.id}</th>
-                    <td>{worksheet.creater}</td>
-                    <td>{worksheet.date}</td>
-                    <td>{worksheet.partner}</td>
-                    <td>{worksheet.type}</td>
-                    <td>{worksheet.state}</td>
+              {workSheetsWithNumber ? (
+                workSheetsWithNumber.map((worksheet) => (
+                  <tr key={worksheet.listId}>
+                    <th scope="row">{worksheet.listId}</th>
+                    <td>
+                      {worksheet.givenData.createdBy.lastName}{' '}
+                      {worksheet.givenData.createdBy.firstName}
+                    </td>
+                    <td>{worksheet.givenData.createdAt}</td>
+                    <td>{worksheet.givenData.partnerId}</td>
+                    <td>{worksheet.givenData.typeOfWork}</td>
+                    <td>{worksheet.givenData.worksheetStatus}</td>
                   </tr>
                 ))
               ) : (
