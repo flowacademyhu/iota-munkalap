@@ -1,5 +1,4 @@
 import api from './createApi'
-import MockAdapter from 'axios-mock-adapter'
 
 var mock = new MockAdapter(api)
 

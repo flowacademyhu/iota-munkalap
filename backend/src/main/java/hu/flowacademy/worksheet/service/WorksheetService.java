@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -81,14 +83,6 @@ public class WorksheetService {
         return worksheetRepository.save(toChange);
     }
 
-
-    public List<Worksheet> listWorksheets(Optional<Integer> page, Optional<Integer> limit, Optional<String> orderBy) {
-        return worksheetRepository
-                .findAll(PageRequest.of(page.orElse(DEFAULT_PAGE),
-                        limit.orElse(pagingProperties.getDefaultLimit()),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())).getContent();
-    }
-
     public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
         validateWorksheet(worksheetReceived);
         Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
@@ -112,5 +106,12 @@ public class WorksheetService {
         worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
         worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
         return worksheetRepository.save(worksheetToUpdate);
+    }
+
+    public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDateTime> minTime, Optional<LocalDateTime> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
+        return worksheetRepository.findAll(
+                buildSpecification(status, maxTime, minTime),
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+        ).getContent();
     }
 }
