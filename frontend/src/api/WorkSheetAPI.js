@@ -11,6 +11,7 @@ const workSheets = [
     partner: 'partner1',
     type: 'type1',
     state: 'state1',
+    usedMaterial: 'asdasd',
   },
   {
     id: '2',

@@ -36,7 +36,7 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.date}</td>
                     <td>{worksheet.partner}</td>
                     <td>{worksheet.type}</td>
-                    <td>
+                    <td className="d-flex justify-content-around">
                       {worksheet.state}
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
