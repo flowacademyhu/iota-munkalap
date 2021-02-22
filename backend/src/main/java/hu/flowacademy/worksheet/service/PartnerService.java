@@ -44,14 +44,26 @@ public class PartnerService {
         if (partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getAdoszam().length() == 8) {
+        if (partner.getAdoszam().length() != 8) {
             throw new ValidationException("The tax number length is not eight");
+        }
+        if (partner.getAdoszam().contains("[a-zA-Z]")) {
+            throw new ValidationException("The tax number contains letter or other character");
         }
         if (partner.getKAdoszamTipus() == null) {
             throw new ValidationException("The K. tax number is null");
         }
-        if (partner.getKAdoszamTipus() >=1 && partner.getKAdoszamTipus() <= 5) {
+        if (partner.getKAdoszamTipus() < 1 && partner.getKAdoszamTipus() > 5) {
             throw new ValidationException("The K. tax number is not 1, 2, 3, 4, 5");
+        }
+        if (partner.getBankszamlaszam() == null) {
+            throw new ValidationException("The bank account number is null");
+        }
+        if (partner.getBankszamlaszam().length() != 17 || partner.getBankszamlaszam().length() != 25) {
+            throw new ValidationException("The bank account number length is not appropriate");
+        }
+        if (partner.getBankszamlaszam().contains("[a-zA-Z]")) {
+            throw new ValidationException("The bank account contains letter");
         }
     }
 }
