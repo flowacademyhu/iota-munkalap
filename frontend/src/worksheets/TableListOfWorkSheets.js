@@ -5,6 +5,12 @@ import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
+  const typeOfWork = {
+    INSTALLATION: 'telepítés',
+    REPAIR: 'javítás',
+    MAINTENANCE: 'karbantartás',
+    OTHER: 'egyéb',
+  }
 
   return (
     <>
@@ -38,7 +44,7 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{worksheet.typeOfWork}</td>
+                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{worksheet.worksheetStatus}</td>
                   </tr>
                 ))
