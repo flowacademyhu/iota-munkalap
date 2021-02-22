@@ -2,15 +2,10 @@ import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import { typeOfWork } from '../TranslationForWorkSheet'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
-  const typeOfWork = {
-    INSTALLATION: 'telepítés',
-    REPAIR: 'javítás',
-    MAINTENANCE: 'karbantartás',
-    OTHER: 'egyéb',
-  }
 
   return (
     <>
