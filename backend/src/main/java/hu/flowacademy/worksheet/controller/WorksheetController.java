@@ -81,7 +81,7 @@ public class WorksheetController {
 
     @GetMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
-    public Optional<Worksheet> getWorksheetById(@PathVariable("id") String worksheetId) {
+    public Worksheet getWorksheetById(@PathVariable("id") String worksheetId) throws ValidationException {
         return worksheetService.getWorksheetById(worksheetId);
     }
 }

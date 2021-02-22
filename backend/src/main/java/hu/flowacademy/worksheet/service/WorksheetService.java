@@ -115,7 +115,7 @@ public class WorksheetService {
         ).getContent();
     }
 
-    public Optional<Worksheet> getWorksheetById(String worksheetId) {
-        return worksheetRepository.findById(worksheetId);
+    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
+        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
     }
 }

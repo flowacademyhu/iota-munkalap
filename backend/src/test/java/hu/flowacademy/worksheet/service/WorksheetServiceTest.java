@@ -5,6 +5,7 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
+import org.hibernate.jdbc.Work;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -147,6 +148,28 @@ class WorksheetServiceTest {
         assertThat(result.size(), is(1));
     }
 
+    @Test
+    public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
+        givenExistingOneWorksheet();
+        Worksheet result = worksheetService.getWorksheetById(WORKSHEET_ID);
+
+        Mockito.verify(worksheetRepository, times(1)).findById(WORKSHEET_ID);
+        assertThat(result.getId(), notNullValue());
+        assertThat(result.getId(), is(WORKSHEET_ID));
+        verifyNoMoreInteractions(worksheetRepository);
+    }
+
+    /* @Test
+    public void givenAnExistingUser_whenSettingActivity_thenActivityIsUpdated() throws ValidationException {
+        givenExistingUser();
+        User result = userService.setUserActivity(REGISTRATION_ID, Status.inactive);
+        Mockito.verify(userRepository, times(1)).save(result);
+        assertThat(result, notNullValue());
+        assertThat(result.isEnabled(), notNullValue());
+        assertThat(result.isEnabled(), is(false));
+    }*/
+
+
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
@@ -174,6 +197,12 @@ class WorksheetServiceTest {
     private void givenExistingWorksheet() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private void givenExistingOneWorksheet() {
+        Worksheet worksheet = givenValidWorksheet();
+        worksheet.setId(WORKSHEET_ID);
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
     }
 
     private void givenAProperWorkSheetForListing() {
