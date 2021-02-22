@@ -78,9 +78,7 @@ public class WorksheetService {
     }
 
     public Worksheet setStatusWorksheet(String id, WorksheetStatus status) throws ValidationException {
-        Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
-        toChange.setWorksheetStatus(status);
-        return worksheetRepository.save(toChange);
+        return worksheetRepository.updateWorksheetstatus(id, status).orElseThrow(() -> new javax.validation.ValidationException("No worksheet found with provided id"));
     }
 
     public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
