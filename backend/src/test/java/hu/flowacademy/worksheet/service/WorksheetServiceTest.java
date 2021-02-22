@@ -188,9 +188,7 @@ class WorksheetServiceTest {
     }
 
     private void givenExistingOneWorksheet() {
-        Worksheet worksheet = givenValidWorksheet();
-        worksheet.setId(WORKSHEET_ID);
-        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(worksheet));
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
     }
 
     private void givenAProperWorkSheetForListing() {
