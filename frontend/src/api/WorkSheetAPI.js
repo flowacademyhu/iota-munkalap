@@ -1,7 +1,9 @@
 import api from './createApi'
 
-function getWorkSheets() {
-  return api.get(`/worksheets`)
+function getWorkSheets(status) {
+  return api.get(`/worksheets/`, {
+    params: { status },
+  })
 }
 
 function postWorkSheet(credentials) {

@@ -2,9 +2,10 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function FilterWorkSheets(props) {
-  const { workSheetStatus, onStatusChange } = props
+  const { status, onStatusChange } = props
 
   const handleInputChange = (event) => {
+    console.log('filter', event.target.value)
     onStatusChange(event.target.value)
   }
 
@@ -12,18 +13,18 @@ function FilterWorkSheets(props) {
     <div>
       <form>
         <select
-          value={workSheetStatus}
+          value={status}
           class="btn btn-success"
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
-          <option value="created" label="Nyitott">
+          <option value="CREATED" label="Nyitott">
             Nyitott
           </option>
-          <option value="reported" label="Készre jelentett">
+          <option value="REPORTED" label="Készre jelentett">
             Készre jelentett
           </option>
-          <option value="closed" label="Lezárt">
+          <option value="CLOSED" label="Lezárt">
             Lezárt
           </option>
         </select>
