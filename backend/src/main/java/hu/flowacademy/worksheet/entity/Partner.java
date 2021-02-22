@@ -11,10 +11,12 @@ public class Partner {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "worksheet_id", nullable = false)
-    private String id;
+    @Column(name = "partner_id", nullable = false)
+    private String partnerId;
     @Column(name = "partner_email", nullable = false)
     private String partnerEmail;
+    @Column(name = "telefon", nullable = false)
+    private String telefon;
     @Column(name = "nev", nullable = false)
     private String nev;
     @Column(name = "rovid_nev", nullable = false)
@@ -29,39 +31,29 @@ public class Partner {
     private String szamlazasiCimOrszagKod;
     @Column(name = "szamlazasi_cim_orszag_nev", nullable = false)
     private String szamlazasiCimOrszagNev;
-    @Column(name = "szamlazasi_cim_megye_nev")
+    @Column(name = "szamlazasi_cim_megye_nev", nullable = false)
     private String szamlazasiCimMegyeNev;
-    @Column(name = "szamlazasi_cim_iranyitoszam")
+    @Column(name = "szamlazasi_cim_iranyitoszam", nullable = false)
     private String szamlazasiCimIranyitoszam;
+    @Column(name = "szamlazasi_cim_telepules_nev", nullable = false)
+    private String szamlazasiCimTelepulesNev;
+    @Column(name = "szamlazasi_cim_kerulet", nullable = false)
+    private String szamlazasiCimKerulet;
+    @Column(name = "szamlazasi_cim_kozterulet_nev", nullable = false)
+    private String szamlazasiCimKozteruletNev;
+    @Column(name = "szamlazasi_cim_kozterulet_jelleg_nev", nullable = false)
+    private String szamlazasiCimKozteruletJellegNev;
+    @Column(name = "szamlazasi_cim_hazszam", nullable = false)
+    private String szamlazasiCimHazszam;
+    @Column(name = "szamlazasi_cim_epulet", nullable = false)
+    private String szamlazasiCimEpulet;
+    @Column(name = "szamlazasi_cim_lepcsohaz", nullable = false)
+    private String szamlazasiCimLepcsohaz;
+    @Column(name = "szamlazasi_cim_szint", nullable = false)
+    private String szamlazasiCimSzint;
+    @Column(name = "szamlazasi_cim_ajto", nullable = false)
+    private String szamlazasiCimAjto;
+    @Column(name = "szamlazasi_cim_hrsz", nullable = false)
+    private String szamlazasiCimHrsz;
 
 }
-
-
-/*Partner részletes adatai:
-
-Email: email
-Telefon: string
-
-Az alábbiak NAV kompatibilitás szerint kerülnek kibontásra! Mező neve, zárójelben a típusa majd leírás és ha van kieg. info.
-
-Nev(string)[;]: Név
-RovidNev(string)[;]: Rövid név
-Adoszam(string)[;]: Adószám (8 számjegy hosszú, fixen)
-KAdoszamTipus(integer)[;]: Adószám típus (1 számjegy, lehetséges értékek: 1 - 5)
-Bankszamlaszam(string)[;]: Bankszámlaszám (2x vagy 3x 8 db számjegy, kötőjelekkel elválasztva)
-
-SzamlazasiCimOrszagKod(string)[;]: Számlázási cím Ország kód (pl. "HU")
-SzamlazasiCimOrszagNev(string)[;]: Számlázási cím Ország
-SzamlazasiCimMegyeNev(string)[;]: Számlázási cím Megye
-SzamlazasiCimIranyitoszam(string)[;]: Számlázási cím Irányítószám
-SzamlazasiCimTelepulesNev(string)[;]: Számlázási cím Település
-SzamlazasiCimKerulet(string)[;]: Számlázási cím Kerület
-SzamlazasiCimKozteruletNev(string)[;]: Számlázási cím Közterület név
-SzamlazasiCimKozteruletJellegNev(string)[;]: Számlázási cím Közterület jelleg (út, utca, tér, stb)
-SzamlazasiCimHazszam(string)[;]: Számlázási cím Házszám
-SzamlazasiCimEpulet(string)[;]: Számlázási cím Épület
-SzamlazasiCimLepcsohaz(string)[;]: Számlázási cím Lépcsőház
-SzamlazasiCimSzint(string)[;]: Számlázási cím Szint
-SzamlazasiCimAjto(string)[;]: Számlázási cím Ajtó
-SzamlazasiCimHrsz(string)[;]: Számlázási cím helyrajzi szám
-*/
