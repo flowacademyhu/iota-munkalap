@@ -21,32 +21,30 @@ public class PartnerController {
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
     public Partner createPartner(@RequestBody PartnerDTO partnerDTO) throws ValidationException {
-        Partner partner
+        Partner partner = Partner.builder()
+                .partnerEmail(partnerDTO.getPartnerEmail())
+                .telefon(partnerDTO.getTelefon())
+                .nev(partnerDTO.getNev())
+                .rovidNev(partnerDTO.getRovidNev())
+                .adoszam(partnerDTO.getAdoszam())
+                .kAdoszamTipus(partnerDTO.getKAdoszamTipus())
+                .bankszamlaszam(partnerDTO.getBankszamlaszam())
+                .szamlazasiCimOrszagKod(partnerDTO.getSzamlazasiCimOrszagKod())
+                .szamlazasiCimOrszagNev(partnerDTO.getSzamlazasiCimOrszagNev())
+                .szamlazasiCimMegyeNev(partnerDTO.getSzamlazasiCimMegyeNev())
+                .szamlazasiCimIranyitoszam(partnerDTO.getSzamlazasiCimIranyitoszam())
+                .szamlazasiCimTelepulesNev(partnerDTO.getSzamlazasiCimTelepulesNev())
+                .szamlazasiCimKerulet(partnerDTO.getSzamlazasiCimKerulet())
+                .szamlazasiCimKozteruletNev(partnerDTO.getSzamlazasiCimKozteruletNev())
+                .szamlazasiCimKozteruletJellegNev(partnerDTO.getSzamlazasiCimKozteruletJellegNev())
+                .szamlazasiCimHazszam(partnerDTO.getSzamlazasiCimHazszam())
+                .szamlazasiCimEpulet(partnerDTO.getSzamlazasiCimEpulet())
+                .szamlazasiCimLepcsohaz(partnerDTO.getSzamlazasiCimLepcsohaz())
+                .szamlazasiCimSzint(partnerDTO.getSzamlazasiCimSzint())
+                .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
+                .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
+                .build();
+        return partnerService.savePartner(partner);
     }
 
 }
-
-/*  @PostMapping("/worksheets")
-    @ResponseStatus(HttpStatus.CREATED)
-    @RolesAllowed({"admin", "user"})
-    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
-        Worksheet worksheet = Worksheet.builder()
-                .partnerId(worksheetDTO.getPartnerId())
-                .typeOfWork(worksheetDTO.getTypeOfWork())
-                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
-                .assetSettlement(worksheetDTO.getAssetSettlement())
-                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
-                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
-                .overheadHour(worksheetDTO.getOverheadHour())
-                .deliveryKm(worksheetDTO.getDeliveryKm())
-                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
-                .description(worksheetDTO.getDescription())
-                .usedMaterial(worksheetDTO.getUsedMaterial())
-                .typeOfPayment(worksheetDTO.getTypeOfPayment())
-                .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment())
-                .worksheetStatus(worksheetDTO.getWorksheetStatus())
-                .build();
-        return worksheetService.saveWorksheet(worksheet);
-    }*/
