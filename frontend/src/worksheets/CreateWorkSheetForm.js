@@ -8,6 +8,12 @@ import SelectInput from '../SelectInput'
 import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
+import {
+  TYPE_OF_WORK_LIST,
+  ASSET_SETTLEMENT_LIST,
+  WORKING_TIME_ACCOUNT_LIST,
+  TYPE_OF_PAYMENT_LIST,
+} from './WorksheetDropdownOptions'
 
 function CreateWorkSheetForm({
   sent,
@@ -16,28 +22,6 @@ function CreateWorkSheetForm({
   sendData,
   title,
 }) {
-  const typeOfWorkList = [
-    { label: 'Telepítés', value: 'INSTALLATION' },
-    { label: 'Javítás', value: 'REPAIR' },
-    { label: 'Karbantartás', value: 'MAINTENANCE' },
-    { label: 'Egyéb', value: TYPE_OF_WORK.OTHER },
-  ]
-
-  const assetSettlementList = [
-    { label: 'Térítéses', value: 'REPAYMENT' },
-    { label: 'Garanciális', value: 'WARRANTY' },
-  ]
-
-  const workingTimeAccountingList = [
-    { label: 'Térítéses', value: 'REPAYMENT' },
-    { label: 'Garanciális', value: 'WARRANTY' },
-  ]
-
-  const typeOfPaymentList = [
-    { label: 'Készpénz', value: 'CASH' },
-    { label: 'Átutalás', value: 'BANKTRANSFER' },
-  ]
-
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -46,17 +30,17 @@ function CreateWorkSheetForm({
           <Formik
             initialValues={{
               partnerId: '',
-              typeOfWork: typeOfWorkList[0].value,
+              typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
-              assetSettlement: assetSettlementList[0].value,
-              workingTimeAccounting: workingTimeAccountingList[0].value,
+              assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
+              workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
               numberOfEmployees: 0,
               overheadHour: 0,
               deliveryKm: 0,
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
-              typeOfPayment: typeOfPaymentList[0].value,
+              typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
@@ -75,7 +59,7 @@ function CreateWorkSheetForm({
                   <SelectInput
                     name="typeOfWork"
                     label="Munkavégzés jellege"
-                    container={typeOfWorkList}
+                    container={TYPE_OF_WORK_LIST}
                   />
                   {values.typeOfWork === TYPE_OF_WORK.OTHER && (
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
@@ -83,12 +67,12 @@ function CreateWorkSheetForm({
                   <SelectInput
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
-                    container={assetSettlementList}
+                    container={ASSET_SETTLEMENT_LIST}
                   />
                   <SelectInput
                     name="workingTimeAccounting"
                     label="Munkaidő elszámolás módja"
-                    container={workingTimeAccountingList}
+                    container={WORKING_TIME_ACCOUNT_LIST}
                   />
                   <Input
                     name="numberOfEmployees"
@@ -126,7 +110,7 @@ function CreateWorkSheetForm({
                   <SelectInput
                     name="typeOfPayment"
                     label="Fizetés módja"
-                    container={typeOfPaymentList}
+                    container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: {getCurrentDate()}</span>
                   <Input

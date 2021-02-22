@@ -7,6 +7,10 @@ import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
+import {
+  TYPE_OF_WORK_LIST,
+  ASSET_SETTLEMENT_LIST,
+} from './WorksheetDropdownOptions'
 
 const schema = yup.object().shape({
   description: yup.string().required('A leírás kötelező!'),
@@ -21,18 +25,6 @@ function UpdateWorkSheetForm({
   title,
   worksheet,
 }) {
-  const typeOfWorkList = [
-    { label: 'Telepítés', value: 'INSTALLATION' },
-    { label: 'Javítás', value: 'REPAIR' },
-    { label: 'Karbantartás', value: 'MAINTENANCE' },
-    { label: 'Egyéb', value: TYPE_OF_WORK.OTHER },
-  ]
-
-  const assetSettlementList = [
-    { label: 'Térítéses', value: 'REPAYMENT' },
-    { label: 'Garanciális', value: 'WARRANTY' },
-  ]
-
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -41,9 +33,9 @@ function UpdateWorkSheetForm({
           <Formik
             initialValues={{
               partner: worksheet.partner || '',
-              typeOfWork: worksheet.typeOfWork || typeOfWorkList[0].value,
+              typeOfWork: worksheet.typeOfWork || TYPE_OF_WORK_LIST[0].value,
               assetSettlement:
-                worksheet.assetSettlement || assetSettlementList[0].value,
+                worksheet.assetSettlement || ASSET_SETTLEMENT_LIST[0].value,
               description: worksheet.description || '',
               usedMaterial: worksheet.usedMaterial || '',
             }}
@@ -60,7 +52,7 @@ function UpdateWorkSheetForm({
                   <SelectInput
                     name="typeOfWork"
                     label="Munkavégzés jellege"
-                    container={typeOfWorkList}
+                    container={TYPE_OF_WORK_LIST}
                   />
                   {values.typeOfWork === TYPE_OF_WORK.OTHER && (
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
@@ -68,7 +60,7 @@ function UpdateWorkSheetForm({
                   <SelectInput
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
-                    container={assetSettlementList}
+                    container={ASSET_SETTLEMENT_LIST}
                   />
                   <Input name="description" label="Leírás" type="text" />
                   <Input
