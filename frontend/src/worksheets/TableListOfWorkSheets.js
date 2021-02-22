@@ -9,8 +9,13 @@ import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets } = useWorkSheets()
+  const { workSheets, updateWorkSheets } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
+
+  async function closeAndReload(worksheet) {
+    await closeWorkSheet(worksheet.id)
+    updateWorkSheets()
+  }
 
   return (
     <>
@@ -50,7 +55,7 @@ export default function TableListOfWorkSheets() {
                     <td>
                       {isAdmin && (
                         <CloseButton
-                          onClick={() => closeWorkSheet(worksheet.id)}
+                          onClick={() => closeAndReload(worksheet)}
                         />
                       )}
                     </td>
