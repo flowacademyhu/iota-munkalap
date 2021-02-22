@@ -8,4 +8,8 @@ function postWorkSheet(credentials) {
   return api.post(`/worksheets`, credentials)
 }
 
-export { getWorkSheets, postWorkSheet }
+function closeWorkSheet(id) {
+  return api.put(`/worksheets/${id}/close`)
+}
+
+export { getWorkSheets, postWorkSheet, closeWorkSheet }

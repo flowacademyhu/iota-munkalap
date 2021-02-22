@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Button from '../Button'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
+import { closeWorkSheet } from '../api/WorkSheetAPI'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -44,7 +45,13 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.partnerId}</td>
                     <td>{worksheet.typeOfWork}</td>
                     <td>{worksheet.worksheetStatus}</td>
-                    <td>{isAdmin && <CloseButton />}</td>
+                    <td>
+                      {isAdmin && (
+                        <CloseButton
+                          onClick={() => closeWorkSheet(worksheet.id)}
+                        />
+                      )}
+                    </td>
                   </tr>
                 ))
               ) : (
