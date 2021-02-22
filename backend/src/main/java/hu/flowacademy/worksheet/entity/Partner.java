@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.entity;
 
+import hu.flowacademy.worksheet.enumCustom.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class Partner {
     private String telefon;
     @Enumerated(EnumType.STRING)
     @Column(name = "megrendelo_tipusa")
-    private String megrendeloTipusa;
+    private OrderType megrendeloTipusa;
     @Column(name = "nev", nullable = false)
     private String nev;
     @Column(name = "rovid_nev", nullable = false)

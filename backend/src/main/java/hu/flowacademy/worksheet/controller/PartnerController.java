@@ -25,6 +25,7 @@ public class PartnerController {
                 .partnerEmail(partnerDTO.getPartnerEmail())
                 .telefon(partnerDTO.getTelefon())
                 .nev(partnerDTO.getNev())
+                .megrendeloTipusa(partnerDTO.getMegrendeloTipusa())
                 .rovidNev(partnerDTO.getRovidNev())
                 .adoszam(partnerDTO.getAdoszam())
                 .kAdoszamTipus(partnerDTO.getKAdoszamTipus())

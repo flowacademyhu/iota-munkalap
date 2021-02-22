@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
@@ -17,7 +18,8 @@ public class PartnerService {
     private PartnerRepository partnerRepository;
 
     public Partner savePartner(@NonNull Partner partner) throws ValidationException {
-    return partnerRepository.save(partner);
+        partner.setMegrendeloTipusa(OrderType.PRIVATE);
+        return partnerRepository.save(partner);
 
     }
 }

@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.dto;
 
+import hu.flowacademy.worksheet.enumCustom.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ public class PartnerDTO {
 
     private String partnerEmail;
     private String telefon;
-    private String megrendeloTipusa;
+    private OrderType megrendeloTipusa;
     private String nev;
     private String rovidNev;
     private String adoszam;
