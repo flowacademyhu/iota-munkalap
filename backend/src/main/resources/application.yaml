@@ -8,22 +8,17 @@ hu:
         defaultLimit: 10
 
 spring:
-  data:
-    jpa:
-      repositories:
-        enabled: true
   datasource:
-    url: jdbc:mysql://localhost:8081/worksheet
+    url: jdbc:mysql://localhost:3307/worksheet
     username: worksheet
     password: worksheet
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
   jpa:
-    database: mysql
     hibernate:
       ddl-auto: update
       use-new-id-generator-mappings: true
     show-sql: true
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
 
 keycloakBackendClient:
   realm: master
