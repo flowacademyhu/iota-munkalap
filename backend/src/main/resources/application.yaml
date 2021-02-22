@@ -13,7 +13,7 @@ spring:
       repositories:
         enabled: true
   datasource:
-    url: jdbc:mysql://localhost:8081/db_example
+    url: jdbc:mysql://localhost:8081/worksheet
     username: worksheet
     password: worksheet
     driverClassName: com.mysql.jdbc.Driver
