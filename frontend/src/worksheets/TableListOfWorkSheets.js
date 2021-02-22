@@ -53,7 +53,7 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{status[worksheet.worksheetStatus]}</td>
                     <td>
-                      {isAdmin && (
+                      {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
                         <CloseButton
                           onClick={() => closeAndReload(worksheet)}
                         />
