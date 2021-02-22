@@ -2,6 +2,7 @@ import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import { typeOfWork, status } from '../TranslationForWorkSheet'
 import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
@@ -39,8 +40,8 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{worksheet.typeOfWork}</td>
-                    <td>{worksheet.worksheetStatus}</td>
+                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
+                    <td>{status[worksheet.worksheetStatus]}</td>
                   </tr>
                 ))
               ) : (
