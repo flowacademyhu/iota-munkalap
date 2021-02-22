@@ -11,6 +11,7 @@ public class PartnerDTO {
 
     private String partnerEmail;
     private String telefon;
+    private String megrendeloTipusa;
     private String nev;
     private String rovidNev;
     private String adoszam;

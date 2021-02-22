@@ -25,6 +25,9 @@ public class Partner {
     private String partnerEmail;
     @Column(name = "telefon", nullable = false)
     private String telefon;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "megrendelo_tipusa")
+    private String megrendeloTipusa;
     @Column(name = "nev", nullable = false)
     private String nev;
     @Column(name = "rovid_nev", nullable = false)
