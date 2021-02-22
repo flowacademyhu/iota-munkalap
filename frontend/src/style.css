@@ -45,17 +45,3 @@ img {
 .table th {
   vertical-align: middle;
 }
-
-#Outer {
-  height: 100vh;
-  position: relative;
-}
-
-.image-container {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
