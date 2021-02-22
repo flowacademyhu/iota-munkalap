@@ -6,13 +6,12 @@ import { useHistory } from 'react-router-dom'
 
 function CreateWorkSheet() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
 
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    sent && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
   async function postData(values) {
@@ -20,7 +19,6 @@ function CreateWorkSheet() {
       const response = await postWorkSheet(values)
       if (response.status === 201) {
         setPopUpMessage('Munkalap sikeresen létrehozva')
-        setSentSuccessfully(true)
       }
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen')

@@ -6,13 +6,12 @@ import { useHistory } from 'react-router-dom'
 
 function CreateEmployee() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
 
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sent && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
   }
 
   async function postData(values) {
@@ -20,7 +19,6 @@ function CreateEmployee() {
       const response = await postUser(values)
       if (response.status === 201) {
         setPopUpMessage('Munkavállaló sikeresen létrehozva')
-        setSentSuccessfully(true)
       }
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen')
