@@ -5,7 +5,6 @@ function FilterWorkSheets(props) {
   const { status, onStatusChange } = props
 
   const handleInputChange = (event) => {
-    console.log('filter', event.target.value)
     onStatusChange(event.target.value)
   }
 
