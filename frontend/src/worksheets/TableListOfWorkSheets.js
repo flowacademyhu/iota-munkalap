@@ -2,7 +2,7 @@ import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { typeOfWork } from '../TranslationForWorkSheet'
+import { typeOfWork, status } from '../TranslationForWorkSheet'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -40,7 +40,7 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
-                    <td>{worksheet.worksheetStatus}</td>
+                    <td>{status[worksheet.worksheetStatus]}</td>
                   </tr>
                 ))
               ) : (
