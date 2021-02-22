@@ -2,6 +2,7 @@ import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import { typeOfWork, status } from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet } from '../api/WorkSheetAPI'
@@ -43,8 +44,8 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{worksheet.typeOfWork}</td>
-                    <td>{worksheet.worksheetStatus}</td>
+                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
+                    <td>{status[worksheet.worksheetStatus]}</td>
                     <td>
                       {isAdmin && (
                         <CloseButton
