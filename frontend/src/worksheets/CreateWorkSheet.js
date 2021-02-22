@@ -6,12 +6,14 @@ import { useHistory } from 'react-router-dom'
 
 function CreateWorkSheet() {
   const [sent, setSent] = useState(false)
+  const [sentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
 
   const history = useHistory()
 
   function handleClick() {
-    sent && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    setSent(false)
   }
 
   async function postData(values) {

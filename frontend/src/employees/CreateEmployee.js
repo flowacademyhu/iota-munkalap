@@ -6,12 +6,14 @@ import { useHistory } from 'react-router-dom'
 
 function CreateEmployee() {
   const [sent, setSent] = useState(false)
+  const [sentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
 
   const history = useHistory()
 
   function handleClick() {
-    sent && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    setSent(false)
   }
 
   async function postData(values) {
