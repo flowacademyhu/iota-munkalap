@@ -18,7 +18,6 @@ public class PartnerService {
     private PartnerRepository partnerRepository;
 
     public Partner savePartner(@NonNull Partner partner) throws ValidationException {
-        partner.setMegrendeloTipusa(OrderType.PRIVATE);
         return partnerRepository.save(partner);
     }
 }
