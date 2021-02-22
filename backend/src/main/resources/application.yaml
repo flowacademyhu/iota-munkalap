@@ -8,12 +8,17 @@ hu:
         defaultLimit: 10
 
 spring:
+  data:
+    jpa:
+      repositories:
+        enabled: true
   datasource:
     url: jdbc:mysql://localhost:8081/db_example
     username: worksheet
     password: worksheet
     driverClassName: com.mysql.jdbc.Driver
   jpa:
+    database: mysql
     hibernate:
       ddl-auto: update
       use-new-id-generator-mappings: true
