@@ -49,7 +49,7 @@ public class Partner {
     private String szamlazasiCimIranyitoszam;
     @Column(name = "szamlazasi_cim_telepules_nev", nullable = false)
     private String szamlazasiCimTelepulesNev;
-    @Column(name = "szamlazasi_cim_kerulet", nullable = false)
+    @Column(name = "szamlazasi_cim_kerulet")
     private String szamlazasiCimKerulet;
     @Column(name = "szamlazasi_cim_kozterulet_nev", nullable = false)
     private String szamlazasiCimKozteruletNev;
@@ -57,15 +57,15 @@ public class Partner {
     private String szamlazasiCimKozteruletJellegNev;
     @Column(name = "szamlazasi_cim_hazszam", nullable = false)
     private String szamlazasiCimHazszam;
-    @Column(name = "szamlazasi_cim_epulet", nullable = false)
+    @Column(name = "szamlazasi_cim_epulet")
     private String szamlazasiCimEpulet;
-    @Column(name = "szamlazasi_cim_lepcsohaz", nullable = false)
+    @Column(name = "szamlazasi_cim_lepcsohaz")
     private String szamlazasiCimLepcsohaz;
-    @Column(name = "szamlazasi_cim_szint", nullable = false)
+    @Column(name = "szamlazasi_cim_szint")
     private String szamlazasiCimSzint;
-    @Column(name = "szamlazasi_cim_ajto", nullable = false)
+    @Column(name = "szamlazasi_cim_ajto")
     private String szamlazasiCimAjto;
-    @Column(name = "szamlazasi_cim_hrsz", nullable = false)
+    @Column(name = "szamlazasi_cim_hrsz")
     private String szamlazasiCimHrsz;
 
 }
