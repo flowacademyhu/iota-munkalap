@@ -8,8 +8,8 @@ import CreateWorkSheet from './worksheets/CreateWorkSheet'
 
 function Routing() {
   return (
-    <Switch>
-      <div className="col-12">
+    <div className="col-12">
+      <Switch>
         <Route path="/employees/new">
           <CreateEmployee />
         </Route>
@@ -34,8 +34,8 @@ function Routing() {
         <Route path="/">
           <Redirect to="/partners" />
         </Route>
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   )
 }
 
