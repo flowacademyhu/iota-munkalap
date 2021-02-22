@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -76,5 +77,11 @@ public class WorksheetController {
     @RolesAllowed({"admin", "user"})
     public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
         return worksheetService.update(worksheetId, worksheet);
+    }
+
+    @GetMapping("/worksheets/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Worksheet getWorksheetById(@PathVariable("id") String worksheetId) throws ValidationException {
+        return worksheetService.getWorksheetById(worksheetId);
     }
 }
