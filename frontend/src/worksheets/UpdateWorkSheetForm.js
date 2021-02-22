@@ -9,11 +9,6 @@ import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
 
 const schema = yup.object().shape({
-  partner: yup.string().required('A partner kötelező!'),
-  typeOfWork: yup.string().required('A munkavégzés jellege kötelező!'),
-  assetSettlement: yup
-    .string()
-    .required('Az eszközökök elszámolásának módja kötelező!'),
   description: yup.string().required('A leírás kötelező!'),
   usedMaterial: yup.string().required('A felhasznált anyag kötelező!'),
 })
@@ -83,12 +78,12 @@ function UpdateWorkSheetForm({
                   />
                   <div className="buttons">
                     <Link to="/worksheets">
-                      <Button text="Mégse" moreClassName="h-auto w-auto p-2" />
+                      <Button text="Mégse" moreClassName="h-auto" />
                     </Link>
                     <Button
                       text="Mentés"
                       type="submit"
-                      moreClassName="h-auto w-auto p-2"
+                      moreClassName="h-auto"
                     />
                   </div>
                 </Form>

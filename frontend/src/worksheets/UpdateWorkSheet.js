@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import UpdateWorksheetForm from './UpdateWorkSheetForm'
-import { getWorkSheets, putWorkSheet } from '../api/WorkSheetAPI'
+import { getWorkSheet, putWorkSheet } from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
 function UpdateWorksheet() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully, setSentSuccessfully] = useState(false)
+  const [setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
   const [worksheetData, setWorksheetData] = useState({})
@@ -14,13 +14,13 @@ function UpdateWorksheet() {
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    sent && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getWorkSheets(id)
+        const response = await getWorkSheet(id)
         setWorksheetData({ ...response.data, loaded: true })
       } catch (error) {
         setWorksheetData({ loaded: true })

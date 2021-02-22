@@ -6,7 +6,7 @@ import { PATH_VARIABLES } from '../Const'
 
 function UpdateEmployee() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully, setSentSuccessfully] = useState(false)
+  const [setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
   const [userData, setUserData] = useState({})
@@ -14,7 +14,7 @@ function UpdateEmployee() {
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sent && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
   }
 
   useEffect(() => {

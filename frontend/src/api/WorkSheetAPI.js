@@ -8,8 +8,12 @@ function getWorkSheets() {
   return api.get(`/worksheets`)
 }
 
+function getWorkSheet(id) {
+  return api.get(`/worksheets/${id}`)
+}
+
 function postWorkSheet(credentials) {
   return api.post(`/worksheets`, credentials)
 }
 
-export { getWorkSheets, postWorkSheet, putWorkSheet }
+export { getWorkSheets, postWorkSheet, putWorkSheet, getWorkSheet }
