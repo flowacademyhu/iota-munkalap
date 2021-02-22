@@ -1,14 +1,14 @@
 const typeOfWork = {
-  INSTALLATION: 'telepítés',
-  REPAIR: 'javítás',
-  MAINTENANCE: 'karbantartás',
-  OTHER: 'egyéb',
+  INSTALLATION: 'Telepítés',
+  REPAIR: 'Javítás',
+  MAINTENANCE: 'Karbantartás',
+  OTHER: 'Egyéb',
 }
 
 const status = {
-  CREATED: 'létrehozott',
-  REPORTED: 'készre jelentett',
-  CLOSED: 'lezárt',
+  CREATED: 'Létrehozott',
+  REPORTED: 'Készre jelentett',
+  CLOSED: 'Lezárt',
 }
 
 export { typeOfWork, status }
