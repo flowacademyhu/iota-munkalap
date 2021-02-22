@@ -5,7 +5,7 @@ export default function useUsers() {
   const [keyword, setKeyword] = useState('')
   const [status, setStatus] = useState(null)
 
-  const lastCancel = useRef(null) //objektumot add vissza, ide tesszük cancel-t, változtatásnál nem rendereli ki
+  const lastCancel = useRef(null)
 
   const [users, setUsers] = useState()
   const updateUsers = useCallback(
@@ -14,7 +14,7 @@ export default function useUsers() {
         lastCancel.current()
       }
       const { request, cancel } = getUsers(keyword.toLowerCase(), status)
-      lastCancel.current = cancel //ide mentjük el az utolsó hivás visszavonó fgv-ét
+      lastCancel.current = cancel
       const { data } = await request
       lastCancel.current = null
       if (data) {
