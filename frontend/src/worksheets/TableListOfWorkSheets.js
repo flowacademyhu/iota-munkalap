@@ -3,6 +3,7 @@ import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -44,9 +45,9 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <td colspan="5">
+                  <LoadingScreen />
+                </td>
               )}
             </tbody>
           </table>
