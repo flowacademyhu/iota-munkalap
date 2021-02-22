@@ -5,7 +5,6 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
-import org.hibernate.jdbc.Work;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -158,17 +157,6 @@ class WorksheetServiceTest {
         assertThat(result.getId(), is(WORKSHEET_ID));
         verifyNoMoreInteractions(worksheetRepository);
     }
-
-    /* @Test
-    public void givenAnExistingUser_whenSettingActivity_thenActivityIsUpdated() throws ValidationException {
-        givenExistingUser();
-        User result = userService.setUserActivity(REGISTRATION_ID, Status.inactive);
-        Mockito.verify(userRepository, times(1)).save(result);
-        assertThat(result, notNullValue());
-        assertThat(result.isEnabled(), notNullValue());
-        assertThat(result.isEnabled(), is(false));
-    }*/
-
 
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
