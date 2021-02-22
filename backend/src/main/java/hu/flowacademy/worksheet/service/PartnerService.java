@@ -20,13 +20,5 @@ public class PartnerService {
     public Partner savePartner(@NonNull Partner partner) throws ValidationException {
         partner.setMegrendeloTipusa(OrderType.PRIVATE);
         return partnerRepository.save(partner);
-
     }
 }
-
-/*public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
-        validateWorksheet(worksheet);
-        worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
-        worksheet.setCreatedAt(LocalDateTime.now());
-        return worksheetRepository.save(worksheet);
-    }*/
