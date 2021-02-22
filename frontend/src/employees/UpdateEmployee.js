@@ -6,7 +6,7 @@ import { PATH_VARIABLES } from '../Const'
 
 function UpdateEmployee() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
   const [userData, setUserData] = useState({})
@@ -37,6 +37,7 @@ function UpdateEmployee() {
       const response = await putUser(id, values)
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva')
+        setSentSuccessfully(true)
       }
     } catch (error) {
       setPopUpMessage('A módosítás sikertelen')

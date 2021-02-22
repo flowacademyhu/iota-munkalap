@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 function CreateWorkSheet() {
   const [sent, setSent] = useState(false)
-  const [sentSuccessfully] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
 
   const history = useHistory()
@@ -21,6 +21,7 @@ function CreateWorkSheet() {
       const response = await postWorkSheet(values)
       if (response.status === 201) {
         setPopUpMessage('Munkalap sikeresen létrehozva')
+        setSentSuccessfully(true)
       }
     } catch (error) {
       setPopUpMessage('A létrehozás sikertelen')
