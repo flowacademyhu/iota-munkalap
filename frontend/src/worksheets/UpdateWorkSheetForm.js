@@ -83,12 +83,12 @@ function UpdateWorkSheetForm({
                   />
                   <div className="buttons">
                     <Link to="/worksheets">
-                      <Button text="Mégse" moreClassName="h-auto" />
+                      <Button text="Mégse" moreClassName="h-auto w-auto p-2" />
                     </Link>
                     <Button
                       text="Mentés"
                       type="submit"
-                      moreClassName="h-auto"
+                      moreClassName="h-auto w-auto p-2"
                     />
                   </div>
                 </Form>
