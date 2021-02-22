@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class WorksheetSpecification {
     public static Specification<Worksheet> createdAtBetween(Optional<LocalDateTime> maxTime, Optional<LocalDateTime> minTime) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), maxTime.orElse(LocalDateTime.MAX), minTime.orElse(LocalDateTime.MIN));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), minTime.orElse(LocalDateTime.MIN), maxTime.orElse(LocalDateTime.MAX));
     }
 
     public static Specification<Worksheet> enabled(Optional<WorksheetStatus> status) {

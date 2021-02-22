@@ -6,6 +6,7 @@ import { typeOfWork, status } from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet } from '../api/WorkSheetAPI'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -56,9 +57,9 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <td colspan="5">
+                  <LoadingScreen />
+                </td>
               )}
             </tbody>
           </table>
