@@ -115,7 +115,7 @@ public class WorksheetService {
         ).getContent();
     }
 
-    public Optional<Worksheet> getUserById(String worksheetId) {
+    public Optional<Worksheet> getWorksheetById(String worksheetId) {
         return worksheetRepository.findById(worksheetId);
     }
 }

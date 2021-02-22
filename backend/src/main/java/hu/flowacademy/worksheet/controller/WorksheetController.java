@@ -79,10 +79,10 @@ public class WorksheetController {
         return worksheetService.update(worksheetId, worksheet);
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
     public Optional<Worksheet> getWorksheetById(@PathVariable("id") String worksheetId) {
-        return worksheetService.getUserById(worksheetId);
+        return worksheetService.getWorksheetById(worksheetId);
     }
 
 }
