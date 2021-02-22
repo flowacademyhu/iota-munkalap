@@ -6,7 +6,7 @@ import { PATH_VARIABLES } from '../Const'
 
 function UpdateWorksheet() {
   const [sent, setSent] = useState(false)
-  const [setSentSuccessfully] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
   const [worksheetData, setWorksheetData] = useState({})
@@ -14,7 +14,7 @@ function UpdateWorksheet() {
   const history = useHistory()
 
   function handleClick() {
-    sent && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
   }
 
   useEffect(() => {

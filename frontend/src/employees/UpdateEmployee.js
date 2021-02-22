@@ -14,7 +14,7 @@ function UpdateEmployee() {
   const history = useHistory()
 
   function handleClick() {
-    sent && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
   }
 
   useEffect(() => {
