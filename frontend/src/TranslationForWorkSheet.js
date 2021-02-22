@@ -5,4 +5,10 @@ const typeOfWork = {
   OTHER: 'egyéb',
 }
 
-export { typeOfWork }
+const status = {
+  CREATED: 'létrehozott',
+  REPORTED: 'készre jelentett',
+  CLOSED: 'lezárt',
+}
+
+export { typeOfWork, status }
