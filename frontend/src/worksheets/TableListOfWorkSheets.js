@@ -2,6 +2,7 @@ import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import CloseButton from '../CloseButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -24,6 +25,7 @@ export default function TableListOfWorkSheets() {
                 <th scope="col">Partner neve</th>
                 <th scope="col">Munkavégzés jellege</th>
                 <th scope="col">Állapot</th>
+                <th scope="col">Módosítás</th>
               </tr>
             </thead>
 
@@ -40,6 +42,9 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.partnerId}</td>
                     <td>{worksheet.typeOfWork}</td>
                     <td>{worksheet.worksheetStatus}</td>
+                    <td>
+                      <CloseButton />
+                    </td>
                   </tr>
                 ))
               ) : (
