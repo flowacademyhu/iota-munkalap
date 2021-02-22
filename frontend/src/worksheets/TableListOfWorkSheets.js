@@ -3,7 +3,7 @@ import useWorkSheets from '../hooks/useWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import useCurrentUser from '../hooks/useCurrentUser'
-import CloseButton from '../CloseButton'
+import CloseButton from '../specialButtons/CloseButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
