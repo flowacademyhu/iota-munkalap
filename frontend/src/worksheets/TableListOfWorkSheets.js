@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom'
 import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets } = useWorkSheets()
-
-  const { workSheets, workSheetStatus, setworkSheetStatus } = useWorkSheets()
+  const {
+    workSheets,
+    updateWorkSheets,
+    workSheetStatus,
+    setWorkSheetStatus,
+  } = useWorkSheets()
 
   return (
     <>
@@ -16,8 +19,8 @@ export default function TableListOfWorkSheets() {
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
         <FilterWorkSheets
-          workSheetstatus={workSheetstatus}
-          onStatusChange={setworkSheetStatus}
+          workSheetStatus={workSheetStatus}
+          onStatusChange={setWorkSheetStatus}
         />
       </div>
       <div className="border border-secondary">
