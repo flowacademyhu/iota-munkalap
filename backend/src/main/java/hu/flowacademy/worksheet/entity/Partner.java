@@ -25,8 +25,14 @@ public class Partner {
     private Integer kAdoszamTipus;
     @Column(name = "bankszamlaszam", nullable = false)
     private String bankszamlaszam;
-
-
+    @Column(name = "szamlazasi_cim_orszag_kod", nullable = false)
+    private String szamlazasiCimOrszagKod;
+    @Column(name = "szamlazasi_cim_orszag_nev", nullable = false)
+    private String szamlazasiCimOrszagNev;
+    @Column(name = "szamlazasi_cim_megye_nev")
+    private String szamlazasiCimMegyeNev;
+    @Column(name = "szamlazasi_cim_iranyitoszam")
+    private String szamlazasiCimIranyitoszam;
 
 }
 
@@ -57,4 +63,5 @@ SzamlazasiCimEpulet(string)[;]: Számlázási cím Épület
 SzamlazasiCimLepcsohaz(string)[;]: Számlázási cím Lépcsőház
 SzamlazasiCimSzint(string)[;]: Számlázási cím Szint
 SzamlazasiCimAjto(string)[;]: Számlázási cím Ajtó
-SzamlazasiCimHrsz(string)[;]: Számlázási cím helyrajzi szám*/
+SzamlazasiCimHrsz(string)[;]: Számlázási cím helyrajzi szám
+*/
