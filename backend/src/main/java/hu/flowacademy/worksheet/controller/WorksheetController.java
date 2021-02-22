@@ -55,6 +55,7 @@ public class WorksheetController {
     }
 
     @PutMapping("/worksheets/{id}/finalize")
+    @RolesAllowed({"admin", "user"})
     @ResponseStatus(HttpStatus.CREATED)
     public Worksheet finalizeWorksheet(@PathVariable(value = "id") String id) throws ValidationException {
         return worksheetService.setStatusWorksheet(id, WorksheetStatus.REPORTED);
