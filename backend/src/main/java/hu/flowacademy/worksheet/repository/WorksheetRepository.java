@@ -14,5 +14,5 @@ import java.util.Optional;
 public interface WorksheetRepository extends JpaRepository<Worksheet, String>, JpaSpecificationExecutor<Worksheet> {
     @Modifying
     @Query("update Worksheet w set w.worksheetStatus = ?2 where w.id = ?1")
-    Optional<Worksheet> updateWorksheetstatus(String id, WorksheetStatus status);
+    void updateWorksheetstatus(String id, WorksheetStatus status);
 }
