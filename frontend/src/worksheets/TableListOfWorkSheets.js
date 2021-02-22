@@ -1,17 +1,24 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
+import FilterWorkSheets from './FilterWorkSheets'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
 
+  const { workSheets, workSheetStatus, setworkSheetStatus } = useWorkSheets()
+
   return (
     <>
-      <div className="d-flex justify-content-between p-1">
+      <div className="d-flex flex-row justify-content-around p-5">
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
+        <FilterWorkSheets
+          workSheetstatus={workSheetstatus}
+          onStatusChange={setworkSheetStatus}
+        />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
