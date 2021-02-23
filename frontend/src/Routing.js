@@ -6,7 +6,7 @@ import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
-import LoadingScreen from './LoadingScreen'
+import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
 import useCurrentUser from './hooks/useCurrentUser'
 
 function Routing() {
@@ -48,7 +48,3 @@ function Routing() {
 }
 
 export default Routing
-
-function UpdateWorkSheet() {
-  return <LoadingScreen />
-}
