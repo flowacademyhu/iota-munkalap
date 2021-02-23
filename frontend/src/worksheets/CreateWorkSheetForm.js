@@ -115,15 +115,14 @@ function CreateWorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: {getCurrentDate()}</span>
-                  <div>
+                  <div className="mt-3">
+                    Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <Input
-                    name="proofOfEmployment"
-                    label="munkavégzést igazolja"
-                    placeholder="IDE KELL MÉG EGY E-ALÁÍRÁS"
-                  />
-
+                  <div className="mt-3">
+                    Munkavégzést igazolja:
+                    <Signature name="proofOfEmployment" />
+                  </div>
                   <div className="buttons">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />
