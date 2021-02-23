@@ -8,4 +8,5 @@ export const PATH_VARIABLES = {
   EMPLOYEE_UPDATE: 'update',
   WORKSHEET: 'worksheets',
   WORKSHEET_NEW: 'new',
+  WORKSHEET_UPDATE: 'update',
 }
