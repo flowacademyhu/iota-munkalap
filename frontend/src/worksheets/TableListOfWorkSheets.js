@@ -54,15 +54,15 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{status[worksheet.worksheetStatus]}</td>
                     <td>
+                      <Link to={`/worksheets/update/${worksheet.id}`}>
+                        <EditButton />
+                      </Link>
+                      <ReadyButton />
                       {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
                         <CloseButton
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
-                      <Link to={`/worksheets/update/${worksheet.id}`}>
-                        <EditButton />
-                      </Link>
-                      <ReadyButton />
                     </td>
                   </tr>
                 ))
