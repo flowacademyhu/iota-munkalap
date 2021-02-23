@@ -1,16 +1,12 @@
 import React from 'react'
 import { logo } from '../img/uj_logo.png'
-import {
-  PDFDocument,
-  PDFText,
-  PDFTable,
-  PDFTableRow,
-  PDFTableColumn,
-  PDFColumns,
-  PDFColumn,
-} from 'react-pdfmake'
+import pdfMake from 'pdfmake/build/pdfmake'
+import vfsFonts from 'pdfmake/build/vfs_fonts'
 
 function WorkSheetPDF() {
+  const { vfs } = vfsFonts.pdfMake
+  pdfMake.vfs = vfs
+
   var workSheet = {
     content: [
       {
@@ -122,12 +118,11 @@ function WorkSheetPDF() {
     },
     defaultStyle: {
       // alignment: 'justify'
-    }}
-
-    pdfMake.createPdf(workSheet).open();
+    },
   }
 
-  return <>a</>
+  pdfMake.createPdf(workSheet).open()
+  //pdfMake.createPdf({ content: 'Hi. I am a PDF.' }).open()
 }
 
 export default WorkSheetPDF
