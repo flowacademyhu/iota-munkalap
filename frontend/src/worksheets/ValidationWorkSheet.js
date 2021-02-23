@@ -28,7 +28,7 @@ export default function schema() {
       .min(1, 'Minimum 1!'),
     deliveryKm: yup
       .number()
-      .required('Kiszállítás megadása kötelező!')
+      .required('Kiszállás megadása kötelező!')
       .min(0, 'Minimum 0!'),
     accountSerialNumber: yup.string(),
     description: yup.string().required('Elvégzett munka leírása kötelező!'),
