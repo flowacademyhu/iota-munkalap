@@ -6,7 +6,7 @@ import { PATH_VARIABLES } from '../Const'
 
 function UpdateEmployee() {
   const [sent, setSent] = useState(false)
-  const [setSentSuccessfully] = useState(false)
+  const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
   const [userData, setUserData] = useState({})
