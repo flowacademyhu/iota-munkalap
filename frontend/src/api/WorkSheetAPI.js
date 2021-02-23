@@ -13,7 +13,6 @@ async function closeWorkSheet(id) {
     return await api.put(`/worksheets/${id}/close`)
   } catch (error) {
     alert('A művelet sikertelen.')
-    return false
   }
 }
 
