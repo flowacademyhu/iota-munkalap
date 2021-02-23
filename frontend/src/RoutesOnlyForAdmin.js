@@ -4,7 +4,7 @@ import TableListOfEmployees from './employees/TableListOfEmployees'
 import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 
-function RoutsOnlyForAdmin() {
+function RoutesOnlyForAdmin() {
   return (
     <>
       <Route path="/employees/new">
@@ -20,4 +20,4 @@ function RoutsOnlyForAdmin() {
   )
 }
 
-export default RoutsOnlyForAdmin
+export default RoutesOnlyForAdmin

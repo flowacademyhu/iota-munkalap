@@ -5,7 +5,7 @@ import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
 import LoadingScreen from './LoadingScreen'
 
-function RoutsForEveryOne() {
+function RoutesForEveryOne() {
   return (
     <>
       <Route path="/partners">
@@ -31,4 +31,4 @@ function UpdateWorkSheet() {
   return <LoadingScreen />
 }
 
-export default RoutsForEveryOne
+export default RoutesForEveryOne
