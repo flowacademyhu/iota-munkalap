@@ -88,7 +88,7 @@ function CreateWorkSheetForm({
                   />
                   <Input
                     name="deliveryKm"
-                    label="Kiszállítás"
+                    label="Kiszállás"
                     type="number"
                     min="0"
                   />

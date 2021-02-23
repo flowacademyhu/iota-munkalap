@@ -1,5 +1,5 @@
 import React from 'react'
-import EditButton from '../EditButton'
+import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
