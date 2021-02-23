@@ -7,6 +7,7 @@ import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
+import ReadyButton from '../specialButtons/ReadyButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()
@@ -58,6 +59,7 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
+                      <ReadyButton />
                     </td>
                   </tr>
                 ))
