@@ -104,5 +104,20 @@ public class PartnerService {
         if (partner.getSzamlazasiCimMegyeNev() == null) {
             throw new ValidationException("The county name is null");
         }
+        if (partner.getSzamlazasiCimIranyitoszam() == null) {
+            throw new ValidationException("The postcode is null");
+        }
+        if (partner.getSzamlazasiCimTelepulesNev() == null) {
+            throw new ValidationException("The city name is null");
+        }
+        if (partner.getSzamlazasiCimKozteruletNev() == null) {
+            throw new ValidationException("The street name is null");
+        }
+        if (partner.getSzamlazasiCimKozteruletJellegNev() == null) {
+            throw new ValidationException("The street type is null");
+        }
+        if (partner.getSzamlazasiCimHazszam() == null) {
+            throw new ValidationException("The house number is null");
+        }
     }
 }
