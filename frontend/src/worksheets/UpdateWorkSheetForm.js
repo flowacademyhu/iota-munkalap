@@ -7,9 +7,12 @@ import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
+import getCurrentDate from './Date'
 import {
   TYPE_OF_WORK_LIST,
   ASSET_SETTLEMENT_LIST,
+  WORKING_TIME_ACCOUNT_LIST,
+  TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
 
 const schema = yup.object().shape({
@@ -32,16 +35,12 @@ function UpdateWorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partner: worksheet.partner || '',
-              typeOfWork: worksheet.typeOfWork || TYPE_OF_WORK_LIST[0].value,
-              assetSettlement:
-                worksheet.assetSettlement || ASSET_SETTLEMENT_LIST[0].value,
-              description: worksheet.description || '',
-              usedMaterial: worksheet.usedMaterial || '',
+              localDateTime: getCurrentDate(),
+              ...worksheet,
             }}
             validationSchema={schema}
-            onSubmit={(values) => {
-              sendData(values)
+            onSubmit={(data) => {
+              sendData(data)
             }}
           >
             {({ values }) => {
@@ -62,12 +61,61 @@ function UpdateWorkSheetForm({
                     label="Eszközök elszámolás módja"
                     container={ASSET_SETTLEMENT_LIST}
                   />
-                  <Input name="description" label="Leírás" type="text" />
+                  <SelectInput
+                    name="workingTimeAccounting"
+                    label="Munkaidő elszámolás módja"
+                    container={WORKING_TIME_ACCOUNT_LIST}
+                  />
                   <Input
-                    name="usedMaterial"
-                    label="Felhasznált anyagom"
+                    name="numberOfEmployees"
+                    label="Létszám"
+                    type="number"
+                    min="0"
+                  />
+                  <Input
+                    name="overheadHour"
+                    label="Rezsióra"
+                    type="number"
+                    min="0"
+                  />
+                  <Input
+                    name="deliveryKm"
+                    label="Kiszállítás"
+                    type="number"
+                    min="0"
+                  />
+                  <Input
+                    name="accountSerialNumber"
+                    label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
+                  <Input
+                    name="description"
+                    label="Elvégzett munka leírása"
+                    type="text"
+                  />
+                  <Input
+                    name="usedMaterial"
+                    label="Felhasznált anyagok"
+                    type="text"
+                  />
+                  <SelectInput
+                    name="typeOfPayment"
+                    label="Fizetés módja"
+                    container={TYPE_OF_PAYMENT_LIST}
+                  />
+                  <span>Kelt: {getCurrentDate()}</span>
+                  <Input
+                    name="workerSignature"
+                    label="Munkát végezte"
+                    placeholder="IDE KELL E-ALÁIRÁS"
+                  />
+                  <Input
+                    name="proofOfEmployment"
+                    label="munkavégzést igazolja"
+                    placeholder="IDE KELL MÉG EGY E-ALÁÍRÁS"
+                  />
+
                   <div className="buttons">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />
