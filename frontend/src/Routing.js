@@ -7,7 +7,6 @@ import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
 import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
-import LoadingScreen from './LoadingScreen'
 import AdminRoute from './AdminRoute'
 
 function Routing() {
