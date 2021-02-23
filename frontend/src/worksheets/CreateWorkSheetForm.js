@@ -69,6 +69,7 @@ function CreateWorkSheetForm({
             }}
           >
             {({ values }) => {
+              console.log(values)
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
@@ -130,13 +131,8 @@ function CreateWorkSheetForm({
                     container={typeOfPaymentList}
                   />
                   <span>Kelt: {getCurrentDate()}</span>
-                  <Input
-                    name="workerSignature"
-                    label="Munkát végezte"
-                    placeholder="IDE KELL E-ALÁIRÁS"
-                  />
                   <div>
-                    <Signature />
+                    <Signature name="workerSignature" />
                   </div>
                   <Input
                     name="proofOfEmployment"
