@@ -7,19 +7,21 @@ import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
 import LoadingScreen from './LoadingScreen'
+import useCurrentUser from './hooks/useCurrentUser'
 
 function Routing() {
+  const { isAdmin } = useCurrentUser()
   return (
     <div className="col-12">
       <Switch>
         <Route path="/employees/new">
-          <CreateEmployee />
+          {isAdmin ? <CreateEmployee /> : <Redirect to="/" />}
         </Route>
         <Route path="/employees/update/:id">
-          <UpdateEmployee />
+          {isAdmin ? <UpdateEmployee /> : <Redirect to="/" />}
         </Route>
         <Route exact path="/employees">
-          <TableListOfEmployees />
+          {isAdmin ? <TableListOfEmployees /> : <Redirect to="/" />}
         </Route>
         <Route path="/partners">
           <TableListofPartners />
