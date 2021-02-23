@@ -95,5 +95,14 @@ public class PartnerService {
                 }
             }
         }
+        if (partner.getSzamlazasiCimOrszagKod() == null) {
+            throw new ValidationException("The country code is null");
+        }
+        if (partner.getSzamlazasiCimOrszagNev() == null) {
+            throw new ValidationException("The country name is null");
+        }
+        if (partner.getSzamlazasiCimMegyeNev() == null) {
+            throw new ValidationException("The county name is null");
+        }
     }
 }
