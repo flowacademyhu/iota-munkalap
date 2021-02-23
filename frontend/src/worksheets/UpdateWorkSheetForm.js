@@ -15,7 +15,7 @@ import {
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
 
-function UpdateWorkSheetForm({
+function WorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
@@ -131,4 +131,4 @@ function UpdateWorkSheetForm({
   )
 }
 
-export default UpdateWorkSheetForm
+export default WorkSheetForm

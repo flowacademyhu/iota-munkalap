@@ -1,50 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import UpdateWorksheetForm from './UpdateWorkSheetForm'
-import { getWorkSheet, putWorkSheet } from '../api/WorkSheetAPI'
-import { useParams, useHistory } from 'react-router-dom'
-import { PATH_VARIABLES } from '../Const'
+import useWorksheetData from '../hooks/useWorksheetData'
 
 function UpdateWorksheet() {
-  const [sent, setSent] = useState(false)
-  const [sentSuccessfully, setSentSuccessfully] = useState(false)
-  const [popUpMessage, setPopUpMessage] = useState('')
-  const { id } = useParams()
-  const [worksheetData, setWorksheetData] = useState({})
-
-  const history = useHistory()
-
-  function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
-    setSent(false)
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getWorkSheet(id)
-        setWorksheetData({ ...response.data, loaded: true })
-      } catch (error) {
-        setWorksheetData({ loaded: true })
-        setPopUpMessage('A módosítás sikertelen')
-        setSent(true)
-      }
-    }
-    fetchData()
-  }, [id])
-
-  async function putData(values) {
-    try {
-      const response = await putWorkSheet(id, values)
-      if (response.status === 200) {
-        setPopUpMessage('Munkalap sikeresen módosítva')
-        setSentSuccessfully(true)
-      }
-    } catch (error) {
-      setPopUpMessage('A módosítás sikertelen')
-    } finally {
-      setSent(true)
-    }
-  }
+  const {
+    putData,
+    handleClick,
+    worksheetData,
+    popUpMessage,
+    sent,
+  } = useWorksheetData()
 
   return (
     <>
