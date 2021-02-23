@@ -47,7 +47,7 @@ public class PartnerService {
         if (partner.getAdoszam().length() != 8) {
             throw new ValidationException("The tax number length is not eight");
         }
-        if (partner.getAdoszam().contains("[a-zA-Z]")) {
+        if (partner.getAdoszam().contains("[^0-9]")) {
             throw new ValidationException("The tax number contains letter or other character");
         }
         if (partner.getKAdoszamTipus() == null) {
@@ -59,11 +59,41 @@ public class PartnerService {
         if (partner.getBankszamlaszam() == null) {
             throw new ValidationException("The bank account number is null");
         }
-        if (partner.getBankszamlaszam().length() != 17 || partner.getBankszamlaszam().length() != 25) {
+        if (partner.getBankszamlaszam().length() != 17 || partner.getBankszamlaszam().length() != 26) {
             throw new ValidationException("The bank account number length is not appropriate");
         }
-        if (partner.getBankszamlaszam().contains("[a-zA-Z]")) {
+        if (partner.getBankszamlaszam().contains("[^0-9 -]")) {
             throw new ValidationException("The bank account contains letter");
+        }
+        if (partner.getBankszamlaszam().length() == 17) {
+            for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
+                if (partner.getBankszamlaszam().charAt(8) != '-') {
+                    throw new ValidationException("The bank account format is not valid, missing: - ");
+                }
+            }
+        }
+        if (partner.getBankszamlaszam().length() == 26) {
+            for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
+                if (partner.getBankszamlaszam().charAt(8) != '-' || partner.getBankszamlaszam().charAt(17) != '-') {
+                    throw new ValidationException("The bank account format is not valid, missing: - ");
+                }
+            }
+        }
+        if (partner.getBankszamlaszam().length() == 17) {
+            for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
+                if (partner.getBankszamlaszam().substring(0, 9).contains("-") || partner.getBankszamlaszam().substring(9, 17).contains("-")) {
+                    throw new ValidationException("The bank account format is not valid, don't have 8 number");
+                }
+            }
+        }
+        if (partner.getBankszamlaszam().length() == 26) {
+            for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
+                if (partner.getBankszamlaszam().substring(0, 9).contains("-")
+                        || partner.getBankszamlaszam().substring(9, 17).contains("-")
+                        || partner.getBankszamlaszam().substring(17, 26).contains("-")) {
+                    throw new ValidationException("The bank account format is not valid, don't have 8 number");
+                }
+            }
         }
     }
 }
