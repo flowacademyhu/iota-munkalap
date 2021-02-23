@@ -7,6 +7,7 @@ export default function Signature(props) {
 
   const [field, meta, helpers] = useField(props)
   const { setValue } = helpers
+
   function clear() {
     signaturePadRef.current.clear()
   }
@@ -36,8 +37,12 @@ export default function Signature(props) {
           onEnd,
         }}
       />
-      <button onClick={() => clear()}>Clear</button>
-      <button></button>
+      <span
+        className="border rounded p-1 bg-success text-white"
+        onClick={clear}
+      >
+        Clear
+      </span>
     </>
   )
 }
