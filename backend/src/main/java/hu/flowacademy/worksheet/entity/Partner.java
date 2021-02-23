@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
 
 @Data
 @NoArgsConstructor
@@ -36,7 +35,6 @@ public class Partner {
     private String rovidNev;
     @Column(name = "adoszam", nullable = false)
     private String adoszam;
-    //@Digits()
     @Column(name = "k_adoszam_tipus", nullable = false)
     private Integer kAdoszamTipus;
     @Column(name = "bankszamlaszam", nullable = false)
