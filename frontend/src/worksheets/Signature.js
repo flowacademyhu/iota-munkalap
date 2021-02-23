@@ -10,6 +10,7 @@ export default function Signature(props) {
 
   function clear() {
     signaturePadRef.current.clear()
+    setValue(JSON.stringify([]))
   }
 
   useEffect(() => {
@@ -37,10 +38,7 @@ export default function Signature(props) {
           onEnd,
         }}
       />
-      <span
-        className="border rounded p-1 bg-success text-white"
-        onClick={clear}
-      >
+      <span className="btn btn-success" onClick={clear}>
         Clear
       </span>
     </>
