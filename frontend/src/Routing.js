@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import TableListOfEmployees from './employees/TableListOfEmployees'
 import CreateEmployee from './employees/CreateEmployee'
@@ -14,15 +14,19 @@ function Routing() {
   return (
     <div className="col-12">
       <Switch>
-        <Route path="/employees/new">
-          {isAdmin ? <CreateEmployee /> : <Redirect to="/" />}
-        </Route>
-        <Route path="/employees/update/:id">
-          {isAdmin ? <UpdateEmployee /> : <Redirect to="/" />}
-        </Route>
-        <Route exact path="/employees">
-          {isAdmin ? <TableListOfEmployees /> : <Redirect to="/" />}
-        </Route>
+        {isAdmin && (
+          <Fragment>
+            <Route path="/employees/new">
+              <CreateEmployee />
+            </Route>
+            <Route path="/employees/update/:id">
+              <UpdateEmployee />
+            </Route>
+            <Route exact path="/employees">
+              <TableListOfEmployees />
+            </Route>
+          </Fragment>
+        )}
         <Route path="/partners">
           <TableListofPartners />
         </Route>
