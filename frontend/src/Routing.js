@@ -43,8 +43,4 @@ function Routing() {
   )
 }
 
-function UpdateWorkSheet() {
-  return <LoadingScreen />
-}
-
 export default Routing
