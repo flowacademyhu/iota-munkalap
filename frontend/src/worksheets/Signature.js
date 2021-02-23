@@ -18,7 +18,7 @@ export default function Signature(props) {
     } catch {
       setValue(JSON.stringify([]))
     }
-  }, [field.value])
+  }, [field.value, setValue])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
