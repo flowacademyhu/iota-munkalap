@@ -53,7 +53,6 @@ function CreateWorkSheetForm({
             }}
           >
             {({ values }) => {
-              console.log(values)
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
