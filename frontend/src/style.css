@@ -45,3 +45,12 @@ img {
 .table th {
   vertical-align: middle;
 }
+
+.editIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.closeIcon {
+  color: red;
+}
