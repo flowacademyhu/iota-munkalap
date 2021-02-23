@@ -23,7 +23,7 @@ export default function SelectInput({
           className={`form-control ${showError ? 'is-invalid' : ''}`}
         >
           {container.map((oneItem) => (
-            <option key={oneItem.id} value={oneItem.value}>
+            <option key={oneItem.value} value={oneItem.value}>
               {' '}
               {oneItem.label}{' '}
             </option>

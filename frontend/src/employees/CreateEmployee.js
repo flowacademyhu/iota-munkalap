@@ -13,6 +13,7 @@ function CreateEmployee() {
 
   function handleClick() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    setSent(false)
   }
 
   async function postData(values) {

@@ -114,4 +114,8 @@ public class WorksheetService {
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
     }
+
+    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
+        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+    }
 }

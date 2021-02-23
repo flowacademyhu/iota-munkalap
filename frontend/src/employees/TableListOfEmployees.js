@@ -3,6 +3,7 @@ import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
+import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
 import FilterUsers from './FilterUsers'
@@ -61,13 +62,14 @@ export default function TableListOfEmployees() {
                 users.map((user) => (
                   <EmployeeListRow
                     user={user}
+                    key={user.id}
                     onInactivate={() => updater(user)}
                   />
                 ))
               ) : (
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <td colspan="5">
+                  <LoadingScreen />
+                </td>
               )}
             </tbody>
           </table>
