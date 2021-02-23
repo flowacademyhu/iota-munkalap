@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").ascending());
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
 
     private static final String TEST_FIRSTNAME = "Lajos";
     private static final String TEST_LASTNAME = "Széchenyi";
@@ -107,6 +107,7 @@ class UserServiceTest {
         givenRepoWithAUserForPaging();
         List<User> pagedUserList = userService.filter(Optional.of(true), Optional.of(0), Optional.of("Mao"), Optional.of(1), Optional.of("createdAt"));
         verify(userRepository).findAll(any(Specification.class), eq(PAGEABLE));
+        verifyNoMoreInteractions(userRepository);
         assertThat(pagedUserList.size(), is(1));
     }
     private void givenRepoWithAUserForPaging() {

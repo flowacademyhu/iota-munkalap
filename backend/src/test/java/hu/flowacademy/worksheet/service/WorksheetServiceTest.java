@@ -147,6 +147,17 @@ class WorksheetServiceTest {
         assertThat(result.size(), is(1));
     }
 
+    @Test
+    public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
+        givenExistingOneWorksheet();
+        Worksheet result = worksheetService.getWorksheetById(WORKSHEET_ID);
+
+        Mockito.verify(worksheetRepository, times(1)).findById(WORKSHEET_ID);
+        assertThat(result.getId(), notNullValue());
+        assertThat(result.getId(), is(WORKSHEET_ID));
+        verifyNoMoreInteractions(worksheetRepository);
+    }
+
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
@@ -174,6 +185,10 @@ class WorksheetServiceTest {
     private void givenExistingWorksheet() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    private void givenExistingOneWorksheet() {
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
     }
 
     private void givenAProperWorkSheetForListing() {
