@@ -8,6 +8,7 @@ import SelectInput from '../SelectInput'
 import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
+import Signature from './Signature'
 
 function CreateWorkSheetForm({
   sent,
@@ -134,6 +135,9 @@ function CreateWorkSheetForm({
                     label="Munkát végezte"
                     placeholder="IDE KELL E-ALÁIRÁS"
                   />
+                  <div>
+                    <Signature />
+                  </div>
                   <Input
                     name="proofOfEmployment"
                     label="munkavégzést igazolja"
