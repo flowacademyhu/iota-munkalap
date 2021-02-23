@@ -1,6 +1,5 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
-import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
@@ -8,17 +7,13 @@ import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
 import getCurrentDate from './Date'
+import schema from './ValidationWorkSheet'
 import {
   TYPE_OF_WORK_LIST,
   ASSET_SETTLEMENT_LIST,
   WORKING_TIME_ACCOUNT_LIST,
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
-
-const schema = yup.object().shape({
-  description: yup.string().required('A leírás kötelező!'),
-  usedMaterial: yup.string().required('A felhasznált anyag kötelező!'),
-})
 
 function UpdateWorkSheetForm({
   sent,
