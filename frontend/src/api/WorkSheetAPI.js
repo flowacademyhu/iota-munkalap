@@ -8,4 +8,12 @@ function postWorkSheet(credentials) {
   return api.post('/worksheets', credentials)
 }
 
-export { getWorkSheets, postWorkSheet }
+async function closeWorkSheet(id) {
+  try {
+    return await api.put(`/worksheets/${id}/close`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+  }
+}
+
+export { getWorkSheets, postWorkSheet, closeWorkSheet }
