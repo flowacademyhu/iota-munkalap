@@ -62,6 +62,7 @@ export default function TableListOfEmployees() {
                 users.map((user) => (
                   <EmployeeListRow
                     user={user}
+                    key={user.id}
                     onInactivate={() => updater(user)}
                   />
                 ))
