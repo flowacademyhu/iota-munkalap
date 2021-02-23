@@ -18,7 +18,7 @@ public class PartnerService {
     private PartnerRepository partnerRepository;
 
     public Partner savePartner(@NonNull Partner partner) throws ValidationException {
-        validatePartner(partner);
+        //validatePartner(partner);
         return partnerRepository.save(partner);
     }
 
@@ -49,9 +49,6 @@ public class PartnerService {
         }
         if (partner.getAdoszam().contains("[^0-9]")) {
             throw new ValidationException("The tax number contains letter or other character");
-        }
-        if (partner.getKAdoszamTipus() == null) {
-            throw new ValidationException("The K. tax number is null");
         }
         if (partner.getKAdoszamTipus() < 1 && partner.getKAdoszamTipus() > 5) {
             throw new ValidationException("The K. tax number is not 1, 2, 3, 4, 5");
