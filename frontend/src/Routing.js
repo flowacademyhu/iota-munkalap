@@ -25,6 +25,21 @@ function Routing() {
             <Route exact path="/employees">
               <TableListOfEmployees />
             </Route>
+            <Route path="/partners">
+              <TableListofPartners />
+            </Route>
+            <Route path="/worksheets/new">
+              <CreateWorkSheet />
+            </Route>
+            <Route path="/worksheets/update/:id">
+              <UpdateWorkSheet />
+            </Route>
+            <Route exact path="/worksheets">
+              <TableListOfWorkSheets />
+            </Route>
+            <Route path="/">
+              <Redirect to="/partners" />
+            </Route>
           </>
         )}
         <Route path="/partners">
