@@ -1,37 +1,43 @@
-var SignaturePad = require('signature_pad/dist/signature_pad.js');
+import React, { useRef, useEffect } from 'react'
+import SignaturePad from 'react-signature-pad-wrapper'
+import { useField } from 'formik'
 
+export default function Signature(props) {
+  const signaturePadRef = useRef(null)
 
-var canvas = document.querySelector("canvas");
+  const [field, meta, helpers] = useField(props)
+  const { setValue } = helpers
+  function clear() {
+    signaturePadRef.current.clear()
+  }
 
-var signaturePad = new SignaturePad.default(canvas, { backgroundColor: 'rgb(255, 255, 255)' });
+  useEffect(() => {
+    try {
+      signaturePadRef.current.fromData(JSON.parse(field.value))
+    } catch {
+      setValue(JSON.stringify([]))
+    }
+  }, [field.value])
 
-// Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
-signaturePad.toDataURL(); // save image as PNG
-signaturePad.toDataURL("image/jpeg"); // save image as JPEG
-signaturePad.toDataURL("image/svg+xml"); // save image as SVG
+  function onEnd() {
+    const data = JSON.stringify(signaturePadRef.current.toData())
+    setValue(data)
+  }
 
-// Draws signature image from data URL.
-// NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.
-signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...");
-
-// Returns signature image as an array of point groups
-const data = signaturePad.toData();
-
-// Draws signature image from an array of point groups
-signaturePad.fromData(data);
-
-// Clears the canvas
-signaturePad.clear();
-
-// Returns true if canvas is empty, otherwise returns false
-signaturePad.isEmpty();
-
-// Unbinds all event handlers
-signaturePad.off();
-
-// Rebinds all event handlers
-signaturePad.on();
-
-export default function Signature() {
-    return <div></div>
+  return (
+    <>
+      <SignaturePad
+        id={props.name}
+        ref={(ref) => (signaturePadRef.current = ref)}
+        options={{
+          minWidth: 1,
+          maxWidth: 4,
+          penColor: 'rgb(30, 30, 30)',
+          onEnd,
+        }}
+      />
+      <button onClick={() => clear()}>Clear</button>
+      <button></button>
+    </>
+  )
 }
