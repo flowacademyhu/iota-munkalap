@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
 import LoadingScreen from '../LoadingScreen'
+import WorkSheetPDF from 'WorkSheetPDF'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -14,6 +15,13 @@ export default function TableListOfWorkSheets() {
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
+        //////FOR TESTING TO DELETE
+        <Button
+          onClick={WorkSheetPDF}
+          text="PDF generálás tesztgomb"
+          moreClassName="w-auto p-1"
+        />
+        ///////
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
