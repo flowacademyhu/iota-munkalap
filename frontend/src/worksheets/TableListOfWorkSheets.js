@@ -1,5 +1,6 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
+import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
@@ -39,7 +40,6 @@ export default function TableListOfWorkSheets() {
                 <th scope="col">Módosítás</th>
               </tr>
             </thead>
-
             <tbody>
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
@@ -59,6 +59,9 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
+                      <Link to={`/worksheets/update/${worksheet.id}`}>
+                        <EditButton />
+                      </Link>
                       <ReadyButton />
                     </td>
                   </tr>

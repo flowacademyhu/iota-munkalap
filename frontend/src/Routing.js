@@ -6,27 +6,22 @@ import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
-import LoadingScreen from './LoadingScreen'
-import useCurrentUser from './hooks/useCurrentUser'
+import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
+import AdminRoute from './AdminRoute'
 
 function Routing() {
-  const { isAdmin } = useCurrentUser()
   return (
     <div className="col-12">
       <Switch>
-        {isAdmin && (
-          <>
-            <Route path="/employees/new">
-              <CreateEmployee />
-            </Route>
-            <Route path="/employees/update/:id">
-              <UpdateEmployee />
-            </Route>
-            <Route exact path="/employees">
-              <TableListOfEmployees />
-            </Route>
-          </>
-        )}
+        <AdminRoute path="/employees/new">
+          <CreateEmployee />
+        </AdminRoute>
+        <AdminRoute path="/employees/update/:id">
+          <UpdateEmployee />
+        </AdminRoute>
+        <AdminRoute exact path="/employees">
+          <TableListOfEmployees />
+        </AdminRoute>
         <Route path="/partners">
           <TableListofPartners />
         </Route>
@@ -48,7 +43,3 @@ function Routing() {
 }
 
 export default Routing
-
-function UpdateWorkSheet() {
-  return <LoadingScreen />
-}
