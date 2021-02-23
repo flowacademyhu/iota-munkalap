@@ -5,7 +5,7 @@ function putWorkSheet(id, credentials) {
 }
 
 function getWorkSheets() {
-  return api.get(`/worksheets`)
+  return api.get('/worksheets')
 }
 
 function getWorkSheet(id) {
@@ -13,7 +13,7 @@ function getWorkSheet(id) {
 }
 
 function postWorkSheet(credentials) {
-  return api.post(`/worksheets`, credentials)
+  return api.post('/worksheets', credentials)
 }
 
 export { getWorkSheets, postWorkSheet, putWorkSheet, getWorkSheet }

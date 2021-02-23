@@ -3,6 +3,8 @@ import useWorkSheets from '../hooks/useWorkSheets'
 import EditButton from '../EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import { typeOfWork, status } from '../TranslationForWorkSheet'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { workSheets } = useWorkSheets()
@@ -38,10 +40,10 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{worksheet.typeOfWork}</td>
+                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>
                       <div className="d-flex justify-content-around">
-                        {worksheet.worksheetStatus}
+                        {status[worksheet.worksheetStatus]}
                         <Link to={`/worksheets/update/${worksheet.id}`}>
                           <EditButton />
                         </Link>
@@ -50,9 +52,9 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td>Loading...</td>
-                </tr>
+                <td colspan="5">
+                  <LoadingScreen />
+                </td>
               )}
             </tbody>
           </table>
