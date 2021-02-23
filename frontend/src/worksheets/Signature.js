@@ -5,7 +5,7 @@ import { useField } from 'formik'
 export default function Signature(props) {
   const signaturePadRef = useRef(null)
 
-  const [field, meta, helpers] = useField(props)
+  const [field, helpers] = useField(props)
   const { setValue } = helpers
 
   function clear() {
@@ -18,7 +18,7 @@ export default function Signature(props) {
     } catch {
       setValue(JSON.stringify([]))
     }
-  }, [field.value])
+  }, [field.value, setValue])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
