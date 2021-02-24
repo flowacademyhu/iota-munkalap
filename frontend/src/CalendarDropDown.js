@@ -7,6 +7,7 @@ function CalendarDropDown({ date, setDate }) {
     <DatePicker
       selected={date}
       onChange={(date) => setDate(date)}
+      dateFormat="yyyy/MM/dd"
       className="m-5"
     />
   )
