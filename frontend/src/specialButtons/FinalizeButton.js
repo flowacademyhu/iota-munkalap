@@ -5,7 +5,7 @@ function FinalizeButton({ onClick, hidden }) {
   return (
     <CheckSquare
       onClick={onClick}
-      className={'editIcon finalizeIcon' + (hidden ? ' hidden' : '')}
+      className={'editIcon text-success' + (hidden ? ' hidden' : '')}
     />
   )
 }
