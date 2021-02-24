@@ -52,6 +52,8 @@ function CreateWorkSheetForm({
             onSubmit={(values) => {
               if (finalize) {
                 values.worksheetStatus = 'REPORTED'
+              } else {
+                values.worksheetStatus = 'CLOSED'
               }
               sendData(values)
             }}
