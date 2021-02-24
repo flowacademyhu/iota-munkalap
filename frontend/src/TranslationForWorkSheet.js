@@ -11,4 +11,25 @@ const status = {
   CLOSED: 'Lezárt',
 }
 
-export { typeOfWork, status }
+const assetSettlement = {
+  REPAYMENT: 'Térítéses',
+  WARRANTY: 'Garanciális',
+}
+
+const workingTimeAccounting = {
+  REPAYMENT: 'Térítéses',
+  WARRANTY: 'Garanciális',
+}
+
+const typeOfPayment = {
+  CASH: 'Készpénz',
+  BANKTRANSFER: 'Átutalás',
+}
+
+export {
+  typeOfWork,
+  status,
+  assetSettlement,
+  workingTimeAccounting,
+  typeOfPayment,
+}
