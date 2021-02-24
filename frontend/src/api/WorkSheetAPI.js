@@ -24,7 +24,7 @@ async function closeWorkSheet(id) {
   }
 }
 
-async function readyWorkSheet(id) {
+async function finalizeWorkSheet(id) {
   try {
     return await api.put(`/worksheets/${id}/finalize`)
   } catch (error) {
@@ -38,5 +38,5 @@ export {
   putWorkSheet,
   postWorkSheet,
   closeWorkSheet,
-  readyWorkSheet,
+  finalizeWorkSheet,
 }

@@ -1,13 +1,13 @@
 import React from 'react'
 import { CheckSquare } from 'react-bootstrap-icons'
 
-function ReadyButton({ onClick, hidden }) {
+function FinalizeButton({ onClick, hidden }) {
   return (
     <CheckSquare
       onClick={onClick}
-      className={'editIcon readyIcon' + (hidden ? ' hidden' : '')}
+      className={'editIcon finalizeIcon' + (hidden ? ' hidden' : '')}
     />
   )
 }
 
-export default ReadyButton
+export default FinalizeButton
