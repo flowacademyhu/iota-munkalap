@@ -66,12 +66,12 @@ export default function TableListOfWorkSheets() {
                         hidden={worksheet.worksheetStatus !== 'CREATED'}
                         onClick={() => readyAndReload(worksheet)}
                       />
-                      <CloseButton
-                        hidden={
-                          !isAdmin || worksheet.worksheetStatus === 'CLOSED'
-                        }
-                        onClick={() => closeAndReload(worksheet)}
-                      />
+                      {isAdmin && (
+                        <CloseButton
+                          hidden={worksheet.worksheetStatus === 'CLOSED'}
+                          onClick={() => closeAndReload(worksheet)}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))
