@@ -2,8 +2,9 @@ import React from 'react'
 import logo from '../img/uj_logo.png'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
+import getWorkSheet from 'api/WorkSheetAPI'
 
-function WorkSheetPDF() {
+function WorkSheetPDF(id) {
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
 
