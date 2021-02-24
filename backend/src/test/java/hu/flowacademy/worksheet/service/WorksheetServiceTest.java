@@ -35,7 +35,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class WorksheetServiceTest {
 
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").ascending());
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").descending());
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
@@ -125,11 +125,9 @@ class WorksheetServiceTest {
 
     @Test
     public void givenAnExistingWorksheet_whenSettingStatus_thenSetStatusToReported() throws ValidationException {
-        givenExistingWorksheet();
+        givenExistingWorksheetForUpdateStatus();
         Worksheet result = worksheetService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
-        Mockito.verify(worksheetRepository, times(1)).save(result);
         assertThat(result, notNullValue());
-        assertThat(result.getWorksheetStatus(), notNullValue());
         assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
     }
 
@@ -186,6 +184,9 @@ class WorksheetServiceTest {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
+    private void givenExistingWorksheetForUpdateStatus() {
+        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperIdAndStatus()));
+    }
 
     private void givenExistingOneWorksheet() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
@@ -204,6 +205,10 @@ class WorksheetServiceTest {
 
     private Worksheet givenWorksheetWithProperId() {
         return givenValidWorksheet().toBuilder().id(WORKSHEET_ID).build();
+    }
+
+    private Worksheet givenWorksheetWithProperIdAndStatus() {
+        return givenValidWorksheet().toBuilder().id(WORKSHEET_ID).worksheetStatus(WorksheetStatus.CLOSED).build();
     }
 
     private Worksheet givenValidWorksheet() {

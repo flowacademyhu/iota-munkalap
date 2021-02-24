@@ -1,13 +1,24 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import FilterWorkSheets from './FilterWorkSheets'
+import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
+import useCurrentUser from '../hooks/useCurrentUser'
+import CloseButton from '../specialButtons/CloseButton'
+import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, setStatus } = useWorkSheets()
+  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const { isAdmin } = useCurrentUser()
+
+  async function closeAndReload(worksheet) {
+    await closeWorkSheet(worksheet.id)
+    updateWorkSheets()
+  }
 
   return (
     <>
@@ -28,9 +39,9 @@ export default function TableListOfWorkSheets() {
                 <th scope="col">Partner neve</th>
                 <th scope="col">Munkavégzés jellege</th>
                 <th scope="col">Állapot</th>
+                <th scope="col">Módosítás</th>
               </tr>
             </thead>
-
             <tbody>
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
@@ -44,6 +55,16 @@ export default function TableListOfWorkSheets() {
                     <td>{worksheet.partnerId}</td>
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{status[worksheet.worksheetStatus]}</td>
+                    <td>
+                      {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
+                        <CloseButton
+                          onClick={() => closeAndReload(worksheet)}
+                        />
+                      )}
+                      <Link to={`/worksheets/update/${worksheet.id}`}>
+                        <EditButton />
+                      </Link>
+                    </td>
                   </tr>
                 ))
               ) : (
