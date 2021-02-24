@@ -2,7 +2,13 @@ import React from 'react'
 import logo from '../img/uj_logo.png'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
-import { getWorkSheet } from '../api/WorkSheetAPI'
+import {
+  typeOfWork,
+  status,
+  assetSettlement,
+  workingTimeAccounting,
+  typeOfPayment,
+} from '../TranslationForWorkSheet'
 
 function WorkSheetPDF(worksheet) {
   //let workSheet = getWorkSheet(id)
@@ -59,7 +65,14 @@ function WorkSheetPDF(worksheet) {
         style: 'tableExample',
         table: {
           widths: ['*', '*', '*'],
-          body: [[`Munkavégzés jellege:', ${worksheet.typeofWork}, 'Egyéb:`]],
+          body: [
+            [
+              `Munkavégzés jellege: ${typeOfWork[worksheet.typeOfWork]}, ${
+                typeOfWork[worksheet.typeOfWork] === 'Egyéb' &&
+                'Egyéb: ' + worksheet.customTypeOfWork
+              }`,
+            ],
+          ],
         },
       },
 
@@ -67,7 +80,13 @@ function WorkSheetPDF(worksheet) {
         style: 'tableExample',
         table: {
           widths: ['*', '*'],
-          body: [['Az eszközök elszámolásának módja:', '{importElszmod}']],
+          body: [
+            [
+              `Az eszközök elszámolásának módja: ${
+                assetSettlement[worksheet.assetSettlement]
+              }`,
+            ],
+          ],
         },
       },
 
@@ -83,7 +102,7 @@ function WorkSheetPDF(worksheet) {
         style: 'tableExample',
         table: {
           widths: ['*'],
-          body: [['Felhasznált anyagok:'], ['{importAnyagok}']],
+          body: [['Felhasznált anyagok:'], [`${worksheet.usedMaterial}`]],
         },
       },
 
