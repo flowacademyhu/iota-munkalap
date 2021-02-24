@@ -2,13 +2,35 @@ import React from 'react'
 import logo from '../img/uj_logo.png'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
-import getWorkSheet from 'api/WorkSheetAPI'
+import { getWorkSheet } from '../api/WorkSheetAPI'
 
-function WorkSheetPDF(id) {
+function WorkSheetPDF(worksheet) {
+  //let workSheet = getWorkSheet(id)
+
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
 
-  var workSheet = {
+  // partnerId: '',
+  // typeOfWork: TYPE_OF_WORK_LIST[0].value,
+  // customTypeOfWork: '',
+  // assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
+  // workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
+  // numberOfEmployees: 0,
+  // overheadHour: 0,
+  // deliveryKm: 0,
+  // accountSerialNumber: '',
+  // description: '',
+  // usedMaterial: '',
+  // typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
+  // localDateTime: getCurrentDate(),
+  // workerSignature: '',
+  // proofOfEmployment: '',
+  // status: '',
+
+  console.log(worksheet)
+  console.log(worksheet.description)
+
+  var doc = {
     content: [
       {
         text: 'Munkalap',
@@ -26,8 +48,8 @@ function WorkSheetPDF(id) {
                 //image: '../img/uj_logo.png',
                 //width: 150,
               },
-              'Az ügyfél adatai \n köv sor\n {importAdatok}',
-              'ID sorszám \n {importID}',
+              `Az ügyfél adatai \n Partner ID:  \n {importAdatok}`,
+              `ID sorszám \n`,
             ],
           ],
         },
@@ -37,7 +59,7 @@ function WorkSheetPDF(id) {
         style: 'tableExample',
         table: {
           widths: ['*', '*', '*'],
-          body: [['Munkavégzés jellege:', '{importJelleg}', 'Egyéb:']],
+          body: [[`Munkavégzés jellege:', ${worksheet.typeofWork}, 'Egyéb:`]],
         },
       },
 
@@ -53,7 +75,7 @@ function WorkSheetPDF(id) {
         style: 'tableExample',
         table: {
           widths: ['*'],
-          body: [['Az elvégzett munka leírása:'], ['{importLeiras}']],
+          body: [['Az elvégzett munka leírása:'], [`${worksheet.description}`]],
         },
       },
 
@@ -122,7 +144,7 @@ function WorkSheetPDF(id) {
     },
   }
 
-  pdfMake.createPdf(workSheet).open()
+  pdfMake.createPdf(doc).open()
   //pdfMake.createPdf({ content: 'Hi. I am a PDF.' }).open()
 }
 

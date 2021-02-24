@@ -63,7 +63,7 @@ export default function TableListOfWorkSheets() {
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
-                      <Link onClick={WorkSheetPDF(worksheet.id)}>
+                      <Link onClick={() => WorkSheetPDF(worksheet)}>
                         <PdfButton />
                       </Link>
                     </td>
