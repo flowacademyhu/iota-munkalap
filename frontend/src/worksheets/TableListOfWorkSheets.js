@@ -62,16 +62,18 @@ export default function TableListOfWorkSheets() {
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
-                      {isAdmin && worksheet.worksheetStatus === 'CREATED' && (
-                        <ReadyButton
-                          onClick={() => readyAndReload(worksheet)}
-                        />
-                      )}
-                      {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
-                        <CloseButton
-                          onClick={() => closeAndReload(worksheet)}
-                        />
-                      )}
+                      <ReadyButton
+                        hidden={
+                          !isAdmin || worksheet.worksheetStatus !== 'CREATED'
+                        }
+                        onClick={() => readyAndReload(worksheet)}
+                      />
+                      <CloseButton
+                        hidden={
+                          !isAdmin || worksheet.worksheetStatus === 'CLOSED'
+                        }
+                        onClick={() => closeAndReload(worksheet)}
+                      />
                     </td>
                   </tr>
                 ))
