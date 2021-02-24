@@ -63,9 +63,7 @@ export default function TableListOfWorkSheets() {
                         <EditButton />
                       </Link>
                       <ReadyButton
-                        hidden={
-                          !isAdmin || worksheet.worksheetStatus !== 'CREATED'
-                        }
+                        hidden={worksheet.worksheetStatus !== 'CREATED'}
                         onClick={() => readyAndReload(worksheet)}
                       />
                       <CloseButton
