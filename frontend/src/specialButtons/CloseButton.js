@@ -5,7 +5,7 @@ function CloseButton({ onClick, hidden }) {
   return (
     <FileLockFill
       onClick={onClick}
-      className={'editIcon text-danger' + (hidden ? ' hidden' : '')}
+      className={`editIcon text-danger ${hidden && 'hidden'}`}
     />
   )
 }
