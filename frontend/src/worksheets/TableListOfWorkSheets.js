@@ -33,13 +33,23 @@ export default function TableListOfWorkSheets() {
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
+      <div>Szűrés dátum szerint:</div>
       <div>
-        <CalendarDropDown date={startDate} setDate={setStartDate} />
-        <CalendarDropDown date={endDate} setDate={setEndDate} />
+        <CalendarDropDown
+          date={startDate}
+          setDate={setStartDate}
+          placeholderText="Intervallum kezdete"
+        />
+        <CalendarDropDown
+          date={endDate}
+          setDate={setEndDate}
+          placeholderText="Intervallum vége"
+        />
         <Button
-          text="Szűrés"
+          text="Összes"
           onClick={() => {
-            updateWorkSheets(startDate, endDate)
+            setStartDate(null)
+            setEndDate(null)
           }}
         />
       </div>
