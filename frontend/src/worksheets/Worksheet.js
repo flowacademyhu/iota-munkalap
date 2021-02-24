@@ -18,7 +18,7 @@ export default function Worksheet() {
         sent={sent}
         popUpMessage={popUpMessage}
         sendData={HandleData}
-        title="TITLE SZÖVEG"
+        title="Munkalap létrehozása"
       />
     </>
   ) : (
@@ -29,7 +29,7 @@ export default function Worksheet() {
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={HandleData}
-          title="TITLE SZÖVEG"
+          title="Adatok szerkesztése"
           worksheet={worksheetData}
         />
       )}
