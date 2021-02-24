@@ -4,7 +4,6 @@ import { useField } from 'formik'
 
 export default function Signature(props) {
   const signaturePadRef = useRef(null)
-
   const [field, , helpers] = useField(props)
   const { setValue } = helpers
 
@@ -30,7 +29,7 @@ export default function Signature(props) {
     <>
       <SignaturePad
         id={props.name}
-        ref={(ref) => (signaturePadRef.current = ref)}
+        ref={signaturePadRef}
         options={{
           minWidth: 1,
           maxWidth: 4,
