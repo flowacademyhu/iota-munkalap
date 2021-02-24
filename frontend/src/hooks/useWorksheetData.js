@@ -32,14 +32,14 @@ export default function useWorksheetData() {
   }, [id])
 
   async function HandleData(values) {
-    const { workSheetApi, setWorkSheetDataHandle } = useState()
+    const { WorkSheetDataHandle, setWorkSheetDataHandle } = useState()
     if (id === null) {
       setWorkSheetDataHandle(putWorkSheet(values))
     } else {
       setWorkSheetDataHandle(postWorkSheet(id, values))
     }
     try {
-      const response = await workSheetApi
+      const response = await WorkSheetDataHandle
       if (response.status === 200) {
         setPopUpMessage('Munkalap sikeresen módosítva')
         setSentSuccessfully(true)

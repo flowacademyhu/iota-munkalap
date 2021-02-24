@@ -4,7 +4,7 @@ import useWorksheetData from '../hooks/useWorksheetData'
 
 function UpdateWorksheet() {
   const {
-    putData,
+    HandleData,
     handleClick,
     worksheetData,
     popUpMessage,
@@ -18,7 +18,7 @@ function UpdateWorksheet() {
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
-          sendData={putData}
+          sendData={HandleData}
           title="Adatok módosítása"
           worksheet={worksheetData}
         />
