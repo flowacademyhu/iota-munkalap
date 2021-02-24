@@ -1,17 +1,27 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { getUsers } from '../api/UserAPI'
 
 export default function useUsers() {
   const [keyword, setKeyword] = useState('')
   const [status, setStatus] = useState(null)
 
+  const lastCancel = useRef(null)
+
   const [users, setUsers] = useState()
   const updateUsers = useCallback(
     async function () {
-      const { data } = await getUsers(keyword.toLowerCase(), status)
-      setUsers(data)
+      if (lastCancel.current) {
+        lastCancel.current()
+      }
+      const { request, cancel } = getUsers(keyword.toLowerCase(), status)
+      lastCancel.current = cancel
+      const { data } = await request
+      lastCancel.current = null
+      if (data) {
+        setUsers(data)
+      }
     },
-    [keyword, status]
+    [keyword, status, lastCancel]
   )
 
   useEffect(() => {

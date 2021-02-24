@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import UpdateEmployeeForm from './UpdateEmployeeForm'
-import { putUser, getUser } from '../api/UserAPI'
+import UpdateWorksheetForm from './UpdateWorkSheetForm'
+import { getWorkSheet, putWorkSheet } from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
-function UpdateEmployee() {
+function UpdateWorksheet() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
-  const [userData, setUserData] = useState({})
+  const [worksheetData, setWorksheetData] = useState({})
 
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
     setSent(false)
   }
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getUser(id)
-        setUserData({ ...response.data, loaded: true })
+        const response = await getWorkSheet(id)
+        setWorksheetData({ ...response.data, loaded: true })
       } catch (error) {
-        setUserData({ loaded: true })
+        setWorksheetData({ loaded: true })
         setPopUpMessage('A módosítás sikertelen')
         setSent(true)
       }
@@ -34,9 +34,9 @@ function UpdateEmployee() {
 
   async function putData(values) {
     try {
-      const response = await putUser(id, values)
+      const response = await putWorkSheet(id, values)
       if (response.status === 200) {
-        setPopUpMessage('Munkavállaló sikeresen módosítva')
+        setPopUpMessage('Munkalap sikeresen módosítva')
         setSentSuccessfully(true)
       }
     } catch (error) {
@@ -48,18 +48,18 @@ function UpdateEmployee() {
 
   return (
     <>
-      {userData.loaded && (
-        <UpdateEmployeeForm
+      {worksheetData.loaded && (
+        <UpdateWorksheetForm
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={putData}
           title="Adatok módosítása"
-          user={userData}
+          worksheet={worksheetData}
         />
       )}
     </>
   )
 }
 
-export default UpdateEmployee
+export default UpdateWorksheet

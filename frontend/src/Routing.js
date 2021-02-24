@@ -4,23 +4,26 @@ import TableListOfEmployees from './employees/TableListOfEmployees'
 import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
+import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
+import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
+import AdminRoute from './AdminRoute'
 
 function Routing() {
   return (
-    <Switch>
-      <div className="col-12">
-        <Route path="/employees/new">
+    <div className="col-12">
+      <Switch>
+        <AdminRoute path="/employees/new">
           <CreateEmployee />
-        </Route>
-        <Route path="/employees/update/:id">
+        </AdminRoute>
+        <AdminRoute path="/employees/update/:id">
           <UpdateEmployee />
-        </Route>
-        <Route exact path="/employees">
+        </AdminRoute>
+        <AdminRoute exact path="/employees">
           <TableListOfEmployees />
-        </Route>
-        <Route exact path="/partners">
-          <Partners />
+        </AdminRoute>
+        <Route path="/partners">
+          <TableListofPartners />
         </Route>
         <Route path="/worksheets/new">
           <CreateWorkSheet />
@@ -34,23 +37,7 @@ function Routing() {
         <Route path="/">
           <Redirect to="/partners" />
         </Route>
-      </div>
-    </Switch>
-  )
-}
-
-function Partners() {
-  return (
-    <div>
-      <h2>Partnerek</h2>
-    </div>
-  )
-}
-
-function UpdateWorkSheet() {
-  return (
-    <div>
-      <h2>UpdateWorkSheet</h2>
+      </Switch>
     </div>
   )
 }

@@ -5,9 +5,9 @@ import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
+import { TYPE_OF_WORK } from '../Const'
 import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
-import { TYPE_OF_WORK } from '../Const'
 import {
   TYPE_OF_WORK_LIST,
   ASSET_SETTLEMENT_LIST,
@@ -16,12 +16,13 @@ import {
 } from './WorksheetDropdownOptions'
 import Signature from './Signature'
 
-function CreateWorkSheetForm({
+function UpdateWorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
   sendData,
   title,
+  worksheet,
 }) {
   return (
     <div className="container my-5">
@@ -30,26 +31,12 @@ function CreateWorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: '',
-              typeOfWork: TYPE_OF_WORK_LIST[0].value,
-              customTypeOfWork: '',
-              assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
-              workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
-              numberOfEmployees: 0,
-              overheadHour: 0,
-              deliveryKm: 0,
-              accountSerialNumber: '',
-              description: '',
-              usedMaterial: '',
-              typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
               localDateTime: getCurrentDate(),
-              workerSignature: '',
-              proofOfEmployment: '',
-              status: '',
+              ...worksheet,
             }}
             validationSchema={schema}
-            onSubmit={(values) => {
-              sendData(values)
+            onSubmit={(data) => {
+              sendData(data)
             }}
           >
             {({ values }) => {
@@ -89,7 +76,7 @@ function CreateWorkSheetForm({
                   />
                   <Input
                     name="deliveryKm"
-                    label="Kiszállás"
+                    label="Kiszállítás"
                     type="number"
                     min="0"
                   />
@@ -142,4 +129,4 @@ function CreateWorkSheetForm({
   )
 }
 
-export default CreateWorkSheetForm
+export default UpdateWorkSheetForm

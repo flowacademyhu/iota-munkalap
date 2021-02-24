@@ -33,7 +33,9 @@ public class WorksheetService {
 
     public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
         validateWorksheet(worksheet);
-        worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
+            worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        }
         worksheet.setCreatedAt(LocalDateTime.now());
         return worksheetRepository.save(worksheet);
     }
@@ -78,9 +80,8 @@ public class WorksheetService {
     }
 
     public Worksheet setStatusWorksheet(String id, WorksheetStatus status) throws ValidationException {
-        Worksheet toChange = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet found with provided id."));
-        toChange.setWorksheetStatus(status);
-        return worksheetRepository.save(toChange);
+        worksheetRepository.updateWorksheetstatus(id, status);
+        return worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + id));
     }
 
     public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
@@ -111,7 +112,11 @@ public class WorksheetService {
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDateTime> minTime, Optional<LocalDateTime> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
         return worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
+    }
+
+    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
+        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
     }
 }
