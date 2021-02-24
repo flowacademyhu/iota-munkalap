@@ -128,22 +128,26 @@ function CreateWorkSheetForm({
                     placeholder="IDE KELL MÉG EGY E-ALÁÍRÁS"
                   />
 
-                  <div className="buttons">
-                    <Link to="/worksheets">
-                      <Button text="Mégse" moreClassName="h-auto" />
-                    </Link>
-                    <Button
-                      text="Mentés"
-                      type="submit"
-                      onClick={() => setReady(false)}
-                      moreClassName="h-auto"
-                    />
-                    <Button
-                      text="Mentés és készre jelentés"
-                      type="submit"
-                      onClick={() => setReady(true)}
-                      moreClassName="h-auto"
-                    />
+                  <div>
+                    <div className="buttons">
+                      <Link to="/worksheets">
+                        <Button text="Mégse" moreClassName="h-auto" />
+                      </Link>
+                      <Button
+                        text="Mentés"
+                        type="submit"
+                        onClick={() => setReady(false)}
+                        moreClassName="h-auto"
+                      />
+                    </div>
+                    <div className="buttons">
+                      <Button
+                        text="Mentés és készre jelentés"
+                        type="submit"
+                        onClick={() => setReady(true)}
+                        moreClassName="h-auto"
+                      />
+                    </div>
                   </div>
                 </Form>
               )
