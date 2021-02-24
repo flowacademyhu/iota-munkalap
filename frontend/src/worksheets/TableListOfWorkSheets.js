@@ -8,7 +8,7 @@ import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import ReadyButton from '../specialButtons/ReadyButton'
+import ReadyButton from '../specialButtons/FinalizeButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()

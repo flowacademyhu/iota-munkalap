@@ -23,7 +23,7 @@ function CreateWorkSheetForm({
   sendData,
   title,
 }) {
-  const [finalized, setFinalized] = useState(false)
+  const [finalize, setFinalize] = useState(false)
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -50,7 +50,7 @@ function CreateWorkSheetForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              if (finalized) {
+              if (finalize) {
                 values.worksheetStatus = 'REPORTED'
               }
               sendData(values)
@@ -133,7 +133,7 @@ function CreateWorkSheetForm({
                     <Button
                       text="Mentés"
                       type="submit"
-                      onClick={() => setFinalized(false)}
+                      onClick={() => setFinalize(false)}
                       moreClassName="h-auto"
                     />
                   </div>
@@ -141,7 +141,7 @@ function CreateWorkSheetForm({
                     <Button
                       text="Mentés és készre jelentés"
                       type="submit"
-                      onClick={() => setFinalized(true)}
+                      onClick={() => setFinalize(true)}
                       moreClassName="h-auto"
                     />
                   </div>
