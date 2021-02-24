@@ -133,6 +133,17 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      
+      - name: Start keycloak
+        run: docker-compose run -d --service-ports keycloak
+
+      - name: Wait until keycloak is up
+        uses: nev7n/wait_for_response@v1
+        with:
+          url: 'http://localhost:8180/auth'
+          responseCode: 200
+          timeout: 30000
+          interval: 500
 
       - name: Run maven test
         run: mvn -B clean test
