@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { getWorkSheets } from '../api/WorkSheetAPI'
 
 export default function useWorkSheets() {
-  const [status, setStatus] = useState('CREATED')
+  const [status, setStatus] = useState('')
 
   const [workSheets, setWorkSheets] = useState()
 

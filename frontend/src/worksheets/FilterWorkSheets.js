@@ -26,6 +26,9 @@ function FilterWorkSheets(props) {
           <option value="CLOSED" label="Lezárt">
             Lezárt
           </option>
+          <option value="" label="Mind">
+            Lezárt
+          </option>
         </select>
       </form>
     </div>
