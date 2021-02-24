@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { getWorkSheet, postWorkSheet, putWorkSheet } from '../api/WorkSheetAPI'
+import { useState } from 'react'
+import { postWorkSheet, putWorkSheet } from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
@@ -8,7 +8,6 @@ export default function useWorksheetData() {
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
-  const [worksheetData, setWorksheetData] = useState({})
 
   const history = useHistory()
 
@@ -16,20 +15,6 @@ export default function useWorksheetData() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
     setSent(false)
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getWorkSheet(id)
-        setWorksheetData({ ...response.data, loaded: true })
-      } catch (error) {
-        setWorksheetData({ loaded: true })
-        setPopUpMessage('A módosítás sikertelen')
-        setSent(true)
-      }
-    }
-    fetchData()
-  }, [id])
 
   async function HandleData(values) {
     const { WorkSheetDataHandle, setWorkSheetDataHandle } = useState()
@@ -58,7 +43,6 @@ export default function useWorksheetData() {
   return {
     HandleData,
     handleClick,
-    worksheetData,
     popUpMessage,
     sent,
   }

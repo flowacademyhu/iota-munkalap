@@ -30,12 +30,27 @@ function WorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
+              partnerId: '',
+              typeOfWork: TYPE_OF_WORK_LIST[0].value,
+              customTypeOfWork: '',
+              assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
+              workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
+              numberOfEmployees: '',
+              overheadHour: '',
+              deliveryKm: '',
+              accountSerialNumber: '',
+              description: '',
+              usedMaterial: '',
+              typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
               localDateTime: getCurrentDate(),
+              workerSignature: '',
+              proofOfEmployment: '',
+              status: '',
               ...worksheet,
             }}
             validationSchema={schema}
-            onSubmit={(data) => {
-              sendData(data)
+            onSubmit={(values) => {
+              sendData(values)
             }}
           >
             {({ values }) => {
