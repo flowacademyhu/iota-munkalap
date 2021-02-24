@@ -1,11 +1,16 @@
 import api from './createApi'
+import moment from 'moment'
 
 function putWorkSheet(id, credentials) {
   return api.put(`/worksheets/${id}`, credentials)
 }
 
-function getWorkSheets() {
-  return api.get('/worksheets')
+function getWorkSheets(startDate, endDate) {
+  const minTime = moment(startDate).format('yyyy.MM.DD') + ' 00:00:00'
+  const maxTime = moment(endDate).format('yyyy.MM.DD') + ' 23:59:59'
+  return api.get(`/worksheets/`, {
+    params: { minTime, maxTime },
+  })
 }
 
 function getWorkSheet(id) {

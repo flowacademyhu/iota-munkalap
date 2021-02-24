@@ -11,10 +11,15 @@ import LoadingScreen from '../LoadingScreen'
 import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const {
+    workSheets,
+    updateWorkSheets,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+  } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
@@ -33,7 +38,9 @@ export default function TableListOfWorkSheets() {
         <CalendarDropDown date={endDate} setDate={setEndDate} />
         <Button
           text="Szűrés"
-          onClick={() => console.log('start: ', startDate, ' end: ', endDate)}
+          onClick={() => {
+            updateWorkSheets(startDate, endDate)
+          }}
         />
       </div>
       <div className="border border-secondary">
