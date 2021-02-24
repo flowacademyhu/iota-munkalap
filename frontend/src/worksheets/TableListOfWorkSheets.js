@@ -25,13 +25,6 @@ export default function TableListOfWorkSheets() {
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
-        {/* /* FOR TESTING TO DELETE */}
-        <Button
-          onClick={WorkSheetPDF}
-          text="PDF generálás tesztgomb"
-          moreClassName="w-auto p-1"
-        />
-        {/* /* FOR TESTING TO DELETE */}
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
@@ -69,6 +62,11 @@ export default function TableListOfWorkSheets() {
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
+                      <Button
+                        onClick={WorkSheetPDF}
+                        text="PDF generálás tesztgomb"
+                        moreClassName="w-auto p-1"
+                      />
                     </td>
                   </tr>
                 ))

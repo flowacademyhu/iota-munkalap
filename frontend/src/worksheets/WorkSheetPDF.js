@@ -1,5 +1,5 @@
 import React from 'react'
-import { logo } from '../img/uj_logo.png'
+import logo from '../img/uj_logo.png'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
 
