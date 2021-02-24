@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.controller;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -14,10 +13,5 @@ class PartnerControllerTest {
 
     @LocalServerPort
     private int port;
-
-    @BeforeEach
-    public static void method() {
-
-    }
 
 }
