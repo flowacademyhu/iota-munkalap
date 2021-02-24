@@ -9,6 +9,7 @@ import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 import WorkSheetPDF from './WorkSheetPDF'
+import PdfButton from '../specialButtons/PdfButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()
@@ -62,11 +63,9 @@ export default function TableListOfWorkSheets() {
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
-                      <Button
-                        onClick={WorkSheetPDF}
-                        text="PDF generálás tesztgomb"
-                        moreClassName="w-auto p-1"
-                      />
+                      <Link onClick={WorkSheetPDF}>
+                        <PdfButton />
+                      </Link>
                     </td>
                   </tr>
                 ))
