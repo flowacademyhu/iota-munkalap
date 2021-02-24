@@ -48,6 +48,9 @@ public class WorksheetService {
         if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && StringUtils.hasText(worksheet.getCustomTypeOfWork())) {
             throw new ValidationException("Type Of Work Other value is null or empty String.");
         }
+        if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && worksheet.getCustomTypeOfWork().length() > 3000) {
+            throw new ValidationException("Type Of Work Other too much character.");
+        }
         if (worksheet.getAssetSettlement() == null) {
             throw new ValidationException("Asset settlement value is null");
         }
