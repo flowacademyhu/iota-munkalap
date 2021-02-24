@@ -2,7 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 function FilterWorkSheets(props) {
-  const { onStatusChange } = props
+  const { onStatusChange, status } = props
 
   const handleInputChange = (event) => {
     onStatusChange(event.target.value)

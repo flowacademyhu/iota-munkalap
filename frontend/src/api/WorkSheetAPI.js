@@ -4,8 +4,6 @@ function putWorkSheet(id, credentials) {
   return api.put(`/worksheets/${id}`, credentials)
 }
 
-function getWorkSheets() {
-  return api.get('/worksheets')
 function getWorkSheets(status) {
   return api.get(`/worksheets/`, {
     params: { status },

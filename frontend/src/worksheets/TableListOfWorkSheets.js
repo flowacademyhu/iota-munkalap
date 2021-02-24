@@ -11,8 +11,8 @@ import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets, setStatus } = useWorkSheets()
-  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const { status, workSheets, setStatus, updateWorkSheets } = useWorkSheets()
+  //const { workSheets, updateWorkSheets } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
@@ -26,7 +26,7 @@ export default function TableListOfWorkSheets() {
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
-        <FilterWorkSheets onStatusChange={setStatus} />
+        <FilterWorkSheets status={status} onStatusChange={setStatus} />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
