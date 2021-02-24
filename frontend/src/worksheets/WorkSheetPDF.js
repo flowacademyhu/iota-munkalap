@@ -22,8 +22,8 @@ function WorkSheetPDF() {
           body: [
             [
               {
-                image: { logo },
-                width: 150,
+                //image: '../img/uj_logo.png',
+                //width: 150,
               },
               'Az ügyfél adatai \n köv sor\n {importAdatok}',
               'ID sorszám \n {importID}',
