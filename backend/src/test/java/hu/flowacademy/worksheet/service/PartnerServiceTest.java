@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
@@ -13,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -42,6 +44,13 @@ class PartnerServiceTest {
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
 
+    private static final String INVALID_TEST_EMAIL = "partnerteszt.com";
+    private static final String EMPTY_STRING = "";
+    private static final String RONTOTT_ADOSZAM = "1234*678";
+    private static final String RONTOTT_HOSSZUSAGU_ADOSZAM = "123456789";
+    private static final int RONTOTT_K_ADOSZAM = 6;
+    private static final String RONTOTT_BANKSZAMLASZAM = "1234f678-1234-678";
+    private static final String RONTOTT_BANKSZAMLASZAM_HOSSZ = "12345678-123456789";
 
     @Mock
     private PartnerRepository partnerRepository;
@@ -106,6 +115,48 @@ class PartnerServiceTest {
 
     }
 
+    @Test
+    public void givenInvalidEmailPartner_whenCreatingPartner_thenThrowException() {
+        Partner partnerData = Partner.builder().partnerEmail(INVALID_TEST_EMAIL).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidEmailPartnerWithEmptyString_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().partnerEmail(EMPTY_STRING).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidTaxAccount_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().adoszam(RONTOTT_ADOSZAM).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidTaxAccountLength_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().adoszam(RONTOTT_HOSSZUSAGU_ADOSZAM).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidKTaxAccountType_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().kAdoszamtipus(RONTOTT_K_ADOSZAM).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidBankAccount_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().bankszamlaszam(RONTOTT_BANKSZAMLASZAM).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
+    @Test
+    public void givenInvalidBankAccountLength_whenCreatingPartner_ThenThrowException() {
+        Partner partnerData = Partner.builder().bankszamlaszam(RONTOTT_BANKSZAMLASZAM_HOSSZ).build();
+        assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
+    }
+
     private Partner givenValidPartner() {
         return Partner.builder()
                 .partnerEmail(PARTNER_EMAIL)
@@ -132,5 +183,4 @@ class PartnerServiceTest {
                 .szamlazasiCimHrsz(HRSZ)
                 .build();
     }
-
 }
