@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { postWorkSheet, putWorkSheet, getWorkSheet } from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
@@ -9,7 +9,7 @@ export default function useWorksheetData() {
   const [popUpMessage, setPopUpMessage] = useState('')
   const [worksheetData, setWorksheetData] = useState()
   const { id } = useParams()
-  const [WorkSheetDataHandle, setWorkSheetDataHandle] = useState(true)
+  const [WorkSheetDataHandle, setWorkSheetDataHandle] = useState(false)
 
   const history = useHistory()
 
@@ -18,30 +18,32 @@ export default function useWorksheetData() {
     setSent(false)
   }
 
-  useEffect(() => {
-    if (id !== undefined) {
-      async function fetchData() {
-        try {
-          const response = await getWorkSheet(id)
-          setWorksheetData({ ...response.data, loaded: true })
-        } catch (error) {
-          setWorksheetData({ loaded: true })
-          setPopUpMessage('A módosítás sikertelen')
-          setSent(true)
-        }
+  const UpdateWorksheet = useCallback(
+    async function () {
+      try {
+        const response = await getWorkSheet(id)
+        setWorksheetData({ ...response.data, loaded: true })
+      } catch (error) {
+        setWorksheetData({ loaded: true })
+        setPopUpMessage('A módosítás sikertelen')
+        setSent(true)
       }
-      fetchData()
-    }
-  }, [id])
+    },
+    [id]
+  )
+
+  useEffect(() => {
+    UpdateWorksheet()
+  }, [UpdateWorksheet])
 
   async function HandleData(values) {
-    if (id === undefined) {
-      setWorkSheetDataHandle(false)
+    if (id !== undefined) {
+      setWorkSheetDataHandle(true)
     }
     try {
       const response = WorkSheetDataHandle
-        ? await putWorkSheet(values)
-        : await postWorkSheet(id, values)
+        ? await putWorkSheet(id, values)
+        : await postWorkSheet(values)
       if (response.status === 200) {
         setPopUpMessage('Munkalap sikeresen módosítva')
         setSentSuccessfully(true)
@@ -58,6 +60,7 @@ export default function useWorksheetData() {
   }
 
   return {
+    UpdateWorksheet,
     HandleData,
     handleClick,
     popUpMessage,

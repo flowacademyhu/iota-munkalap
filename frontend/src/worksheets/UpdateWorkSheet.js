@@ -19,15 +19,14 @@ function UpdateWorksheet() {
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={HandleData}
-          title="Adatok módosítása"
+          title="Munkalap létrehozása"
         />
-        )
       </>
     )
   } else {
     return (
       <>
-        {worksheetData.loaded && (
+        {worksheetData && (
           <UpdateWorksheetForm
             handleClick={handleClick}
             sent={sent}
