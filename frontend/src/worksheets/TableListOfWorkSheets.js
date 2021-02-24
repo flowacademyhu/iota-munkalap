@@ -8,7 +8,7 @@ import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import ReadyButton from '../specialButtons/FinalizeButton'
+import FinalizeButton from '../specialButtons/FinalizeButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()
@@ -62,7 +62,7 @@ export default function TableListOfWorkSheets() {
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
-                      <ReadyButton
+                      <FinalizeButton
                         hidden={worksheet.worksheetStatus !== 'CREATED'}
                         onClick={() => finalizeAndReload(worksheet)}
                       />
