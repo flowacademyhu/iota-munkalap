@@ -94,7 +94,7 @@ public class PartnerService {
                 throw new ValidationException("The tax number is not a digit");
             }
         }
-        if (partner.getKadoszamtipus() < 1 || partner.getKadoszamtipus() > 5) {
+        if (partner.getKAdoszamtipus() < 1 || partner.getKAdoszamtipus() > 5) {
             throw new ValidationException("The K. tax number is not 1, 2, 3, 4, 5");
         }
     }

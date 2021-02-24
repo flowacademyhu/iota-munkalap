@@ -16,7 +16,7 @@ public class PartnerDTO {
     private String nev;
     private String rovidNev;
     private String adoszam;
-    private int kadoszamtipus;
+    private int kAdoszamtipus;
     private String bankszamlaszam;
     private String szamlazasiCimOrszagKod;
     private String szamlazasiCimOrszagNev;

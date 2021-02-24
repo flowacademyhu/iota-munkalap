@@ -32,7 +32,7 @@ public class PartnerController {
                 .megrendeloTipusa(partnerDTO.getMegrendeloTipusa())
                 .rovidNev(partnerDTO.getRovidNev())
                 .adoszam(partnerDTO.getAdoszam())
-                .kadoszamtipus(partnerDTO.getKadoszamtipus())
+                .kAdoszamtipus(partnerDTO.getKAdoszamtipus())
                 .bankszamlaszam(partnerDTO.getBankszamlaszam())
                 .szamlazasiCimOrszagKod(partnerDTO.getSzamlazasiCimOrszagKod())
                 .szamlazasiCimOrszagNev(partnerDTO.getSzamlazasiCimOrszagNev())
