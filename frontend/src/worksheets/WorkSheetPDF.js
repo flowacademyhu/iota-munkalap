@@ -22,7 +22,7 @@ function WorkSheetPDF() {
           body: [
             [
               {
-                image: 'sampleImage.jpg',
+                image: { logo },
                 width: 150,
               },
               'Az ügyfél adatai \n köv sor\n {importAdatok}',
