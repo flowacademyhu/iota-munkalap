@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
+import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
@@ -24,6 +25,15 @@ public class Worksheet {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "worksheet_id", nullable = false)
     private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secondaryIdGenerator")
+    @GenericGenerator(
+            name = "secondaryIdGenerator",
+            strategy = "hu.flowacademy.worksheet.generator.WorksheetSerialGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.INCREMENT_PARAM, value = "1"),
+                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.VALUE_PREFIX_PARAMETER, value = "m-"),
+                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.NUMBER_FORMAT_PARAMETER, value = "%10000d") })
+    private String secondaryId;
     @Column(name = "partner_id")
     private String partnerId; // FIXME Change to many to one in the future.
     @Enumerated(EnumType.STRING)
