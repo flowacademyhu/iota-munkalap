@@ -9,7 +9,18 @@ import {
   workingTimeAccounting,
   typeOfPayment,
 } from '../TranslationForWorkSheet'
-import moment from 'moment'
+import SignaturePad from 'signature_pad'
+
+function renderSvg(param) {
+  const canvasSignature = document.createElement('canvas')
+  canvasSignature.width = 400
+  canvasSignature.height = 300
+  const signaturePad = new SignaturePad(canvasSignature)
+  signaturePad.fromData(JSON.parse(param))
+  const svgSignature = signaturePad.toDataURL('image/svg+xml')
+  const data = svgSignature.split(',')[1]
+  return atob(data)
+}
 
 const sentence1 =
   'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
@@ -28,6 +39,9 @@ const sentenceSum = (
 
 function WorkSheetPDF(worksheet) {
   //let workSheet = getWorkSheet(id)
+
+  const workerSignatureSvg = renderSvg(worksheet.workerSignature)
+  const proofOfEmploymentSvg = renderSvg(worksheet.proofOfEmployment)
 
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
@@ -48,9 +62,6 @@ function WorkSheetPDF(worksheet) {
   // workerSignature: '',
   // proofOfEmployment: '',
   // status: '',
-
-  console.log(worksheet)
-  console.log(worksheet.description)
 
   var doc = {
     content: [
@@ -146,6 +157,8 @@ function WorkSheetPDF(worksheet) {
                 { text: sentence2, fontSize: 8, bold: true },
                 { text: sentence3, fontSize: 8 },
               ],
+            ],
+            [
               {
                 table: {
                   widths: ['*', '*'],
@@ -155,24 +168,29 @@ function WorkSheetPDF(worksheet) {
                       `${typeOfPayment[worksheet.typeOfPayment]}`,
                     ],
                     [{ colSpan: 2, text: 'A munkát végezte: ' }],
-                    [{ colSpan: 2, text: `${worksheet.workerSignature}` }],
+                    [
+                      {
+                        colSpan: 2,
+                        background: 'red',
+                        svg: workerSignatureSvg,
+                      },
+                    ],
                   ],
                 },
               },
+            ],
+            [
               {
                 table: {
                   widths: ['*', ''],
                   body: [
                     [
                       {
-                        //   text:
-                        //     'Kelt: ' +
-                        //     moment(worksheet.localDateTime).format('MM-DD-YYYY'),
-                        // }`Kelt: ${worksheet.localDateTime}`,
+                        text: `Kelt: ${worksheet.createdAt}`,
                       },
                     ],
                     [{ colSpan: 2, text: 'A munkavégzést igazolja:' }],
-                    [{ colSpan: 2, text: `${worksheet.proofOfEmployment}` }],
+                    [{ colSpan: 2, svg: proofOfEmploymentSvg }],
                   ],
                 },
               },
