@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Data
@@ -29,6 +30,7 @@ public class Worksheet {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;
+    @Column(name = "custom_type_of_work", length = 3000)
     private String customTypeOfWork;
     @Enumerated(EnumType.STRING)
     @Column(name = "asset_settlement", nullable = false)
