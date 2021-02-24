@@ -6,7 +6,7 @@ import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
-import { closeWorkSheet } from '../api/WorkSheetAPI'
+import { closeWorkSheet, readyWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 import ReadyButton from '../specialButtons/ReadyButton'
 
@@ -16,6 +16,11 @@ export default function TableListOfWorkSheets() {
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
+    updateWorkSheets()
+  }
+
+  async function readyAndReload(worksheet) {
+    await readyWorkSheet(worksheet.id)
     updateWorkSheets()
   }
 
@@ -58,7 +63,9 @@ export default function TableListOfWorkSheets() {
                         <EditButton />
                       </Link>
                       {isAdmin && worksheet.worksheetStatus === 'CREATED' && (
-                        <ReadyButton />
+                        <ReadyButton
+                          onClick={() => readyAndReload(worksheet)}
+                        />
                       )}
                       {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
                         <CloseButton
