@@ -1,16 +1,15 @@
 import React from 'react'
 import UpdateWorksheetForm from './UpdateWorkSheetForm'
 import useWorksheetData from '../hooks/useWorksheetData'
-import useFetchWorkSheet from '../hooks/useFetchWorkSheet'
 
 function UpdateWorksheet() {
-  const { postData, handleClick, popUpMessage, sent } = useWorksheetData()
   const {
+    HandleData,
+    handleClick,
+    popUpMessage,
+    sent,
     worksheetData,
-    fetchPopUpMessage,
-    fetchSent,
-    putData,
-  } = useFetchWorkSheet()
+  } = useWorksheetData()
 
   if (window.location.pathname === '/worksheets/new') {
     return (
@@ -19,7 +18,7 @@ function UpdateWorksheet() {
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
-          sendData={postData}
+          sendData={HandleData}
           title="Adatok módosítása"
         />
         )
@@ -31,9 +30,9 @@ function UpdateWorksheet() {
         {worksheetData.loaded && (
           <UpdateWorksheetForm
             handleClick={handleClick}
-            sent={fetchSent}
-            popUpMessage={fetchPopUpMessage}
-            sendData={putData}
+            sent={sent}
+            popUpMessage={popUpMessage}
+            sendData={HandleData}
             title="Adatok módosítása"
             worksheet={worksheetData}
           />
