@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
 import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
@@ -8,10 +8,13 @@ import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
+import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
@@ -24,6 +27,14 @@ export default function TableListOfWorkSheets() {
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
+      </div>
+      <div>
+        <CalendarDropDown date={startDate} setDate={setStartDate} />
+        <CalendarDropDown date={endDate} setDate={setEndDate} />
+        <Button
+          text="Szűrés"
+          onClick={() => console.log('start: ', startDate, ' end: ', endDate)}
+        />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
