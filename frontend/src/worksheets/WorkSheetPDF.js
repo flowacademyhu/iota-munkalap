@@ -9,6 +9,22 @@ import {
   workingTimeAccounting,
   typeOfPayment,
 } from '../TranslationForWorkSheet'
+import moment from 'moment'
+
+const sentence1 =
+  'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
+const sentence2 = 'A vállalkozó a számla benyújtására jogosult.'
+const sentence3 =
+  'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
+const sentenceSum = (
+  <p>
+    <p>{sentence1}</p>
+    <p>
+      <b>{sentence2}</b>
+    </p>
+    <p>{sentence3}</p>
+  </p>
+)
 
 function WorkSheetPDF(worksheet) {
   //let workSheet = getWorkSheet(id)
@@ -50,12 +66,25 @@ function WorkSheetPDF(worksheet) {
           widths: ['*', '*', '*'],
           body: [
             [
+              [
+                // {
+                //   image: '../img/uj_logo.png',
+                //   width: 150,
+                // },
+              ],
+              [
+                {
+                  text: 'Az ügyfél adatai \n',
+                  bold: true,
+                },
+                {
+                  text: `Partner ID:  ${worksheet.partnerId}`,
+                },
+              ],
+
               {
-                //image: '../img/uj_logo.png',
-                //width: 150,
+                text: `ID sorszám:  ${worksheet.partnerId}`,
               },
-              `Az ügyfél adatai \n Partner ID:  \n {importAdatok}`,
-              `ID sorszám \n`,
             ],
           ],
         },
@@ -112,14 +141,21 @@ function WorkSheetPDF(worksheet) {
           widths: [90, '*', '*'],
           body: [
             [
-              'A munkavégzésr igazoló lorem ipsum cdvndosv  jvnpwo vwnv pwe vvh wpev eivpenpweNP  E PWEf vnwvv  I VWi vwvwieuvn',
+              [
+                { text: sentence1, fontSize: 8 },
+                { text: sentence2, fontSize: 8, bold: true },
+                { text: sentence3, fontSize: 8 },
+              ],
               {
                 table: {
                   widths: ['*', '*'],
                   body: [
-                    ['Fizetés módja', '{importFizmod}'],
-                    [{ colSpan: 2, text: 'A munkát végezte:' }],
-                    [{ colSpan: 2, text: 'importAlairas\nide' }],
+                    [
+                      'Fizetés módja',
+                      `${typeOfPayment[worksheet.typeOfPayment]}`,
+                    ],
+                    [{ colSpan: 2, text: 'A munkát végezte: ' }],
+                    [{ colSpan: 2, text: `${worksheet.workerSignature}` }],
                   ],
                 },
               },
@@ -127,9 +163,16 @@ function WorkSheetPDF(worksheet) {
                 table: {
                   widths: ['*', ''],
                   body: [
-                    ['Kelt: {importKeltezes}'],
+                    [
+                      {
+                        //   text:
+                        //     'Kelt: ' +
+                        //     moment(worksheet.localDateTime).format('MM-DD-YYYY'),
+                        // }`Kelt: ${worksheet.localDateTime}`,
+                      },
+                    ],
                     [{ colSpan: 2, text: 'A munkavégzést igazolja:' }],
-                    [{ colSpan: 2, text: '{importAlairas}\nide' }],
+                    [{ colSpan: 2, text: `${worksheet.proofOfEmployment}` }],
                   ],
                 },
               },
