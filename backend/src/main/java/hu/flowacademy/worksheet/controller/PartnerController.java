@@ -5,6 +5,8 @@ import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,9 @@ import javax.annotation.security.RolesAllowed;
 @RequestMapping("api")
 public class PartnerController {
 
-    private PartnerService partnerService;
+    private static final Logger log = LoggerFactory.getLogger(PartnerController.class);
+
+    private final PartnerService partnerService;
 
     @PostMapping("/partners")
     @ResponseStatus(HttpStatus.CREATED)
@@ -28,7 +32,7 @@ public class PartnerController {
                 .megrendeloTipusa(partnerDTO.getMegrendeloTipusa())
                 .rovidNev(partnerDTO.getRovidNev())
                 .adoszam(partnerDTO.getAdoszam())
-                //.kadoszamtipus(partnerDTO.getKadoszamtipus())
+                .kadoszamtipus(partnerDTO.getKadoszamtipus())
                 .bankszamlaszam(partnerDTO.getBankszamlaszam())
                 .szamlazasiCimOrszagKod(partnerDTO.getSzamlazasiCimOrszagKod())
                 .szamlazasiCimOrszagNev(partnerDTO.getSzamlazasiCimOrszagNev())
@@ -45,6 +49,8 @@ public class PartnerController {
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
                 .build();
+        log.info("Mi a kutyafája van itt?: {}", partner);
         return partnerService.createPartner(partner);
+        //log.error("Itt az ember méretű null: {}", partnerService.createPartner(partner));
     }
 }

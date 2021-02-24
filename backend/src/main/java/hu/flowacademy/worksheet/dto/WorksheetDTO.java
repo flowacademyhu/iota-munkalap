@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class WorksheetDTO {
 
-    private String partnerId;
+    //private String partnerId;
     private TypeOfWork typeOfWork;
     private String customTypeOfWork;
     private AssetSettlement assetSettlement;
