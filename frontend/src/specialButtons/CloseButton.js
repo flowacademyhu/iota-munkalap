@@ -1,8 +1,8 @@
 import React from 'react'
-import { XSquareFill } from 'react-bootstrap-icons'
+import { FileLockFill } from 'react-bootstrap-icons'
 
 function CloseButton({ onClick }) {
-  return <XSquareFill onClick={onClick} className="editIcon closeIcon" />
+  return <FileLockFill onClick={onClick} className="editIcon closeIcon" />
 }
 
 export default CloseButton
