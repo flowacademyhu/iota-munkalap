@@ -28,7 +28,7 @@ public class PartnerController {
                 .megrendeloTipusa(partnerDTO.getMegrendeloTipusa())
                 .rovidNev(partnerDTO.getRovidNev())
                 .adoszam(partnerDTO.getAdoszam())
-                .kAdoszamTipus(partnerDTO.getKAdoszamTipus())
+                //.kadoszamtipus(partnerDTO.getKadoszamtipus())
                 .bankszamlaszam(partnerDTO.getBankszamlaszam())
                 .szamlazasiCimOrszagKod(partnerDTO.getSzamlazasiCimOrszagKod())
                 .szamlazasiCimOrszagNev(partnerDTO.getSzamlazasiCimOrszagNev())
@@ -45,7 +45,6 @@ public class PartnerController {
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
                 .build();
-        return partnerService.savePartner(partner);
+        return partnerService.createPartner(partner);
     }
-
 }
