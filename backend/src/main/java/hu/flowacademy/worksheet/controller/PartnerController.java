@@ -17,8 +17,6 @@ import javax.annotation.security.RolesAllowed;
 @RequestMapping("api")
 public class PartnerController {
 
-    private static final Logger log = LoggerFactory.getLogger(PartnerController.class);
-
     private final PartnerService partnerService;
 
     @PostMapping("/partners")
@@ -49,8 +47,6 @@ public class PartnerController {
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
                 .build();
-        log.info("Mi a kutyafája van itt?: {}", partner);
         return partnerService.createPartner(partner);
-        //log.error("Itt az ember méretű null: {}", partnerService.createPartner(partner));
     }
 }
