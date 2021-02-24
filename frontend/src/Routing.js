@@ -5,7 +5,7 @@ import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
-import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
+import Worksheet from './worksheets/Worksheet'
 import AdminRoute from './AdminRoute'
 
 function Routing() {
@@ -25,10 +25,10 @@ function Routing() {
           <TableListofPartners />
         </Route>
         <Route path="/worksheets/new">
-          <UpdateWorkSheet />
+          <Worksheet />
         </Route>
         <Route path="/worksheets/update/:id">
-          <UpdateWorkSheet />
+          <Worksheet />
         </Route>
         <Route exact path="/worksheets">
           <TableListOfWorkSheets />

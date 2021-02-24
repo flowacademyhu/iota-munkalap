@@ -20,13 +20,15 @@ export default function useWorksheetData() {
 
   const UpdateWorksheet = useCallback(
     async function () {
-      try {
-        const response = await getWorkSheet(id)
-        setWorksheetData({ ...response.data, loaded: true })
-      } catch (error) {
-        setWorksheetData({ loaded: true })
-        setPopUpMessage('A módosítás sikertelen')
-        setSent(true)
+      if (id !== undefined) {
+        try {
+          const response = await getWorkSheet(id)
+          setWorksheetData({ ...response.data, loaded: true })
+        } catch (error) {
+          setWorksheetData({ loaded: true })
+          setPopUpMessage('A módosítás sikertelen')
+          setSent(true)
+        }
       }
     },
     [id]
@@ -39,6 +41,9 @@ export default function useWorksheetData() {
   async function HandleData(values) {
     if (id !== undefined) {
       setWorkSheetDataHandle(true)
+    }
+    if (id === undefined) {
+      setWorkSheetDataHandle(false)
     }
     try {
       const response = WorkSheetDataHandle
