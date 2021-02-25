@@ -41,9 +41,9 @@ public class WorksheetService {
     }
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-       // if (worksheet.getPartnerId() == null) {
-       //     throw new ValidationException("Partner value is null");
-       // }
+        if (worksheet.getPartnerId() == null) {
+            throw new ValidationException("Partner value is null");
+        }
         if (worksheet.getTypeOfWork() == null) {
             throw new ValidationException("Type of work value is null");
         }
@@ -92,7 +92,7 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        //worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());

@@ -86,7 +86,7 @@ class WorksheetServiceTest {
         var worksheet = givenValidWorksheet();
         when(worksheetRepository.save(any())).thenReturn(Worksheet.builder()
                 .id(worksheet.getId())
-                //.partnerId(PARTNER_ID)
+                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
@@ -106,7 +106,7 @@ class WorksheetServiceTest {
         Worksheet result = worksheetService.saveWorksheet(worksheet);
 
         Mockito.verify(worksheetRepository, times(1)).save(worksheet);
-        //assertEquals(worksheet.getPartnerId(), result.getPartnerId());
+        assertEquals(worksheet.getPartnerId(), result.getPartnerId());
         assertEquals(worksheet.getTypeOfWork(), result.getTypeOfWork());
         assertEquals(worksheet.getAssetSettlement(), result.getAssetSettlement());
         assertEquals(worksheet.getWorkingTimeAccounting(), result.getWorkingTimeAccounting());
@@ -141,7 +141,7 @@ class WorksheetServiceTest {
                 .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(dateTimeMin), Optional.of(dateTimeMax), Optional.of(1), Optional.of("createdAt"));
         verify(worksheetRepository).findAll(any(Specification.class), eq(PAGEABLE));
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
-    //    assertThat(result.get(0).getPartnerId(), is(PARTNER_ID));
+        assertThat(result.get(0).getPartnerId(), is(PARTNER_ID));
         assertThat(result.size(), is(1));
     }
 
@@ -163,7 +163,7 @@ class WorksheetServiceTest {
 
         Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
-    //    assertThat(updatedWorksheet.getPartnerId(), is(newWorksheet.getPartnerId()));
+        assertThat(updatedWorksheet.getPartnerId(), is(newWorksheet.getPartnerId()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
@@ -184,6 +184,7 @@ class WorksheetServiceTest {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
+
     private void givenExistingWorksheetForUpdateStatus() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperIdAndStatus()));
     }
@@ -213,7 +214,7 @@ class WorksheetServiceTest {
 
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()
-        //        .partnerId(PARTNER_ID)
+                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
@@ -233,7 +234,7 @@ class WorksheetServiceTest {
     private Worksheet givenUpdateProperWorksheetObject() {
         Worksheet worksheet = new Worksheet();
         worksheet.setId(UPDATED_WORKSHEET_ID);
-    //    worksheet.setPartnerId(UPDATED_PARTNER_ID);
+        worksheet.setPartnerId(UPDATED_PARTNER_ID);
         worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK_OTHER);
         worksheet.setCustomTypeOfWork(UPDATED_CUSTOM_TYPE_OF_WORK);
         worksheet.setAssetSettlement(UPDATED_ASSET_SETTLEMENT);

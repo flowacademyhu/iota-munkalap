@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -28,7 +27,7 @@ public class WorksheetController {
     @RolesAllowed({"admin", "user"})
     public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = Worksheet.builder()
-                //.partnerId(worksheetDTO.getPartnerId())
+                .partnerId(worksheetDTO.getPartnerId())
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
                 .assetSettlement(worksheetDTO.getAssetSettlement())

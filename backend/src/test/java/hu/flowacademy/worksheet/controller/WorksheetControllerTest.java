@@ -79,7 +79,7 @@ class WorksheetControllerTest {
 
     private WorksheetDTO givenAWorksheetDTO() {
         return WorksheetDTO.builder()
-                //.partnerId(PARTNER_ID)
+                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
