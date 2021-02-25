@@ -6,12 +6,12 @@ export default function TextareaInput({
   handleChange,
   label,
   container,
-  name,
   ...props
 }) {
   const [field, meta] = useField(props)
   const { error, touched } = meta
   const showError = touched && error
+  const { name } = props
 
   return (
     <div className="form-group my-4">
