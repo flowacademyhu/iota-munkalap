@@ -6,12 +6,8 @@ function putWorkSheet(id, credentials) {
 }
 
 function getWorkSheets(startDate, endDate) {
-  const minTime = startDate
-    ? moment(startDate).format('yyyy.MM.DD') + ' 00:00:00'
-    : null
-  const maxTime = endDate
-    ? moment(endDate).format('yyyy.MM.DD') + ' 23:59:59'
-    : null
+  const minTime = startDate ? moment(startDate).format('yyyy.MM.DD') : null
+  const maxTime = endDate ? moment(endDate).format('yyyy.MM.DD') : null
   return api.get(`/worksheets/`, {
     params: { minTime, maxTime },
   })
