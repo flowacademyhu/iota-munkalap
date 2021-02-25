@@ -36,8 +36,14 @@ export default function schema() {
       .string()
       .required('Felhasznált anyagok megadása kötelező!'),
     typeOfPayment: yup.string().required('Fizetési mód megadása kötelező!'),
-    workerSignature: yup.string().required('Aláírás kötelező!'),
-    proofOfEmployment: yup.string().required('Munkavégzés igazolása kötelező!'),
+    workerSignature: yup
+      .string()
+      .required('Aláírás kötelező!')
+      .min(3, 'Aláírás kötelező!'),
+    proofOfEmployment: yup
+      .string()
+      .required('Munkavégzés igazolása kötelező!')
+      .min(3, 'Aláírás kötelező!'),
   })
 
   return schema
