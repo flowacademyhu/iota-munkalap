@@ -8,6 +8,16 @@ services:
     entrypoint: "/keycloak/entrypoint.sh"
     volumes:
       - ./keycloak:/keycloak
+  mysql:
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: worksheet
+      MYSQL_USER: worksheet
+      MYSQL_PASSWORD: worksheet
   app:
     image: munkalap:latest
     build:

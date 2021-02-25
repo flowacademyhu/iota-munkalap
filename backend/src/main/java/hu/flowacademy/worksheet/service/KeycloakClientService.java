@@ -68,6 +68,14 @@ public class KeycloakClientService {
         keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(changedUser.getId()).update(changedUser);
     }
 
+    public void setUserUpdate(User user, String email) {
+        UserRepresentation updatedUser = keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().search(email).get(0);
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setEmail(user.getEmail());
+        keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(updatedUser.getId()).update(updatedUser);
+    }
+
     public AccessTokenResponse login(String email, String password) {
         return Keycloak.getInstance(
                 keycloakPropertiesConfiguration.getServerUrl(),
