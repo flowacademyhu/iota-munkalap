@@ -5,7 +5,18 @@ export default function useWorkSheets() {
   const [status, setStatus] = useState('')
 
   const [workSheets, setWorkSheets] = useState()
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
 
+  const updateWorkSheets = useCallback(
+    async function () {
+      const { data } = await getWorkSheets(startDate, endDate)
+      if (data) {
+        setWorkSheets(data)
+      }
+    },
+    [startDate, endDate]
+  )
   const updateWorkSheets = useCallback(
     async function () {
       const { data } = await getWorkSheets(status)
@@ -23,6 +34,10 @@ export default function useWorkSheets() {
   return {
     workSheets,
     updateWorkSheets,
+    startDate,
+    setStartDate,
+    endDate,
+    setEndDate,
     status,
     setStatus,
   }

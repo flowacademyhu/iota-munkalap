@@ -2,12 +2,14 @@ package hu.flowacademy.worksheet.dto;
 
 import hu.flowacademy.worksheet.enumCustom.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorksheetDTO {
@@ -24,7 +26,7 @@ public class WorksheetDTO {
     private String description;
     private String usedMaterial;
     private TypeOfPayment typeOfPayment;
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
     private String workerSignature;
     private String proofOfEmployment;
     private WorksheetStatus worksheetStatus;

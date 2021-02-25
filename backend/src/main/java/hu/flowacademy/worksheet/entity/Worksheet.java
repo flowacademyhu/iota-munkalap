@@ -2,12 +2,15 @@ package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
+import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,8 +23,14 @@ import java.time.LocalDateTime;
 public class Worksheet {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secondaryIdGenerator")
+    @GenericGenerator(
+            name = "secondaryIdGenerator",
+            strategy = "hu.flowacademy.worksheet.generator.WorksheetSerialGenerator",
+            parameters = {
+                    @Parameter(name = WorksheetSerialGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d"),
+                    @Parameter(name = "initial_value", value = "10000")
+            })
     @Column(name = "worksheet_id", nullable = false)
     private String id;
     @Column(name = "partner_id")
@@ -52,9 +61,12 @@ public class Worksheet {
     @Column(name = "type_of_payment", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "createdAtRealTime", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAtRealTime;
+    @Column(name = "createdAt", nullable = false)
+    @JsonFormat(pattern = "yyyy.MM.dd")
+    private LocalDate createdAt;
     @Column(name = "worker_signature", nullable = false)
     private String workerSignature;
     @Column(name = "proof_of_employment", nullable = false)
