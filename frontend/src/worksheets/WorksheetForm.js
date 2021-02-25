@@ -14,6 +14,7 @@ import {
   WORKING_TIME_ACCOUNT_LIST,
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
+import Signature from './Signature'
 
 function WorkSheetForm({
   sent,
@@ -115,17 +116,14 @@ function WorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: {getCurrentDate()}</span>
-                  <Input
-                    name="workerSignature"
-                    label="Munkát végezte"
-                    placeholder="IDE KELL E-ALÁIRÁS"
-                  />
-                  <Input
-                    name="proofOfEmployment"
-                    label="munkavégzést igazolja"
-                    placeholder="IDE KELL MÉG EGY E-ALÁÍRÁS"
-                  />
-
+                  <div className="mt-3">
+                    Munkát elvégezte:
+                    <Signature name="workerSignature" />
+                  </div>
+                  <div className="mt-3">
+                    Munkavégzést igazolja:
+                    <Signature name="proofOfEmployment" />
+                  </div>
                   <div className="buttons">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />

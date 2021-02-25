@@ -65,9 +65,11 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 ))
               ) : (
-                <td colSpan="5">
-                  <LoadingScreen />
-                </td>
+                <tr colspan="5">
+                  <td>
+                    <LoadingScreen />
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
