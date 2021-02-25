@@ -13,6 +13,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import static com.mysql.cj.MysqlType.LONGBLOB;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -67,9 +69,13 @@ public class Worksheet {
     @Column(name = "createdAt", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate createdAt;
-    @Column(name = "worker_signature", nullable = false)
+    @Lob()
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "worker_signature", nullable = false, columnDefinition = "LONGBLOB")
     private String workerSignature;
-    @Column(name = "proof_of_employment", nullable = false)
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "proof_of_employment", nullable = false, columnDefinition = "LONGBLOB")
     private String proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
