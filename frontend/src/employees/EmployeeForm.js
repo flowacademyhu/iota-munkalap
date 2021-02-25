@@ -13,7 +13,7 @@ function CreateEmployeeForm({
   sendData,
   title,
   user,
-  registration,
+  notRegistration,
 }) {
   const initialValuesCreate = {
     firstName: '',
@@ -34,9 +34,9 @@ function CreateEmployeeForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={
-              registration ? initialValuesEdit : initialValuesCreate
+              notRegistration ? initialValuesEdit : initialValuesCreate
             }
-            validationSchema={registration ? schema : (schema, regSchema)}
+            validationSchema={notRegistration ? schema : (schema, regSchema)}
             onSubmit={(values) => {
               sendData(values)
             }}
@@ -50,13 +50,13 @@ function CreateEmployeeForm({
                 name="password"
                 label="Jelszó"
                 type="password"
-                disabled={registration}
+                disabled={notRegistration}
               />
               <Input
                 name="confirmPassword"
                 label="Jelszó még egyszer"
                 type="password"
-                disabled={registration}
+                disabled={notRegistration}
               />
               <div className="buttons">
                 <Link to="/employees">
