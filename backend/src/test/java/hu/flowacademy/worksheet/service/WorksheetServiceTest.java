@@ -14,7 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -135,8 +135,8 @@ class WorksheetServiceTest {
     public void givenAProperWorksheet_whenFilteringByDate_thenReturnItemInList() {
         givenAProperWorkSheetForListing();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
-        LocalDateTime dateTimeMax = LocalDateTime.parse(MAX_TIME, formatter);
-        LocalDateTime dateTimeMin = LocalDateTime.parse(MIN_TIME, formatter);
+        LocalDate dateTimeMax = LocalDate.parse(MAX_TIME, formatter);
+        LocalDate dateTimeMin = LocalDate.parse(MIN_TIME, formatter);
         List<Worksheet> result = worksheetService.collectWorksheetByCriteria(Optional
                 .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(dateTimeMin), Optional.of(dateTimeMax), Optional.of(1), Optional.of("createdAt"));
         verify(worksheetRepository).findAll(any(Specification.class), eq(PAGEABLE));

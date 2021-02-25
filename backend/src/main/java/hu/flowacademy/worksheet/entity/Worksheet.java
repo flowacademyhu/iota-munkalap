@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -60,9 +61,12 @@ public class Worksheet {
     @Column(name = "type_of_payment", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "createdAtRealTime", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAtRealTime;
+    @Column(name = "createdAt", nullable = false)
+    @JsonFormat(pattern = "yyyy.MM.dd")
+    private LocalDate createdAt;
     @Column(name = "worker_signature", nullable = false)
     private String workerSignature;
     @Column(name = "proof_of_employment", nullable = false)

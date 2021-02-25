@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class WorksheetService {
         if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
             worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
         }
-        worksheet.setCreatedAt(LocalDateTime.now());
+        worksheet.setCreatedAtRealTime(LocalDateTime.now());
         return worksheetRepository.save(worksheet);
     }
 
@@ -109,7 +110,7 @@ public class WorksheetService {
         return worksheetRepository.save(worksheetToUpdate);
     }
 
-    public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDateTime> minTime, Optional<LocalDateTime> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
+    public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
         return worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
