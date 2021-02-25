@@ -52,14 +52,6 @@ img {
   margin: 0px 3px 0px 3px;
 }
 
-.closeIcon {
-  color: red;
-}
-
-.finalizeIcon {
-  color: green;
-}
-
 .hidden {
   visibility: hidden;
 }
