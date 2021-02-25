@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+hu:
+  flowacademy:
+    worksheet:
+      paging:
+        defaultLimit: 10
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+
+keycloakBackendClient:
+  realm: master
+  client-id: admin-cli
+  adminusername: gyanyim
+  adminpassword: snxTZr9$5GGnS7w
+  user-role: worksheetuser
+
+keycloak:
+  realm: worksheet
+  auth-server-url: http://localhost:8180/auth
+  ssl-required: external
+  resource: worksheetclient
+  credentials.secret: be835fad-eba0-4797-ad88-b802b676d2f3
+  use-resource-role-mappings: true
+  bearer-only: true
+
