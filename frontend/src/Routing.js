@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import TableListOfEmployees from './employees/TableListOfEmployees'
 import CreateEmployee from './employees/CreateEmployee'
 import UpdateEmployee from './employees/UpdateEmployee'
@@ -35,7 +35,7 @@ function Routing() {
           <TableListOfWorkSheets />
         </Route>
         <Route path="/">
-          <TableListofPartners to="/partners" />
+          <Redirect to="/partners" />
         </Route>
       </Switch>
     </div>
