@@ -40,6 +40,7 @@ function WorkSheetPDF(worksheet) {
   var doc = {
     content: [
       {
+        style: 'tableExample',
         text: 'Munkalap',
         style: 'header',
         alignment: 'right',
@@ -118,6 +119,7 @@ function WorkSheetPDF(worksheet) {
 
       //2nd table
       {
+        style: 'tableExample',
         table: {
           widths: [130, 130, '*', '*', '*'],
           body: [
@@ -146,6 +148,7 @@ function WorkSheetPDF(worksheet) {
       },
       //3rd table (description)
       {
+        style: 'tableExample',
         table: {
           widths: ['*'],
           body: [
@@ -161,6 +164,7 @@ function WorkSheetPDF(worksheet) {
       },
       //4th table (materials)
       {
+        style: 'tableExample',
         table: {
           widths: ['*'],
           body: [
@@ -172,6 +176,7 @@ function WorkSheetPDF(worksheet) {
 
       //5. table (sigatures, date)
       {
+        style: 'tableExample',
         table: {
           widths: ['*', '*', '*'],
           body: [
