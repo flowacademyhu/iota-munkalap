@@ -7,7 +7,6 @@ import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
-import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import {
   TYPE_OF_WORK_LIST,
