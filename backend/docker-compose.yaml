@@ -9,7 +9,7 @@ services:
     volumes:
       - ./keycloak:/keycloak
   mysql:
-    image: mysql:8.0.23
+    image: mysql:5.7
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - 3307:3306
