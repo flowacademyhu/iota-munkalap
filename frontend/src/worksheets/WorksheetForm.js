@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
@@ -24,6 +24,7 @@ function WorkSheetForm({
   title,
   worksheet,
 }) {
+  const finalize = useRef(false)
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -46,11 +47,16 @@ function WorkSheetForm({
               localDateTime: getCurrentDate(),
               workerSignature: '',
               proofOfEmployment: '',
-              status: '',
+              worksheetStatus: 'CREATED',
               ...worksheet,
             }}
             validationSchema={schema}
             onSubmit={(values) => {
+              if (finalize.current) {
+                values.worksheetStatus = 'REPORTED'
+              } else {
+                values.worksheetStatus = 'CREATED'
+              }
               sendData(values)
             }}
           >
@@ -131,6 +137,15 @@ function WorkSheetForm({
                     <Button
                       text="Mentés"
                       type="submit"
+                      onClick={() => (finalize.current = false)}
+                      moreClassName="h-auto"
+                    />
+                  </div>
+                  <div className="buttons">
+                    <Button
+                      text="Mentés és készre jelentés"
+                      type="submit"
+                      onClick={() => (finalize.current = true)}
                       moreClassName="h-auto"
                     />
                   </div>
