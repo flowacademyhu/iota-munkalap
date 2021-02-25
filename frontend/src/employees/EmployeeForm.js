@@ -17,16 +17,16 @@ function CreateEmployeeForm({
 }) {
   const initialValues = isCreate
     ? {
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
-        email: user?.email || '',
-      }
-    : {
         firstName: '',
         lastName: '',
         email: '',
         password: '',
         confirmPassword: '',
+      }
+    : {
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
       }
   return (
     <div className="container my-5">
@@ -35,7 +35,7 @@ function CreateEmployeeForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={initialValues}
-            validationSchema={isCreate ? schema : regSchema}
+            validationSchema={isCreate ? regSchema : schema}
             onSubmit={(values) => {
               sendData(values)
             }}
