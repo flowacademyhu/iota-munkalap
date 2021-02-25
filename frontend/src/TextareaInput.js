@@ -14,7 +14,7 @@ export default function TextareaInput({
 
   return (
     <div className="form-group my-4">
-      <Form.Group controlId="exampleForm.ControlTextarea1">
+      <Form.Group controlId="textArea">
         <Form.Label>{label}</Form.Label>
         <Form.Control
           {...field}
