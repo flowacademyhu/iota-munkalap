@@ -8,8 +8,12 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class WorksheetSpecification {
+
+    public static final LocalDateTime MAX_TIME = LocalDateTime.of(2100, 12, 31, 23, 59, 59);
+    public static final LocalDateTime MIN_TIME = LocalDateTime.of(1970, 1, 1, 1, 1, 1);
+
     public static Specification<Worksheet> createdAtBetween(Optional<LocalDateTime> maxTime, Optional<LocalDateTime> minTime) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.between(root.get("createdAt"), minTime.orElse(LocalDateTime.MAX), maxTime.orElse(LocalDateTime.MIN));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.and(criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), maxTime.orElse(MAX_TIME)), criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), minTime.orElse(MIN_TIME)));
     }
 
     public static Specification<Worksheet> enabled(Optional<WorksheetStatus> status) {

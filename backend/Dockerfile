@@ -2,7 +2,7 @@ FROM maven:3.6.3-openjdk-11-slim AS builder
 
 WORKDIR /build
 COPY . .
-RUN mvn -B clean package
+RUN mvn -B clean package -DskipTests
 
 FROM openjdk:11-slim
 

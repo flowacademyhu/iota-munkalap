@@ -33,7 +33,9 @@ public class WorksheetService {
 
     public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
         validateWorksheet(worksheet);
-        worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
+            worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        }
         worksheet.setCreatedAt(LocalDateTime.now());
         return worksheetRepository.save(worksheet);
     }
