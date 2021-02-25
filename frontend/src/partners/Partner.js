@@ -4,12 +4,12 @@ import { putUser, getUser } from '../api/UserAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
-export default function Partner() {
+function UpdateEmployee() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
-  const [partnerData, setPartnerData] = useState({})
+  const [userData, setUserData] = useState({})
 
   const history = useHistory()
 
@@ -61,3 +61,5 @@ export default function Partner() {
     </>
   )
 }
+
+export default UpdateEmployee
