@@ -9,9 +9,17 @@ import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 import FinalizeButton from '../specialButtons/FinalizeButton'
+import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const {
+    workSheets,
+    updateWorkSheets,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+  } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
@@ -31,6 +39,26 @@ export default function TableListOfWorkSheets() {
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
+      <div>Szűrés dátum szerint:</div>
+      <div>
+        <CalendarDropDown
+          date={startDate}
+          setDate={setStartDate}
+          placeholderText="Intervallum kezdete"
+        />
+        <CalendarDropDown
+          date={endDate}
+          setDate={setEndDate}
+          placeholderText="Intervallum vége"
+        />
+        <Button
+          text="Összes"
+          onClick={() => {
+            setStartDate(null)
+            setEndDate(null)
+          }}
+        />
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover text-center">
@@ -49,7 +77,7 @@ export default function TableListOfWorkSheets() {
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
                   <tr key={index}>
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{worksheet.id}</th>
                     <td>
                       {worksheet.createdBy.lastName}{' '}
                       {worksheet.createdBy.firstName}

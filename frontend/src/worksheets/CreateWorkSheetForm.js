@@ -1,11 +1,11 @@
-import React, { useRef } from 'react'
+import React, { useState, useRef } from 'react'
+import moment from 'moment'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
-import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
 import {
@@ -15,6 +15,8 @@ import {
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
 import Signature from './Signature'
+import CalendarDropDown from '../CalendarDropDown'
+import TextareaInput from '../TextareaInput'
 
 function CreateWorkSheetForm({
   sent,
@@ -24,6 +26,7 @@ function CreateWorkSheetForm({
   title,
 }) {
   const finalize = useRef(false)
+  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -43,7 +46,7 @@ function CreateWorkSheetForm({
               description: '',
               usedMaterial: '',
               typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
-              localDateTime: getCurrentDate(),
+              createdAt: '',
               workerSignature: '',
               proofOfEmployment: '',
               worksheetStatus: 'CREATED',
@@ -55,6 +58,7 @@ function CreateWorkSheetForm({
               } else {
                 values.worksheetStatus = 'CREATED'
               }
+              values.createdAt = moment(date).format('yyyy-MM-DD')
               sendData(values)
             }}
           >
@@ -104,10 +108,9 @@ function CreateWorkSheetForm({
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
-                  <Input
+                  <TextareaInput
                     name="description"
                     label="Elvégzett munka leírása"
-                    type="text"
                   />
                   <Input
                     name="usedMaterial"
@@ -119,7 +122,8 @@ function CreateWorkSheetForm({
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
-                  <span>Kelt: {getCurrentDate()}</span>
+                  <span>Kelt: </span>
+                  <CalendarDropDown date={date} setDate={setDate} />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
