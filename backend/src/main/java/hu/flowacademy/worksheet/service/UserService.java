@@ -47,6 +47,7 @@ public class UserService {
     public User update(Long id, User user) throws ValidationException {
         validateUpdate(user);
         User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + user.getId()));
+        keycloakClientService.setUserUpdate(user, updatedUser.getEmail());
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setEmail(user.getEmail());

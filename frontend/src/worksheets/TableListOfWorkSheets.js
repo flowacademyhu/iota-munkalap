@@ -6,8 +6,9 @@ import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
-import { closeWorkSheet } from '../api/WorkSheetAPI'
+import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
+import FinalizeButton from '../specialButtons/FinalizeButton'
 
 export default function TableListOfWorkSheets() {
   const { workSheets, updateWorkSheets } = useWorkSheets()
@@ -15,6 +16,11 @@ export default function TableListOfWorkSheets() {
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
+    updateWorkSheets()
+  }
+
+  async function finalizeAndReload(worksheet) {
+    await finalizeWorkSheet(worksheet.id)
     updateWorkSheets()
   }
 
@@ -53,14 +59,19 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{status[worksheet.worksheetStatus]}</td>
                     <td>
-                      {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
-                        <CloseButton
-                          onClick={() => closeAndReload(worksheet)}
-                        />
-                      )}
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
+                      <FinalizeButton
+                        hidden={worksheet.worksheetStatus !== 'CREATED'}
+                        onClick={() => finalizeAndReload(worksheet)}
+                      />
+                      {isAdmin && (
+                        <CloseButton
+                          hidden={worksheet.worksheetStatus === 'CLOSED'}
+                          onClick={() => closeAndReload(worksheet)}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))
