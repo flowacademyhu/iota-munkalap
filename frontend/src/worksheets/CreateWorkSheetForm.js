@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
@@ -50,7 +50,6 @@ function CreateWorkSheetForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              console.log(finalize.current)
               if (finalize.current) {
                 values.worksheetStatus = 'REPORTED'
               } else {
