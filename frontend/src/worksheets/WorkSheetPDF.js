@@ -35,7 +35,6 @@ function WorkSheetPDF(worksheet) {
   var doc = {
     content: [
       {
-        style: 'tableExample',
         text: 'Munkalap',
         style: 'header',
         alignment: 'right',
@@ -51,6 +50,7 @@ function WorkSheetPDF(worksheet) {
                 {
                   image: LOGO_STRING,
                   width: 150,
+                  margin: [4, 13, 2, 8],
                 },
               ],
               [
@@ -103,7 +103,7 @@ function WorkSheetPDF(worksheet) {
                   bold: true,
                 },
                 {
-                  text: `ML-00001`,
+                  text: `${worksheet.id}`,
                   fontSize: 25,
                 },
               ],
