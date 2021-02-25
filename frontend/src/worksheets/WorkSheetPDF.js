@@ -109,7 +109,7 @@ function WorkSheetPDF(worksheet) {
                   bold: true,
                 },
                 {
-                  text: `${worksheet.partnerId}`,
+                  text: `ML-00001`,
                   fontSize: 25,
                 },
               ],
@@ -118,25 +118,62 @@ function WorkSheetPDF(worksheet) {
         },
       },
 
+      //2. táblázat
       {
-        style: 'tableExample',
+        table: {
+          widths: [130, 130, '*', '*', '*'],
+          body: [
+            [
+              { text: `Munkavégzés jellege:`, bold: true },
+              { text: `Az eszközök elszámolásának módja:`, bold: true },
+              { text: `Létszám:`, bold: true },
+              { text: `Rezsióra:`, bold: true },
+              { text: `Kiszállás:`, bold: true },
+            ],
+            [
+              {
+                text: `${typeOfWork[worksheet.typeOfWork]} ${
+                  typeOfWork[worksheet.typeOfWork] === 'Egyéb'
+                    ? 'Egyéb: ' + worksheet.customTypeOfWork
+                    : ''
+                }`,
+              },
+              `${assetSettlement[worksheet.assetSettlement]}`,
+              `${worksheet.numberOfEmployees} fő`,
+              `${worksheet.overheadHour} HUF`,
+              `${worksheet.deliveryKm} Km`,
+            ],
+          ],
+        },
+      },
+      //3. táblázat
+      {
         table: {
           widths: ['*'],
-          body: [['Az elvégzett munka leírása:'], ['{importLeiras}']],
+          body: [
+            [
+              {
+                text: `Az elvégzett munka leírása:`,
+                bold: true,
+              },
+            ],
+            [`${worksheet.description}`],
+          ],
+        },
+      },
+      //4. táblázat
+      {
+        table: {
+          widths: ['*'],
+          body: [
+            [{ text: 'Felhasznált anyagok:', bold: true }],
+            [`${worksheet.usedMaterial}`],
+          ],
         },
       },
 
+      //5.táblázat
       {
-        style: 'tableExample',
-        table: {
-          widths: ['*'],
-          body: [['Felhasznált anyagok:'], ['{importAnyagok}']],
-        },
-      },
-
-      //NEW TABLE
-      {
-        style: 'tableExample',
         table: {
           widths: ['*', '*', '*'],
           body: [
