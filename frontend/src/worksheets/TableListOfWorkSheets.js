@@ -12,7 +12,6 @@ import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const { status, workSheets, setStatus, updateWorkSheets } = useWorkSheets()
-  //const { workSheets, updateWorkSheets } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
