@@ -39,7 +39,7 @@ export default function useEmployeeData() {
   async function controlingEmployeeData(values) {
     try {
       const response =
-        id !== undefined ? await putUser(id, values) : await postUser(values)
+        id === undefined ? await postUser(values) : await putUser(id, values)
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva')
         setSentSuccessfully(true)
