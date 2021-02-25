@@ -102,9 +102,6 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
-                      <Link to={`/worksheets/update/${worksheet.id}`}>
-                        <EditButton />
-                      </Link>
                       <Link onClick={() => WorkSheetPDF(worksheet)}>
                         <PdfButton />
                       </Link>
