@@ -1,6 +1,6 @@
 import api from './createApi'
 
-function putPartner(id, credentials) {
+function updatePartner(id, credentials) {
   return api.put(`/partners/${id}`, credentials)
 }
 
@@ -12,8 +12,8 @@ function getPartner(id) {
   return api.get(`/partners/${id}`)
 }
 
-function postPartner(credentials) {
+function createPartner(credentials) {
   return api.post('/partners', credentials)
 }
 
-export { putPartner, getPartners, getPartner, postPartner }
+export { updatePartner, getPartners, getPartner, createPartner }
