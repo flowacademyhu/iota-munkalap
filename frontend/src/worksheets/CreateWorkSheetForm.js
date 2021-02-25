@@ -16,6 +16,7 @@ import {
 } from './WorksheetDropdownOptions'
 import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
+import TextareaInput from '../TextareaInput'
 
 function CreateWorkSheetForm({
   sent,
@@ -107,10 +108,9 @@ function CreateWorkSheetForm({
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
-                  <Input
+                  <TextareaInput
                     name="description"
                     label="Elvégzett munka leírása"
-                    type="text"
                   />
                   <Input
                     name="usedMaterial"
