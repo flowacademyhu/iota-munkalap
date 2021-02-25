@@ -9,7 +9,6 @@ export default function useWorksheetData() {
   const [popUpMessage, setPopUpMessage] = useState('')
   const [worksheetData, setWorksheetData] = useState()
   const { id } = useParams()
-  const [WorkSheetDataHandle, setWorkSheetDataHandle] = useState(false)
 
   const history = useHistory()
 
@@ -39,16 +38,11 @@ export default function useWorksheetData() {
   }, [UpdateWorksheet])
 
   async function HandleData(values) {
-    if (id !== undefined) {
-      setWorkSheetDataHandle(true)
-    }
-    if (id === undefined) {
-      setWorkSheetDataHandle(false)
-    }
     try {
-      const response = WorkSheetDataHandle
-        ? await putWorkSheet(id, values)
-        : await postWorkSheet(values)
+      const response =
+        id !== undefined
+          ? await putWorkSheet(id, values)
+          : await postWorkSheet(values)
       if (response.status === 200) {
         setPopUpMessage('Munkalap sikeresen módosítva')
         setSentSuccessfully(true)

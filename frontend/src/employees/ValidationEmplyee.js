@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export default function schema() {
+export function schema() {
   const schema = yup.object().shape({
     lastName: yup.string().required('A vezetéknév kötelező!'),
     firstName: yup.string().required('A keresztnév kötelező!'),
@@ -8,6 +8,12 @@ export default function schema() {
       .string()
       .required('Az email kötelező!')
       .email('Nem megfelelő email cím!'),
+  })
+  return schema
+}
+
+export function regSchema() {
+  const regSchema = yup.object().shape({
     password: yup
       .string()
       .required('A jelszó kötelező!')
@@ -20,6 +26,5 @@ export default function schema() {
       .required('Add meg a jelszót még egyszer!')
       .oneOf([yup.ref('password')], 'A két jelszó nem egyezik meg!'),
   })
-
-  return schema
+  return regSchema
 }

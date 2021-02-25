@@ -1,11 +1,10 @@
 import React from 'react'
 import { Formik, Form } from 'formik'
-import * as yup from 'yup'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
-import schema from './ValidationEmplyee'
+import { schema, regSchema } from './ValidationEmplyee'
 
 function CreateEmployeeForm({
   sent,
@@ -16,22 +15,28 @@ function CreateEmployeeForm({
   user,
   registration,
 }) {
+  const initialValuesCreate = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  }
+  const initialValuesEdit = {
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+  }
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={{
-              firstName: '',
-              lastName: '',
-              email: '',
-              password: '',
-              confirmPassword: '',
-              ...user,
-            }}
-            registration
-            validationSchema={schema}
+            initialValues={
+              registration ? initialValuesEdit : initialValuesCreate
+            }
+            validationSchema={registration ? schema : (schema, regSchema)}
             onSubmit={(values) => {
               sendData(values)
             }}

@@ -9,7 +9,6 @@ export default function useUserData() {
   const [popUpMessage, setPopUpMessage] = useState('')
   const [userData, setUserData] = useState()
   const { id } = useParams()
-  const [userDataHandle, setUserDataHandle] = useState(false)
 
   const history = useHistory()
 
@@ -38,16 +37,9 @@ export default function useUserData() {
   }, [UpdateUser])
 
   async function HandleData(values) {
-    if (id !== undefined) {
-      setUserDataHandle(true)
-    }
-    if (id === undefined) {
-      setUserDataHandle(false)
-    }
     try {
-      const response = userDataHandle
-        ? await putUser(id, values)
-        : await postUser(values)
+      const response =
+        id !== undefined ? await putUser(id, values) : await postUser(values)
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva')
         setSentSuccessfully(true)
