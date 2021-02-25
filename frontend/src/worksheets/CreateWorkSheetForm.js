@@ -53,7 +53,7 @@ function CreateWorkSheetForm({
               if (finalize.current) {
                 values.worksheetStatus = 'REPORTED'
               } else {
-                values.worksheetStatus = 'CLOSED'
+                values.worksheetStatus = 'CREATED'
               }
               sendData(values)
             }}
