@@ -18,7 +18,7 @@ export default function useWorkSheets() {
 
   useEffect(() => {
     updateWorkSheets()
-  }, [updateWorkSheets])
+  }, [updateWorkSheets, setWorkSheets])
 
   return {
     workSheets,
