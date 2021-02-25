@@ -6,7 +6,6 @@ import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
-import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
 import {
@@ -59,7 +58,6 @@ function CreateWorkSheetForm({
                 values.worksheetStatus = 'CREATED'
               }
               values.createdAt = moment(date).format('yyyy-MM-DD')
-              console.log(values)
               sendData(values)
             }}
           >
