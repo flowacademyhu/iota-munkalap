@@ -6,6 +6,7 @@ export default function TextareaInput({
   handleChange,
   label,
   container,
+  name,
   ...props
 }) {
   const [field, meta] = useField(props)
@@ -14,7 +15,7 @@ export default function TextareaInput({
 
   return (
     <div className="form-group my-4">
-      <Form.Group controlId="textArea">
+      <Form.Group controlId={`form-group-${name}`}>
         <Form.Label>{label}</Form.Label>
         <Form.Control
           {...field}
