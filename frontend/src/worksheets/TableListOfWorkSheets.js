@@ -49,7 +49,7 @@ export default function TableListOfWorkSheets() {
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
                   <tr key={index}>
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{worksheet.id}</th>
                     <td>
                       {worksheet.createdBy.lastName}{' '}
                       {worksheet.createdBy.firstName}
