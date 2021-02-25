@@ -1,6 +1,6 @@
 import React from 'react'
 import EmployeeForm from './EmployeeForm'
-import useUserData from '../hooks/useUserData'
+import useEmployeeData from '../hooks/useEmployeeData'
 
 export default function Employee() {
   const {
@@ -9,7 +9,7 @@ export default function Employee() {
     popUpMessage,
     sent,
     userData,
-  } = useUserData()
+  } = useEmployeeData()
 
   return window.location.pathname === '/employees/new' ? (
     <>

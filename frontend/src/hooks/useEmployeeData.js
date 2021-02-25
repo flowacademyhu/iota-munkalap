@@ -3,7 +3,7 @@ import { postUser, putUser, getUser } from '../api/UserAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
-export default function useUserData() {
+export default function useEmployeeData() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
