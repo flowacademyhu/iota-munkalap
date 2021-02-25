@@ -36,7 +36,7 @@ export default function useUserData() {
     UpdateUser()
   }, [UpdateUser])
 
-  async function handleData(values) {
+  async function controlingEmployeeData(values) {
     try {
       const response =
         id !== undefined ? await putUser(id, values) : await postUser(values)
@@ -57,7 +57,7 @@ export default function useUserData() {
 
   return {
     UpdateUser,
-    handleData,
+    controlingEmployeeData,
     handleClick,
     popUpMessage,
     sent,
