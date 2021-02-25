@@ -5,8 +5,6 @@ import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
