@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
@@ -23,7 +23,7 @@ function CreateWorkSheetForm({
   sendData,
   title,
 }) {
-  const [finalize, setFinalize] = useState(false)
+  const finalize = useRef(false)
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -50,7 +50,8 @@ function CreateWorkSheetForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              if (finalize) {
+              console.log(finalize.current)
+              if (finalize.current) {
                 values.worksheetStatus = 'REPORTED'
               } else {
                 values.worksheetStatus = 'CLOSED'
@@ -135,7 +136,7 @@ function CreateWorkSheetForm({
                     <Button
                       text="Mentés"
                       type="submit"
-                      onClick={() => setFinalize(false)}
+                      onClick={() => (finalize.current = false)}
                       moreClassName="h-auto"
                     />
                   </div>
@@ -143,7 +144,7 @@ function CreateWorkSheetForm({
                     <Button
                       text="Mentés és készre jelentés"
                       type="submit"
-                      onClick={() => setFinalize(true)}
+                      onClick={() => (finalize.current = true)}
                       moreClassName="h-auto"
                     />
                   </div>
