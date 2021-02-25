@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.PartnerDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -20,7 +21,6 @@ import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -48,6 +48,7 @@ class PartnerControllerTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    //private static final Object PARTNER_ID = "68406b11-99a4-40f8-ae9c-f7859f4ccb20";
 
     @LocalServerPort
     private int port;
@@ -64,7 +65,7 @@ class PartnerControllerTest {
     }
 
 
-    private static PartnerDTO  createPartner() {
+    private static Partner createPartner() {
         return given().header(getAuthorization(adminLogin())).log().all()
                 .body(givenPartnerDTO())
                 .contentType(ContentType.JSON)
@@ -73,7 +74,7 @@ class PartnerControllerTest {
                 .then().log().all()
                 .contentType(ContentType.JSON)
                 .statusCode(201)
-                //.assertThat()
+                .assertThat()
                 .body("$", notNullValue())
                 .body("partnerEmail", equalTo(PARTNER_EMAIL))
                 .body("telefon", equalTo(TELEFON))
@@ -97,7 +98,7 @@ class PartnerControllerTest {
                 .body("szamlazasiCimSzint", equalTo(SZINT))
                 .body("szamlazasiCimAjto", equalTo(AJTO))
                 .body("szamlazasiCimHrsz", equalTo(HRSZ))
-                .extract().body().as(PartnerDTO.class);
+                .extract().body().as(Partner.class);
     }
 
     private static PartnerDTO givenPartnerDTO() {
