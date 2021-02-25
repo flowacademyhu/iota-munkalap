@@ -5,7 +5,8 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import org.keycloak.representations.AccessTokenResponse;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class TestHelper {
     public static Header getAuthorization(String token) {
@@ -19,6 +20,10 @@ public class TestHelper {
                 .when()
                 .post("/api/login")
                 .then()
+                .log().all()
+                .assertThat()
+                .body("access_token", notNullValue())
+                .statusCode(200)
                 .extract().body().as(AccessTokenResponse.class).getToken();
     }
 }
