@@ -15,27 +15,26 @@ function CreateEmployeeForm({
   user,
   notRegistration,
 }) {
-  const initialValuesCreate = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  }
-  const initialValuesEdit = {
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-  }
+  const initialValues = notRegistration
+    ? {
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
+      }
+    : {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      }
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={
-              notRegistration ? initialValuesEdit : initialValuesCreate
-            }
+            initialValues={initialValues}
             validationSchema={notRegistration ? schema : (schema, regSchema)}
             onSubmit={(values) => {
               sendData(values)
