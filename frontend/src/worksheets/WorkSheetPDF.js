@@ -44,7 +44,7 @@ function WorkSheetPDF(worksheet) {
         style: 'header',
         alignment: 'right',
       },
-
+//1st table (header)
       {
         style: 'tableExample',
         table: {
@@ -116,7 +116,7 @@ function WorkSheetPDF(worksheet) {
         },
       },
 
-      //2. táblázat
+      //2nd table 
       {
         table: {
           widths: [130, 130, '*', '*', '*'],
@@ -144,7 +144,7 @@ function WorkSheetPDF(worksheet) {
           ],
         },
       },
-      //3. táblázat
+      //3rd table (description)
       {
         table: {
           widths: ['*'],
@@ -159,7 +159,7 @@ function WorkSheetPDF(worksheet) {
           ],
         },
       },
-      //4. táblázat
+      //4th table (materials)
       {
         table: {
           widths: ['*'],
@@ -170,7 +170,7 @@ function WorkSheetPDF(worksheet) {
         },
       },
 
-      //5.táblázat
+      //5. table (sigatures, date)
       {
         table: {
           widths: ['*', '*', '*'],
