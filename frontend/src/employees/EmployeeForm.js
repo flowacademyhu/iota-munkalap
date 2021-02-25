@@ -5,26 +5,7 @@ import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
-
-const schema = yup.object().shape({
-  lastName: yup.string().required('A vezetéknév kötelező!'),
-  firstName: yup.string().required('A keresztnév kötelező!'),
-  email: yup
-    .string()
-    .required('Az email kötelező!')
-    .email('Nem megfelelő email cím!'),
-  password: yup
-    .string()
-    .required('A jelszó kötelező!')
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-      'A jelszó minimum 8 karakter hosszú, tartalmaznia kell kis- és nagybetűt, valamint számot!'
-    ),
-  confirmPassword: yup
-    .string()
-    .required('Add meg a jelszót még egyszer!')
-    .oneOf([yup.ref('password')], 'A két jelszó nem egyezik meg!'),
-})
+import schema from './ValidationEmplyee'
 
 function CreateEmployeeForm({
   sent,
@@ -32,6 +13,8 @@ function CreateEmployeeForm({
   popUpMessage,
   sendData,
   title,
+  user,
+  registration,
 }) {
   return (
     <div className="container my-5">
@@ -45,7 +28,9 @@ function CreateEmployeeForm({
               email: '',
               password: '',
               confirmPassword: '',
+              ...user,
             }}
+            registration
             validationSchema={schema}
             onSubmit={(values) => {
               sendData(values)
@@ -56,11 +41,17 @@ function CreateEmployeeForm({
               <Input name="lastName" label="Vezetéknév" type="text" />
               <Input name="firstName" label="Keresztnév" type="text" />
               <Input name="email" label="E-mail" type="email" />
-              <Input name="password" label="Jelszó" type="password" />
+              <Input
+                name="password"
+                label="Jelszó"
+                type="password"
+                disabled={registration}
+              />
               <Input
                 name="confirmPassword"
                 label="Jelszó még egyszer"
                 type="password"
+                disabled={registration}
               />
               <div className="buttons">
                 <Link to="/employees">

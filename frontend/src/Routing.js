@@ -1,8 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import TableListOfEmployees from './employees/TableListOfEmployees'
-import CreateEmployee from './employees/CreateEmployee'
-import UpdateEmployee from './employees/UpdateEmployee'
+import Employee from './employees/Employee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import Worksheet from './worksheets/Worksheet'
@@ -13,10 +12,10 @@ function Routing() {
     <div className="col-12">
       <Switch>
         <AdminRoute path="/employees/new">
-          <CreateEmployee />
+          <Employee />
         </AdminRoute>
         <AdminRoute path="/employees/update/:id">
-          <UpdateEmployee />
+          <Employee />
         </AdminRoute>
         <AdminRoute exact path="/employees">
           <TableListOfEmployees />
