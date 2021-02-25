@@ -17,17 +17,11 @@ function FilterWorkSheets(props) {
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
-          <option value="CREATED" label="Nyitott">
-            Nyitott
-          </option>
-          <option value="REPORTED" label="Készre jelentett">
-            Készre jelentett
-          </option>
-          <option value="CLOSED" label="Lezárt">
-            Lezárt
-          </option>
+          <option value="CREATED">Nyitott</option>
+          <option value="REPORTED">Készre jelentett</option>
+          <option value="CLOSED">Lezárt</option>
           <option value="" label="Mind">
-            Lezárt
+            Mind
           </option>
         </select>
       </form>
