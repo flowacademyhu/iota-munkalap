@@ -15,7 +15,6 @@ import {
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
 import Signature from './Signature'
-import TextareaInput from '../TextareaInput'
 
 function CreateWorkSheetForm({
   sent,
