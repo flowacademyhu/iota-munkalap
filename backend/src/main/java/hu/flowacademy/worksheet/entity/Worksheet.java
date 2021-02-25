@@ -5,6 +5,7 @@ import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -26,10 +27,8 @@ public class Worksheet {
             name = "secondaryIdGenerator",
             strategy = "hu.flowacademy.worksheet.generator.WorksheetSerialGenerator",
             parameters = {
-                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.INCREMENT_PARAM, value = "50"),
-                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.VALUE_PREFIX_PARAMETER, value = "m-"),
-                    @org.hibernate.annotations.Parameter(name = WorksheetSerialGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d"),
-                    @org.hibernate.annotations.Parameter(name = "initial_value", value = "10000")
+                    @Parameter(name = WorksheetSerialGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d"),
+                    @Parameter(name = "initial_value", value = "10000")
             })
     @Column(name = "worksheet_id", nullable = false)
     private String id;
