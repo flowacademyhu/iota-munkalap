@@ -26,7 +26,7 @@ export default function Signature(props) {
   }
 
   return (
-    <>
+    <div className="border border-secondary">
       <SignaturePad
         id={props.name}
         ref={signaturePadRef}
@@ -37,9 +37,9 @@ export default function Signature(props) {
           onEnd,
         }}
       />
-      <span className="btn btn-success" onClick={clear}>
+      <span className="btn btn-success m-2" onClick={clear}>
         Clear
       </span>
-    </>
+    </div>
   )
 }
