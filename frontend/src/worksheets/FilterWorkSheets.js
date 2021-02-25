@@ -17,7 +17,7 @@ function FilterWorkSheets(props) {
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
-          <option value="CREATED">Nyitott</option>
+          <option value="CREATED">Létrehozott</option>
           <option value="REPORTED">Készre jelentett</option>
           <option value="CLOSED">Lezárt</option>
           <option value="" label="Mind">
