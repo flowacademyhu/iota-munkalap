@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserOperationDTO {
     private String firstName;
     private String lastName;

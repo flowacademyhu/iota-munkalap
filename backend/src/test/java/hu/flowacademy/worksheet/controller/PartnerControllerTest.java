@@ -2,15 +2,12 @@ package hu.flowacademy.worksheet.controller;
 
 import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.PartnerDTO;
-import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.http.Header;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.keycloak.representations.AccessTokenResponse;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -18,11 +15,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Locale;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
-import static io.restassured.RestAssured.when;
+import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
+import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
-import static io.restassured.RestAssured.given;
 
 
 @ExtendWith(SpringExtension.class)
@@ -62,24 +59,13 @@ class PartnerControllerTest {
     }
 
     @Test
-    public String login() {
-        return given()
-                .log().all()
-                .body(UserOperationDTO.builder().email("superadmin@superadmin.hu").password("superadmin").build())
-                .contentType(ContentType.JSON)
-                .when()
-                .post("/api/login")
-                .then()
-                .log().all()
-                .assertThat()
-                .contentType(ContentType.JSON)
-                .statusCode(201)
-                .body("$", notNullValue())
-                .extract().body().as(AccessTokenResponse.class).getToken();
+    public void create() {
+        createPartner();
     }
 
-    private static PartnerDTO createPartnerDTO() {
-                return given().header().log().all()
+
+    private static PartnerDTO  createPartner() {
+        return given().header(getAuthorization(adminLogin())).log().all()
                 .body(givenPartnerDTO())
                 .contentType(ContentType.JSON)
                 .when()
@@ -87,14 +73,15 @@ class PartnerControllerTest {
                 .then().log().all()
                 .contentType(ContentType.JSON)
                 .statusCode(201)
+                //.assertThat()
                 .body("$", notNullValue())
                 .body("partnerEmail", equalTo(PARTNER_EMAIL))
                 .body("telefon", equalTo(TELEFON))
-                .body("megrendeloTipusa", equalTo(MEGRENDELO_TIPUSA))
+                .body("megrendeloTipusa", equalTo(MEGRENDELO_TIPUSA.name()))
                 .body("nev", equalTo(NEV))
                 .body("rovidNev", equalTo(ROVID_NEV))
                 .body("adoszam", equalTo(ADOSZAM))
-                .body("kAdoszamtipus", equalTo(K_ADOSZAM_TIPUS))
+                .body("kadoszamtipus", equalTo(K_ADOSZAM_TIPUS))
                 .body("bankszamlaszam", equalTo(BANKSZAMLASZAM))
                 .body("szamlazasiCimOrszagKod", equalTo(ORSZAG_KOD))
                 .body("szamlazasiCimOrszagNev", equalTo(ORSZAG_NEV))
@@ -114,7 +101,7 @@ class PartnerControllerTest {
     }
 
     private static PartnerDTO givenPartnerDTO() {
-       return PartnerDTO.builder()
+        return PartnerDTO.builder()
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
