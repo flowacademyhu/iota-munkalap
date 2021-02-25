@@ -13,12 +13,12 @@ export default function useWorkSheets() {
         setWorkSheets(data)
       }
     },
-    [status]
+    [status, setWorkSheets]
   )
 
   useEffect(() => {
     updateWorkSheets()
-  }, [updateWorkSheets, setWorkSheets])
+  }, [updateWorkSheets])
 
   return {
     workSheets,
