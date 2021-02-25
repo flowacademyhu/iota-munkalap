@@ -16,7 +16,7 @@ export default function TableListofPartners() {
                 <th scope="col">Név</th>
                 <th scope="col">Cím</th>
                 <th scope="col">Adószám</th>
-                <th scope="col">Opciók</th>
+                <th scope="col">Módosítás</th>
               </tr>
             </thead>
             <tbody>
