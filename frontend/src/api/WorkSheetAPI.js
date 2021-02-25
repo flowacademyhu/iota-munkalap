@@ -24,10 +24,19 @@ async function closeWorkSheet(id) {
   }
 }
 
+async function finalizeWorkSheet(id) {
+  try {
+    return await api.put(`/worksheets/${id}/finalize`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+  }
+}
+
 export {
   getWorkSheets,
   getWorkSheet,
   putWorkSheet,
   postWorkSheet,
   closeWorkSheet,
+  finalizeWorkSheet,
 }

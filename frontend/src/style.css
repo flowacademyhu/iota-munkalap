@@ -52,6 +52,6 @@ img {
   margin: 0px 3px 0px 3px;
 }
 
-.closeIcon {
-  color: red;
+.hidden {
+  visibility: hidden;
 }
