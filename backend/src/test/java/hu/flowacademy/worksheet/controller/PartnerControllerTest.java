@@ -1,6 +1,5 @@
 package hu.flowacademy.worksheet.controller;
 
-import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
@@ -12,8 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.Locale;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
@@ -48,11 +45,9 @@ class PartnerControllerTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
-    //private static final Object PARTNER_ID = "68406b11-99a4-40f8-ae9c-f7859f4ccb20";
 
     @LocalServerPort
     private int port;
-    private static Faker faker = new Faker(Locale.forLanguageTag("hu"));
 
     @BeforeEach
     private void setUp() {
