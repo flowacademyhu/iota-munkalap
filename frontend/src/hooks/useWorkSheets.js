@@ -10,21 +10,12 @@ export default function useWorkSheets() {
 
   const updateWorkSheets = useCallback(
     async function () {
-      const { data } = await getWorkSheets(startDate, endDate)
+      const { data } = await getWorkSheets(startDate, endDate, status)
       if (data) {
         setWorkSheets(data)
       }
     },
-    [startDate, endDate]
-  )
-  const updateWorkSheets = useCallback(
-    async function () {
-      const { data } = await getWorkSheets(status)
-      if (data) {
-        setWorkSheets(data)
-      }
-    },
-    [status, setWorkSheets]
+    [startDate, endDate, status, setWorkSheets]
   )
 
   useEffect(() => {

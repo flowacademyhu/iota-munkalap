@@ -4,7 +4,10 @@ import FilterWorkSheets from './FilterWorkSheets'
 import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { typeOfWork } from '../TranslationForWorkSheet'
+import {
+  typeOfWorkTranslation,
+  statusTranslation,
+} from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
@@ -20,8 +23,10 @@ export default function TableListOfWorkSheets() {
     endDate,
     setStartDate,
     setEndDate,
+    status,
+    setStatus,
   } = useWorkSheets()
-  const { status, workSheets, setStatus, updateWorkSheets } = useWorkSheets()
+
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
@@ -87,8 +92,8 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
-                    <td>{status[worksheet.worksheetStatus]}</td>
+                    <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
+                    <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
