@@ -44,7 +44,7 @@ function WorkSheetPDF(worksheet) {
         style: 'header',
         alignment: 'right',
       },
-//1st table (header)
+      //1st table (header)
       {
         style: 'tableExample',
         table: {
@@ -116,7 +116,7 @@ function WorkSheetPDF(worksheet) {
         },
       },
 
-      //2nd table 
+      //2nd table
       {
         table: {
           widths: [130, 130, '*', '*', '*'],
