@@ -41,31 +41,38 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <div className="d-flex flex-row justify-content-around p-5">
+      <div className="py-1">
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
-        <FilterWorkSheets status={status} onStatusChange={setStatus} />
       </div>
-      <div>Szűrés dátum szerint:</div>
-      <div>
-        <CalendarDropDown
-          date={startDate}
-          setDate={setStartDate}
-          placeholderText="Intervallum kezdete"
-        />
-        <CalendarDropDown
-          date={endDate}
-          setDate={setEndDate}
-          placeholderText="Intervallum vége"
-        />
-        <Button
-          text="Összes"
-          onClick={() => {
-            setStartDate(null)
-            setEndDate(null)
-          }}
-        />
+      <div className="d-flex flex-row justify-content-between">
+        <div className="ml-2">
+          <div>Szűrés dátum szerint:</div>
+          <div>
+            <CalendarDropDown
+              date={startDate}
+              setDate={setStartDate}
+              placeholderText="Intervallum kezdete"
+            />
+            <CalendarDropDown
+              date={endDate}
+              setDate={setEndDate}
+              placeholderText="Intervallum vége"
+            />
+            <Button
+              text="Összes"
+              onClick={() => {
+                setStartDate(null)
+                setEndDate(null)
+              }}
+            />
+          </div>
+        </div>
+        <div className="mr-2">
+          <div>Szűrés állapot szerint:</div>
+          <FilterWorkSheets status={status} onStatusChange={setStatus} />
+        </div>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">

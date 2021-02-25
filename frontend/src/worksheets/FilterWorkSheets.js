@@ -9,11 +9,11 @@ function FilterWorkSheets(props) {
   }
 
   return (
-    <div>
+    <div className="my-3">
       <form>
         <select
           value={status}
-          class="btn btn-success"
+          className="btn btn-success"
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
