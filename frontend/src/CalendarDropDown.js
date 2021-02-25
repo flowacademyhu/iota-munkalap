@@ -8,7 +8,6 @@ function CalendarDropDown({ date, setDate, placeholderText }) {
       selected={date}
       onChange={(date) => setDate(date)}
       dateFormat="yyyy.MM.dd"
-      disabledKeyboardNavigation
       placeholderText={placeholderText}
       className="mr-5 mb-5"
     />
