@@ -26,7 +26,7 @@ function CreateWorkSheetForm({
   title,
 }) {
   const finalize = useRef(false)
-  const [date, setDate] = useState()
+  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
