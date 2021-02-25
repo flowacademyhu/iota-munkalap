@@ -1,4 +1,5 @@
 import api from './createApi'
+import axios from 'axios'
 
 async function loginUser(credentials) {
   try {
@@ -30,9 +31,20 @@ function getUser(id) {
 }
 
 function getUsers(searchCriteria, status) {
-  return api.get('/users/', {
-    params: { searchCriteria, status },
-  })
+  const source = axios.CancelToken.source()
+  const request = api
+    .get('/users/', {
+      params: { searchCriteria, status },
+      cancelToken: source.token,
+    })
+    .catch(function (e) {
+      if (axios.isCancel(e)) {
+        return { data: null }
+      } else {
+        throw e
+      }
+    })
+  return { request, cancel: () => source.cancel() }
 }
 
 export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }

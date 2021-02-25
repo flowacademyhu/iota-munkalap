@@ -6,21 +6,22 @@ import UpdateEmployee from './employees/UpdateEmployee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
-import LoadingScreen from './LoadingScreen'
+import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
+import AdminRoute from './AdminRoute'
 
 function Routing() {
   return (
-    <Switch>
-      <div className="col-12">
-        <Route path="/employees/new">
+    <div className="col-12">
+      <Switch>
+        <AdminRoute path="/employees/new">
           <CreateEmployee />
-        </Route>
-        <Route path="/employees/update/:id">
+        </AdminRoute>
+        <AdminRoute path="/employees/update/:id">
           <UpdateEmployee />
-        </Route>
-        <Route exact path="/employees">
+        </AdminRoute>
+        <AdminRoute exact path="/employees">
           <TableListOfEmployees />
-        </Route>
+        </AdminRoute>
         <Route path="/partners">
           <TableListofPartners />
         </Route>
@@ -36,13 +37,9 @@ function Routing() {
         <Route path="/">
           <Redirect to="/partners" />
         </Route>
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   )
 }
 
 export default Routing
-
-function UpdateWorkSheet() {
-  return <LoadingScreen />
-}

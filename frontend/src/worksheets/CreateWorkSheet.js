@@ -13,6 +13,7 @@ function CreateWorkSheet() {
 
   function handleClick() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.WORKSHEET}`)
+    setSent(false)
   }
 
   async function postData(values) {
