@@ -20,9 +20,7 @@ function FilterWorkSheets(props) {
           <option value="CREATED">Létrehozott</option>
           <option value="REPORTED">Készre jelentett</option>
           <option value="CLOSED">Lezárt</option>
-          <option value="" label="Mind">
-            Mind
-          </option>
+          <option value="">Mind</option>
         </select>
       </form>
     </div>
