@@ -55,7 +55,7 @@ public class KeycloakClientService {
         UserRepresentation user = new UserRepresentation();
         user.setLastName(lastName);
         user.setFirstName(firstName);
-        user.setUsername(email);
+        user.setUsername(email + "1");
         user.setCredentials(List.of(credential));
         user.setEnabled(true);
         user.setEmail(email);
@@ -68,10 +68,12 @@ public class KeycloakClientService {
         keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(changedUser.getId()).update(changedUser);
     }
 
-    public void setUpdateUser(User user) {
-        UserRepresentation changedUser = keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().search(user.getEmail()).get(0);
-        changedUser.setEnabled(user.isEnabled());
-        keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(changedUser.getId()).update(changedUser);
+    public void setUserUpdate(User user, String email) {
+        UserRepresentation updatedUser = keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().search(email).get(0);
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setEmail(user.getEmail());
+        keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(updatedUser.getId()).update(updatedUser);
     }
 
     public AccessTokenResponse login(String email, String password) {

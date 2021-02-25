@@ -45,8 +45,13 @@ public class UserService {
     }
 
     public User update(Long id, User user) throws ValidationException {
+        System.out.println("Itt jártunk Service Update 1");
         validateUpdate(user);
+        System.out.println("Itt jártunk Service validation 1");
         User updatedUser = userRepository.findById(id).orElseThrow(() -> new ValidationException("The id is null or not real: " + user.getId()));
+        System.out.println("Itt jártunk Service User van-é 1");
+        keycloakClientService.setUserUpdate(user, updatedUser.getEmail());
+        System.out.println("Itt jártunk Service keycloak 1");
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setEmail(user.getEmail());

@@ -55,17 +55,11 @@ public class UserController {
     public AccessTokenResponse login(@RequestBody UserOperationDTO userOperationDTO) {
         return keycloakClientService.login(userOperationDTO.getEmail(), userOperationDTO.getPassword());
     }
-/* ORIGINAL
+
     @PutMapping("/users/{id}")
     @RolesAllowed("admin")
     public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
         return userService.update(id, user);
-    }
-*/
-    @PutMapping("/users/{id}")
-    @RolesAllowed("admin")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody User user) throws ValidationException {
-        return keycloakClientService.update(id, user);
     }
 
 
