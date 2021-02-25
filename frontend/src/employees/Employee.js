@@ -19,7 +19,7 @@ export default function Employee() {
         popUpMessage={popUpMessage}
         sendData={controlingEmployeeData}
         title="Új munkatárs létrehozása"
-        notRegistration={false}
+        isCreate={false}
       />
     </>
   ) : (
@@ -32,7 +32,7 @@ export default function Employee() {
           sendData={controlingEmployeeData}
           title="Adatok módosítása"
           user={userData}
-          notRegistration={true}
+          isCreate={true}
         />
       )}
     </>
