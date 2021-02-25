@@ -35,7 +35,7 @@ function CreateEmployeeForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={initialValues}
-            validationSchema={notRegistration ? schema : (schema, regSchema)}
+            validationSchema={notRegistration ? schema : regSchema}
             onSubmit={(values) => {
               sendData(values)
             }}
