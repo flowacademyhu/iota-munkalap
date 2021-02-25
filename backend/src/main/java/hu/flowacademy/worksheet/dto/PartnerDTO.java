@@ -2,12 +2,14 @@ package hu.flowacademy.worksheet.dto;
 
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder(toBuilder = true)
 public class PartnerDTO {
 
     private String partnerEmail;
