@@ -67,7 +67,7 @@ export default function TableListOfEmployees() {
                   />
                 ))
               ) : (
-                <td colspan="5">
+                <td colSpan="5">
                   <LoadingScreen />
                 </td>
               )}

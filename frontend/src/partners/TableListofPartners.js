@@ -8,7 +8,7 @@ export default function TableListofPartners() {
   return (
     <>
       <div className="border border-secondary">
-        <div className="container-fluid">
+        <div className="container-fluid align-items-center">
           <table className="table table-hover text-center">
             <thead>
               <tr>
@@ -30,11 +30,9 @@ export default function TableListofPartners() {
                   </tr>
                 ))
               ) : (
-                <tr>
-                  <td>
-                    <LoadingScreen />
-                  </td>
-                </tr>
+                <td colSpan="5">
+                  <LoadingScreen />
+                </td>
               )}
             </tbody>
           </table>
