@@ -1,15 +1,12 @@
-import logoString from './LogoForPdf'
+import { LOGO_STRING } from './LogoForPdf'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
 import {
   typeOfWork,
-  status,
   assetSettlement,
-  workingTimeAccounting,
   typeOfPayment,
 } from '../TranslationForWorkSheet'
 import SignaturePad from 'signature_pad'
-import imageToBase64 from 'image-to-base64'
 
 function renderSvg(param) {
   const canvasSignature = document.createElement('canvas')
@@ -21,8 +18,6 @@ function renderSvg(param) {
   const data = svgSignature.split(',')[1]
   return atob(data)
 }
-
-let logoBase64 = logoString
 
 const acknowledge =
   'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
@@ -40,7 +35,6 @@ function WorkSheetPDF(worksheet) {
   var doc = {
     content: [
       {
-        style: 'tableExample',
         text: 'Munkalap',
         style: 'header',
         alignment: 'right',
@@ -54,8 +48,9 @@ function WorkSheetPDF(worksheet) {
             [
               [
                 {
-                  image: logoBase64,
+                  image: LOGO_STRING,
                   width: 150,
+                  margin: [4, 13, 2, 8],
                 },
               ],
               [
@@ -108,7 +103,7 @@ function WorkSheetPDF(worksheet) {
                   bold: true,
                 },
                 {
-                  text: `ML-00001`,
+                  text: `${worksheet.id}`,
                   fontSize: 25,
                 },
               ],

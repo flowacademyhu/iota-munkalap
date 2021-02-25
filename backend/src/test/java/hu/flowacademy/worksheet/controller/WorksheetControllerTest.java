@@ -14,6 +14,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
@@ -26,7 +29,7 @@ import static org.hamcrest.Matchers.notNullValue;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class WorksheetControllerTest {
-
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private final static String PARTNER_ID = "PartnerId";
     private final static TypeOfWork TYPE_OF_WORK = TypeOfWork.REPAIR;
     private final static AssetSettlement ASSET_SETTLEMENT = AssetSettlement.REPAYMENT;
@@ -40,6 +43,8 @@ class WorksheetControllerTest {
     private static final TypeOfPayment TYPE_OF_PAYMENT = CASH;
     private static final String WORKER_SIGNATURE = "Nagy Lajos";
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
+    private final static String actualDate = "2021.02.25";
+    private static final LocalDate CREATED_AT = LocalDate.parse(actualDate, formatter);
 
     @LocalServerPort
     private int port;
@@ -59,7 +64,6 @@ class WorksheetControllerTest {
                 .when().post("api/worksheets").
                 then()
                 .log().all()
-                .assertThat()
                 .body("id", notNullValue())
                 .body("deliveryKm", equalTo(DELIVERY_KM))
                 .body("accountSerialNumber", equalTo(ACCOUNT_SERIAL_NUMBER))
@@ -74,7 +78,9 @@ class WorksheetControllerTest {
                 .body("workingTimeAccounting", equalTo(WORKING_TIME_ACCOUNTING.name()))
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
+                .body("createdAt", equalTo(actualDate))
                 .statusCode(201);
+
     }
 
     private WorksheetDTO givenAWorksheetDTO() {
@@ -92,6 +98,7 @@ class WorksheetControllerTest {
                 .typeOfPayment(TYPE_OF_PAYMENT)
                 .workerSignature(WORKER_SIGNATURE)
                 .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .createdAt(CREATED_AT)
                 .build();
     }
 }

@@ -6,17 +6,31 @@ import Button from '../Button'
 import { typeOfWork, status } from '../TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
-import { closeWorkSheet } from '../api/WorkSheetAPI'
+import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 import WorkSheetPDF from './WorkSheetPDF'
 import PdfButton from '../specialButtons/PdfButton'
+import FinalizeButton from '../specialButtons/FinalizeButton'
+import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const {
+    workSheets,
+    updateWorkSheets,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+  } = useWorkSheets()
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
+    updateWorkSheets()
+  }
+
+  async function finalizeAndReload(worksheet) {
+    await finalizeWorkSheet(worksheet.id)
     updateWorkSheets()
   }
 
@@ -26,6 +40,26 @@ export default function TableListOfWorkSheets() {
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
+      </div>
+      <div>Szűrés dátum szerint:</div>
+      <div>
+        <CalendarDropDown
+          date={startDate}
+          setDate={setStartDate}
+          placeholderText="Intervallum kezdete"
+        />
+        <CalendarDropDown
+          date={endDate}
+          setDate={setEndDate}
+          placeholderText="Intervallum vége"
+        />
+        <Button
+          text="Összes"
+          onClick={() => {
+            setStartDate(null)
+            setEndDate(null)
+          }}
+        />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
@@ -45,7 +79,7 @@ export default function TableListOfWorkSheets() {
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
                   <tr key={index}>
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{worksheet.id}</th>
                     <td>
                       {worksheet.createdBy.lastName}{' '}
                       {worksheet.createdBy.firstName}
@@ -55,14 +89,19 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWork[worksheet.typeOfWork]}</td>
                     <td>{status[worksheet.worksheetStatus]}</td>
                     <td>
-                      {isAdmin && worksheet.worksheetStatus !== 'CLOSED' && (
-                        <CloseButton
-                          onClick={() => closeAndReload(worksheet)}
-                        />
-                      )}
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
                       </Link>
+                      <FinalizeButton
+                        hidden={worksheet.worksheetStatus !== 'CREATED'}
+                        onClick={() => finalizeAndReload(worksheet)}
+                      />
+                      {isAdmin && (
+                        <CloseButton
+                          hidden={worksheet.worksheetStatus === 'CLOSED'}
+                          onClick={() => closeAndReload(worksheet)}
+                        />
+                      )}
                       <Link onClick={() => WorkSheetPDF(worksheet)}>
                         <PdfButton />
                       </Link>
@@ -70,8 +109,8 @@ export default function TableListOfWorkSheets() {
                   </tr>
                 ))
               ) : (
-                <tr colspan="5">
-                  <td>
+                <tr>
+                  <td colSpan="5">
                     <LoadingScreen />
                   </td>
                 </tr>
