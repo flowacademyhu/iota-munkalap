@@ -2,11 +2,9 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,8 +16,7 @@ import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -63,14 +60,13 @@ class PartnerControllerTest {
 
     @Test
     public void testFilerUserReturnList() {
-        Partner[] toCheckArray = given()
+        given()
                 .header(getAuthorization(adminLogin()))
                 .param("searchCriteria", "Teszt")
                 .when().get("api/partners")
                 .then()
                 .log().all()
-                .extract().body().as(Partner[].class);
-        Assertions.assertTrue(toCheckArray[0].getNev().contains("Teszt"));
+                .body("nev", hasItem(NEV));
     }
 
     private static Partner createPartner() {
