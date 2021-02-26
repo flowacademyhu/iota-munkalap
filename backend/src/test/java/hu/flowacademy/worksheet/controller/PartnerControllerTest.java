@@ -16,8 +16,7 @@ import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -59,6 +58,16 @@ class PartnerControllerTest {
         createPartner();
     }
 
+    @Test
+    public void testFilerUserReturnList() {
+        given()
+                .header(getAuthorization(adminLogin()))
+                .param("searchCriteria", "Teszt")
+                .when().get("api/partners")
+                .then()
+                .log().all()
+                .body("nev", hasItem(NEV));
+    }
 
     private static Partner createPartner() {
         return given().header(getAuthorization(adminLogin())).log().all()
