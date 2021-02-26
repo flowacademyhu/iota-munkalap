@@ -22,11 +22,10 @@ import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.REPAIR;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.BANKTRANSFER;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.*;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.REPAYMENT;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
