@@ -1,6 +1,8 @@
 package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
 import lombok.AllArgsConstructor;
@@ -36,8 +38,10 @@ public class Worksheet {
             })
     @Column(name = "worksheet_id", nullable = false)
     private String id;
-    @Column(name = "partner_id")
-    private String partnerId; // FIXME Change to many to one in the future.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Partner partnerId;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;
