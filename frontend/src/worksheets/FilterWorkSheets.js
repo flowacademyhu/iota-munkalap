@@ -18,10 +18,11 @@ function FilterWorkSheets(props) {
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
-          <option value="CREATED">{statusTranslation['CREATED']}</option>
-          <option value="REPORTED">{statusTranslation['REPORTED']}</option>
-          <option value="CLOSED">{statusTranslation['CLOSED']}</option>
-          <option value="">{statusTranslation['ALL']}</option>
+          {Object.keys(statusTranslation).map((actualStatus) => (
+            <option value={actualStatus}>
+              {statusTranslation[actualStatus]}
+            </option>
+          ))}
         </select>
       </form>
     </div>
