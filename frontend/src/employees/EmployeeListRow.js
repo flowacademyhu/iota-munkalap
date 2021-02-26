@@ -5,24 +5,24 @@ import ActivateButton from '../specialButtons/ActivateButton'
 import { Link } from 'react-router-dom'
 
 export default function EmployeeListRow({
-  employee,
+  employee: { id, email, lastName, firstName, enabled },
   onInactivate,
   onActivate,
 }) {
   return (
-    <tr key={employee.id}>
-      <th scope="row">{employee.id}</th>
+    <tr key={id}>
+      <th scope="row">{id}</th>
       <td>
-        {employee.lastName} {employee.firstName}
+        {lastName} {firstName}
       </td>
-      <td>{employee.email}</td>
-      <td>{employee.enabled ? 'Aktív' : 'Inaktív'}</td>
+      <td>{email}</td>
+      <td>{enabled ? 'Aktív' : 'Inaktív'}</td>
       <td>
         <div>
-          <Link to={`/employees/update/${employee.id}`}>
+          <Link to={`/employees/update/${id}`}>
             <EditButton />
           </Link>
-          {employee.enabled ? (
+          {enabled ? (
             <InactivateButton onClick={onInactivate} />
           ) : (
             <ActivateButton onClick={onActivate} />
