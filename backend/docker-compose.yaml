@@ -18,13 +18,13 @@ services:
       MYSQL_DATABASE: worksheet
       MYSQL_USER: worksheet
       MYSQL_PASSWORD: worksheet
-#  app:
-#    image: munkalap:latest
-#    build:
-#      context: .
-#    container_name: munkalap
-#    hostname: munkalap
-#    environment:
-#      - keycloak.auth-server-url=http://keycloak:8080/auth
-#    ports:
-#      - 8080:8080
+  app:
+    image: munkalap:latest
+    build:
+      context: .
+    container_name: munkalap
+    hostname: munkalap
+    environment:
+      - keycloak.auth-server-url=http://keycloak:8080/auth
+    ports:
+      - 8080:8080
