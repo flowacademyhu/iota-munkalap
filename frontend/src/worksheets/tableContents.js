@@ -1,6 +1,6 @@
-
-///eleje
-content: [
+function createHeader() {
+  ///eleje
+  content: [
     {
       text: 'Munkalap',
       style: 'header',
@@ -8,11 +8,82 @@ content: [
     },
     ///eleje
     //tartalom///
-
+    {
+      style: 'tableExample',
+      table: {
+        widths: ['*', '*', '*'],
+        body: [
+          [
+            [
+              {
+                image: LOGO_STRING,
+                width: 150,
+                margin: [4, 13, 2, 8],
+              },
+            ],
+            [
+              {
+                text: 'Az ügyfél adatai \n',
+                bold: true,
+                fontSize: 10,
+              },
+              {
+                text: `Partner ID:`,
+                bold: true,
+                fontSize: 8,
+              },
+              {
+                text: `${worksheet.partnerId}\n`,
+                fontSize: 8,
+              },
+              {
+                text: `Az Ügyfél számlázási neve:`,
+                fontSize: 8,
+                bold: true,
+              },
+              {
+                text: `{partner.BillingName}\n`,
+                fontSize: 8,
+              },
+              {
+                text: `Az Ügyfél számlázási címe:`,
+                fontSize: 8,
+                bold: true,
+              },
+              {
+                text: `{partner.BillingAddress}\n`,
+                fontSize: 8,
+              },
+              {
+                text: `Az Ügyfél elérhetősége:`,
+                fontSize: 8,
+                bold: true,
+              },
+              {
+                text: `{partner.phone}\n`,
+                fontSize: 8,
+              },
+            ],
+            [
+              {
+                text: `Munkalap sorszám:\n`,
+                fontSize: 15,
+                bold: true,
+              },
+              {
+                text: `${worksheet.id}`,
+                fontSize: 25,
+              },
+            ],
+          ],
+        ],
+      },
+    },
     //tartalom///
     ///vége
-
-    styles: {
+  ],
+    {
+      styles: {
         header: {
           fontSize: 18,
           bold: true,
@@ -34,4 +105,7 @@ content: [
       },
       defaultStyle: {},
     }
-    //vége
+  //vége
+}
+
+export default { createHeader }
