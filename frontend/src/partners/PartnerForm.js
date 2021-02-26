@@ -5,6 +5,8 @@ import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import schema from './ValidationPartner'
+import RadioInputGroup from '../RadioInputGroup'
+import RadioInput from '../RadioInput'
 
 function PartnerForm({
   sent,
@@ -51,37 +53,33 @@ function PartnerForm({
               sendData(values)
             }}
           >
-            {({ values }) => {
+            {({ values, errors, touched }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
                   <Input name="partnerEmail" label="Email cím" type="text" />
                   <Input name="telefon" label="Telefonszám" type="text" />
-                  <div className="mb-3" id="my-radio-group">
-                    Megrendelő típusa:
-                  </div>
-                  <div
-                    role="group"
-                    aria-labelledby="my-radio-group"
-                    className="d flex justify-content-around"
+                  <RadioInputGroup
+                    className="inputStyle"
+                    id="megrendeloTipusa"
+                    label="Megrendelő típusa:"
+                    value={values.megrendeloTipusa}
+                    error={errors.megrendeloTipusa}
+                    touched={touched.megrendeloTipusa}
                   >
-                    <label className="d-flex ml-3">
-                      <Field
-                        type="radio"
-                        name="megrendeloTipusa"
-                        value="LEGAL"
-                      />
-                      Jogi személy
-                    </label>
-                    <label className="d-flex ml-3">
-                      <Field
-                        type="radio"
-                        name="megrendeloTipusa"
-                        value="PRIVATE"
-                      />
-                      Magánszemély
-                    </label>
-                  </div>
+                    <Field
+                      component={RadioInput}
+                      name="megrendeloTipusa"
+                      id="LEGAL"
+                      label="Jogi személy"
+                    />
+                    <Field
+                      component={RadioInput}
+                      name="megrendeloTipusa"
+                      id="PRIVATE"
+                      label="Magánszemély"
+                    />
+                  </RadioInputGroup>
                   <Input name="nev" label="Név" type="text" />
                   <Input name="rovidNev" label="Rövid név" type="text" />
                   {values.megrendeloTipusa === 'LEGAL' && (
