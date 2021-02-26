@@ -104,7 +104,7 @@ export default function TableListOfWorkSheets() {
                       )}
                       <PdfButton
                         hidden={worksheet.worksheetStatus === 'CREATED'}
-                        onClick={() => WorkSheetPDF(worksheet)}
+                        onClick={() => workSheetPDF(worksheet)}
                       />
                     </td>
                   </tr>

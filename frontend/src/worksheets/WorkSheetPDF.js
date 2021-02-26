@@ -25,7 +25,7 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-function WorkSheetPDF(worksheet) {
+function workSheetPDF(worksheet) {
   const workerSignatureSvg = renderSvg(worksheet.workerSignature)
   const proofOfEmploymentSvg = renderSvg(worksheet.proofOfEmployment)
 
@@ -245,4 +245,4 @@ function WorkSheetPDF(worksheet) {
   //pdfMake.createPdf({ content: 'Hi. I am a PDF.' }).open()
 }
 
-export default WorkSheetPDF
+export default workSheetPDF
