@@ -4,7 +4,10 @@ import FilterWorkSheets from './FilterWorkSheets'
 import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { typeOfWork, status } from '../TranslationForWorkSheet'
+import {
+  typeOfWorkTranslation,
+  statusTranslation,
+} from '../TranslationForWorkSheet'
 import useCurrentEmployee from '../hooks/useCurrentEmployee'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
