@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -47,10 +48,22 @@ public class WorksheetService {
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
         return Worksheet.builder()
-                .partner(
-                        partnerRepository.findFirstByNev(worksheetDTO.getPartnerId())
-                                .orElseThrow(()->new ValidationException("No such partner exists!"))
-                )
+                .partner(Partner.builder().partnerId(worksheetDTO.getPartnerId()).build())
+                .typeOfWork(worksheetDTO.getTypeOfWork())
+                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
+                .assetSettlement(worksheetDTO.getAssetSettlement())
+                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
+                .overheadHour(worksheetDTO.getOverheadHour())
+                .deliveryKm(worksheetDTO.getDeliveryKm())
+                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
+                .description(worksheetDTO.getDescription())
+                .usedMaterial(worksheetDTO.getUsedMaterial())
+                .typeOfPayment(worksheetDTO.getTypeOfPayment())
+                .createdAt(worksheetDTO.getCreatedAt())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
 
