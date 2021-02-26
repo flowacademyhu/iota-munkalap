@@ -49,13 +49,13 @@ function CreateEmployeeForm({
                 name="password"
                 label="Jelszó"
                 type="password"
-                disabled={isCreate}
+                disabled={!isCreate}
               />
               <Input
                 name="confirmPassword"
                 label="Jelszó még egyszer"
                 type="password"
-                disabled={isCreate}
+                disabled={!isCreate}
               />
               <div className="buttons">
                 <Link to="/employees">
