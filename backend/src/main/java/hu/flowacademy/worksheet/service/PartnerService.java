@@ -25,7 +25,7 @@ import static org.apache.commons.lang3.StringUtils.stripAccents;
 public class PartnerService {
 
     private final int DEFAULT_PAGE = 0;
-    private final String DEFAULT_ORDERBY = "createdAt";
+    private final String DEFAULT_ORDERBY = "nev";
 
     private final PartnerRepository partnerRepository;
 
@@ -142,7 +142,7 @@ public class PartnerService {
     }
 
     private boolean filterContains(String searchPart, Partner partner) {
-        return stripAccents(partner.getAdoszam()).contains(stripAccents(searchPart)) ||
-                stripAccents(partner.getNev()).contains(stripAccents(searchPart));
+        return stripAccents(partner.getAdoszam().toLowerCase()).contains(stripAccents(searchPart)) ||
+                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
     }
 }
