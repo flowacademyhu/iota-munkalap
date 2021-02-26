@@ -1,5 +1,6 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
+import FilterWorkSheets from './FilterWorkSheets'
 import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
@@ -19,6 +20,8 @@ export default function TableListOfWorkSheets() {
     endDate,
     setStartDate,
     setEndDate,
+    status,
+    setStatus,
   } = useWorkSheets()
   const { isAdmin } = useCurrentEmployee()
 
@@ -34,30 +37,38 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <div className="d-flex justify-content-between p-1">
+      <div className="py-1">
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
-      <div>Szűrés dátum szerint:</div>
-      <div>
-        <CalendarDropDown
-          date={startDate}
-          setDate={setStartDate}
-          placeholderText="Intervallum kezdete"
-        />
-        <CalendarDropDown
-          date={endDate}
-          setDate={setEndDate}
-          placeholderText="Intervallum vége"
-        />
-        <Button
-          text="Összes"
-          onClick={() => {
-            setStartDate(null)
-            setEndDate(null)
-          }}
-        />
+      <div className="d-flex flex-row justify-content-between">
+        <div className="ml-2">
+          <div>Szűrés dátum szerint:</div>
+          <div>
+            <CalendarDropDown
+              date={startDate}
+              setDate={setStartDate}
+              placeholderText="Intervallum kezdete"
+            />
+            <CalendarDropDown
+              date={endDate}
+              setDate={setEndDate}
+              placeholderText="Intervallum vége"
+            />
+            <Button
+              text="Összes"
+              onClick={() => {
+                setStartDate(null)
+                setEndDate(null)
+              }}
+            />
+          </div>
+        </div>
+        <div className="mr-2">
+          <div>Szűrés állapot szerint:</div>
+          <FilterWorkSheets status={status} onStatusChange={setStatus} />
+        </div>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
@@ -84,8 +95,8 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
-                    <td>{status[worksheet.worksheetStatus]}</td>
+                    <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
+                    <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />

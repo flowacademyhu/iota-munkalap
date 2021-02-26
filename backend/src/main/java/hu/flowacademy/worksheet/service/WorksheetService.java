@@ -69,6 +69,9 @@ public class WorksheetService {
         if (!StringUtils.hasText(worksheet.getDescription())) {
             throw new ValidationException("Description is empty or null");
         }
+        if (worksheet.getDescription().length() > 3000) {
+            throw new ValidationException("Description length is more than 3000 character");
+        }
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
         }

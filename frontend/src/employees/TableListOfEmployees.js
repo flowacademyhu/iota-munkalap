@@ -19,8 +19,13 @@ export default function TableListOfEmployees() {
     setStatus,
   } = useEmployees()
 
-  async function updater(employee) {
-    await putEmployeeInactive(employee.id)
+  async function inactivateAndReload(employee) {
+    await inactivateEmployee(employee.id)
+    updateEmployees()
+  }
+
+  async function activateAndReload(employee) {
+    await activateEmployee(employee.id)
     updateEmployees()
   }
 
@@ -63,7 +68,8 @@ export default function TableListOfEmployees() {
                   <EmployeeListRow
                     employee={employee}
                     key={employee.id}
-                    onInactivate={() => updater(employee)}
+                    onInactivate={() => inactivateAndReload(employee)}
+                    onActivate={() => activateAndReload(employee)}
                   />
                 ))
               ) : (

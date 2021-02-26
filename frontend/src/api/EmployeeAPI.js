@@ -26,6 +26,16 @@ async function putEmployeeInactive(id) {
     return false
   }
 }
+
+async function activateUser(id) {
+  try {
+    return await api.put(`/users/${id}/active`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+    return false
+  }
+}
+
 function getEmployee(id) {
   return api.get(`/users/${id}`)
 }
