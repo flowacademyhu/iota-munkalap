@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.controller;
 
+import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
@@ -32,6 +33,7 @@ import static org.hamcrest.Matchers.notNullValue;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class WorksheetControllerTest {
+    private static final Faker faker = new Faker();
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private final static String PARTNER_ID = "PartnerId";
     private final static TypeOfWork TYPE_OF_WORK = TypeOfWork.REPAIR;
@@ -48,36 +50,7 @@ class WorksheetControllerTest {
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
     private final static String actualDate = "2021.02.25";
     private static final LocalDate CREATED_AT = LocalDate.parse(actualDate, formatter);
-    private static final String DESCRIPTION_3000 = "SZENT ISTVÁN KIRÁLY INTELMEI IMRE HERCEGHEZMivel megértem s" +
-            " mélyen átérzem, hogy amit csak Isten akarata megteremtett s nyilvánvaló eleve elrendelése elrendezett mind" +
-            " a kiterjedt égboltozaton, mind az egybefüggő földi tájakon, azt törvény élteti s tartja fenn, s mivel látom," +
-            " hogy mindazt, amit Isten kegyelme bőséggel adott az élet előnyére és méltóságára, tudniillik királyságokat," +
-            " konzulságokat, hercegségeket, ispánságokat, főpapságokat s más méltóságokat, részben isteni parancsok" +
-            " és rendeletek, részben világiak, valamint a nemesek meg az élemedett korúak tanácsai és javaslatai" +
-            " kormányozzák, védik, osztják fel és egyesítik, s mivel bizonyosan tudom, hogy minden renden valók a föld" +
-            " bármely részén, bármilyen méltóságot viseljenek, nemcsak kíséretüknek, híveiknek, szolgáiknak parancsolnak," +
-            " tanácsolnak, javasolnak, hanem fiaiknak is, úgy hát én sem restellem, szerelmetes fiam, hogy neked még " +
-            "életemben tanulságokat, parancsokat, tanácsokat, javaslatokat adjak, hogy velük mind a magad, mind" +
-            " alattvalóid életmódját ékesítsed, ha majd a legfőbb hatalom engedélyével utánam uralkodni fogsz. " +
-            "Illik pedig, hogy odaadó figyelemmel hallgatván eszedbe vésd apád parancsait, az isteni bölcsesség intelme" +
-            " szerint, mely Salamon szájából szól:Hallgass, fiam, atyád intelmére,s ne vedd semmibe anyád tanítását!..." +
-            "[Hallgasd hát meg, fiam, fogadd el szavaimat,]akkor nagy lesz száma élted éveinek.Ebből a mondásból tehát " +
-            "észbe veheted, ha azt, amit atyai gyöngédséggel parancsolok, megveted - távol legyen! -, nem szívelnek " +
-            "többé sem Isten, sem az emberek. De halljad az engedetlen parancsszegők esetét és vesztét. Ádám ugyanis, " +
-            "kit az isteni alkotó, valamennyi létező teremtője a maga hasonlatosságára formált, s minden méltóság " +
-            "örökösévé tett, széttörte a parancsok bilincsét, s nyomban elvesztette a magas méltóságokat meg a " +
-            "paradicsombéli lakást. Isten régi, kiválasztott s kivált kedvelt népe is, amiért szétszaggatta a törvények " +
-            "Isten ujjával kötözött kötelékét, különb-különbféleképpen pusztult el: részben ugyanis a föld nyelte el, " +
-            "részben tűz emésztette el, részint egymást koncolta fel. Salamon fia is, félrevetve apja békéltető szavait," +
-            " gőgjében pöffeszkedve kardcsapásokkal fenyegette a népet apja ostorsuhintásai helyett, azért sok rosszat" +
-            " tűrt el országában, végül is kivetették onnan. Hogy ez véled ne történjék, fogadj szót, fiam; gyermek" +
-            " vagy, gazdagságban született kis cselédem, puha párnák lakója, minden gyönyörűségben dédelgetve és " +
-            "nevelve, nem tapasztaltad a hadjáratok fáradalmait s a különféle népek támadásait, melyekben én szinte" +
-            " egész életemet lemorzsoltam. Itt az idő, hogy többé ne puha kásával étessenek, az téged csak puhánnyá s " +
-            "finnyássá tehet, ez pedig a férfiasság elvesztegetése s a bűnök csiholója és a törvények megvetése; hanem " +
-            "itassanak meg olykor fanyar borral, mely értelmedet tanításomra figyelmessé teszi.Ezeket előrebocsátván " +
-            "térjünk a tárgyra.FEJEZETEKRE OSZTÁSA katolikus hit megőrzésérőlAz egyházi rend becsben tartásáról" +
-            "A főpapoknak járó tiszteletről.......";
+    private static final String DESCRIPTION3000 = faker.lorem().characters(3000);
 
     @LocalServerPort
     private int port;
@@ -127,7 +100,7 @@ class WorksheetControllerTest {
                 .when().post("api/worksheets").
                         then()
                 .log().all()
-                .body("description", equalTo(DESCRIPTION_3000))
+                .body("description", equalTo(DESCRIPTION3000))
                 .statusCode(201)
                 .assertThat()
                 .extract().as(Worksheet.class);
@@ -164,7 +137,7 @@ class WorksheetControllerTest {
                 .overheadHour(OVERHEAD_HOUR)
                 .deliveryKm(DELIVERY_KM)
                 .accountSerialNumber(ACCOUNT_SERIAL_NUMBER)
-                .description(DESCRIPTION_3000)
+                .description(DESCRIPTION3000)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
                 .workerSignature(WORKER_SIGNATURE)
