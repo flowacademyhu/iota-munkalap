@@ -16,7 +16,7 @@ export default function useEmployeeData() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
     setSent(false)
   }
-  const UpdateUser = useCallback(
+  const updateUser = useCallback(
     async function () {
       if (id !== undefined) {
         try {
@@ -33,8 +33,8 @@ export default function useEmployeeData() {
   )
 
   useEffect(() => {
-    UpdateUser()
-  }, [UpdateUser])
+    updateUser()
+  }, [updateUser])
 
   async function saveEmployee(values) {
     try {
@@ -56,8 +56,8 @@ export default function useEmployeeData() {
   }
 
   return {
-    UpdateUser,
-    controlingEmployeeData,
+    updateUser,
+    saveEmployee,
     handleClick,
     popUpMessage,
     sent,
