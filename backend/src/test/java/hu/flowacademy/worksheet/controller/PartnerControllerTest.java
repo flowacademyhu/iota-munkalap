@@ -2,9 +2,11 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,6 +61,17 @@ class PartnerControllerTest {
         createPartner();
     }
 
+    @Test
+    public void testFilerUserReturnList() {
+        Partner[] toCheckArray = given()
+                .header(getAuthorization(adminLogin()))
+                .param("searchCriteria", "Teszt")
+                .when().get("api/partners")
+                .then()
+                .log().all()
+                .extract().body().as(Partner[].class);
+        Assertions.assertTrue(toCheckArray[0].getNev().contains("Teszt"));
+    }
 
     private static Partner createPartner() {
         return given().header(getAuthorization(adminLogin())).log().all()
