@@ -1,10 +1,12 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -31,14 +33,40 @@ public class WorksheetService {
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
+    private final PartnerRepository partnerRepository;
 
-    public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
+    public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
+        Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
         if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
             worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
         }
         worksheet.setCreatedAtRealTime(LocalDateTime.now());
         return worksheetRepository.save(worksheet);
+    }
+
+    private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
+        return Worksheet.builder()
+                .partnerId(
+                        partnerRepository.findById(worksheetDTO.getPartnerId())
+                                .orElseThrow(()->new ValidationException("No such partner exists!"))
+                )
+                .typeOfWork(worksheetDTO.getTypeOfWork())
+                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
+                .assetSettlement(worksheetDTO.getAssetSettlement())
+                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
+                .overheadHour(worksheetDTO.getOverheadHour())
+                .deliveryKm(worksheetDTO.getDeliveryKm())
+                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
+                .description(worksheetDTO.getDescription())
+                .usedMaterial(worksheetDTO.getUsedMaterial())
+                .typeOfPayment(worksheetDTO.getTypeOfPayment())
+                .createdAt(worksheetDTO.getCreatedAt())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                .worksheetStatus(worksheetDTO.getWorksheetStatus())
+                .build();
     }
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
