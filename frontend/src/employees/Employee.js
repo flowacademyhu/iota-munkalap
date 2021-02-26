@@ -4,7 +4,7 @@ import useEmployeeData from '../hooks/useEmployeeData'
 
 export default function Employee() {
   const {
-    controlingEmployeeData,
+    saveEmployee,
     handleClick,
     popUpMessage,
     sent,
@@ -17,7 +17,7 @@ export default function Employee() {
         handleClick={handleClick}
         sent={sent}
         popUpMessage={popUpMessage}
-        sendData={controlingEmployeeData}
+        sendData={saveEmployee}
         title="Új munkatárs létrehozása"
         isCreate={true}
       />
@@ -29,7 +29,7 @@ export default function Employee() {
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
-          sendData={controlingEmployeeData}
+          sendData={saveEmployee}
           title="Adatok módosítása"
           user={userData}
           isCreate={false}

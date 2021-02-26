@@ -36,7 +36,7 @@ export default function useEmployeeData() {
     UpdateUser()
   }, [UpdateUser])
 
-  async function controlingEmployeeData(values) {
+  async function saveEmployee(values) {
     try {
       const response =
         id === undefined ? await postUser(values) : await putUser(id, values)
