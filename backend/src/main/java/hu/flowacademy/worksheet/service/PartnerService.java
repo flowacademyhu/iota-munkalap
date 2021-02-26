@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
@@ -17,13 +16,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.buildSpecification;
+import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class PartnerService {
+
+    private final int DEFAULT_PAGE = 0;
+    private final String DEFAULT_ORDERBY = "createdAt";
 
     private final PartnerRepository partnerRepository;
 
@@ -123,25 +125,24 @@ public class PartnerService {
         }
     }
 
-    public List<User> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<User> result = collectUsersByCriteria(page, searchCriteria, limit, orderBy);
+    public List<Partner> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<Partner> result = collectPartnersByCriteria(page, searchCriteria, limit, orderBy);
         return searchCriteria.map(searchPart ->
-                result.stream().filter(user -> filterContains(searchPart, user))
+                result.stream().filter(partner -> filterContains(searchPart, partner))
                         .collect(Collectors.toList()))
                 .orElse(result);
     }
 
-    private List<User> collectUsersByCriteria(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<User> result = partnerRepository.findAll(
-                buildSpecification(status, searchCriteria),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+    private List<Partner> collectPartnersByCriteria(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<Partner> result = partnerRepository.findAll(
+                buildSpecification(searchCriteria),
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(Integer.MAX_VALUE), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
         return result;
     }
 
-    private boolean filterContains(String searchPart, User user) {
-        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
-                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
-                user.getEmail().contains(stripAccents(searchPart));
+    private boolean filterContains(String searchPart, Partner partner) {
+        return stripAccents(partner.getAdoszam()).contains(stripAccents(searchPart)) ||
+                stripAccents(partner.getNev()).contains(stripAccents(searchPart));
     }
 }
