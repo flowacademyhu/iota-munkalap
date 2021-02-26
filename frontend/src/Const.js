@@ -2,6 +2,10 @@ export const TYPE_OF_WORK = {
   OTHER: 'OTHER',
 }
 
+export const MEGRENDELO_TIPUSA = {
+  LEGAL: 'LEGAL',
+}
+
 export const PATH_VARIABLES = {
   EMPLOYEE: 'employees',
   EMPLOYEE_NEW: 'new',
