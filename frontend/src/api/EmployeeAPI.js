@@ -10,15 +10,15 @@ async function loginEmployee(credentials) {
   }
 }
 
-function postEmployee(credentials) {
+function createEmployee(credentials) {
   return api.post(`/users`, credentials)
 }
 
-function putEmployee(id, credentials) {
+function updateEmployee(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-async function putEmployeeInactive(id) {
+async function updateEmployeeInactive(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
   } catch (error) {
@@ -59,9 +59,9 @@ function getEmployees(searchCriteria, status) {
 
 export {
   getEmployees,
-  postEmployee,
-  putEmployee,
-  putEmployeeInactive,
+  createEmployee,
+  updateEmployee,
+  updateEmployeeInactive,
   getEmployee,
   loginEmployee,
   activateEmployee,

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { postEmployee, putEmployee, getEmployee } from '../api/EmployeeAPI'
+import { createEmployee, updateEmployee, getEmployee } from '../api/EmployeeAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
@@ -16,7 +16,7 @@ export default function useEmployeeData() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
     setSent(false)
   }
-  const updateEmployee = useCallback(
+  const employeeUpdater = useCallback(
     async function () {
       if (id !== undefined) {
         try {
@@ -33,15 +33,15 @@ export default function useEmployeeData() {
   )
 
   useEffect(() => {
-    updateEmployee()
-  }, [updateEmployee])
+    employeeUpdater()
+  }, [employeeUpdater])
 
   async function saveEmployee(values) {
     try {
       const response =
         id === undefined
-          ? await postEmployee(values)
-          : await putEmployee(id, values)
+          ? await createEmployee(values)
+          : await updateEmployee(id, values)
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva')
         setSentSuccessfully(true)
@@ -58,7 +58,7 @@ export default function useEmployeeData() {
   }
 
   return {
-    updateEmployee,
+    employeeUpdater,
     saveEmployee,
     handleClick,
     popUpMessage,

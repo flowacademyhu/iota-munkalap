@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
-import { postWorkSheet, putWorkSheet, getWorkSheet } from '../api/WorkSheetAPI'
+import {
+  createWorkSheet,
+  updateWorkSheet,
+  getWorkSheet,
+} from '../api/WorkSheetAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
@@ -41,8 +45,8 @@ export default function useWorksheetData() {
     try {
       const response =
         id !== undefined
-          ? await putWorkSheet(id, values)
-          : await postWorkSheet(values)
+          ? await updateWorkSheet(id, values)
+          : await createWorkSheet(values)
       if (response.status === 200) {
         setPopUpMessage('Munkalap sikeresen módosítva')
         setSentSuccessfully(true)
