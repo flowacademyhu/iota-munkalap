@@ -74,6 +74,5 @@ public class Partner {
     private String szamlazasiCimHrsz;
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Worksheet> worksheetList;
 }
