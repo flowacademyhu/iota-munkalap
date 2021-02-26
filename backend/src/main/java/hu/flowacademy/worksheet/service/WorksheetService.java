@@ -51,21 +51,6 @@ public class WorksheetService {
                         partnerRepository.findFirstByNev(worksheetDTO.getPartnerId())
                                 .orElseThrow(()->new ValidationException("No such partner exists!"))
                 )
-                .typeOfWork(worksheetDTO.getTypeOfWork())
-                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
-                .assetSettlement(worksheetDTO.getAssetSettlement())
-                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
-                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
-                .overheadHour(worksheetDTO.getOverheadHour())
-                .deliveryKm(worksheetDTO.getDeliveryKm())
-                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
-                .description(worksheetDTO.getDescription())
-                .usedMaterial(worksheetDTO.getUsedMaterial())
-                .typeOfPayment(worksheetDTO.getTypeOfPayment())
-                .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
-                .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
 
