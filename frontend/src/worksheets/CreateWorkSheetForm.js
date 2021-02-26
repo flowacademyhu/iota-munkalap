@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
+import moment from 'moment'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
-import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
 import {
@@ -14,6 +14,9 @@ import {
   WORKING_TIME_ACCOUNT_LIST,
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
+import Signature from './Signature'
+import CalendarDropDown from '../CalendarDropDown'
+import TextareaInput from '../TextareaInput'
 
 function CreateWorkSheetForm({
   sent,
@@ -22,6 +25,8 @@ function CreateWorkSheetForm({
   sendData,
   title,
 }) {
+  const finalize = useRef(false)
+  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -41,13 +46,19 @@ function CreateWorkSheetForm({
               description: '',
               usedMaterial: '',
               typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
-              localDateTime: getCurrentDate(),
+              createdAt: '',
               workerSignature: '',
               proofOfEmployment: '',
-              status: '',
+              worksheetStatus: 'CREATED',
             }}
             validationSchema={schema}
             onSubmit={(values) => {
+              if (finalize.current) {
+                values.worksheetStatus = 'REPORTED'
+              } else {
+                values.worksheetStatus = 'CREATED'
+              }
+              values.createdAt = moment(date).format('yyyy-MM-DD')
               sendData(values)
             }}
           >
@@ -97,10 +108,9 @@ function CreateWorkSheetForm({
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
-                  <Input
+                  <TextareaInput
                     name="description"
                     label="Elvégzett munka leírása"
-                    type="text"
                   />
                   <Input
                     name="usedMaterial"
@@ -112,18 +122,16 @@ function CreateWorkSheetForm({
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
-                  <span>Kelt: {getCurrentDate()}</span>
-                  <Input
-                    name="workerSignature"
-                    label="Munkát végezte"
-                    placeholder="IDE KELL E-ALÁIRÁS"
-                  />
-                  <Input
-                    name="proofOfEmployment"
-                    label="munkavégzést igazolja"
-                    placeholder="IDE KELL MÉG EGY E-ALÁÍRÁS"
-                  />
-
+                  <span>Kelt: </span>
+                  <CalendarDropDown date={date} setDate={setDate} />
+                  <div className="mt-3">
+                    Munkát elvégezte:
+                    <Signature name="workerSignature" />
+                  </div>
+                  <div className="mt-3">
+                    Munkavégzést igazolja:
+                    <Signature name="proofOfEmployment" />
+                  </div>
                   <div className="buttons">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />
@@ -131,6 +139,15 @@ function CreateWorkSheetForm({
                     <Button
                       text="Mentés"
                       type="submit"
+                      onClick={() => (finalize.current = false)}
+                      moreClassName="h-auto"
+                    />
+                  </div>
+                  <div className="buttons">
+                    <Button
+                      text="Mentés és készre jelentés"
+                      type="submit"
+                      onClick={() => (finalize.current = true)}
                       moreClassName="h-auto"
                     />
                   </div>
