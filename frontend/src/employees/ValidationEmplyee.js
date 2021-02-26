@@ -34,3 +34,14 @@ export function regSchema() {
   })
   return regSchema
 }
+
+export function isValidatingPassword(isCreate, employee) {
+  const baseShape = {
+    firstName: employee?.firstName || '',
+    lastName: employee?.lastName || '',
+    email: employee?.email || '',
+  }
+  return isCreate
+    ? { ...baseShape, password: '', confirmPassword: '' }
+    : baseShape
+}

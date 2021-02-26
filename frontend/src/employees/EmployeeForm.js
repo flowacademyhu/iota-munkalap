@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
-import { schema, regSchema } from './ValidationEmplyee'
+import { schema, regSchema, isValidatingPassword } from './ValidationEmplyee'
 
 function CreateEmployeeForm({
   sent,
@@ -15,21 +15,13 @@ function CreateEmployeeForm({
   employee,
   isCreate,
 }) {
-  const baseShape = {
-    firstName: employee?.firstName || '',
-    lastName: employee?.lastName || '',
-    email: employee?.email || '',
-  }
-  const shape = isCreate
-    ? { ...baseShape, password: '', confirmPassword: '' }
-    : baseShape
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={shape}
+            initialValues={isValidatingPassword(isCreate, employee)}
             validationSchema={isCreate ? regSchema : schema}
             onSubmit={(values) => {
               sendData(values)
