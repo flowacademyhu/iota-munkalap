@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
 import hu.flowacademy.worksheet.enumCustom.TypeOfPayment;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
@@ -14,15 +15,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
@@ -71,15 +73,16 @@ class WorksheetControllerTest {
                 .body("description", equalTo(DESCRIPTION))
                 .body("usedMaterial", equalTo(USED_MATERIAL))
                 .body("typeOfPayment", equalTo(TYPE_OF_PAYMENT.name()))
-                .body("workerSignature", equalTo(WORKER_SIGNATURE))
-                .body("proofOfEmployment", equalTo(PROOF_OF_EMPLOYMENT))
+                .body("workerSignature", notNullValue())
+                .body("proofOfEmployment", notNullValue())
                 .body("typeOfWork", equalTo(TYPE_OF_WORK.name()))
                 .body("assetSettlement", equalTo(ASSET_SETTLEMENT.name()))
                 .body("workingTimeAccounting", equalTo(WORKING_TIME_ACCOUNTING.name()))
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
                 .body("createdAt", equalTo(actualDate))
-                .statusCode(201);
+                .statusCode(201)
+                .extract().body().as(Worksheet.class);
 
     }
 
