@@ -101,9 +101,9 @@ public class UserService {
     }
 
     private boolean filterContains(String searchPart, User user) {
-        return stripAccents(user.getFirstName().toLowerCase()).contains(stripAccents(searchPart)) ||
-                stripAccents(user.getLastName().toLowerCase()).contains(stripAccents(searchPart)) ||
-                user.getEmail().toLowerCase().contains(stripAccents(searchPart));
+        return stripAccents(user.getFirstName().toLowerCase()).contains(stripAccents(searchPart.toLowerCase())) ||
+                stripAccents(user.getLastName().toLowerCase()).contains(stripAccents(searchPart.toLowerCase())) ||
+                user.getEmail().toLowerCase().contains(stripAccents(searchPart.toLowerCase()));
     }
 
     public Optional<User> getUserById(Long userId) {
