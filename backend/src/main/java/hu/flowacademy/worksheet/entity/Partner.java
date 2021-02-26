@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
