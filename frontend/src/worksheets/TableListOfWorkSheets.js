@@ -109,6 +109,7 @@ export default function TableListOfWorkSheets() {
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
                       <EditButton
+                        hidden={worksheet.worksheetStatus === 'CLOSED'}
                         onClick={() =>
                           history.push(
                             `/${PATH_VARIABLES.WORKSHEET_UPDATE}/${worksheet.id}`
