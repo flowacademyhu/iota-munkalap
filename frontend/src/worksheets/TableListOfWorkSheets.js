@@ -7,7 +7,7 @@ import Button from '../Button'
 import {
   typeOfWorkTranslation,
   statusTranslation,
-} from '../TranslationForWorkSheet'
+} from './TranslationForWorkSheet'
 import useCurrentEmployee from '../hooks/useCurrentEmployee'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'

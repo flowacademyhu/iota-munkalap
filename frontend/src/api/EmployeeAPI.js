@@ -27,7 +27,7 @@ async function putEmployeeInactive(id) {
   }
 }
 
-async function activateUser(id) {
+async function activateEmployee(id) {
   try {
     return await api.put(`/users/${id}/active`)
   } catch (error) {
@@ -64,4 +64,5 @@ export {
   putEmployeeInactive,
   getEmployee,
   loginEmployee,
+  activateEmployee,
 }

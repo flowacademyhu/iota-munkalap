@@ -2,7 +2,7 @@ import React from 'react'
 import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { putEmployeeInactive } from '../api/EmployeeAPI'
+import { putEmployeeInactive, activateEmployee } from '../api/EmployeeAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
@@ -20,7 +20,7 @@ export default function TableListOfEmployees() {
   } = useEmployees()
 
   async function inactivateAndReload(employee) {
-    await inactivateEmployee(employee.id)
+    await putEmployeeInactive(employee.id)
     updateEmployees()
   }
 
