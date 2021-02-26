@@ -6,6 +6,7 @@ import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import Worksheet from './worksheets/Worksheet'
 import AdminRoute from './AdminRoute'
+import Partner from './partners/Partner'
 
 function Routing() {
   return (
@@ -20,8 +21,17 @@ function Routing() {
         <AdminRoute exact path="/employees">
           <TableListOfEmployees />
         </AdminRoute>
-        <Route path="/partners">
+        <Route path="/partners/new">
+          <Partner />
+        </Route>
+        <Route path="/partners/update/:id">
+          <Partner />
+        </Route>
+        <Route exact path="/partners">
           <TableListofPartners />
+        </Route>
+        <Route path="/">
+          <Redirect to="/partners" />
         </Route>
         <Route path="/worksheets/new">
           <Worksheet />
