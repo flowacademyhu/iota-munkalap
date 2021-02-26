@@ -1,20 +1,10 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
 import Address from './Address'
+import usePartners from '../hooks/usePartners'
 
 export default function TableListofPartners() {
-  const partners = [
-    {
-      nev: 'bela',
-      adoszam: 12345678,
-      szamlazasiCimIranyitoszam: 1234,
-      szamlazasiCimTelepulesNev: 'szeged',
-      szamlazasiCimKozteruletNev: 'utca',
-      szamlazasiCimKozteruletJellegNev: 'utca',
-      szamlazasiCimHazszam: 12,
-      szamlazasiCimEpulet: 'A',
-    },
-  ]
+  const { partners } = usePartners()
 
   return (
     <>
