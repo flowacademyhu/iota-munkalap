@@ -157,6 +157,7 @@ class WorksheetServiceTest {
         verifyNoMoreInteractions(worksheetRepository);
     }
 
+    @Test
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
@@ -179,11 +180,6 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature()));
         assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment()));
         verifyNoMoreInteractions(worksheetRepository);
-    }
-
-    private void givenExistingWorksheet() {
-        when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
-        when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
     private void givenExistingWorksheetForUpdateStatus() {
