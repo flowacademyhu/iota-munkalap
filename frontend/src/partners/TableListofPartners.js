@@ -3,6 +3,7 @@ import LoadingScreen from '../LoadingScreen'
 import usePartners from '../hooks/usePartners'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import Address from './Address'
 
 export default function TableListofPartners() {
   const { partners } = usePartners()
