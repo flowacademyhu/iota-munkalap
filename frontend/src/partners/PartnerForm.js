@@ -103,7 +103,7 @@ function UpdateEmployeeForm({
               <Input name="szamlazasiCimSzint" label="Szint" type="number" />
               <Input name="szamlazasiCimAjto" label="Ajtó" type="number" />
               <div className="buttons">
-                <Link to="/employees">
+                <Link to="/partners">
                   <Button text="Mégse" moreClassName="h-auto w-auto p-2" />
                 </Link>
                 <Button

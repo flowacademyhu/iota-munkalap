@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import UpdateEmployeeForm from './UpdateEmployeeForm'
-import { putUser, getUser } from '../api/UserAPI'
+import PartnerForm from './PartnerForm'
+import { updatePartner, getPartner } from '../api/PartnerAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
-function UpdateEmployee() {
+export default function Partner() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
-  const [userData, setUserData] = useState({})
+  const [partnerData, setPartnerData] = useState({})
 
   const history = useHistory()
 
   function handleClick() {
-    sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
+    sentSuccessfully && history.push(`/${PATH_VARIABLES.PARTNER}`)
     setSent(false)
   }
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await getUser(id)
-        setUserData({ ...response.data, loaded: true })
+        const response = await getPartner(id)
+        setPartnerData({ ...response.data, loaded: true })
       } catch (error) {
-        setUserData({ loaded: true })
+        setPartnerData({ loaded: true })
         setPopUpMessage('A módosítás sikertelen')
         setSent(true)
       }
@@ -34,9 +34,9 @@ function UpdateEmployee() {
 
   async function putData(values) {
     try {
-      const response = await putUser(id, values)
+      const response = await updatePartner(id, values)
       if (response.status === 200) {
-        setPopUpMessage('Munkavállaló sikeresen módosítva')
+        setPopUpMessage('Partner sikeresen módosítva')
         setSentSuccessfully(true)
       }
     } catch (error) {
@@ -48,18 +48,16 @@ function UpdateEmployee() {
 
   return (
     <>
-      {userData.loaded && (
-        <UpdateEmployeeForm
+      {partnerData.loaded && (
+        <PartnerForm
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={putData}
           title="Adatok módosítása"
-          user={userData}
+          partner={partnerData}
         />
       )}
     </>
   )
 }
-
-export default UpdateEmployee

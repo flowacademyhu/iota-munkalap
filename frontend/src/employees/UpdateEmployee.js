@@ -9,7 +9,7 @@ export default function Partner() {
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
   const { id } = useParams()
-  const [partnerData, setPartnerData] = useState({})
+  const [userData, setUserData] = useState({})
 
   const history = useHistory()
 
