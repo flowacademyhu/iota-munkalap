@@ -30,9 +30,6 @@ function Routing() {
         <Route exact path="/partners">
           <TableListofPartners />
         </Route>
-        <Route path="/">
-          <Redirect to="/partners" />
-        </Route>
         <Route path="/worksheets/new">
           <Worksheet />
         </Route>
