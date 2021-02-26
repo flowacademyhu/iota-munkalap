@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { statusTranslation } from './TranslationForWorkSheet'
 
 function FilterWorkSheets(props) {
   const { onStatusChange, status } = props
@@ -17,10 +18,10 @@ function FilterWorkSheets(props) {
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
-          <option value="CREATED">Létrehozott</option>
-          <option value="REPORTED">Készre jelentett</option>
-          <option value="CLOSED">Lezárt</option>
-          <option value="">Mind</option>
+          <option value="CREATED">{statusTranslation['CREATED']}</option>
+          <option value="REPORTED">{statusTranslation['REPORTED']}</option>
+          <option value="CLOSED">{statusTranslation['CLOSED']}</option>
+          <option value="">{statusTranslation['ALL']}</option>
         </select>
       </form>
     </div>

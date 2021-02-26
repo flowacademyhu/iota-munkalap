@@ -9,6 +9,7 @@ const statusTranslation = {
   CREATED: 'Létrehozott',
   REPORTED: 'Készre jelentett',
   CLOSED: 'Lezárt',
+  ALL: 'Mind',
 }
 
 export { typeOfWorkTranslation, statusTranslation }
