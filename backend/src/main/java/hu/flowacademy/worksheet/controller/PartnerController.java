@@ -2,6 +2,8 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
@@ -47,4 +49,11 @@ public class PartnerController {
                 .build();
         return partnerService.createPartner(partner);
     }
+
+    @PutMapping("/partners/{id}/{status}")
+    public User setPartnerStatus(@PathVariable("id") Long id,
+                              @PathVariable(value = "status") Status status) throws ValidationException {
+        return partnerService.setPartnerActivity(id, status);
+    }
+
 }

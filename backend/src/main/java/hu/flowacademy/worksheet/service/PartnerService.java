@@ -1,7 +1,9 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
@@ -17,6 +19,8 @@ import javax.transaction.Transactional;
 public class PartnerService {
 
     private final PartnerRepository partnerRepository;
+    private final KeycloakClientService keycloakClientService;
+
 
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
         validatePartner(partner);
@@ -113,4 +117,12 @@ public class PartnerService {
             }
         }
     }
+
+    public Partner setPartnerActivity(String id, Status status) throws ValidationException {
+        Partner toChange = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
+        toChange.setEnabled(status == Status.active);
+        keycloakClientService.setPartnerStatus(toChange);
+        return partnerRepository.save(toChange);
+    }
+
 }
