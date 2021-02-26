@@ -39,8 +39,6 @@ public class Worksheet {
     @Column(name = "worksheet_id", nullable = false)
     private String id;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Partner partnerId;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)
