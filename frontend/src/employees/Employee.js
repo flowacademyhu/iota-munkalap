@@ -8,7 +8,7 @@ export default function Employee() {
     handleClick,
     popUpMessage,
     sent,
-    userData,
+    employeeData,
   } = useEmployeeData()
 
   return window.location.pathname === '/employees/new' ? (
@@ -24,14 +24,14 @@ export default function Employee() {
     </>
   ) : (
     <>
-      {userData && (
+      {employeeData && (
         <EmployeeForm
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
           sendData={saveEmployee}
           title="Adatok módosítása"
-          user={userData}
+          employee={employeeData}
           isCreate={false}
         />
       )}

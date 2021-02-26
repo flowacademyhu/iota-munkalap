@@ -12,29 +12,24 @@ function CreateEmployeeForm({
   popUpMessage,
   sendData,
   title,
-  user,
+  employee,
   isCreate,
 }) {
-  const initialValues = isCreate
-    ? {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      }
-    : {
-        firstName: user?.firstName || '',
-        lastName: user?.lastName || '',
-        email: user?.email || '',
-      }
+  const baseShape = {
+    firstName: employee?.firstName || '',
+    lastName: employee?.lastName || '',
+    email: employee?.email || '',
+  }
+  const shape = isCreate
+    ? { ...baseShape, password: '', confirmPassword: '' }
+    : baseShape
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={initialValues}
+            initialValues={shape}
             validationSchema={isCreate ? regSchema : schema}
             onSubmit={(values) => {
               sendData(values)

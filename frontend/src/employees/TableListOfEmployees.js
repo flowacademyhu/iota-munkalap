@@ -1,5 +1,5 @@
 import React from 'react'
-import useUsers from '../hooks/useUsers'
+import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import { putUserInactive } from '../api/UserAPI'
@@ -11,17 +11,17 @@ import EmployeeListRow from './EmployeeListRow'
 
 export default function TableListOfEmployees() {
   const {
-    users,
+    employees,
     keyword,
     setKeyword,
-    updateUsers,
+    updateEmployees,
     status,
     setStatus,
-  } = useUsers()
+  } = useEmployees()
 
-  async function updater(user) {
-    await putUserInactive(user.id)
-    updateUsers()
+  async function updater(employee) {
+    await putEmployeeInactive(employee.id)
+    updateEmployees()
   }
 
   return (
@@ -33,7 +33,7 @@ export default function TableListOfEmployees() {
             moreClassName="w-auto p-1"
           />
         </Link>
-        <Formik class="form-inline">
+        <Formik className="form-inline">
           <Form>
             <SearchEmployeeInput
               keyword={keyword}
@@ -58,12 +58,12 @@ export default function TableListOfEmployees() {
               </tr>
             </thead>
             <tbody>
-              {users ? (
-                users.map((user) => (
+              {employees ? (
+                employees.map((employee) => (
                   <EmployeeListRow
-                    user={user}
-                    key={user.id}
-                    onInactivate={() => updater(user)}
+                    employee={employee}
+                    key={employee.id}
+                    onInactivate={() => updater(employee)}
                   />
                 ))
               ) : (
