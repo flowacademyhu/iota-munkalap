@@ -66,7 +66,7 @@ class WorksheetControllerTest {
     public void testSuccessfulCreationReturns201() {
         Partner toCheck = createPartner();
         WorksheetDTO toSend = givenAWorksheetDTO();
-        toSend.setPartnerId(toCheck.getNev());
+        toSend.setPartnerId(toCheck.getPartnerId());
         given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
@@ -100,7 +100,7 @@ class WorksheetControllerTest {
     public void checkTheDescriptionWith3000Character() {
         Partner toCheck = createPartner();
         WorksheetDTO toSend = givenWorksheetDescription();
-        toSend.setPartnerId(toCheck.getNev());
+        toSend.setPartnerId(toCheck.getPartnerId());
         Worksheet worksheet = given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
