@@ -35,9 +35,9 @@ public class Partner {
     private String nev;
     @Column(name = "rovid_nev", nullable = false)
     private String rovidNev;
-    @Column(name = "adoszam", nullable = false)
+    @Column(name = "adoszam")
     private String adoszam;
-    @Column(name = "k_adoszam_tipus", nullable = false)
+    @Column(name = "k_adoszam_tipus")
     private int kAdoszamtipus;
     @Column(name = "bankszamlaszam", nullable = false)
     private String bankszamlaszam;
