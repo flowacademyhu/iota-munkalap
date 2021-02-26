@@ -35,7 +35,7 @@ function Routing() {
           <TableListOfWorkSheets />
         </Route>
         <Route path="/">
-          <Redirect to="/partners" />
+          <Redirect to="/worksheets" />
         </Route>
       </Switch>
     </div>
