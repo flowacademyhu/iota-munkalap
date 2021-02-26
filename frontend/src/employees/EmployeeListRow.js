@@ -4,7 +4,7 @@ import InactivateButton from '../specialButtons/InactivateButton'
 import ActivateButton from '../specialButtons/ActivateButton'
 import { Link } from 'react-router-dom'
 
-export default function EmployeeListRow({ user, onInactivate }) {
+export default function EmployeeListRow({ user, onInactivate, onActivate }) {
   return (
     <tr key={user.id}>
       <th scope="row">{user.id}</th>
@@ -21,7 +21,7 @@ export default function EmployeeListRow({ user, onInactivate }) {
           {user.enabled ? (
             <InactivateButton onClick={onInactivate} />
           ) : (
-            <ActivateButton />
+            <ActivateButton onClick={onActivate} />
           )}
         </div>
       </td>

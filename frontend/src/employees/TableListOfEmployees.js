@@ -2,7 +2,7 @@ import React from 'react'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { putUserInactive } from '../api/UserAPI'
+import { putUserInactive, putUserActive } from '../api/UserAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
@@ -24,6 +24,10 @@ export default function TableListOfEmployees() {
     updateUsers()
   }
 
+  async function activateAndReload(user) {
+    await putUserActive(user.id)
+    updateUsers()
+  }
   return (
     <>
       <div className="d-flex flex-row justify-content-around p-5">
@@ -64,6 +68,7 @@ export default function TableListOfEmployees() {
                     user={user}
                     key={user.id}
                     onInactivate={() => updater(user)}
+                    onActivate={() => activateAndReload(user)}
                   />
                 ))
               ) : (
