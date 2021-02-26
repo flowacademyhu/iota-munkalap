@@ -3,7 +3,6 @@ import EditButton from '../specialButtons/EditButton'
 import InactivateButton from '../specialButtons/InactivateButton'
 import ActivateButton from '../specialButtons/ActivateButton'
 import { Link } from 'react-router-dom'
-import Button from '../Button'
 
 export default function EmployeeListRow({ user, onInactivate }) {
   return (
