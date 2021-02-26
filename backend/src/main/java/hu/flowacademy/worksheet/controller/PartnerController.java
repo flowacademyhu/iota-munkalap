@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,5 +49,14 @@ public class PartnerController {
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
                 .build();
         return partnerService.createPartner(partner);
+    }
+
+    @GetMapping("/partners")
+    @RolesAllowed({"admin", "user"})
+    public List<Partner> findAll(@RequestParam(name = "page", required = false) Optional<Integer> page,
+                              @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                              @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                              @RequestParam(name = "searchCriteria", required = false) Optional<String> searchCriteria) {
+        return partnerService.filter(page, searchCriteria, limit, orderBy);
     }
 }

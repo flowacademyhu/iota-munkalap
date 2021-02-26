@@ -42,7 +42,7 @@ public class Worksheet {
     @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;
     @Lob()
-    @Column(name = "custom_type_of_work", length = 3000)
+    @Column(name = "custom_type_of_work")
     private String customTypeOfWork;
     @Enumerated(EnumType.STRING)
     @Column(name = "asset_settlement", nullable = false)
@@ -59,7 +59,7 @@ public class Worksheet {
     @Column(name = "account_serial_number")
     private String accountSerialNumber;
     @Lob
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 3000)
     private String description;
     @Column(name = "used_material", nullable = false)
     private String usedMaterial;

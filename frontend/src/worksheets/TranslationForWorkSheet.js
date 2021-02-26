@@ -12,4 +12,19 @@ const statusTranslation = {
   ALL: 'Mind',
 }
 
-export { typeOfWorkTranslation, statusTranslation }
+const assetSettlement = {
+  REPAYMENT: 'Térítéses',
+  WARRANTY: 'Garanciális',
+}
+
+const typeOfPayment = {
+  CASH: 'Készpénz',
+  BANKTRANSFER: 'Átutalás',
+}
+
+export {
+  typeOfWorkTranslation,
+  statusTranslation,
+  assetSettlement,
+  typeOfPayment,
+}

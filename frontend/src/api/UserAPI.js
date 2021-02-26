@@ -18,7 +18,7 @@ function putUser(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-async function putUserInactive(id) {
+async function inactivateUser(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
   } catch (error) {
@@ -26,6 +26,16 @@ async function putUserInactive(id) {
     return false
   }
 }
+
+async function activateUser(id) {
+  try {
+    return await api.put(`/users/${id}/active`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+    return false
+  }
+}
+
 function getUser(id) {
   return api.get(`/users/${id}`)
 }
@@ -47,4 +57,12 @@ function getUsers(searchCriteria, status) {
   return { request, cancel: () => source.cancel() }
 }
 
-export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }
+export {
+  getUsers,
+  postUser,
+  putUser,
+  inactivateUser,
+  activateUser,
+  getUser,
+  loginUser,
+}

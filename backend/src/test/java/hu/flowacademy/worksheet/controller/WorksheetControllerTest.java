@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.controller;
 
+import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
@@ -8,6 +9,7 @@ import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,22 +17,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class WorksheetControllerTest {
+    private static final Faker faker = new Faker();
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private final static String PARTNER_ID = "PartnerId";
     private final static TypeOfWork TYPE_OF_WORK = TypeOfWork.REPAIR;
@@ -47,6 +50,7 @@ class WorksheetControllerTest {
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
     private final static String actualDate = "2021.02.25";
     private static final LocalDate CREATED_AT = LocalDate.parse(actualDate, formatter);
+    private static final String DESCRIPTION3000 = faker.lorem().characters(3000);
 
     @LocalServerPort
     private int port;
@@ -86,6 +90,24 @@ class WorksheetControllerTest {
 
     }
 
+    @Test
+    public void checkTheDescriptionWith3000Character() {
+        Worksheet worksheet = given()
+                .log().all()
+                .header(getAuthorization(adminLogin()))
+                .body(givenWorksheetDescription())
+                .contentType(ContentType.JSON)
+                .when().post("api/worksheets").
+                        then()
+                .log().all()
+                .body("description", equalTo(DESCRIPTION3000))
+                .statusCode(201)
+                .assertThat()
+                .extract().as(Worksheet.class);
+        assertThat(worksheet, Matchers.notNullValue());
+
+    }
+
     private WorksheetDTO givenAWorksheetDTO() {
         return WorksheetDTO.builder()
                 .partnerId(PARTNER_ID)
@@ -97,6 +119,25 @@ class WorksheetControllerTest {
                 .deliveryKm(DELIVERY_KM)
                 .accountSerialNumber(ACCOUNT_SERIAL_NUMBER)
                 .description(DESCRIPTION)
+                .usedMaterial(USED_MATERIAL)
+                .typeOfPayment(TYPE_OF_PAYMENT)
+                .workerSignature(WORKER_SIGNATURE)
+                .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .createdAt(CREATED_AT)
+                .build();
+    }
+
+    private WorksheetDTO givenWorksheetDescription() {
+        return WorksheetDTO.builder()
+                .partnerId(PARTNER_ID)
+                .typeOfWork(TYPE_OF_WORK)
+                .assetSettlement(ASSET_SETTLEMENT)
+                .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
+                .numberOfEmployees(NUMBER_OF_EMPLOYEES)
+                .overheadHour(OVERHEAD_HOUR)
+                .deliveryKm(DELIVERY_KM)
+                .accountSerialNumber(ACCOUNT_SERIAL_NUMBER)
+                .description(DESCRIPTION3000)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
                 .workerSignature(WORKER_SIGNATURE)
