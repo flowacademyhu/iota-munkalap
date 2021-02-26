@@ -2,7 +2,7 @@ import React from 'react'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { putUserInactive, putUserActive } from '../api/UserAPI'
+import { inactivateUser, activateUser } from '../api/UserAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
@@ -20,12 +20,12 @@ export default function TableListOfEmployees() {
   } = useUsers()
 
   async function inactivateAndReload(user) {
-    await putUserInactive(user.id)
+    await inactivateUser(user.id)
     updateUsers()
   }
 
   async function activateAndReload(user) {
-    await putUserActive(user.id)
+    await activateUser(user.id)
     updateUsers()
   }
 

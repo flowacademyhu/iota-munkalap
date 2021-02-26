@@ -18,7 +18,7 @@ function putUser(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-async function putUserInactive(id) {
+async function inactivateUser(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
   } catch (error) {
@@ -27,7 +27,7 @@ async function putUserInactive(id) {
   }
 }
 
-async function putUserActive(id) {
+async function activateUser(id) {
   try {
     return await api.put(`/users/${id}/active`)
   } catch (error) {
@@ -61,8 +61,8 @@ export {
   getUsers,
   postUser,
   putUser,
-  putUserInactive,
-  putUserActive,
+  inactivateUser,
+  activateUser,
   getUser,
   loginUser,
 }
