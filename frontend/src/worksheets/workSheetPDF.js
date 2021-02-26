@@ -2,10 +2,10 @@ import { LOGO_STRING } from './LogoForPdf'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
 import {
-  typeOfWork,
+  typeOfWorkTranslation,
   assetSettlement,
   typeOfPayment,
-} from '../TranslationForWorkSheet'
+} from './TranslationForWorkSheet'
 import renderSvg from './renderSvg'
 
 const acknowledge =
@@ -116,8 +116,8 @@ function workSheetPDF(worksheet) {
             ],
             [
               {
-                text: `${typeOfWork[worksheet.typeOfWork]} ${
-                  typeOfWork[worksheet.typeOfWork] === 'Egyéb'
+                text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
+                  typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
                     ? 'Egyéb: ' + worksheet.customTypeOfWork
                     : ''
                 }`,
