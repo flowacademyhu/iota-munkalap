@@ -19,7 +19,7 @@ export default function TableListOfEmployees() {
     setStatus,
   } = useUsers()
 
-  async function updater(user) {
+  async function inactivateAndReload(user) {
     await putUserInactive(user.id)
     updateUsers()
   }
@@ -28,6 +28,7 @@ export default function TableListOfEmployees() {
     await putUserActive(user.id)
     updateUsers()
   }
+
   return (
     <>
       <div className="d-flex flex-row justify-content-around p-5">
@@ -67,7 +68,7 @@ export default function TableListOfEmployees() {
                   <EmployeeListRow
                     user={user}
                     key={user.id}
-                    onInactivate={() => updater(user)}
+                    onInactivate={() => inactivateAndReload(user)}
                     onActivate={() => activateAndReload(user)}
                   />
                 ))
