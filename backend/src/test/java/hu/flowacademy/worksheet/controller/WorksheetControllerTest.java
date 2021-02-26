@@ -1,11 +1,9 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
-import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
-import hu.flowacademy.worksheet.enumCustom.TypeOfPayment;
-import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
-import hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting;
+import hu.flowacademy.worksheet.enumCustom.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,24 +13,27 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
+import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
+import static hu.flowacademy.worksheet.helper.TestHelper.createPartner;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class WorksheetControllerTest {
-    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
+
     private final static String PARTNER_ID = "PartnerId";
+
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private final static TypeOfWork TYPE_OF_WORK = TypeOfWork.REPAIR;
     private final static AssetSettlement ASSET_SETTLEMENT = AssetSettlement.REPAYMENT;
     private final static WorkingTimeAccounting WORKING_TIME_ACCOUNTING = WorkingTimeAccounting.REPAYMENT;
@@ -58,10 +59,13 @@ class WorksheetControllerTest {
 
     @Test
     public void testSuccessfulCreationReturns201() {
+        Partner toCheck = createPartner();
+        WorksheetDTO toSend = givenAWorksheetDTO();
+        toSend.setPartnerId(toCheck.getPartnerId());
         given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
-                .body(givenAWorksheetDTO())
+                .body(toSend)
                 .contentType(ContentType.JSON)
                 .when().post("api/worksheets").
                 then()
@@ -81,6 +85,7 @@ class WorksheetControllerTest {
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
                 .body("createdAt", equalTo(actualDate))
+                .body("partnerId", equalTo(toCheck))
                 .statusCode(201)
                 .extract().body().as(Worksheet.class);
 
@@ -88,7 +93,6 @@ class WorksheetControllerTest {
 
     private WorksheetDTO givenAWorksheetDTO() {
         return WorksheetDTO.builder()
-                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
