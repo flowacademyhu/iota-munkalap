@@ -102,9 +102,11 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
-                      <Link onClick={() => WorkSheetPDF(worksheet)}>
-                        <PdfButton />
-                      </Link>
+                      {worksheet.worksheetStatus !== 'CREATED' && (
+                        <Link onClick={() => WorkSheetPDF(worksheet)}>
+                          <PdfButton />
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 ))
