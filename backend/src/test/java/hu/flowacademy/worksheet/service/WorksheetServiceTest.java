@@ -28,6 +28,7 @@ import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -98,8 +99,8 @@ class WorksheetServiceTest {
                 .description(DESCRIPTION)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
-                .workerSignature(WORKER_SIGNATURE)
-                .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .workerSignature(WORKER_SIGNATURE.getBytes())
+                .proofOfEmployment(PROOF_OF_EMPLOYMENT.getBytes())
                 .worksheetStatus(WorksheetStatus.CREATED)
                 .build());
 
@@ -117,8 +118,8 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getDescription(), result.getDescription());
         assertEquals(worksheet.getUsedMaterial(), result.getUsedMaterial());
         assertEquals(worksheet.getTypeOfPayment(), result.getTypeOfPayment());
-        assertEquals(worksheet.getWorkerSignature(), result.getWorkerSignature());
-        assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
+        assertArrayEquals(worksheet.getWorkerSignature(), result.getWorkerSignature());
+        assertArrayEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
     }
@@ -184,6 +185,7 @@ class WorksheetServiceTest {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
+
     private void givenExistingWorksheetForUpdateStatus() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperIdAndStatus()));
     }
@@ -225,8 +227,8 @@ class WorksheetServiceTest {
                 .description(DESCRIPTION)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
-                .workerSignature(WORKER_SIGNATURE)
-                .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .workerSignature(WORKER_SIGNATURE.getBytes())
+                .proofOfEmployment(PROOF_OF_EMPLOYMENT.getBytes())
                 .build();
     }
 
@@ -245,8 +247,8 @@ class WorksheetServiceTest {
         worksheet.setDescription(UPDATED_DESCRIPTION);
         worksheet.setUsedMaterial(UPDATED_USED_MATERIAL);
         worksheet.setTypeOfPayment(UPDATED_TYPE_OF_PAYMENT);
-        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE);
-        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT);
+        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE.getBytes());
+        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT.getBytes());
         return worksheet;
     }
 }

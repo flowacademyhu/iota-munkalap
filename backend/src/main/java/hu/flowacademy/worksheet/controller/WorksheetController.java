@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,8 +43,8 @@ public class WorksheetController {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
         return worksheetService.saveWorksheet(worksheet);

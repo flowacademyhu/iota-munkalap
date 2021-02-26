@@ -3,7 +3,10 @@ package hu.flowacademy.worksheet.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
@@ -12,8 +15,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import static com.mysql.cj.MysqlType.LONGBLOB;
 
 @Data
 @NoArgsConstructor
@@ -69,14 +70,12 @@ public class Worksheet {
     @Column(name = "createdAt", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate createdAt;
-    @Lob()
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "worker_signature", nullable = false, columnDefinition = "LONGBLOB")
-    private String workerSignature;
     @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "proof_of_employment", nullable = false, columnDefinition = "LONGBLOB")
-    private String proofOfEmployment;
+    @Column(name = "worker_signature", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] workerSignature;
+    @Lob
+    @Column(name = "proof_of_employment", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
     @CreatedBy
