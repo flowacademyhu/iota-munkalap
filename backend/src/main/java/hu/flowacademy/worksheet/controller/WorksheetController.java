@@ -1,7 +1,6 @@
 package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
-import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -12,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
