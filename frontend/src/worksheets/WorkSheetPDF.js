@@ -8,7 +8,7 @@ import {
 } from '../TranslationForWorkSheet'
 import SignaturePad from 'signature_pad'
 
-function renderSvg(param) {
+function renderSvg(signatureData) {
   const canvasSignature = document.createElement('canvas')
   canvasSignature.width = 400
   canvasSignature.height = 300
@@ -236,13 +236,10 @@ function workSheetPDF(worksheet) {
         color: 'black',
       },
     },
-    defaultStyle: {
-      // alignment: 'justify'
-    },
+    defaultStyle: {},
   }
 
   pdfMake.createPdf(doc).open()
-  //pdfMake.createPdf({ content: 'Hi. I am a PDF.' }).open()
 }
 
 export default workSheetPDF
