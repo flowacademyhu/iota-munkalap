@@ -184,6 +184,7 @@ class WorksheetServiceTest {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperId()));
         when(worksheetRepository.save(any(Worksheet.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
+
     private void givenExistingWorksheetForUpdateStatus() {
         when(worksheetRepository.findById(WORKSHEET_ID)).thenReturn(Optional.of(givenWorksheetWithProperIdAndStatus()));
     }
