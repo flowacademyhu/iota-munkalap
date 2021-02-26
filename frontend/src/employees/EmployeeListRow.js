@@ -1,5 +1,7 @@
 import React from 'react'
 import EditButton from '../specialButtons/EditButton'
+import InactivateButton from '../specialButtons/InactivateButton'
+import ActivateButton from '../specialButtons/ActivateButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
@@ -13,18 +15,15 @@ export default function EmployeeListRow({ user, onInactivate }) {
       <td>{user.email}</td>
       <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
       <td>
-        <div className="d-flex justify-content-around">
-          {user.enabled && (
-            <Button
-              onClick={onInactivate}
-              type="button"
-              className="btn btn-danger"
-              text="Inaktiválás"
-            />
-          )}
+        <div>
           <Link to={`/employees/update/${user.id}`}>
             <EditButton />
           </Link>
+          {user.enabled ? (
+            <InactivateButton onClick={onInactivate} />
+          ) : (
+            <ActivateButton />
+          )}
         </div>
       </td>
     </tr>
