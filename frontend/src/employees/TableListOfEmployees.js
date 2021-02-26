@@ -2,11 +2,11 @@ import React from 'react'
 import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { putUserInactive } from '../api/UserAPI'
+import { putEmployeeInactive } from '../api/EmployeeAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
-import FilterUsers from './FilterUsers'
+import FilterEmployees from './FilterEmployees'
 import EmployeeListRow from './EmployeeListRow'
 
 export default function TableListOfEmployees() {
@@ -43,7 +43,7 @@ export default function TableListOfEmployees() {
             />
           </Form>
         </Formik>
-        <FilterUsers status={status} onStatusChange={setStatus} />
+        <FilterEmployees status={status} onStatusChange={setStatus} />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">

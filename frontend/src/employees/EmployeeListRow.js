@@ -3,18 +3,18 @@ import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 
-export default function EmployeeListRow({ user, onInactivate }) {
+export default function EmployeeListRow({ employee, onInactivate }) {
   return (
-    <tr key={user.id}>
-      <th scope="row">{user.id}</th>
+    <tr key={employee.id}>
+      <th scope="row">{employee.id}</th>
       <td>
-        {user.lastName} {user.firstName}
+        {employee.lastName} {employee.firstName}
       </td>
-      <td>{user.email}</td>
-      <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
+      <td>{employee.email}</td>
+      <td>{employee.enabled ? 'Aktív' : 'Inaktív'}</td>
       <td>
         <div className="d-flex justify-content-around">
-          {user.enabled && (
+          {employee.enabled && (
             <Button
               onClick={onInactivate}
               type="button"
@@ -22,7 +22,7 @@ export default function EmployeeListRow({ user, onInactivate }) {
               text="Inaktiválás"
             />
           )}
-          <Link to={`/employees/update/${user.id}`}>
+          <Link to={`/employees/update/${employee.id}`}>
             <EditButton />
           </Link>
         </div>

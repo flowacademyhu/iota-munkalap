@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { postUser, putUser, getUser } from '../api/UserAPI'
+import { postEmployee, putEmployee, getEmployee } from '../api/EmployeeAPI'
 import { useParams, useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 
@@ -7,7 +7,7 @@ export default function useEmployeeData() {
   const [sent, setSent] = useState(false)
   const [sentSuccessfully, setSentSuccessfully] = useState(false)
   const [popUpMessage, setPopUpMessage] = useState('')
-  const [userData, setUserData] = useState()
+  const [employeeData, setEmployeeData] = useState()
   const { id } = useParams()
 
   const history = useHistory()
@@ -16,14 +16,14 @@ export default function useEmployeeData() {
     sentSuccessfully && history.push(`/${PATH_VARIABLES.EMPLOYEE}`)
     setSent(false)
   }
-  const updateUser = useCallback(
+  const updateEmployee = useCallback(
     async function () {
       if (id !== undefined) {
         try {
-          const response = await getUser(id)
-          setUserData({ ...response.data, loaded: true })
+          const response = await getEmployee(id)
+          setEmployeeData({ ...response.data, loaded: true })
         } catch (error) {
-          setUserData({ loaded: true })
+          setEmployeeData({ loaded: true })
           setPopUpMessage('A módosítás sikertelen')
           setSent(true)
         }
@@ -33,13 +33,15 @@ export default function useEmployeeData() {
   )
 
   useEffect(() => {
-    updateUser()
-  }, [updateUser])
+    updateEmployee()
+  }, [updateEmployee])
 
   async function saveEmployee(values) {
     try {
       const response =
-        id === undefined ? await postUser(values) : await putUser(id, values)
+        id === undefined
+          ? await postEmployee(values)
+          : await putEmployee(id, values)
       if (response.status === 200) {
         setPopUpMessage('Munkavállaló sikeresen módosítva')
         setSentSuccessfully(true)
@@ -56,11 +58,11 @@ export default function useEmployeeData() {
   }
 
   return {
-    updateUser,
+    updateEmployee,
     saveEmployee,
     handleClick,
     popUpMessage,
     sent,
-    userData,
+    employeeData,
   }
 }

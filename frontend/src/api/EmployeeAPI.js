@@ -1,7 +1,7 @@
 import api from './createApi'
 import axios from 'axios'
 
-async function loginUser(credentials) {
+async function loginEmployee(credentials) {
   try {
     const result = await api.post('/login', credentials)
     return result.data.access_token
@@ -10,15 +10,15 @@ async function loginUser(credentials) {
   }
 }
 
-function postUser(credentials) {
+function postEmployee(credentials) {
   return api.post(`/users`, credentials)
 }
 
-function putUser(id, credentials) {
+function putEmployee(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-async function putUserInactive(id) {
+async function putEmployeeInactive(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
   } catch (error) {
@@ -26,11 +26,11 @@ async function putUserInactive(id) {
     return false
   }
 }
-function getUser(id) {
+function getEmployee(id) {
   return api.get(`/users/${id}`)
 }
 
-function getUsers(searchCriteria, status) {
+function getEmployees(searchCriteria, status) {
   const source = axios.CancelToken.source()
   const request = api
     .get('/users/', {
@@ -47,4 +47,11 @@ function getUsers(searchCriteria, status) {
   return { request, cancel: () => source.cancel() }
 }
 
-export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }
+export {
+  getEmployees,
+  postEmployee,
+  putEmployee,
+  putEmployeeInactive,
+  getEmployee,
+  loginEmployee,
+}
