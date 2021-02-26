@@ -5,6 +5,22 @@ import usePartners from '../hooks/usePartners'
 export default function TableListofPartners() {
   const { partners } = usePartners()
 
+  function partnerAddress(partner) {
+    return (
+      partner.szamlazasiCimIranyitoszam +
+      ' ' +
+      partner.szamlazasiCimTelepulesNev +
+      ', ' +
+      partner.szamlazasiCimKozteruletNev +
+      ' ' +
+      partner.szamlazasiCimKozteruletJellegNev +
+      ' ' +
+      partner.szamlazasiCimHazszam +
+      ' ' +
+      partner.szamlazasiCimEpulet
+    )
+  }
+
   return (
     <>
       <div className="border border-secondary">
@@ -25,7 +41,7 @@ export default function TableListofPartners() {
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{partner.nev}</td>
-                    <td>{partner.szamlazasiCimKozteruletNev}</td>
+                    <td>{partnerAddress(partner)}</td>
                     <td>{partner.adoszam}</td>
                   </tr>
                 ))
