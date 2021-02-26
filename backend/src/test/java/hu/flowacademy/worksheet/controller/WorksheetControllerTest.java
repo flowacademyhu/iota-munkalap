@@ -61,7 +61,7 @@ class WorksheetControllerTest {
     public void testSuccessfulCreationReturns201() {
         Partner toCheck = createPartner();
         WorksheetDTO toSend = givenAWorksheetDTO();
-        toSend.setPartnerId(toCheck.getPartnerId());
+        toSend.setPartnerId(toCheck.getNev());
         given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
@@ -85,7 +85,8 @@ class WorksheetControllerTest {
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
                 .body("createdAt", equalTo(actualDate))
-                .body("partnerId", equalTo(toCheck))
+                .body("partnerId.partnerId", equalTo(toCheck.getPartnerId()))
+                .body("partnerId.partnerEmail", equalTo(toCheck.getPartnerEmail()))
                 .statusCode(201)
                 .extract().body().as(Worksheet.class);
 
