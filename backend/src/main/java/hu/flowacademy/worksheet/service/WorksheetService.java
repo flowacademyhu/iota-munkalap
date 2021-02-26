@@ -51,9 +51,6 @@ public class WorksheetService {
         if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && StringUtils.hasText(worksheet.getCustomTypeOfWork())) {
             throw new ValidationException("Type Of Work Other value is null or empty String.");
         }
-        if (worksheet.getTypeOfWork() != TypeOfWork.OTHER && worksheet.getCustomTypeOfWork().length() > 3000) {
-            throw new ValidationException("Type Of Work Other too much character.");
-        }
         if (worksheet.getAssetSettlement() == null) {
             throw new ValidationException("Asset settlement value is null");
         }
@@ -71,6 +68,9 @@ public class WorksheetService {
         }
         if (!StringUtils.hasText(worksheet.getDescription())) {
             throw new ValidationException("Description is empty or null");
+        }
+        if (worksheet.getDescription().length() > 3000) {
+            throw new ValidationException("Description length is more than 3000 character");
         }
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
