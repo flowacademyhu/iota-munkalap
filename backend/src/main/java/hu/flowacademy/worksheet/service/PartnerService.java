@@ -128,7 +128,7 @@ public class PartnerService {
     public List<Partner> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
         List<Partner> result = collectPartnersByCriteria(page, searchCriteria, limit, orderBy);
         return searchCriteria.map(searchPart ->
-                result.stream().filter(partner -> filterContains(searchPart, partner))
+                result.stream().filter(partner -> filterContains(searchPart.toLowerCase(), partner))
                         .collect(Collectors.toList()))
                 .orElse(result);
     }
@@ -142,7 +142,7 @@ public class PartnerService {
     }
 
     private boolean filterContains(String searchPart, Partner partner) {
-        return stripAccents(partner.getAdoszam().toLowerCase()).contains(stripAccents(searchPart.toLowerCase())) ||
-                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart.toLowerCase()));
+        return partner.getAdoszam().toLowerCase().contains(searchPart) ||
+                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
     }
 }
