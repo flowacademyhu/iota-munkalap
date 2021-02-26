@@ -12,6 +12,8 @@ import useCurrentEmployee from '../hooks/useCurrentEmployee'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
+import workSheetPDF from './workSheetPDF'
+import PdfButton from '../specialButtons/PdfButton'
 import FinalizeButton from '../specialButtons/FinalizeButton'
 import CalendarDropDown from '../CalendarDropDown'
 
@@ -114,6 +116,10 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
+                      <PdfButton
+                        hidden={worksheet.worksheetStatus === 'CREATED'}
+                        onClick={() => workSheetPDF(worksheet)}
+                      />
                     </td>
                   </tr>
                 ))
