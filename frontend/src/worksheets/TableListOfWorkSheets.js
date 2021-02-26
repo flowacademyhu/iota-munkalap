@@ -104,7 +104,9 @@ export default function TableListOfWorkSheets() {
                       )}
                       {worksheet.worksheetStatus !== 'CREATED' && (
                         <Link onClick={() => WorkSheetPDF(worksheet)}>
-                          <PdfButton />
+                          <PdfButton
+                            hidden={worksheet.worksheetStatus !== 'CREATED'}
+                          />
                         </Link>
                       )}
                     </td>
