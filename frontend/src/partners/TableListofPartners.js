@@ -1,25 +1,10 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
 import usePartners from '../hooks/usePartners'
+import Address from './Address'
 
 export default function TableListofPartners() {
   const { partners } = usePartners()
-
-  function partnerAddress(partner) {
-    return (
-      partner.szamlazasiCimIranyitoszam +
-      ' ' +
-      partner.szamlazasiCimTelepulesNev +
-      ', ' +
-      partner.szamlazasiCimKozteruletNev +
-      ' ' +
-      partner.szamlazasiCimKozteruletJellegNev +
-      ' ' +
-      partner.szamlazasiCimHazszam +
-      ' ' +
-      partner.szamlazasiCimEpulet
-    )
-  }
 
   return (
     <>
@@ -41,7 +26,7 @@ export default function TableListofPartners() {
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{partner.nev}</td>
-                    <td>{partnerAddress(partner)}</td>
+                    <Address partner={partner} />
                     <td>{partner.adoszam}</td>
                   </tr>
                 ))
