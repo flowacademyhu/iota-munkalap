@@ -30,9 +30,11 @@ export default function TableListofPartners() {
                   </tr>
                 ))
               ) : (
-                <td colSpan="5">
-                  <LoadingScreen />
-                </td>
+                <tr>
+                  <td colSpan="5">
+                    <LoadingScreen />
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
