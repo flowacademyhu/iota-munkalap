@@ -1,13 +1,19 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
-import Address from './Address'
 import usePartners from '../hooks/usePartners'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 
 export default function TableListofPartners() {
   const { partners } = usePartners()
 
   return (
     <>
+      <div className="d-flex justify-content-between p-1">
+        <Link to={`/partners/new`}>
+          <Button text="Új partner létrehozása" moreClassName="w-auto p-1" />
+        </Link>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
           <table className="table table-hover text-center">
