@@ -16,6 +16,8 @@ import workSheetPDF from './workSheetPDF'
 import PdfButton from '../specialButtons/PdfButton'
 import FinalizeButton from '../specialButtons/FinalizeButton'
 import CalendarDropDown from '../CalendarDropDown'
+import { PATH_VARIABLES } from '../Const'
+import { useHistory } from 'react-router-dom'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -30,6 +32,8 @@ export default function TableListOfWorkSheets() {
   } = useWorkSheets()
 
   const { isAdmin } = useCurrentUser()
+
+  const history = useHistory()
 
   async function closeAndReload(worksheet) {
     await closeWorkSheet(worksheet.id)
@@ -104,9 +108,13 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
-                      <Link to={`/worksheets/update/${worksheet.id}`}>
-                        <EditButton />
-                      </Link>
+                      <EditButton
+                        onClick={() =>
+                          history.push(
+                            `/${PATH_VARIABLES.WORKSHEET_UPDATE}/${worksheet.id}`
+                          )
+                        }
+                      />
                       <FinalizeButton
                         hidden={worksheet.worksheetStatus !== 'CREATED'}
                         onClick={() => finalizeAndReload(worksheet)}
