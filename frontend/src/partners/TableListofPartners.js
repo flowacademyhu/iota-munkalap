@@ -1,13 +1,12 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
-import usePartners from '../hooks/usePartners'
 import Address from './Address'
 
 export default function TableListofPartners() {
   const partners = [
     {
       nev: 'bela',
-      adoszam: 123 - 456 - 78,
+      adoszam: 12345678,
       szamlazasiCimIranyitoszam: 1234,
       szamlazasiCimTelepulesNev: 'szeged',
       szamlazasiCimKozteruletNev: 'utca',
@@ -37,7 +36,7 @@ export default function TableListofPartners() {
                   <tr key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{partner.nev}</td>
-                    <Address />
+                    <Address partner={partner} />
                     <td>{partner.adoszam}</td>
                     <td></td>
                   </tr>

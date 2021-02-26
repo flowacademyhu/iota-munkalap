@@ -1,10 +1,15 @@
-export default function Address({
-  szamlazasiCimIranyitoszam,
-  szamlazasiCimTelepulesNev,
-  szamlazasiCimKozteruletNev,
-  szamlazasiCimKozteruletJellegNev,
-  szamlazasiCimHazszam,
-  szamlazasiCimEpulet,
-}) {
-  return `${szamlazasiCimIranyitoszam} ${szamlazasiCimTelepulesNev}, ${szamlazasiCimKozteruletNev} ${szamlazasiCimKozteruletJellegNev} ${szamlazasiCimHazszam} ${szamlazasiCimEpulet}`
+export default function Address({ partner }) {
+  const {
+    szamlazasiCimIranyitoszam,
+    szamlazasiCimTelepulesNev,
+    szamlazasiCimKozteruletNev,
+    szamlazasiCimKozteruletJellegNev,
+    szamlazasiCimHazszam,
+    szamlazasiCimEpulet,
+  } = partner
+  return (
+    <td>
+      {`${szamlazasiCimIranyitoszam} ${szamlazasiCimTelepulesNev}, ${szamlazasiCimKozteruletNev} ${szamlazasiCimKozteruletJellegNev} ${szamlazasiCimHazszam} ${szamlazasiCimEpulet}`}
+    </td>
+  )
 }
