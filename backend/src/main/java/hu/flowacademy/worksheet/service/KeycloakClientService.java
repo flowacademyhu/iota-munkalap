@@ -68,12 +68,6 @@ public class KeycloakClientService {
         keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(changedUser.getId()).update(changedUser);
     }
 
-    public void setPartnerStatus(User user) {
-        PartnerRepresentation changedUser = keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().search(user.getEmail()).get(0);
-        changedPartner.setEnabled(user.isEnabled());
-        keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().get(changedUser.getId()).update(changedUser);
-    }
-
     public void setUserUpdate(User user, String email) {
         UserRepresentation updatedUser = keycloak.realm(keycloakPropertiesConfiguration.getCustomRealm()).users().search(email).get(0);
         updatedUser.setFirstName(user.getFirstName());

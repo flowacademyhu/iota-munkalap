@@ -2,8 +2,10 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.enumCustom.Status;
+import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
@@ -118,11 +120,9 @@ public class PartnerService {
         }
     }
 
-    public Partner setPartnerActivity(String id, Status status) throws ValidationException {
-        Partner toChange = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
-        toChange.setEnabled(status == Status.active);
-        keycloakClientService.setPartnerStatus(toChange);
-        return partnerRepository.save(toChange);
+    public Partner setStatusPartner(String id, boolean status) throws ValidationException {
+        partnerRepository.updatePartnerstatus(id, status);
+        return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
 
 }
