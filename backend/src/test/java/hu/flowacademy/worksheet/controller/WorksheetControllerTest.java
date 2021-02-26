@@ -48,35 +48,36 @@ class WorksheetControllerTest {
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
     private final static String actualDate = "2021.02.25";
     private static final LocalDate CREATED_AT = LocalDate.parse(actualDate, formatter);
-    private static final String DESCRIPTION_3000 = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. " +
-            "Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient " +
-            "montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla" +
-            " consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim " +
-            "justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer" +
-            " tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula," +
-            " porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a," +
-            " tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies" +
-            " nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus " +
-            "eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc," +
-            " blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae" +
-            " sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt." +
-            " Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget " +
-            "bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien." +
-            " Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. " +
-            "Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et " +
-            "ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis " +
-            "arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer " +
-            "ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper " +
-            "ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et " +
-            "nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed " +
-            "lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet " +
-            "imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur" +
-            " ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue " +
-            "erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit." +
-            " Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi " +
-            "quis porttitor congue, elit erat euismod orci, ac placerat dolor lectus quis orci. Phasellus consectetuer " +
-            "vestibulum elit. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc. Vestibulum fringilla pede " +
-            "sit amet augue. In turpis. Pellentesque posuere. Praesent turpis. Aenean posuere, tor";
+    private static final String DESCRIPTION_3000 = "SZENT ISTVÁN KIRÁLY INTELMEI IMRE HERCEGHEZMivel megértem s" +
+            " mélyen átérzem, hogy amit csak Isten akarata megteremtett s nyilvánvaló eleve elrendelése elrendezett mind" +
+            " a kiterjedt égboltozaton, mind az egybefüggő földi tájakon, azt törvény élteti s tartja fenn, s mivel látom," +
+            " hogy mindazt, amit Isten kegyelme bőséggel adott az élet előnyére és méltóságára, tudniillik királyságokat," +
+            " konzulságokat, hercegségeket, ispánságokat, főpapságokat s más méltóságokat, részben isteni parancsok" +
+            " és rendeletek, részben világiak, valamint a nemesek meg az élemedett korúak tanácsai és javaslatai" +
+            " kormányozzák, védik, osztják fel és egyesítik, s mivel bizonyosan tudom, hogy minden renden valók a föld" +
+            " bármely részén, bármilyen méltóságot viseljenek, nemcsak kíséretüknek, híveiknek, szolgáiknak parancsolnak," +
+            " tanácsolnak, javasolnak, hanem fiaiknak is, úgy hát én sem restellem, szerelmetes fiam, hogy neked még " +
+            "életemben tanulságokat, parancsokat, tanácsokat, javaslatokat adjak, hogy velük mind a magad, mind" +
+            " alattvalóid életmódját ékesítsed, ha majd a legfőbb hatalom engedélyével utánam uralkodni fogsz. " +
+            "Illik pedig, hogy odaadó figyelemmel hallgatván eszedbe vésd apád parancsait, az isteni bölcsesség intelme" +
+            " szerint, mely Salamon szájából szól:Hallgass, fiam, atyád intelmére,s ne vedd semmibe anyád tanítását!..." +
+            "[Hallgasd hát meg, fiam, fogadd el szavaimat,]akkor nagy lesz száma élted éveinek.Ebből a mondásból tehát " +
+            "észbe veheted, ha azt, amit atyai gyöngédséggel parancsolok, megveted - távol legyen! -, nem szívelnek " +
+            "többé sem Isten, sem az emberek. De halljad az engedetlen parancsszegők esetét és vesztét. Ádám ugyanis, " +
+            "kit az isteni alkotó, valamennyi létező teremtője a maga hasonlatosságára formált, s minden méltóság " +
+            "örökösévé tett, széttörte a parancsok bilincsét, s nyomban elvesztette a magas méltóságokat meg a " +
+            "paradicsombéli lakást. Isten régi, kiválasztott s kivált kedvelt népe is, amiért szétszaggatta a törvények " +
+            "Isten ujjával kötözött kötelékét, különb-különbféleképpen pusztult el: részben ugyanis a föld nyelte el, " +
+            "részben tűz emésztette el, részint egymást koncolta fel. Salamon fia is, félrevetve apja békéltető szavait," +
+            " gőgjében pöffeszkedve kardcsapásokkal fenyegette a népet apja ostorsuhintásai helyett, azért sok rosszat" +
+            " tűrt el országában, végül is kivetették onnan. Hogy ez véled ne történjék, fogadj szót, fiam; gyermek" +
+            " vagy, gazdagságban született kis cselédem, puha párnák lakója, minden gyönyörűségben dédelgetve és " +
+            "nevelve, nem tapasztaltad a hadjáratok fáradalmait s a különféle népek támadásait, melyekben én szinte" +
+            " egész életemet lemorzsoltam. Itt az idő, hogy többé ne puha kásával étessenek, az téged csak puhánnyá s " +
+            "finnyássá tehet, ez pedig a férfiasság elvesztegetése s a bűnök csiholója és a törvények megvetése; hanem " +
+            "itassanak meg olykor fanyar borral, mely értelmedet tanításomra figyelmessé teszi.Ezeket előrebocsátván " +
+            "térjünk a tárgyra.FEJEZETEKRE OSZTÁSA katolikus hit megőrzésérőlAz egyházi rend becsben tartásáról" +
+            "A főpapoknak járó tiszteletről.......";
 
     @LocalServerPort
     private int port;
@@ -103,15 +104,16 @@ class WorksheetControllerTest {
                 .body("description", equalTo(DESCRIPTION))
                 .body("usedMaterial", equalTo(USED_MATERIAL))
                 .body("typeOfPayment", equalTo(TYPE_OF_PAYMENT.name()))
-                .body("workerSignature", equalTo(WORKER_SIGNATURE))
-                .body("proofOfEmployment", equalTo(PROOF_OF_EMPLOYMENT))
+                .body("workerSignature", notNullValue())
+                .body("proofOfEmployment", notNullValue())
                 .body("typeOfWork", equalTo(TYPE_OF_WORK.name()))
                 .body("assetSettlement", equalTo(ASSET_SETTLEMENT.name()))
                 .body("workingTimeAccounting", equalTo(WORKING_TIME_ACCOUNTING.name()))
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
                 .body("createdAt", equalTo(actualDate))
-                .statusCode(201);
+                .statusCode(201)
+                .extract().body().as(Worksheet.class);
 
     }
 

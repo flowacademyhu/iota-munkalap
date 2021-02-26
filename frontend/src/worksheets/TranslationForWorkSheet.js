@@ -1,14 +1,15 @@
-const typeOfWork = {
+const typeOfWorkTranslation = {
   INSTALLATION: 'Telepítés',
   REPAIR: 'Javítás',
   MAINTENANCE: 'Karbantartás',
   OTHER: 'Egyéb',
 }
 
-const status = {
+const statusTranslation = {
   CREATED: 'Létrehozott',
   REPORTED: 'Készre jelentett',
   CLOSED: 'Lezárt',
+  ALL: 'Mind',
 }
 
-export { typeOfWork, status }
+export { typeOfWorkTranslation, statusTranslation }

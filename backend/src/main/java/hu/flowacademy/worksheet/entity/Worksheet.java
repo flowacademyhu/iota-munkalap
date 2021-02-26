@@ -72,10 +72,12 @@ public class Worksheet {
     @Column(name = "createdAt", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd")
     private LocalDate createdAt;
-    @Column(name = "worker_signature", nullable = false)
-    private String workerSignature;
-    @Column(name = "proof_of_employment", nullable = false)
-    private String proofOfEmployment;
+    @Lob
+    @Column(name = "worker_signature", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] workerSignature;
+    @Lob
+    @Column(name = "proof_of_employment", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
     @CreatedBy
