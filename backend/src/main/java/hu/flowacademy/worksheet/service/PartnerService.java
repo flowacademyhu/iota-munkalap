@@ -142,7 +142,7 @@ public class PartnerService {
     }
 
     private boolean filterContains(String searchPart, Partner partner) {
-        return stripAccents(partner.getAdoszam().toLowerCase()).contains(stripAccents(searchPart)) ||
-                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
+        return stripAccents(partner.getAdoszam().toLowerCase()).contains(stripAccents(searchPart.toLowerCase())) ||
+                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart.toLowerCase()));
     }
 }
