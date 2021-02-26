@@ -73,7 +73,7 @@ public class Partner {
     @Column(name = "szamlazasi_cim_hrsz")
     private String szamlazasiCimHrsz;
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partnerId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Worksheet> worksheetList;
 }

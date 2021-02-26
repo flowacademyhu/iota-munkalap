@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface PartnerRepository extends JpaRepository<Partner, String>, JpaSpecificationExecutor<Partner> {
-    public Optional<Partner> findFirstByNev(String nev);
+    Optional<Partner> findFirstByNev(String nev);
 }

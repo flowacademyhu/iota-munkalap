@@ -47,7 +47,7 @@ public class WorksheetService {
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
         return Worksheet.builder()
-                .partnerId(
+                .partner(
                         partnerRepository.findFirstByNev(worksheetDTO.getPartnerId())
                                 .orElseThrow(()->new ValidationException("No such partner exists!"))
                 )
@@ -70,7 +70,7 @@ public class WorksheetService {
     }
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-        if (worksheet.getPartnerId() == null) {
+        if (worksheet.getPartner() == null) {
             throw new ValidationException("Partner value is null");
         }
         if (worksheet.getTypeOfWork() == null) {
@@ -97,6 +97,9 @@ public class WorksheetService {
         if (!StringUtils.hasText(worksheet.getDescription())) {
             throw new ValidationException("Description is empty or null");
         }
+        if (worksheet.getDescription().length() > 3000) {
+            throw new ValidationException("Description length is more than 3000 character");
+        }
         if (!StringUtils.hasText(worksheet.getUsedMaterial())) {
             throw new ValidationException("UsedMaterial is empty or null");
         }
@@ -121,7 +124,7 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
