@@ -48,7 +48,10 @@ public class WorksheetService {
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
         return Worksheet.builder()
-                .partner(Partner.builder().partnerId(worksheetDTO.getPartnerId()).build())
+                .partner(
+                        partnerRepository.findById(worksheetDTO.getPartnerId())
+                                .orElseThrow(()-> new ValidationException("No such partner in database"))
+                )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
                 .assetSettlement(worksheetDTO.getAssetSettlement())
