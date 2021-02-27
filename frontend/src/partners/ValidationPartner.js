@@ -10,7 +10,7 @@ export default function schema() {
     telefon: yup
       .string()
       .required('Kötelező mező!')
-      .matches(/([0-9])/, 'Nem megfelelő formátum!'),
+      .matches(/([0-9]+)/, 'Nem megfelelő formátum!'),
     megrendeloTipusa: yup.string().required('Kötelező mező!'),
     nev: yup.string().required('Kötelező mező!'),
     rovidNev: yup.string(),
