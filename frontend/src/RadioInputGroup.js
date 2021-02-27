@@ -1,33 +1,39 @@
-import classNames from 'classnames'
+import React from 'react'
+import Form from 'react-bootstrap/Form'
+import { useField } from 'formik'
+import RadioInput from './RadioInput'
+import { Row, Col } from 'react-bootstrap'
 
-function InputFeedback({ error }) {
-  return (
-    error && (
-      <div className="input-feedback text-danger validationText">{error}</div>
-    )
-  )
-}
-
-function RadioInputGroup(props) {
-  const { value, error, touched, label, className, children } = props
-  const classes = classNames(
-    'input-field',
-    {
-      'is-success': value || (!error && touched),
-      'is-error': !!error && touched,
-    },
-    className
-  )
+export default function RadioInputGroup({ label, options, ...props }) {
+  const [field, meta] = useField(props)
+  const { error, touched } = meta
+  const showError = touched && error
+  const { name } = props
 
   return (
-    <div className={classes}>
-      <fieldset>
-        <legend className="inputStyle mb-4">{label}</legend>
-        {children}
-        {touched && <InputFeedback error={error} />}
-      </fieldset>
-    </div>
+    <fieldset>
+      <Form.Group as={Row}>
+        <Form.Label as="legend" column sm={4}>
+          {label}
+        </Form.Label>
+        <Col
+          {...field}
+          sm={5}
+          className={`form-control border border-white d-flex flex-row align-content-start ${
+            showError ? 'is-invalid' : ''
+          }`}
+        >
+          {options.map((oneItem) => (
+            <RadioInput
+              key={oneItem.value}
+              label={oneItem.label}
+              name={name}
+              value={oneItem.value}
+            />
+          ))}
+        </Col>
+        {showError && <div className="invalid-feedback">{error}</div>}
+      </Form.Group>
+    </fieldset>
   )
 }
-
-export default RadioInputGroup

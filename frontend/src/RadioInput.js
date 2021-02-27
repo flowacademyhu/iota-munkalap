@@ -1,22 +1,14 @@
-import { useField } from 'formik'
+import Form from 'react-bootstrap/Form'
 
-function RadioInput({ id, label, ...props }) {
-  const { field } = useField(props)
-  const { name, value, onChange } = field
-
+function RadioInput({ label, value, name }) {
   return (
-    <div className="ml-4">
-      <input
-        name={name}
-        id={id}
-        type="radio"
-        value={id}
-        checked={id === value}
-        onChange={onChange}
-        className="radio-button mr-2"
-      />
-      <label htmlFor={id}>{label}</label>
-    </div>
+    <Form.Check
+      className="ml-4"
+      type="radio"
+      label={label}
+      name={name}
+      value={value}
+    />
   )
 }
 
