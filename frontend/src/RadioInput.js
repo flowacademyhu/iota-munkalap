@@ -7,7 +7,7 @@ function RadioInput(props) {
   const { name, value, onChange } = field
 
   return (
-    <div>
+    <div className="ml-4">
       <input
         name={name}
         id={id}
