@@ -12,15 +12,13 @@ export default function Partner() {
   } = usePartnerData()
 
   return window.location.pathname === '/partners/new' ? (
-    <>
-      <PartnerForm
-        handleClick={handleClick}
-        sent={sent}
-        popUpMessage={popUpMessage}
-        sendData={handleData}
-        title="Partner létrehozása"
-      />
-    </>
+    <PartnerForm
+      handleClick={handleClick}
+      sent={sent}
+      popUpMessage={popUpMessage}
+      sendData={handleData}
+      title="Partner létrehozása"
+    />
   ) : (
     <>
       {partnerData && (
