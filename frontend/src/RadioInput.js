@@ -15,7 +15,7 @@ function RadioInput(props) {
         value={id}
         checked={id === value}
         onChange={onChange}
-        className={classNames('radio-button')}
+        className={classNames('radio-button mr-2')}
       />
       <label htmlFor={id}>{label}</label>
     </div>
