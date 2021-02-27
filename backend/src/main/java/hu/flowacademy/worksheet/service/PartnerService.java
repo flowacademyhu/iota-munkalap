@@ -7,6 +7,7 @@ import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.aspectj.lang.annotation.RequiredTypes;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,12 @@ public class PartnerService {
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL)) {
             partner.setAdoszam(partner.getAdoszam());
             partner.setKAdoszamtipus(partner.getKAdoszamtipus());
+        } else {
+            partner.setAdoszam(null);
+            partner.setKAdoszamtipus(0);
         }
+
+
         partner.setMegrendeloTipusa(OrderType.LEGAL);
         return partnerRepository.save(partner);
     }
