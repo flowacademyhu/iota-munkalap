@@ -12,14 +12,14 @@ export default function RadioInputGroup({ label, options, ...props }) {
 
   return (
     <fieldset>
-      <Form.Group as={Row}>
+      <Form.Group as={Row} className="d-flex flex-column">
         <Form.Label as="legend" column sm={4}>
           {label}
         </Form.Label>
         <Col
           {...field}
-          sm={5}
-          className={`form-control border border-white d-flex flex-row align-content-start ${
+          sm={4}
+          className={`form-control border-white d-flex  ${
             showError ? 'is-invalid' : ''
           }`}
         >
