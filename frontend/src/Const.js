@@ -14,6 +14,6 @@ export const PATH_VARIABLES = {
   WORKSHEET_NEW: 'new',
   WORKSHEET_UPDATE: 'update',
   PARTNER: 'partners',
-  PARTNER_NEY: 'new',
+  PARTNER_NEW: 'new',
   PARTNER_UPDATE: 'update',
 }
