@@ -25,7 +25,7 @@ export default function usePartnerData() {
           setPartnerData({ ...response.data, loaded: true })
         } catch (error) {
           setPartnerData({ loaded: true })
-          setPopUpMessage('A módosítás sikertelen')
+          setPopUpMessage('A lekérés sikertelen')
           setSent(true)
         }
       }
