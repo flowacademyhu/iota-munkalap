@@ -2,9 +2,7 @@ import classNames from 'classnames'
 
 function InputFeedback({ error }) {
   return error ? (
-    <div className={classNames('input-feedback text-danger validationText')}>
-      {error}
-    </div>
+    <div className="input-feedback text-danger validationText">{error}</div>
   ) : null
 }
 
