@@ -1,7 +1,7 @@
 package hu.flowacademy.worksheet.repository;
 
 import hu.flowacademy.worksheet.entity.Worksheet;
-import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
+import hu.flowacademy.worksheet.enumCustom.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,4 +13,12 @@ public interface WorksheetRepository extends JpaRepository<Worksheet, String>, J
     @Modifying
     @Query("update Worksheet w set w.worksheetStatus = ?2 where w.id = ?1")
     void updateWorksheetstatus(String id, WorksheetStatus status);
+
+    @Modifying
+    @Query("update Worksheet w set w.partnerId = ?2 where w.id = ?1")
+    void updateWorksheetPartner(String id, String partnerId, TypeOfWork typeOfWork, String customTypeOfWork,
+                         AssetSettlement assetSettlement, WorkingTimeAccounting workingTimeAccounting,
+                        int numberOfEmployees, float overheadHour, float deliveryKm, String accountSerialNumber,
+                         String description, String usedMaterial, TypeOfPayment typeOfPayment, byte[] workerSignature,
+                         byte[] proofOfEmployment);
 }
