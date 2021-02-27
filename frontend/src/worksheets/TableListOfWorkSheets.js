@@ -45,6 +45,21 @@ export default function TableListOfWorkSheets() {
     updateWorkSheets()
   }
 
+  const isEditable = (workSheetStatus) => {
+    if (workSheetStatus === 'CREATED') {
+      return true
+    }
+    if (workSheetStatus === 'CLOSED') {
+      return false
+    }
+    if (workSheetStatus === 'REPORTED') {
+      if (isAdmin) {
+        return true
+      }
+    }
+    return false
+  }
+
   return (
     <>
       <div className="py-1">
@@ -109,7 +124,7 @@ export default function TableListOfWorkSheets() {
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
                       <EditButton
-                        hidden={worksheet.worksheetStatus === 'CLOSED'}
+                        hidden={!isEditable(worksheet.worksheetStatus)}
                         onClick={() =>
                           history.push(
                             `/${PATH_VARIABLES.WORKSHEET_UPDATE}/${worksheet.id}`
