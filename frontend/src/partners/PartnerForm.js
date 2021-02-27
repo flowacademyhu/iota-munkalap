@@ -49,7 +49,6 @@ function PartnerForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              console.log(values)
               sendData(values)
             }}
           >
