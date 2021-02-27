@@ -59,7 +59,6 @@ function PartnerForm({
                   <Input name="partnerEmail" label="Email cím" type="text" />
                   <Input name="telefon" label="Telefonszám" type="text" />
                   <RadioInputGroup
-                    className="inputStyle"
                     id="megrendeloTipusa"
                     label="Megrendelő típusa:"
                     value={values.megrendeloTipusa}
