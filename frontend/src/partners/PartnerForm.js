@@ -1,12 +1,12 @@
 import React from 'react'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import schema from './ValidationPartner'
+import { TYPE_OF_CUSTOMER } from './PartnerRadioButtonOptions'
 import RadioInputGroup from '../RadioInputGroup'
-import RadioInput from '../RadioInput'
 
 function PartnerForm({
   sent,
@@ -52,32 +52,17 @@ function PartnerForm({
               sendData(values)
             }}
           >
-            {({ values, errors, touched }) => {
+            {({ values }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
                   <Input name="partnerEmail" label="Email cím" type="text" />
                   <Input name="telefon" label="Telefonszám" type="text" />
                   <RadioInputGroup
-                    id="megrendeloTipusa"
+                    name="megrendeloTipusa"
                     label="Megrendelő típusa:"
-                    value={values.megrendeloTipusa}
-                    error={errors.megrendeloTipusa}
-                    touched={touched.megrendeloTipusa}
-                  >
-                    <Field
-                      component={RadioInput}
-                      name="megrendeloTipusa"
-                      id="LEGAL"
-                      label="Jogi személy"
-                    />
-                    <Field
-                      component={RadioInput}
-                      name="megrendeloTipusa"
-                      id="PRIVATE"
-                      label="Magánszemély"
-                    />
-                  </RadioInputGroup>
+                    options={TYPE_OF_CUSTOMER}
+                  />
                   <Input name="nev" label="Név" type="text" />
                   <Input name="rovidNev" label="Rövid név" type="text" />
                   {values.megrendeloTipusa === 'LEGAL' && (
