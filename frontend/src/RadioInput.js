@@ -1,5 +1,7 @@
-function RadioInput(props) {
-  const { field, id, label } = props
+import { useField } from 'formik'
+
+function RadioInput({ id, label, ...props }) {
+  const { field } = useField(props)
   const { name, value, onChange } = field
 
   return (
