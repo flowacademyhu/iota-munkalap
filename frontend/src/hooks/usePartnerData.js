@@ -17,7 +17,7 @@ export default function usePartnerData() {
     setSent(false)
   }
 
-  const UpdatePartner = useCallback(
+  const amendPartner = useCallback(
     async function () {
       if (id !== undefined) {
         try {
@@ -34,10 +34,10 @@ export default function usePartnerData() {
   )
 
   useEffect(() => {
-    UpdatePartner()
-  }, [UpdatePartner])
+    amendPartner()
+  }, [amendPartner])
 
-  async function HandleData(values) {
+  async function handleData(values) {
     try {
       const response =
         id !== undefined
@@ -59,8 +59,8 @@ export default function usePartnerData() {
   }
 
   return {
-    UpdatePartner,
-    HandleData,
+    amendPartner,
+    handleData,
     handleClick,
     popUpMessage,
     sent,
