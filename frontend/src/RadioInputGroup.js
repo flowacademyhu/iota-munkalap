@@ -1,9 +1,11 @@
 import classNames from 'classnames'
 
 function InputFeedback({ error }) {
-  return error ? (
-    <div className="input-feedback text-danger validationText">{error}</div>
-  ) : null
+  return (
+    error && (
+      <div className="input-feedback text-danger validationText">{error}</div>
+    )
+  )
 }
 
 function RadioInputGroup(props) {
