@@ -11,6 +11,7 @@ import org.aspectj.lang.annotation.RequiredTypes;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -53,49 +54,49 @@ public class PartnerService {
     }
 
     private void nullChecker(Partner partner) throws ValidationException {
-        if (partner.getPartnerEmail() == null) {
+        if (!StringUtils.hasText(partner.getPartnerEmail())) {
             throw new ValidationException("Partner email is null");
         }
-        if (partner.getTelefon() == null) {
+        if (!StringUtils.hasText(partner.getTelefon())) {
             throw new ValidationException("The phone number is null");
         }
         if (partner.getMegrendeloTipusa() == null) {
             throw new ValidationException("The Order Type is null");
         }
-        if (partner.getNev() == null) {
+        if (!StringUtils.hasText(partner.getNev())) {
             throw new ValidationException("The partner name is null");
         }
-        if (partner.getRovidNev() == null) {
+        if (!StringUtils.hasText(partner.getRovidNev())) {
             throw new ValidationException("The partner short name is null");
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getBankszamlaszam() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() == null) {
             throw new ValidationException("The bank account number is null");
         }
-        if (partner.getSzamlazasiCimOrszagKod() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
         }
-        if (partner.getSzamlazasiCimOrszagNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagNev())) {
             throw new ValidationException("The country name is null");
         }
-        if (partner.getSzamlazasiCimMegyeNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimMegyeNev())) {
             throw new ValidationException("The county name is null");
         }
-        if (partner.getSzamlazasiCimIranyitoszam() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimIranyitoszam())) {
             throw new ValidationException("The postcode is null");
         }
-        if (partner.getSzamlazasiCimTelepulesNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimTelepulesNev())) {
             throw new ValidationException("The city name is null");
         }
-        if (partner.getSzamlazasiCimKozteruletNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimKozteruletNev())) {
             throw new ValidationException("The street name is null");
         }
-        if (partner.getSzamlazasiCimKozteruletJellegNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimKozteruletJellegNev())) {
             throw new ValidationException("The street type is null");
         }
-        if (partner.getSzamlazasiCimHazszam() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
     }
