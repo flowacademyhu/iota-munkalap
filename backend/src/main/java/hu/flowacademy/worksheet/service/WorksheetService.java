@@ -96,21 +96,13 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
-        worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
-        worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
-        worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
-        worksheetToUpdate.setWorkingTimeAccounting(worksheetReceived.getWorkingTimeAccounting());
-        worksheetToUpdate.setNumberOfEmployees(worksheetReceived.getNumberOfEmployees());
-        worksheetToUpdate.setOverheadHour(worksheetReceived.getOverheadHour());
-        worksheetToUpdate.setDeliveryKm(worksheetReceived.getDeliveryKm());
-        worksheetToUpdate.setAccountSerialNumber(worksheetReceived.getAccountSerialNumber());
-        worksheetToUpdate.setDescription(worksheetReceived.getDescription());
-        worksheetToUpdate.setUsedMaterial(worksheetReceived.getUsedMaterial());
-        worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
-        worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
-        worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
-        return worksheetRepository.save(worksheetToUpdate);
+        worksheetRepository.updateWorksheet(worksheetToUpdate.getId(), worksheetReceived.getPartnerId(),
+                worksheetReceived.getTypeOfWork(), worksheetReceived.getCustomTypeOfWork(), worksheetReceived.getAssetSettlement(),
+                worksheetReceived.getWorkingTimeAccounting(), worksheetReceived.getNumberOfEmployees(), worksheetReceived.getOverheadHour(),
+                worksheetReceived.getDeliveryKm(), worksheetReceived.getAccountSerialNumber(), worksheetReceived.getDescription(),
+                worksheetReceived.getUsedMaterial(), worksheetReceived.getTypeOfPayment(), worksheetReceived.getWorkerSignature(),
+                worksheetReceived.getProofOfEmployment());
+        return worksheetToUpdate;
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
