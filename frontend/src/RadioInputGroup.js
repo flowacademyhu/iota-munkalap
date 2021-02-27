@@ -13,7 +13,7 @@ function RadioInputGroup(props) {
   const classes = classNames(
     'input-field',
     {
-      'is-success': value || (!error && touched), // handle prefilled or user-filled
+      'is-success': value || (!error && touched),
       'is-error': !!error && touched,
     },
     className
