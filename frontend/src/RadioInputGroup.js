@@ -18,7 +18,7 @@ export default function RadioInputGroup({ label, options, ...props }) {
         </Form.Label>
         <Col
           {...field}
-          sm={4}
+          sm={5}
           className={`form-control border-white d-flex  ${
             showError ? 'is-invalid' : ''
           }`}
