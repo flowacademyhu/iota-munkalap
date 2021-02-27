@@ -31,6 +31,10 @@ public class PartnerService {
 
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
         validatePartner(partner);
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL)) {
+            partner.setAdoszam(partner.getAdoszam());
+            partner.setKAdoszamtipus(partner.getKAdoszamtipus());
+        }
         partner.setMegrendeloTipusa(OrderType.LEGAL);
         return partnerRepository.save(partner);
     }
@@ -58,10 +62,10 @@ public class PartnerService {
         if (partner.getRovidNev() == null) {
             throw new ValidationException("The partner short name is null");
         }
-        if (partner.getAdoszam() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getBankszamlaszam() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getBankszamlaszam() == null) {
             throw new ValidationException("The bank account number is null");
         }
         if (partner.getSzamlazasiCimOrszagKod() == null) {
