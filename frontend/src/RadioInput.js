@@ -1,5 +1,3 @@
-import classNames from 'classnames'
-
 function RadioInput(props) {
   const { field, id, label } = props
   const { name, value, onChange } = field
@@ -13,7 +11,7 @@ function RadioInput(props) {
         value={id}
         checked={id === value}
         onChange={onChange}
-        className={classNames('radio-button mr-2')}
+        className="radio-button mr-2"
       />
       <label htmlFor={id}>{label}</label>
     </div>
