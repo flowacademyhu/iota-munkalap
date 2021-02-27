@@ -4,7 +4,7 @@ import usePartnerData from '../hooks/usePartnerData'
 
 export default function Partner() {
   const {
-    HandleData,
+    handleData,
     handleClick,
     popUpMessage,
     sent,
@@ -17,7 +17,7 @@ export default function Partner() {
         handleClick={handleClick}
         sent={sent}
         popUpMessage={popUpMessage}
-        sendData={HandleData}
+        sendData={handleData}
         title="Partner létrehozása"
       />
     </>
@@ -28,7 +28,7 @@ export default function Partner() {
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
-          sendData={HandleData}
+          sendData={handleData}
           title="Adatok szerkesztése"
           partner={partnerData}
         />
