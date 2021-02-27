@@ -16,9 +16,57 @@ public interface WorksheetRepository extends JpaRepository<Worksheet, String>, J
 
     @Modifying
     @Query("update Worksheet w set w.partnerId = ?2 where w.id = ?1")
-    void updateWorksheetPartner(String id, String partnerId, TypeOfWork typeOfWork, String customTypeOfWork,
-                         AssetSettlement assetSettlement, WorkingTimeAccounting workingTimeAccounting,
-                        int numberOfEmployees, float overheadHour, float deliveryKm, String accountSerialNumber,
-                         String description, String usedMaterial, TypeOfPayment typeOfPayment, byte[] workerSignature,
-                         byte[] proofOfEmployment);
+    void updateWorksheetPartner(String id, String partnerId);
+
+    @Modifying
+    @Query("update Worksheet w set w.typeOfWork = ?2 where w.id = ?1")
+    void updateWorksheetTypeOfWork(String id, TypeOfWork typeOfWork);
+
+    @Modifying
+    @Query("update Worksheet w set w.customTypeOfWork = ?2 where w.id = ?1")
+    void updateWorksheetCustomTypeOfWork(String id, String customTypeOfWork);
+
+    @Modifying
+    @Query("update Worksheet w set w.assetSettlement = ?2 where w.id = ?1")
+    void updateWorksheetAssetSettlement(String id, AssetSettlement assetSettlement);
+
+    @Modifying
+    @Query("update Worksheet w set w.workingTimeAccounting = ?2 where w.id = ?1")
+    void updateWorksheetWorkingTimeAccounting(String id, WorkingTimeAccounting workingTimeAccounting);
+
+    @Modifying
+    @Query("update Worksheet w set w.numberOfEmployees = ?2 where w.id = ?1")
+    void updateWorksheetNumberOfEmployees(String id, int numberOfEmployees);
+
+    @Modifying
+    @Query("update Worksheet w set w.overheadHour = ?2 where w.id = ?1")
+    void updateWorksheetOverheadHour(String id, float overheadHour);
+
+    @Modifying
+    @Query("update Worksheet w set w.deliveryKm = ?2 where w.id = ?1")
+    void updateWorksheetDeliveryKm(String id, float deliveryKm);
+
+    @Modifying
+    @Query("update Worksheet w set w.accountSerialNumber = ?2 where w.id = ?1")
+    void updateWorksheetAccountSerialNumber(String id, String accountSerialNumber);
+
+    @Modifying
+    @Query("update Worksheet w set w.description = ?2 where w.id = ?1")
+    void updateWorksheetDescription(String id, String description);
+
+    @Modifying
+    @Query("update Worksheet w set w.usedMaterial = ?2 where w.id = ?1")
+    void updateWorksheetUsedMaterial(String id, String usedMaterial);
+
+    @Modifying
+    @Query("update Worksheet w set w.typeOfPayment = ?2 where w.id = ?1")
+    void updateWorksheetTypeOfPayment(String id, TypeOfPayment typeOfPayment);
+
+    @Modifying
+    @Query("update Worksheet w set w.workerSignature = ?2 where w.id = ?1")
+    void updateWorksheetWorkerSignature(String id, byte[] workerSignature);
+
+    @Modifying
+    @Query("update Worksheet w set w.proofOfEmployment = ?2 where w.id = ?1")
+    void updateWorksheetProofOfEmployment(String id, byte[] proofOfEmployment);
 }
