@@ -2,7 +2,7 @@ export const TYPE_OF_WORK = {
   OTHER: 'OTHER',
 }
 
-export const MEGRENDELO_TIPUSA = {
+export const CUSTOMER_TYPE = {
   LEGAL: 'LEGAL',
 }
 

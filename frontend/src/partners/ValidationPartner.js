@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { MEGRENDELO_TIPUSA } from '../Const'
+import { CUSTOMER_TYPE } from '../Const'
 
 export default function schema() {
   const schema = yup.object().shape({
@@ -15,7 +15,7 @@ export default function schema() {
     nev: yup.string().required('Kötelező mező!'),
     rovidNev: yup.string(),
     adoszam: yup.string().when('megrendeloTipusa', {
-      is: MEGRENDELO_TIPUSA.LEGAL,
+      is: CUSTOMER_TIPE.LEGAL,
       then: yup
         .string()
         .required('Kötelező mező!')
@@ -24,7 +24,7 @@ export default function schema() {
       otherwise: yup.string(),
     }),
     kadoszamtipus: yup.number().when('megrendeloTipusa', {
-      is: MEGRENDELO_TIPUSA.LEGAL,
+      is: CUSTOMER_TYPE.LEGAL,
       then: yup
         .number()
         .required('Kötelező mező!')
