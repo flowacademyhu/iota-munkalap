@@ -96,13 +96,21 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        worksheetRepository.updateWorksheet(worksheetToUpdate.getId(), worksheetReceived.getPartnerId(),
-                worksheetReceived.getTypeOfWork(), worksheetReceived.getCustomTypeOfWork(), worksheetReceived.getAssetSettlement(),
-                worksheetReceived.getWorkingTimeAccounting(), worksheetReceived.getNumberOfEmployees(), worksheetReceived.getOverheadHour(),
-                worksheetReceived.getDeliveryKm(), worksheetReceived.getAccountSerialNumber(), worksheetReceived.getDescription(),
-                worksheetReceived.getUsedMaterial(), worksheetReceived.getTypeOfPayment(), worksheetReceived.getWorkerSignature(),
-                worksheetReceived.getProofOfEmployment());
-        return worksheetToUpdate;
+        worksheetRepository.updateWorksheetPartner(worksheetToUpdate.getId(), worksheetReceived.getPartnerId());
+        worksheetRepository.updateWorksheetTypeOfWork(worksheetToUpdate.getId(), worksheetReceived.getTypeOfWork());
+        worksheetRepository.updateWorksheetCustomTypeOfWork(worksheetToUpdate.getId(), worksheetReceived.getCustomTypeOfWork());
+        worksheetRepository.updateWorksheetAssetSettlement(worksheetToUpdate.getId(), worksheetReceived.getAssetSettlement());
+        worksheetRepository.updateWorksheetWorkingTimeAccounting(worksheetToUpdate.getId(), worksheetReceived.getWorkingTimeAccounting());
+        worksheetRepository.updateWorksheetNumberOfEmployees(worksheetToUpdate.getId(), worksheetReceived.getNumberOfEmployees());
+        worksheetRepository.updateWorksheetOverheadHour(worksheetToUpdate.getId(), worksheetReceived.getOverheadHour());
+        worksheetRepository.updateWorksheetDeliveryKm(worksheetToUpdate.getId(), worksheetReceived.getDeliveryKm());
+        worksheetRepository.updateWorksheetAccountSerialNumber(worksheetToUpdate.getId(), worksheetReceived.getAccountSerialNumber());
+        worksheetRepository.updateWorksheetDescription(worksheetToUpdate.getId(), worksheetReceived.getDescription());
+        worksheetRepository.updateWorksheetUsedMaterial(worksheetToUpdate.getId(), worksheetReceived.getUsedMaterial());
+        worksheetRepository.updateWorksheetTypeOfPayment(worksheetToUpdate.getId(), worksheetReceived.getTypeOfPayment());
+        worksheetRepository.updateWorksheetWorkerSignature(worksheetToUpdate.getId(), worksheetReceived.getWorkerSignature());
+        worksheetRepository.updateWorksheetProofOfEmployment(worksheetToUpdate.getId(), worksheetReceived.getProofOfEmployment());
+        return worksheetRepository.findById(worksheetToUpdate.getId()).orElseThrow(()-> new ValidationException("This cannot happen."));
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
