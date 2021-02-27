@@ -15,7 +15,7 @@ export default function schema() {
     nev: yup.string().required('Kötelező mező!'),
     rovidNev: yup.string(),
     adoszam: yup.string().when('megrendeloTipusa', {
-      is: CUSTOMER_TIPE.LEGAL,
+      is: CUSTOMER_TYPE.LEGAL,
       then: yup
         .string()
         .required('Kötelező mező!')
