@@ -1,18 +1,14 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { PATH_VARIABLES } from '../Const'
 import useWorkSheets from '../hooks/useWorkSheets'
-import FilterWorkSheetsByStatus from './FilterWorkSheetsByStatus'
-import Button from '../Button'
 import {
   typeOfWorkTranslation,
   statusTranslation,
 } from './TranslationForWorkSheet'
 import LoadingScreen from '../LoadingScreen'
-import CalendarDropDown from '../CalendarDropDown'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import workSheetPDF from './workSheetPDF'
+import FiltersAndNewWorkSheet from './FiltersAndNewWorkSheet'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -26,8 +22,6 @@ export default function TableListOfWorkSheets() {
     setStatus,
   } = useWorkSheets()
 
-  const history = useHistory()
-
   async function closeAndReload(id) {
     await closeWorkSheet(id)
     updateWorkSheets()
@@ -40,41 +34,14 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <div className="py-1">
-        <Button
-          onClick={() => history.push(`/${PATH_VARIABLES.WORKSHEET_NEW}`)}
-          text="Új munkalap létrehozása"
-          moreClassName="w-auto p-1"
-        />
-      </div>
-      <div className="d-flex flex-row justify-content-between">
-        <div className="ml-2">
-          <div>Szűrés dátum szerint:</div>
-          <div>
-            <CalendarDropDown
-              date={startDate}
-              setDate={setStartDate}
-              placeholderText="Intervallum kezdete"
-            />
-            <CalendarDropDown
-              date={endDate}
-              setDate={setEndDate}
-              placeholderText="Intervallum vége"
-            />
-            <Button
-              text="Összes"
-              onClick={() => {
-                setStartDate(null)
-                setEndDate(null)
-              }}
-            />
-          </div>
-        </div>
-        <div className="mr-2">
-          <div>Szűrés állapot szerint:</div>
-          <FilterWorkSheetsByStatus
-        </div>
-      </div>
+      <FiltersAndNewWorkSheet
+        startDate={startDate}
+        setStartDate={setStartDate}
+        endDate={endDate}
+        setEndDate={setEndDate}
+        status={status}
+        setStatus={setStatus}
+      />
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover text-center">
