@@ -2,7 +2,7 @@ import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { PATH_VARIABLES } from '../Const'
 import useWorkSheets from '../hooks/useWorkSheets'
-import FilterWorkSheets from './FilterWorkSheets'
+import FilterWorkSheetsByStatus from './FilterWorkSheetsByStatus'
 import Button from '../Button'
 import {
   typeOfWorkTranslation,
@@ -72,7 +72,7 @@ export default function TableListOfWorkSheets() {
         </div>
         <div className="mr-2">
           <div>Szűrés állapot szerint:</div>
-          <FilterWorkSheets status={status} onStatusChange={setStatus} />
+          <FilterWorkSheetsByStatus
         </div>
       </div>
       <div className="border border-secondary">

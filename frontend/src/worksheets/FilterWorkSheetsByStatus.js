@@ -2,7 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { statusTranslation } from './TranslationForWorkSheet'
 
-function FilterWorkSheets(props) {
+function FilterWorkSheetsByStatus(props) {
   const { onStatusChange, status } = props
 
   const handleInputChange = (event) => {
@@ -29,4 +29,4 @@ function FilterWorkSheets(props) {
   )
 }
 
-export default FilterWorkSheets
+export default FilterWorkSheetsByStatus
