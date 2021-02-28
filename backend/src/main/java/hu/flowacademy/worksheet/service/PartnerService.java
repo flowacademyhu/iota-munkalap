@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
@@ -33,13 +34,13 @@ public class PartnerService {
 
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
         validatePartner(partner);
-        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL)) {
-            partner.setAdoszam(partner.getAdoszam());
-            partner.setKAdoszamtipus(partner.getKAdoszamtipus());
-        } else {
-            partner.setAdoszam(null);
-            partner.setKAdoszamtipus(0);
-        }
+//        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL)) {
+//            partner.setAdoszam(partner.getAdoszam());
+//            partner.setKAdoszamtipus(partner.getKAdoszamtipus());
+//        } else {
+//            partner.setAdoszam(null);
+//            partner.setKAdoszamtipus(0);
+//        }
 
 
         partner.setMegrendeloTipusa(OrderType.LEGAL);
@@ -67,13 +68,19 @@ public class PartnerService {
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() == 0) {
-            throw new ValidationException("The K tax number is null");
+        if (!taxNumberChecker(partner)) {
+            throw new ValidationException("The tax number length is not eight");
+        }
+        if (!taxNumberTypeChecker(partner)) {
+            throw new ValidationException("The tax number contains non digit characters");
+        }
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() < 1
+                || partner.getKAdoszamtipus() > 5) {
+            throw new ValidationException("The K tax number is not valid");
         }
         if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
         }
-
         if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
         }
@@ -98,23 +105,25 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
-        taxNumberChecker(partner);
         bankAccountChecker(partner);
     }
 
-    private void taxNumberChecker(Partner partner) throws ValidationException {
+    private boolean taxNumberChecker(Partner partner) {
+        boolean result = true;
         if (partner.getAdoszam().length() != 8) {
-            throw new ValidationException("The tax number length is not eight");
+            result = false;
         }
-        for (char x : partner.getAdoszam().toCharArray()) {
-            if (!Character.isDigit(x)) {
-                throw new ValidationException("The tax number is not a digit");
-            }
-        }
-        if (partner.getKAdoszamtipus() < 1 || partner.getKAdoszamtipus() > 5) {
-            throw new ValidationException("The K. tax number is not 1, 2, 3, 4, 5");
-        }
+        return result;
     }
+
+    private boolean taxNumberTypeChecker(Partner partner) {
+        boolean result = true;
+        if (!partner.getAdoszam().matches("^[0-9]{8}$")) {
+            result = false;
+        }
+        return result;
+    }
+
 
     private void bankAccountChecker(Partner partner) throws ValidationException {
         if (!(partner.getBankszamlaszam().length() == 17 || partner.getBankszamlaszam().length() == 26)) {
