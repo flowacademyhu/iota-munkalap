@@ -58,7 +58,7 @@ public class PartnerService {
             throw new ValidationException("The tax number is null");
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberTypeChecker(partner)) {
-            throw new ValidationException("The tax number contains non digit characters");
+            throw new ValidationException("The tax number is invalid");
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() < 1
                 || partner.getKAdoszamtipus() > 5) {
@@ -100,11 +100,7 @@ public class PartnerService {
     }
 
     private boolean taxNumberTypeChecker(Partner partner) {
-        boolean result = true;
-        if (!partner.getAdoszam().matches("^[0-9]{8}$")) {
-            result = false;
-        }
-        return result;
+        return partner.getAdoszam().matches("^[0-9]{8}$");
     }
 
     private boolean bankAccountLengthChecker(Partner partner) {
