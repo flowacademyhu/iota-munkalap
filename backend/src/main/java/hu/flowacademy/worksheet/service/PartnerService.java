@@ -10,10 +10,8 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
-import javax.mail.Part;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
@@ -128,7 +126,6 @@ public class PartnerService {
         }
         return result;
     }
-
 
     private boolean bankAccountLengthChecker(Partner partner) {
         boolean result = true;
