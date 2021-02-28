@@ -67,11 +67,8 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
         }
-        if (bankAccountLengthChecker(partner)) {
-            throw new ValidationException("The bank account number length is not appropriate");
-        }
         if (bankAccountFormatChecker(partner)) {
-            throw new ValidationException("The bank account format is not valid");
+            throw new ValidationException("The bank account is not valid");
         }
         if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
@@ -103,23 +100,10 @@ public class PartnerService {
         return partner.getAdoszam().matches("^[0-9]{8}$");
     }
 
-    private boolean bankAccountLengthChecker(Partner partner) {
-        boolean result = true;
-        if (partner.getBankszamlaszam().length() != 17 || partner.getBankszamlaszam().length() != 26) {
-            result = false;
-        }
-        return result;
-    }
-
     private boolean bankAccountFormatChecker(Partner partner) {
-        boolean result = true;
-        if (partner.getBankszamlaszam().length() == 17 && partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")) {
-            result = false;
-        }
-        if (partner.getBankszamlaszam().length() == 26 && partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$")) {
-            result = false;
-        }
-        return result;
+        return partner.getBankszamlaszam().length() == 17
+                ? !partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")
+                : !partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$");
     }
 
     private void orderTypeFormat(Partner partner) {
