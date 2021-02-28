@@ -30,18 +30,8 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
 
-    public Partner createPartner(@NonNull Partner partner) throws ValidationException {
+    public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
-//        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL)) {
-//            partner.setAdoszam(partner.getAdoszam());
-//            partner.setKAdoszamtipus(partner.getKAdoszamtipus());
-//        } else {
-//            partner.setAdoszam(null);
-//            partner.setKAdoszamtipus(0);
-//        }
-
-
-        partner.setMegrendeloTipusa(OrderType.LEGAL);
         return partnerRepository.save(partner);
     }
 
@@ -62,6 +52,10 @@ public class PartnerService {
         }
         if (!StringUtils.hasText(partner.getRovidNev())) {
             throw new ValidationException("The partner short name is null");
+        }
+        if (partner.getMegrendeloTipusa().equals(OrderType.PRIVATE)) {
+            partner.setAdoszam("-");
+            partner.setKAdoszamtipus(0);
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
