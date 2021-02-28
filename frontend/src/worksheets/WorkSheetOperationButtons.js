@@ -57,10 +57,7 @@ function WorkSheetOperationButtons({ worksheet }) {
           onClick={() => closeAndReload(worksheet)}
         />
       )}
-      <PdfButton
-        hidden={worksheet.worksheetStatus === 'CREATED'}
-        onClick={() => workSheetPDF(worksheet)}
-      />
+      <PdfButton onClick={() => workSheetPDF(worksheet)} />
     </>
   )
 }
