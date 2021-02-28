@@ -11,10 +11,13 @@ import {
 import LoadingScreen from '../LoadingScreen'
 import CalendarDropDown from '../CalendarDropDown'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
+import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
+import workSheetPDF from './workSheetPDF'
 
 export default function TableListOfWorkSheets() {
   const {
     workSheets,
+    updateWorkSheets,
     startDate,
     endDate,
     setStartDate,
@@ -24,6 +27,16 @@ export default function TableListOfWorkSheets() {
   } = useWorkSheets()
 
   const history = useHistory()
+
+  async function closeAndReload(id) {
+    await closeWorkSheet(id)
+    updateWorkSheets()
+  }
+
+  async function finalizeAndReload(id) {
+    await finalizeWorkSheet(id)
+    updateWorkSheets()
+  }
 
   return (
     <>
@@ -90,7 +103,13 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
-                      <WorkSheetOperationButtons worksheet={worksheet} />
+                      <WorkSheetOperationButtons
+                        status={worksheet.worksheetStatus}
+                        id={worksheet.id}
+                        onFinalize={() => finalizeAndReload(worksheet.id)}
+                        onClose={() => closeAndReload(worksheet.id)}
+                        onPrint={() => workSheetPDF(worksheet)}
+                      />
                     </td>
                   </tr>
                 ))
