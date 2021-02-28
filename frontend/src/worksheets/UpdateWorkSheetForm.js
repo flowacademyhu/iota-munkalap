@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
+import moment from 'moment'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
-import getCurrentDate from './Date'
+import CalendarDropDown from '../CalendarDropDown'
 import schema from './ValidationWorkSheet'
 import {
   TYPE_OF_WORK_LIST,
@@ -24,6 +25,7 @@ function UpdateWorkSheetForm({
   title,
   worksheet,
 }) {
+  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -31,11 +33,12 @@ function UpdateWorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              localDateTime: getCurrentDate(),
+              createdAt: '',
               ...worksheet,
             }}
             validationSchema={schema}
             onSubmit={(data) => {
+              data.createdAt = moment(date).format('yyyy-MM-DD')
               sendData(data)
             }}
           >
@@ -100,7 +103,8 @@ function UpdateWorkSheetForm({
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
-                  <span>Kelt: {getCurrentDate()}</span>
+                  <span>Kelt: </span>
+                  <CalendarDropDown date={date} setDate={setDate} />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
