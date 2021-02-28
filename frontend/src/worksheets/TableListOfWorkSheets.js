@@ -1,28 +1,19 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import useWorkSheets from '../hooks/useWorkSheets'
 import FilterWorkSheets from './FilterWorkSheets'
-import EditButton from '../specialButtons/EditButton'
-import { Link } from 'react-router-dom'
 import Button from '../Button'
 import {
   typeOfWorkTranslation,
   statusTranslation,
 } from './TranslationForWorkSheet'
-import useCurrentUser from '../hooks/useCurrentUser'
-import CloseButton from '../specialButtons/CloseButton'
-import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import workSheetPDF from './workSheetPDF'
-import PdfButton from '../specialButtons/PdfButton'
-import FinalizeButton from '../specialButtons/FinalizeButton'
 import CalendarDropDown from '../CalendarDropDown'
-import { PATH_VARIABLES } from '../Const'
-import { useHistory } from 'react-router-dom'
+import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 
 export default function TableListOfWorkSheets() {
   const {
     workSheets,
-    updateWorkSheets,
     startDate,
     endDate,
     setStartDate,
@@ -30,35 +21,6 @@ export default function TableListOfWorkSheets() {
     status,
     setStatus,
   } = useWorkSheets()
-
-  const { isAdmin } = useCurrentUser()
-
-  const history = useHistory()
-
-  async function closeAndReload(worksheet) {
-    await closeWorkSheet(worksheet.id)
-    updateWorkSheets()
-  }
-
-  async function finalizeAndReload(worksheet) {
-    await finalizeWorkSheet(worksheet.id)
-    updateWorkSheets()
-  }
-
-  const isEditable = (workSheetStatus) => {
-    if (workSheetStatus === 'CREATED') {
-      return true
-    }
-    if (workSheetStatus === 'CLOSED') {
-      return false
-    }
-    if (workSheetStatus === 'REPORTED') {
-      if (isAdmin) {
-        return true
-      }
-    }
-    return false
-  }
 
   return (
     <>
@@ -123,28 +85,7 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
-                      <EditButton
-                        hidden={!isEditable(worksheet.worksheetStatus)}
-                        onClick={() =>
-                          history.push(
-                            `/${PATH_VARIABLES.WORKSHEET_UPDATE}/${worksheet.id}`
-                          )
-                        }
-                      />
-                      <FinalizeButton
-                        hidden={worksheet.worksheetStatus !== 'CREATED'}
-                        onClick={() => finalizeAndReload(worksheet)}
-                      />
-                      {isAdmin && (
-                        <CloseButton
-                          hidden={worksheet.worksheetStatus === 'CLOSED'}
-                          onClick={() => closeAndReload(worksheet)}
-                        />
-                      )}
-                      <PdfButton
-                        hidden={worksheet.worksheetStatus === 'CREATED'}
-                        onClick={() => workSheetPDF(worksheet)}
-                      />
+                      <WorkSheetOperationButtons worksheet={worksheet} />
                     </td>
                   </tr>
                 ))
