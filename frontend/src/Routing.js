@@ -10,8 +10,8 @@ import Partner from './partners/Partner'
 
 function Routing() {
   return (
-    <Switch>
-      <div className="col-12">
+    <div className="col-12">
+      <Switch>
         <AdminRoute path="/employees/new">
           <Employee />
         </AdminRoute>
@@ -42,8 +42,8 @@ function Routing() {
         <Route path="/">
           <Redirect to="/worksheets" />
         </Route>
-      </div>
-    </Switch>
+      </Switch>
+    </div>
   )
 }
 
