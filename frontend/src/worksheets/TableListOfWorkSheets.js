@@ -43,32 +43,38 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <div className="py-1">
+      <div className="py-1 my-3">
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
       <div className="d-flex flex-row justify-content-between">
-        <div className="ml-2">
-          <div>Szűrés dátum szerint:</div>
-          <div>
-            <CalendarDropDown
-              date={startDate}
-              setDate={setStartDate}
-              placeholderText="Intervallum kezdete"
-            />
-            <CalendarDropDown
-              date={endDate}
-              setDate={setEndDate}
-              placeholderText="Intervallum vége"
-            />
-            <Button
-              text="Összes"
-              onClick={() => {
-                setStartDate(null)
-                setEndDate(null)
-              }}
-            />
+        <div className="ml-2 d-flex flex-column">
+          <div className="d-block col-sm-">Szűrés dátum szerint:</div>
+          <div className="ml-2 d-flex flex-row my-3">
+            <span>
+              <CalendarDropDown
+                date={startDate}
+                setDate={setStartDate}
+                placeholderText="Intervallum kezdete"
+              />{' '}
+            </span>
+            <span>
+              <CalendarDropDown
+                date={endDate}
+                setDate={setEndDate}
+                placeholderText="Intervallum vége"
+              />{' '}
+            </span>
+            <span>
+              <Button
+                text="Összes"
+                onClick={() => {
+                  setStartDate(null)
+                  setEndDate(null)
+                }}
+              />
+            </span>
           </div>
         </div>
         <div className="mr-2">
