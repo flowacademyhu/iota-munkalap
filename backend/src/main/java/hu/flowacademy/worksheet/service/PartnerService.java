@@ -35,7 +35,7 @@ public class PartnerService {
         return partnerRepository.save(partner);
     }
 
-    private void validatePartner(Partner partner) throws ValidationException {
+    private void validatePartner(@NonNull Partner partner) throws ValidationException {
         if (!StringUtils.hasText(partner.getPartnerEmail())) {
             throw new ValidationException("Partner email is null");
         } else if (!EmailValidator.getInstance().isValid(partner.getPartnerEmail())) {
