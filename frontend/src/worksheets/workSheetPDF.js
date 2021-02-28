@@ -1,4 +1,3 @@
-import { LOGO_STRING } from './LogoForPdf'
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
 import {
@@ -7,7 +6,7 @@ import {
   typeOfPayment,
 } from './TranslationForWorkSheet'
 import renderSvg from './renderSvg'
-import { createHeader } from './tableContents'
+import createHeader from './tableContents'
 
 const acknowledge =
   'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
@@ -24,7 +23,7 @@ function workSheetPDF(worksheet) {
 
   var doc = {
     content: [
-      createHeader(),
+      createHeader(worksheet),
       {
         text: 'Munkalap',
         style: 'header',

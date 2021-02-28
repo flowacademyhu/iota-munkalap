@@ -1,5 +1,9 @@
-function createHeader() {
+import { LOGO_STRING } from './LogoForPdf'
+
+function createHeader(worksheet) {
   ///eleje
+  return (
+var doc = {
   content: [
     {
       text: 'Munkalap',
@@ -105,7 +109,10 @@ function createHeader() {
       },
       defaultStyle: {},
     }
+    
+
   //vége
+)
 }
 
-export default { createHeader }
+export default createHeader
