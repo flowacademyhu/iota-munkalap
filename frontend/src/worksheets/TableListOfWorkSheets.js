@@ -73,7 +73,7 @@ export default function TableListOfWorkSheets() {
                 <th scope="col">Partner neve</th>
                 <th scope="col">Munkavégzés jellege</th>
                 <th scope="col">Állapot</th>
-                <th scope="col">Módosítás</th>
+                <th scope="col">Műveletek</th>
               </tr>
             </thead>
             <tbody>
