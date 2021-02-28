@@ -47,15 +47,10 @@ public class PartnerService {
     }
 
     private void validatePartner(Partner partner) throws ValidationException {
-        nullChecker(partner);
-        emailChecker(partner);
-        taxNumberChecker(partner);
-        bankAccountChecker(partner);
-    }
-
-    private void nullChecker(Partner partner) throws ValidationException {
         if (!StringUtils.hasText(partner.getPartnerEmail())) {
             throw new ValidationException("Partner email is null");
+        } else if (!EmailValidator.getInstance().isValid(partner.getPartnerEmail())) {
+            throw new ValidationException("Invalid partner email format");
         }
         if (!StringUtils.hasText(partner.getTelefon())) {
             throw new ValidationException("The phone number is null");
@@ -72,9 +67,13 @@ public class PartnerService {
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() == 0) {
+            throw new ValidationException("The K tax number is null");
+        }
+        if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
         }
+
         if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
         }
@@ -99,12 +98,8 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
-    }
-
-    private void emailChecker(Partner partner) throws ValidationException {
-        if (!EmailValidator.getInstance().isValid(partner.getPartnerEmail())) {
-            throw new ValidationException("Invalid partner email format");
-        }
+        taxNumberChecker(partner);
+        bankAccountChecker(partner);
     }
 
     private void taxNumberChecker(Partner partner) throws ValidationException {
