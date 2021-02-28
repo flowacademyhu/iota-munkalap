@@ -67,7 +67,7 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
         }
-        if (bankAccountFormatChecker(partner)) {
+        if (!bankAccountFormatChecker(partner)) {
             throw new ValidationException("The bank account is not valid");
         }
         if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
@@ -101,9 +101,8 @@ public class PartnerService {
     }
 
     private boolean bankAccountFormatChecker(Partner partner) {
-        return partner.getBankszamlaszam().length() == 17
-                ? !partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")
-                : !partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$");
+        return partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")
+                || partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$");
     }
 
     private void orderTypeFormat(Partner partner) {
