@@ -12,7 +12,7 @@ function CalendarDropDown({ date, setDate, placeholderText }) {
       onChange={(date) => setDate(date)}
       dateFormat="yyyy.MM.dd"
       placeholderText={placeholderText}
-      className="mr-2 mb-5"
+      className="mr-2"
     />
   )
 }
