@@ -57,9 +57,6 @@ public class PartnerService {
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberLengthChecker(partner)) {
-            throw new ValidationException("The tax number length is not eight");
-        }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberTypeChecker(partner)) {
             throw new ValidationException("The tax number contains non digit characters");
         }
@@ -100,14 +97,6 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
-    }
-
-    private boolean taxNumberLengthChecker(Partner partner) {
-        boolean result = true;
-        if (partner.getAdoszam().length() != 8) {
-            result = false;
-        }
-        return result;
     }
 
     private boolean taxNumberTypeChecker(Partner partner) {
