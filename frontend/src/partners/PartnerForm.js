@@ -70,7 +70,7 @@ function PartnerForm({
                       <Input name="adoszam" label="Adószám" type="text" />
                       <Input
                         name="kadoszamtipus"
-                        label="kAdószám"
+                        label="ÁFA-kód"
                         type="number"
                       />
                     </>

@@ -28,8 +28,8 @@ export default function schema() {
       then: yup
         .number()
         .required('Kötelező mező!')
-        .min(1, 'A kadószám 1 és 5 közötti szám!')
-        .max(5, 'A kadószám 1 és 5 közötti szám!'),
+        .min(1, 'Az ÁFA-kód 1 és 5 közötti szám!')
+        .max(5, 'Az ÁFA-kód 1 és 5 közötti szám!'),
       otherwise: yup.number(),
     }),
     bankszamlaszam: yup
