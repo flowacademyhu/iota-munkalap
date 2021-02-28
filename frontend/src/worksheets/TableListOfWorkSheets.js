@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { PATH_VARIABLES } from '../Const'
 import useWorkSheets from '../hooks/useWorkSheets'
 import FilterWorkSheets from './FilterWorkSheets'
 import Button from '../Button'
@@ -22,12 +23,16 @@ export default function TableListOfWorkSheets() {
     setStatus,
   } = useWorkSheets()
 
+  const history = useHistory()
+
   return (
     <>
       <div className="py-1">
-        <Link to={`/worksheets/new`}>
-          <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
-        </Link>
+        <Button
+          onClick={() => history.push(`/${PATH_VARIABLES.WORKSHEET_NEW}`)}
+          text="Új munkalap létrehozása"
+          moreClassName="w-auto p-1"
+        />
       </div>
       <div className="d-flex flex-row justify-content-between">
         <div className="ml-2">
