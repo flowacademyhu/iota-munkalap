@@ -32,6 +32,7 @@ public class PartnerService {
 
     public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
+        orderTypeFormat(partner);
         return partnerRepository.save(partner);
     }
 
@@ -52,10 +53,6 @@ public class PartnerService {
         }
         if (!StringUtils.hasText(partner.getRovidNev())) {
             throw new ValidationException("The partner short name is null");
-        }
-        if (partner.getMegrendeloTipusa().equals(OrderType.PRIVATE)) {
-            partner.setAdoszam("-");
-            partner.setKAdoszamtipus(0);
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
@@ -138,6 +135,13 @@ public class PartnerService {
             result = false;
         }
         return result;
+    }
+
+    private void orderTypeFormat(Partner partner) {
+        if (OrderType.PRIVATE.equals(partner.getMegrendeloTipusa())) {
+            partner.setAdoszam("-");
+            partner.setKAdoszamtipus(0);
+        }
     }
 
     public List<Partner> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
