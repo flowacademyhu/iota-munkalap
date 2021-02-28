@@ -7,16 +7,16 @@ import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.aspectj.lang.annotation.RequiredTypes;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.NumberUtils;
 import org.springframework.util.StringUtils;
 
+import javax.mail.Part;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
@@ -68,10 +68,10 @@ public class PartnerService {
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (!taxNumberChecker(partner)) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberLengthChecker(partner)) {
             throw new ValidationException("The tax number length is not eight");
         }
-        if (!taxNumberTypeChecker(partner)) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberTypeChecker(partner)) {
             throw new ValidationException("The tax number contains non digit characters");
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() < 1
@@ -80,6 +80,12 @@ public class PartnerService {
         }
         if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
+        }
+        if (bankAccountLengthChecker(partner)) {
+            throw new ValidationException("The bank account number length is not appropriate");
+        }
+        if (bankAccountFormatChecker(partner)) {
+            throw new ValidationException("The bank account format is not valid");
         }
         if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
@@ -105,10 +111,9 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
-        bankAccountChecker(partner);
     }
 
-    private boolean taxNumberChecker(Partner partner) {
+    private boolean taxNumberLengthChecker(Partner partner) {
         boolean result = true;
         if (partner.getAdoszam().length() != 8) {
             result = false;
@@ -125,19 +130,23 @@ public class PartnerService {
     }
 
 
-    private void bankAccountChecker(Partner partner) throws ValidationException {
-        if (!(partner.getBankszamlaszam().length() == 17 || partner.getBankszamlaszam().length() == 26)) {
-            throw new ValidationException("The bank account number length is not appropriate");
+    private boolean bankAccountLengthChecker(Partner partner) {
+        boolean result = true;
+        if (partner.getBankszamlaszam().length() != 17 || partner.getBankszamlaszam().length() != 26) {
+            result = false;
         }
-        for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
-            if (i == 8 || i == 17) {
-                if (partner.getBankszamlaszam().charAt(i) != '-') {
-                    throw new ValidationException("The bank account format is not valid, missing: - ");
-                }
-            } else if (!Character.isDigit(partner.getBankszamlaszam().charAt(i))) {
-                throw new ValidationException("The bank account format is not valid, missing numbers");
-            }
+        return result;
+    }
+
+    private boolean bankAccountFormatChecker(Partner partner) {
+        boolean result = true;
+        if (partner.getBankszamlaszam().length() == 17 && partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")) {
+            result = false;
         }
+        if (partner.getBankszamlaszam().length() == 26 && partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$")) {
+            result = false;
+        }
+        return result;
     }
 
     public List<Partner> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
