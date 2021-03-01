@@ -37,7 +37,7 @@ export default function usePartnerData() {
     refreshPartner()
   }, [refreshPartner])
 
-  async function handleData(values) {
+  async function savePartner(values) {
     try {
       const response =
         id !== undefined
@@ -60,7 +60,7 @@ export default function usePartnerData() {
 
   return {
     refreshPartner,
-    handleData,
+    savePartner,
     handleClick,
     popUpMessage,
     sent,
