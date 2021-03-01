@@ -4,7 +4,6 @@ import {
   typeOfWorkTranslation,
   statusTranslation,
 } from './TranslationForWorkSheet'
-import useCurrentEmployee from '../hooks/useCurrentEmployee'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
@@ -22,7 +21,6 @@ export default function TableListOfWorkSheets() {
     status,
     setStatus: onStatus,
   } = useWorkSheets()
-  const { isAdmin } = useCurrentEmployee()
 
   async function closeAndReload(id) {
     await closeWorkSheet(id)
