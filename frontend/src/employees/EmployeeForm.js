@@ -15,7 +15,7 @@ function CreateEmployeeForm({
   employee,
   isCreate,
 }) {
-  const baseShape = {
+  const initialValues = {
     firstName: employee?.firstName || '',
     lastName: employee?.lastName || '',
     email: employee?.email || '',
@@ -29,8 +29,8 @@ function CreateEmployeeForm({
           <Formik
             initialValues={
               isCreate
-                ? { ...baseShape, password: '', confirmPassword: '' }
-                : baseShape
+                ? { ...initialValues, password: '', confirmPassword: '' }
+                : initialValues
             }
             validationSchema={schema(isCreate)}
             onSubmit={(values) => {
