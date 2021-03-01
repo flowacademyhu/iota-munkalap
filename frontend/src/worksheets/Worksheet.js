@@ -4,7 +4,7 @@ import useWorksheetData from '../hooks/useWorksheetData'
 
 export default function Worksheet() {
   const {
-    HandleData,
+    saveWorksheet,
     handleClick,
     popUpMessage,
     sent,
@@ -17,7 +17,7 @@ export default function Worksheet() {
         handleClick={handleClick}
         sent={sent}
         popUpMessage={popUpMessage}
-        sendData={HandleData}
+        sendData={saveWorksheet}
         title="Munkalap létrehozása"
       />
     </>
@@ -28,7 +28,7 @@ export default function Worksheet() {
           handleClick={handleClick}
           sent={sent}
           popUpMessage={popUpMessage}
-          sendData={HandleData}
+          sendData={saveWorksheet}
           title="Adatok szerkesztése"
           worksheet={worksheetData}
         />

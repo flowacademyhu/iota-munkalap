@@ -21,7 +21,7 @@ export default function useWorksheetData() {
     setSent(false)
   }
 
-  const UpdateWorksheet = useCallback(
+  const updateWorksheet = useCallback(
     async function () {
       if (id !== undefined) {
         try {
@@ -38,10 +38,10 @@ export default function useWorksheetData() {
   )
 
   useEffect(() => {
-    UpdateWorksheet()
-  }, [UpdateWorksheet])
+    updateWorksheet()
+  }, [updateWorksheet])
 
-  async function HandleData(values) {
+  async function saveWorksheet(values) {
     try {
       const response =
         id !== undefined
@@ -63,8 +63,8 @@ export default function useWorksheetData() {
   }
 
   return {
-    UpdateWorksheet,
-    HandleData,
+    updateWorksheet,
+    saveWorksheet,
     handleClick,
     popUpMessage,
     sent,
