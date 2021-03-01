@@ -1,16 +1,24 @@
 import { LOGO_STRING } from './LogoForPdf'
-import { worksheet } from './workSheetPDF'
+import {
+  typeOfWorkTranslation,
+  assetSettlement,
+  typeOfPayment,
+} from './TranslationForWorkSheet'
+import renderSvg from './renderSvg'
 
-function createHeader(worksheet) {
-
-  const acknowledge =
+const acknowledge =
   'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
-  const billable = 'A vállalkozó a számla benyújtására jogosult.'
-  const possession =
+const billable = 'A vállalkozó a számla benyújtására jogosult.'
+const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-  ///eleje
+export const createHeader = function (worksheet) {
   return (
+    {
+      text: 'Munkalap',
+      style: 'header',
+      alignment: 'right',
+    },
     {
       style: 'tableExample',
       table: {
@@ -81,143 +89,140 @@ function createHeader(worksheet) {
           ],
         ],
       },
-    },
-    function createDeails(worksheet) {
-      return {
-        style: 'tableExample',
-        table: {
-          widths: [130, 130, '*', '*', '*'],
-          body: [
-            [
-              { text: `Munkavégzés jellege:`, bold: true },
-              { text: `Az eszközök elszámolásának módja:`, bold: true },
-              { text: `Létszám:`, bold: true },
-              { text: `Rezsióra:`, bold: true },
-              { text: `Kiszállás:`, bold: true },
-            ],
-            [
-              {
-                text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
-                  typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
-                    ? 'Egyéb: ' + worksheet.customTypeOfWork
-                    : ''
-                }`,
-              },
-              `${assetSettlement[worksheet.assetSettlement]}`,
-              `${worksheet.numberOfEmployees} fő`,
-              `${worksheet.overheadHour} HUF`,
-              `${worksheet.deliveryKm} Km`,
-            ],
-          ],
-        },
-      }
-    },
-    function createDescription(worksheet) {
-      return {
-        style: 'tableExample',
-        table: {
-          widths: ['*'],
-          body: [
-            [
-              {
-                text: `Az elvégzett munka leírása:`,
-                bold: true,
-              },
-            ],
-            [`${worksheet.description}`],
-          ],
-        },
-      }
     }
   )
-
-  function createMaterials(worksheet) {
-    return {
-      style: 'tableExample',
-      table: {
-        widths: ['*'],
-        body: [
-          [{ text: 'Felhasznált anyagok:', bold: true }],
-          [`${worksheet.usedMaterial}`],
-        ],
-      },
-    }
-  }
-  function createSignatureAndDate(worksheet) {
-    return {
-        style: 'tableExample',
-        table: {
-          widths: ['*', '*', '*'],
-          body: [
-            [
-              {
-                border: [true, true, true, false],
-                text: acknowledge,
-                fontSize: 10,
-              },
-              `Fizetés  módja: \n ${typeOfPayment[worksheet.typeOfPayment]}`,
-              `Kelt: \n ${worksheet.createdAt}`,
-            ],
-            [
-              {
-                border: [true, false, true, false],
-                text: billable,
-                fontSize: 10,
-                bold: true,
-              },
-              'Munkát végezte:',
-              'A munkavégzést igazolja:',
-            ],
-            [
-              {
-                border: [true, false, true, true],
-                text: possession,
-                fontSize: 10,
-              },
-              {
-                colSpan: 2,
-                svg: workerSignatureSvg,
-                fit: [100, 100],
-              },
-              {
-                colSpan: 2,
-                fit: [100, 100],
-                svg: proofOfEmploymentSvg,
-              },
-            ],
-          ],
-        }
-      }
-      function createSignatureAndDate(worksheet) {
-        return    {
-          header: {
-            fontSize: 18,
-            bold: true,
-            margin: [0, 0, 0, 10],
-          },
-          subheader: {
-            fontSize: 16,
-            bold: true,
-            margin: [0, 10, 0, 5],
-          },
-          tableExample: {
-            margin: [0, 5, 0, 15],
-          },
-          tableHeader: {
-            bold: true,
-            fontSize: 13,
-            color: 'black',
-          }
-        }
-        }
-       
-      
 }
-export default {
-  createHeader,
-  createDeails,
-  createDescription,
-  createMaterials,
-  createSignatureAndDate,
-  createSignatureAndDate,
+
+export const createDetails = function (worksheet) {
+  return {
+    style: 'tableExample',
+    table: {
+      widths: [130, 130, '*', '*', '*'],
+      body: [
+        [
+          { text: `Munkavégzés jellege:`, bold: true },
+          { text: `Az eszközök elszámolásának módja:`, bold: true },
+          { text: `Létszám:`, bold: true },
+          { text: `Rezsióra:`, bold: true },
+          { text: `Kiszállás:`, bold: true },
+        ],
+        [
+          {
+            text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
+              typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
+                ? 'Egyéb: ' + worksheet.customTypeOfWork
+                : ''
+            }`,
+          },
+          `${assetSettlement[worksheet.assetSettlement]}`,
+          `${worksheet.numberOfEmployees} fő`,
+          `${worksheet.overheadHour} HUF`,
+          `${worksheet.deliveryKm} Km`,
+        ],
+      ],
+    },
+  }
+}
+
+export const createDescription = function (worksheet) {
+  return {
+    style: 'tableExample',
+    table: {
+      widths: ['*'],
+      body: [
+        [
+          {
+            text: `Az elvégzett munka leírása:`,
+            bold: true,
+          },
+        ],
+        [`${worksheet.description}`],
+      ],
+    },
+  }
+}
+
+export const createMaterials = function (worksheet) {
+  return {
+    style: 'tableExample',
+    table: {
+      widths: ['*'],
+      body: [
+        [{ text: 'Felhasznált anyagok:', bold: true }],
+        [`${worksheet.usedMaterial}`],
+      ],
+    },
+  }
+}
+export const createSignatureAndDate = function (worksheet) {
+  const workerSignatureSvg = renderSvg(worksheet.workerSignature)
+  const proofOfEmploymentSvg = renderSvg(worksheet.proofOfEmployment)
+
+  return {
+    style: 'tableExample',
+    table: {
+      widths: ['*', '*', '*'],
+      body: [
+        [
+          {
+            border: [true, true, true, false],
+            text: acknowledge,
+            fontSize: 10,
+          },
+          `Fizetés  módja: \n ${typeOfPayment[worksheet.typeOfPayment]}`,
+          `Kelt: \n ${worksheet.createdAt}`,
+        ],
+        [
+          {
+            border: [true, false, true, false],
+            text: billable,
+            fontSize: 10,
+            bold: true,
+          },
+          'Munkát végezte:',
+          'A munkavégzést igazolja:',
+        ],
+        [
+          {
+            border: [true, false, true, true],
+            text: possession,
+            fontSize: 10,
+          },
+          {
+            colSpan: 2,
+            svg: workerSignatureSvg,
+            fit: [100, 100],
+          },
+          {
+            colSpan: 2,
+            fit: [100, 100],
+            svg: proofOfEmploymentSvg,
+          },
+        ],
+      ],
+    },
+  }
+}
+
+export const createStyles = function () {
+  return {
+    header: {
+      fontSize: 18,
+      bold: true,
+      margin: [0, 0, 0, 10],
+    },
+    subheader: {
+      fontSize: 16,
+      bold: true,
+      margin: [0, 10, 0, 5],
+    },
+    tableExample: {
+      margin: [0, 5, 0, 15],
+    },
+    tableHeader: {
+      bold: true,
+      fontSize: 13,
+      color: 'black',
+    },
+  }
 }
