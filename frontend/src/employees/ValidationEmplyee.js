@@ -13,7 +13,7 @@ export function schema() {
 }
 
 export function regSchema() {
-  const passSchema = yup.object().shape({
+  const regSchema = yup.object().shape({
     lastName: yup.string().required('A vezetéknév kötelező!'),
     firstName: yup.string().required('A keresztnév kötelező!'),
     email: yup
