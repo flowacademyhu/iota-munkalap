@@ -81,6 +81,7 @@ function WorkSheetForm({
                     options={partnersForSelect}
                     value={values.partnerId}
                     setFieldValue={setFieldValue}
+                    name="partnerId"
                   />
                   <SelectInput
                     name="typeOfWork"
