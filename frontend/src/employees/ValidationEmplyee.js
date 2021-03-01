@@ -1,6 +1,6 @@
 import * as yup from 'yup'
 
-export function schema(isCreate) {
+export default function schema(isCreate) {
   const passwordValidation = isCreate
     ? {
         password: yup
