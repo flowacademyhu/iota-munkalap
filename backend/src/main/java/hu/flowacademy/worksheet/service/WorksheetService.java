@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,8 +64,8 @@ public class WorksheetService {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                .workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+                .proofOfEmployment(Base64.getDecoder().decode(worksheetDTO.getProofOfEmployment()))
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
@@ -167,8 +168,8 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                .workerSignature(new String(worksheetReceived.getWorkerSignature()))
-                .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
+                .workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
+                .proofOfEmployment(Base64.getEncoder().encodeToString(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
