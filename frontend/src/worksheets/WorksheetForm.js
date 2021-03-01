@@ -17,6 +17,7 @@ import {
 import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
+import SelectPartner from '../partners/SelectPartner'
 
 function WorkSheetForm({
   sent,
@@ -61,14 +62,19 @@ function WorkSheetForm({
                 values.worksheetStatus = 'CREATED'
               }
               values.createdAt = moment(date).format('yyyy-MM-DD')
+              console.log(values)
               sendData(values)
             }}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
-                  <Input name="partnerId" label="Partner" type="text" />
+                  {/* <Input name="partnerId" label="Partner" type="text" /> */}
+                  <SelectPartner
+                    value={values.partnerId}
+                    onChange={setFieldValue}
+                  />
                   <SelectInput
                     name="typeOfWork"
                     label="Munkavégzés jellege"

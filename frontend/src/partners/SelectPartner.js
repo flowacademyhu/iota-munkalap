@@ -9,17 +9,12 @@ const options = [
   { value: 'disco', label: 'Disco' },
 ]
 
-function SelectPartner() {
-  const [selectedOption, setSelectedOption] = useState(null)
-
-  const handleChange = (selected) => {
-    setSelectedOption(selected)
-    console.log(`Option selected:`, selected)
+function SelectPartner({ onChange }) {
+  const handleChange = (value) => {
+    onChange('partnerId', value)
   }
 
-  return (
-    <Select options={options} onChange={(selected) => handleChange(selected)} />
-  )
+  return <Select options={options} onChange={handleChange} />
 }
 
 export default SelectPartner
