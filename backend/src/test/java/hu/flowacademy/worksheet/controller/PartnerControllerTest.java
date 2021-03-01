@@ -45,6 +45,7 @@ class PartnerControllerTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    private static final boolean ENABLED = true;
 
     @LocalServerPort
     private int port;
@@ -93,6 +94,7 @@ class PartnerControllerTest {
                 .body("szamlazasiCimSzint", equalTo(SZINT))
                 .body("szamlazasiCimAjto", equalTo(AJTO))
                 .body("szamlazasiCimHrsz", equalTo(HRSZ))
+                .body("Aktív", equalTo(ENABLED))
                 .extract().body().as(Partner.class);
     }
 
@@ -120,6 +122,7 @@ class PartnerControllerTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build();
     }
 }

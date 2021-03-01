@@ -34,4 +34,5 @@ public class PartnerDTO {
     private String szamlazasiCimSzint;
     private String szamlazasiCimAjto;
     private String szamlazasiCimHrsz;
+    private boolean enabled;
 }

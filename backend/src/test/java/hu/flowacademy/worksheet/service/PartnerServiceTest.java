@@ -2,7 +2,9 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,9 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,6 +48,7 @@ class PartnerServiceTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    private static final boolean ENABLED = true;
 
     private static final String INVALID_TEST_EMAIL = "partnerteszt.com";
     private static final String EMPTY_STRING = "";
@@ -85,6 +91,7 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build());
 
         Partner result = partnerService.createPartner(partner);
@@ -157,6 +164,14 @@ class PartnerServiceTest {
         assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
     }
 
+    @Test
+    public void givenAnExistingPartner_whenSwitchingStatus_thenSetStatusToReported() throws ValidationException {
+        givenValidPartner();
+        Partner result = PartnerService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
+        assertThat(result, notNullValue());
+        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
+    }
+
     private Partner givenValidPartner() {
         return Partner.builder()
                 .partnerEmail(PARTNER_EMAIL)
@@ -181,6 +196,7 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build();
     }
 }
