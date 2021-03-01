@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
-import { schema, regSchema } from './ValidationEmplyee'
+import schema from './ValidationEmplyee'
 
 function CreateEmployeeForm({
   sent,
@@ -32,7 +32,7 @@ function CreateEmployeeForm({
                 ? { ...baseShape, password: '', confirmPassword: '' }
                 : baseShape
             }
-            validationSchema={isCreate ? regSchema : schema}
+            validationSchema={schema(isCreate)}
             onSubmit={(values) => {
               sendData(values)
             }}
