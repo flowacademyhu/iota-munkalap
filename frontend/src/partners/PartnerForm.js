@@ -8,7 +8,7 @@ import schema from './ValidationPartner'
 import { TYPE_OF_CUSTOMER } from './PartnerRadioButtonOptions'
 import RadioInputGroup from '../RadioInputGroup'
 
-function PartnerForm({
+export default function PartnerForm({
   sent,
   handleClick,
   popUpMessage,
@@ -162,5 +162,3 @@ function PartnerForm({
     </div>
   )
 }
-
-export default PartnerForm

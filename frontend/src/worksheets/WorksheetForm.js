@@ -21,7 +21,7 @@ import SelectPartner from '../partners/SelectPartner'
 import usePartners from '../hooks/usePartners'
 import LoadingScreen from '../LoadingScreen'
 
-function WorkSheetForm({
+export default function WorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
@@ -185,5 +185,3 @@ function WorkSheetForm({
     <LoadingScreen />
   )
 }
-
-export default WorkSheetForm
