@@ -2,6 +2,13 @@ import { LOGO_STRING } from './LogoForPdf'
 import { worksheet } from './workSheetPDF'
 
 function createHeader(worksheet) {
+
+  const acknowledge =
+  'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
+  const billable = 'A vállalkozó a számla benyújtására jogosult.'
+  const possession =
+  'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
+
   ///eleje
   return (
     {
@@ -136,10 +143,81 @@ function createHeader(worksheet) {
       },
     }
   }
+  function createSignatureAndDate(worksheet) {
+    return {
+        style: 'tableExample',
+        table: {
+          widths: ['*', '*', '*'],
+          body: [
+            [
+              {
+                border: [true, true, true, false],
+                text: acknowledge,
+                fontSize: 10,
+              },
+              `Fizetés  módja: \n ${typeOfPayment[worksheet.typeOfPayment]}`,
+              `Kelt: \n ${worksheet.createdAt}`,
+            ],
+            [
+              {
+                border: [true, false, true, false],
+                text: billable,
+                fontSize: 10,
+                bold: true,
+              },
+              'Munkát végezte:',
+              'A munkavégzést igazolja:',
+            ],
+            [
+              {
+                border: [true, false, true, true],
+                text: possession,
+                fontSize: 10,
+              },
+              {
+                colSpan: 2,
+                svg: workerSignatureSvg,
+                fit: [100, 100],
+              },
+              {
+                colSpan: 2,
+                fit: [100, 100],
+                svg: proofOfEmploymentSvg,
+              },
+            ],
+          ],
+        }
+      }
+      function createSignatureAndDate(worksheet) {
+        return    {
+          header: {
+            fontSize: 18,
+            bold: true,
+            margin: [0, 0, 0, 10],
+          },
+          subheader: {
+            fontSize: 16,
+            bold: true,
+            margin: [0, 10, 0, 5],
+          },
+          tableExample: {
+            margin: [0, 5, 0, 15],
+          },
+          tableHeader: {
+            bold: true,
+            fontSize: 13,
+            color: 'black',
+          }
+        }
+        }
+       
+      
 }
 export default {
   createHeader,
   createDeails,
   createDescription,
   createMaterials,
+  createSignatureAndDate,
+  createSignatureAndDate,
 }
