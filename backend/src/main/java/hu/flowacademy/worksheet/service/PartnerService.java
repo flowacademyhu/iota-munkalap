@@ -10,6 +10,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,99 +30,85 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
 
-    public Partner createPartner(@NonNull Partner partner) throws ValidationException {
+    public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
-        partner.setMegrendeloTipusa(OrderType.LEGAL);
+        orderTypeFormat(partner);
         return partnerRepository.save(partner);
     }
 
-    private void validatePartner(Partner partner) throws ValidationException {
-        nullChecker(partner);
-        emailChecker(partner);
-        taxNumberChecker(partner);
-        bankAccountChecker(partner);
-    }
-
-    private void nullChecker(Partner partner) throws ValidationException {
-        if (partner.getPartnerEmail() == null) {
+    private void validatePartner(@NonNull Partner partner) throws ValidationException {
+        if (!StringUtils.hasText(partner.getPartnerEmail())) {
             throw new ValidationException("Partner email is null");
+        } else if (!EmailValidator.getInstance().isValid(partner.getPartnerEmail())) {
+            throw new ValidationException("Invalid partner email format");
         }
-        if (partner.getTelefon() == null) {
+        if (!StringUtils.hasText(partner.getTelefon())) {
             throw new ValidationException("The phone number is null");
         }
         if (partner.getMegrendeloTipusa() == null) {
             throw new ValidationException("The Order Type is null");
         }
-        if (partner.getNev() == null) {
+        if (!StringUtils.hasText(partner.getNev())) {
             throw new ValidationException("The partner name is null");
         }
-        if (partner.getRovidNev() == null) {
+        if (!StringUtils.hasText(partner.getRovidNev())) {
             throw new ValidationException("The partner short name is null");
         }
-        if (partner.getAdoszam() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }
-        if (partner.getBankszamlaszam() == null) {
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && !taxNumberTypeChecker(partner)) {
+            throw new ValidationException("The tax number is invalid");
+        }
+        if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getKAdoszamtipus() < 1
+                || partner.getKAdoszamtipus() > 5) {
+            throw new ValidationException("The K tax number is not valid");
+        }
+        if (!StringUtils.hasText(partner.getBankszamlaszam())) {
             throw new ValidationException("The bank account number is null");
         }
-        if (partner.getSzamlazasiCimOrszagKod() == null) {
+        if (!bankAccountFormatChecker(partner)) {
+            throw new ValidationException("The bank account is not valid");
+        }
+        if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagKod())) {
             throw new ValidationException("The country code is null");
         }
-        if (partner.getSzamlazasiCimOrszagNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimOrszagNev())) {
             throw new ValidationException("The country name is null");
         }
-        if (partner.getSzamlazasiCimMegyeNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimMegyeNev())) {
             throw new ValidationException("The county name is null");
         }
-        if (partner.getSzamlazasiCimIranyitoszam() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimIranyitoszam())) {
             throw new ValidationException("The postcode is null");
         }
-        if (partner.getSzamlazasiCimTelepulesNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimTelepulesNev())) {
             throw new ValidationException("The city name is null");
         }
-        if (partner.getSzamlazasiCimKozteruletNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimKozteruletNev())) {
             throw new ValidationException("The street name is null");
         }
-        if (partner.getSzamlazasiCimKozteruletJellegNev() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimKozteruletJellegNev())) {
             throw new ValidationException("The street type is null");
         }
-        if (partner.getSzamlazasiCimHazszam() == null) {
+        if (!StringUtils.hasText(partner.getSzamlazasiCimHazszam())) {
             throw new ValidationException("The house number is null");
         }
     }
 
-    private void emailChecker(Partner partner) throws ValidationException {
-        if (!EmailValidator.getInstance().isValid(partner.getPartnerEmail())) {
-            throw new ValidationException("Invalid partner email format");
-        }
+    private boolean taxNumberTypeChecker(Partner partner) {
+        return partner.getAdoszam().matches("^[0-9]{8}$");
     }
 
-    private void taxNumberChecker(Partner partner) throws ValidationException {
-        if (partner.getAdoszam().length() != 8) {
-            throw new ValidationException("The tax number length is not eight");
-        }
-        for (char x : partner.getAdoszam().toCharArray()) {
-            if (!Character.isDigit(x)) {
-                throw new ValidationException("The tax number is not a digit");
-            }
-        }
-        if (partner.getKAdoszamtipus() < 1 || partner.getKAdoszamtipus() > 5) {
-            throw new ValidationException("The K. tax number is not 1, 2, 3, 4, 5");
-        }
+    private boolean bankAccountFormatChecker(Partner partner) {
+        return partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}$")
+                || partner.getBankszamlaszam().matches("^\\d{8}(-)\\d{8}(-)\\d{8}$");
     }
 
-    private void bankAccountChecker(Partner partner) throws ValidationException {
-        if (!(partner.getBankszamlaszam().length() == 17 || partner.getBankszamlaszam().length() == 26)) {
-            throw new ValidationException("The bank account number length is not appropriate");
-        }
-        for (int i = 0; i < partner.getBankszamlaszam().length(); i++) {
-            if (i == 8 || i == 17) {
-                if (partner.getBankszamlaszam().charAt(i) != '-') {
-                    throw new ValidationException("The bank account format is not valid, missing: - ");
-                }
-            } else if (!Character.isDigit(partner.getBankszamlaszam().charAt(i))) {
-                throw new ValidationException("The bank account format is not valid, missing numbers");
-            }
+    private void orderTypeFormat(Partner partner) {
+        if (OrderType.PRIVATE.equals(partner.getMegrendeloTipusa())) {
+            partner.setAdoszam("-");
+            partner.setKAdoszamtipus(0);
         }
     }
 
