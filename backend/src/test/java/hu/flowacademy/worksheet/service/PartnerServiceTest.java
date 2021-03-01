@@ -168,9 +168,9 @@ class PartnerServiceTest {
     @Test
     public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
         givenValidPartner();
-        Partner result = PartnerService.togglePartnerActivity(PARTNER_ID);
+        Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
         assertThat(result, notNullValue());
-        assertThat(result.getEnabled(), is(false));
+        assertThat(result.get(), is(false));
     }
 
     private Partner givenValidPartner() {

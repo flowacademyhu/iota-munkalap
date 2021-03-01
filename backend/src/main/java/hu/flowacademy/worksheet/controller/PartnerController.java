@@ -46,6 +46,7 @@ public class PartnerController {
                 .szamlazasiCimSzint(partnerDTO.getSzamlazasiCimSzint())
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
+                .enabled(partnerDTO.getEnabled())
                 .build();
         return partnerService.createPartner(partner);
     }
