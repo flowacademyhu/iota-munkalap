@@ -28,9 +28,6 @@ function WorkSheetForm({
 }) {
   const finalize = useRef(false)
   const [date, setDate] = useState(new Date())
-  
-  console.log(worksheet);
-  
   return (
     <div className="container my-5">
       <div className="row justify-content-center">

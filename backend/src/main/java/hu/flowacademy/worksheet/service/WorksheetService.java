@@ -65,7 +65,7 @@ public class WorksheetService {
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
                 .workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
-                .proofOfEmployment(Base64.getDecoder().decode(worksheetDTO.getProofOfEmployment()))
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
@@ -169,7 +169,19 @@ public class WorksheetService {
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
                 .workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
-                .proofOfEmployment(Base64.getEncoder().encodeToString(worksheetReceived.getProofOfEmployment()))
+                .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
+/*
+* byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
+String encodedString = Base64.getEncoder().encodeToString(fileContent);
+The encodedString is a String of characters in the set of A-Za-z0-9+/, and the decoder rejects any characters outside of this set.
+
+4. Convert Base64 String to Image File
+Now we have a Base64 String, let’s decode it back to binary content and write to a new file:
+
+byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
+FileUtils.writeByteArrayToFile(new File(outputFileName), decodedBytes);
+
+* */
