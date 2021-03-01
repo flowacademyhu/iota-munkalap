@@ -1,32 +1,32 @@
 import React from 'react'
-import useUsers from '../hooks/useUsers'
+import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { inactivateUser, activateUser } from '../api/UserAPI'
+import { updateEmployeeInactive, activateEmployee } from '../api/EmployeeAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
-import FilterUsers from './FilterUsers'
+import FilterEmployees from './FilterEmployees'
 import EmployeeListRow from './EmployeeListRow'
 
 export default function TableListOfEmployees() {
   const {
-    users,
+    employees,
     keyword,
     setKeyword,
-    updateUsers,
+    updateEmployees,
     status,
     setStatus,
-  } = useUsers()
+  } = useEmployees()
 
-  async function inactivateAndReload(user) {
-    await inactivateUser(user.id)
-    updateUsers()
+  async function inactivateAndReload(id) {
+    await updateEmployeeInactive(id)
+    updateEmployees()
   }
 
-  async function activateAndReload(user) {
-    await activateUser(user.id)
-    updateUsers()
+  async function activateAndReload(id) {
+    await activateEmployee(id)
+    updateEmployees()
   }
 
   return (
@@ -38,7 +38,7 @@ export default function TableListOfEmployees() {
             moreClassName="w-auto p-1"
           />
         </Link>
-        <Formik class="form-inline">
+        <Formik className="form-inline">
           <Form>
             <SearchEmployeeInput
               keyword={keyword}
@@ -47,7 +47,7 @@ export default function TableListOfEmployees() {
             />
           </Form>
         </Formik>
-        <FilterUsers status={status} onStatusChange={setStatus} />
+        <FilterEmployees status={status} onStatusChange={setStatus} />
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
@@ -62,13 +62,12 @@ export default function TableListOfEmployees() {
               </tr>
             </thead>
             <tbody>
-              {users ? (
-                users.map((user) => (
+              {employees ? (
+                employees.map((employee) => (
                   <EmployeeListRow
-                    user={user}
-                    key={user.id}
-                    onInactivate={() => inactivateAndReload(user)}
-                    onActivate={() => activateAndReload(user)}
+                    employee={employee}
+                    onInactivate={() => inactivateAndReload(employee.id)}
+                    onActivate={() => activateAndReload(employee.id)}
                   />
                 ))
               ) : (

@@ -1,7 +1,7 @@
 import useToken from './useToken'
 import jwt from 'jwt-simple'
 
-function useCurrentUser() {
+export default function useCurrentEmployee() {
   const { token, setToken } = useToken()
   try {
     const decodedToken = jwt.decode(token, false, 'RS256')
@@ -21,5 +21,3 @@ function useCurrentUser() {
     window.location.reload()
   }
 }
-
-export default useCurrentUser
