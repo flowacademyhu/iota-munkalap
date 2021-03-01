@@ -6,7 +6,7 @@ import {
   typeOfPayment,
 } from './TranslationForWorkSheet'
 import renderSvg from './renderSvg'
-import createHeader from './tableContents'
+import { createHeader, createDetails, createDescription } from './tableContents'
 
 const acknowledge =
   'A munkavégzést igazoló aláírásával a fent megjelölt munka teljesítését elismeri, az üzemelő rendszert átveszi.'
@@ -23,141 +23,18 @@ function workSheetPDF(worksheet) {
 
   var doc = {
     content: [
-      createHeader(worksheet),
       {
         text: 'Munkalap',
         style: 'header',
         alignment: 'right',
       },
       //1st table (header)
-      {
-        style: 'tableExample',
-        table: {
-          widths: ['*', '*', '*'],
-          body: [
-            [
-              [
-                {
-                  image: LOGO_STRING,
-                  width: 150,
-                  margin: [4, 13, 2, 8],
-                },
-              ],
-              [
-                {
-                  text: 'Az ügyfél adatai \n',
-                  bold: true,
-                  fontSize: 10,
-                },
-                {
-                  text: `Partner ID:`,
-                  bold: true,
-                  fontSize: 8,
-                },
-                {
-                  text: `${worksheet.partnerId}\n`,
-                  fontSize: 8,
-                },
-                {
-                  text: `Az Ügyfél számlázási neve:`,
-                  fontSize: 8,
-                  bold: true,
-                },
-                {
-                  text: `{partner.BillingName}\n`,
-                  fontSize: 8,
-                },
-                {
-                  text: `Az Ügyfél számlázási címe:`,
-                  fontSize: 8,
-                  bold: true,
-                },
-                {
-                  text: `{partner.BillingAddress}\n`,
-                  fontSize: 8,
-                },
-                {
-                  text: `Az Ügyfél elérhetősége:`,
-                  fontSize: 8,
-                  bold: true,
-                },
-                {
-                  text: `{partner.phone}\n`,
-                  fontSize: 8,
-                },
-              ],
-              [
-                {
-                  text: `Munkalap sorszám:\n`,
-                  fontSize: 15,
-                  bold: true,
-                },
-                {
-                  text: `${worksheet.id}`,
-                  fontSize: 25,
-                },
-              ],
-            ],
-          ],
-        },
-      },
-
-      //2nd table
-      {
-        style: 'tableExample',
-        table: {
-          widths: [130, 130, '*', '*', '*'],
-          body: [
-            [
-              { text: `Munkavégzés jellege:`, bold: true },
-              { text: `Az eszközök elszámolásának módja:`, bold: true },
-              { text: `Létszám:`, bold: true },
-              { text: `Rezsióra:`, bold: true },
-              { text: `Kiszállás:`, bold: true },
-            ],
-            [
-              {
-                text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
-                  typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
-                    ? 'Egyéb: ' + worksheet.customTypeOfWork
-                    : ''
-                }`,
-              },
-              `${assetSettlement[worksheet.assetSettlement]}`,
-              `${worksheet.numberOfEmployees} fő`,
-              `${worksheet.overheadHour} HUF`,
-              `${worksheet.deliveryKm} Km`,
-            ],
-          ],
-        },
-      },
+      createHeader(worksheet),
+      //2nd table (details)
+      createDetails(worksheet),
       //3rd table (description)
-      {
-        style: 'tableExample',
-        table: {
-          widths: ['*'],
-          body: [
-            [
-              {
-                text: `Az elvégzett munka leírása:`,
-                bold: true,
-              },
-            ],
-            [`${worksheet.description}`],
-          ],
-        },
-      },
+      createDescription(worksheet),
       //4th table (materials)
-      {
-        style: 'tableExample',
-        table: {
-          widths: ['*'],
-          body: [
-            [{ text: 'Felhasznált anyagok:', bold: true }],
-            [`${worksheet.usedMaterial}`],
-          ],
-        },
-      },
 
       //5. table (sigatures, date)
       {

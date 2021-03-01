@@ -1,17 +1,9 @@
 import { LOGO_STRING } from './LogoForPdf'
+import { worksheet } from './workSheetPDF'
 
 function createHeader(worksheet) {
   ///eleje
   return (
-var doc = {
-  content: [
-    {
-      text: 'Munkalap',
-      style: 'header',
-      alignment: 'right',
-    },
-    ///eleje
-    //tartalom///
     {
       style: 'tableExample',
       table: {
@@ -83,36 +75,71 @@ var doc = {
         ],
       },
     },
-    //tartalom///
-    ///vége
-  ],
-    {
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 0, 0, 10],
+    function createDeails(worksheet) {
+      return {
+        style: 'tableExample',
+        table: {
+          widths: [130, 130, '*', '*', '*'],
+          body: [
+            [
+              { text: `Munkavégzés jellege:`, bold: true },
+              { text: `Az eszközök elszámolásának módja:`, bold: true },
+              { text: `Létszám:`, bold: true },
+              { text: `Rezsióra:`, bold: true },
+              { text: `Kiszállás:`, bold: true },
+            ],
+            [
+              {
+                text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
+                  typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
+                    ? 'Egyéb: ' + worksheet.customTypeOfWork
+                    : ''
+                }`,
+              },
+              `${assetSettlement[worksheet.assetSettlement]}`,
+              `${worksheet.numberOfEmployees} fő`,
+              `${worksheet.overheadHour} HUF`,
+              `${worksheet.deliveryKm} Km`,
+            ],
+          ],
         },
-        subheader: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 10, 0, 5],
+      }
+    },
+    function createDescription(worksheet) {
+      return {
+        style: 'tableExample',
+        table: {
+          widths: ['*'],
+          body: [
+            [
+              {
+                text: `Az elvégzett munka leírása:`,
+                bold: true,
+              },
+            ],
+            [`${worksheet.description}`],
+          ],
         },
-        tableExample: {
-          margin: [0, 5, 0, 15],
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black',
-        },
-      },
-      defaultStyle: {},
+      }
     }
-    
+  )
 
-  //vége
-)
+  function createMaterials(worksheet) {
+    return {
+      style: 'tableExample',
+      table: {
+        widths: ['*'],
+        body: [
+          [{ text: 'Felhasznált anyagok:', bold: true }],
+          [`${worksheet.usedMaterial}`],
+        ],
+      },
+    }
+  }
 }
-
-export default createHeader
+export default {
+  createHeader,
+  createDeails,
+  createDescription,
+  createMaterials,
+}
