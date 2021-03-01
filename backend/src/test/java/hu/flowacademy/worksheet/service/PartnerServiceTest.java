@@ -68,7 +68,7 @@ class PartnerServiceTest {
     public void givenNewPartner_whenSavingPartner_thenGreatSuccess() throws ValidationException {
         var partner = givenValidPartner();
         when(partnerRepository.save(any())).thenReturn(Partner.builder()
-                .partnerId(partner.getPartnerId())
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
@@ -174,6 +174,7 @@ class PartnerServiceTest {
 
     private Partner givenValidPartner() {
         return Partner.builder()
+                .partnerId(PARTNER_ID)
                 .enabled(ENABLED)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
