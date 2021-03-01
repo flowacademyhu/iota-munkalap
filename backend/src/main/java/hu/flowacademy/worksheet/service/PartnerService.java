@@ -38,6 +38,7 @@ public class PartnerService {
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
         validatePartner(partner);
         partner.setMegrendeloTipusa(OrderType.LEGAL);
+        partner.setEnabled(true);
         return partnerRepository.save(partner);
     }
 
@@ -153,9 +154,8 @@ public class PartnerService {
     }
 
     public Partner togglePartnerActivity(String id) throws ValidationException {
-        Optional<Partner> currentPartner = partnerRepository.findById(id);
-        currentPartner.ifPresent(partner -> partnerRepository.updateEnabled(id, !partner.getEnabled()));
-        return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+        Partner toToggle = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
+        toToggle.setEnabled(!toToggle.getEnabled());
+        return partnerRepository.save(toToggle);
     }
-
 }
