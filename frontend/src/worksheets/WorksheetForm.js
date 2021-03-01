@@ -18,6 +18,8 @@ import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
 import SelectPartner from '../partners/SelectPartner'
+import usePartners from '../hooks/usePartners'
+import LoadingScreen from '../LoadingScreen'
 
 function WorkSheetForm({
   sent,
@@ -27,9 +29,15 @@ function WorkSheetForm({
   title,
   worksheet,
 }) {
+  const { partners } = usePartners()
+  const partnersForSelect = partners?.map((partner) => ({
+    label: partner.nev,
+    ...partner,
+  }))
+
   const finalize = useRef(false)
   const [date, setDate] = useState(new Date())
-  return (
+  return partnersForSelect ? (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
@@ -72,8 +80,9 @@ function WorkSheetForm({
                   <h1 className="text-center">{title}</h1>
                   {/* <Input name="partnerId" label="Partner" type="text" /> */}
                   <SelectPartner
+                    options={partnersForSelect}
                     value={values.partnerId}
-                    onChange={setFieldValue}
+                    setFieldValue={setFieldValue}
                   />
                   <SelectInput
                     name="typeOfWork"
@@ -166,6 +175,8 @@ function WorkSheetForm({
         </div>
       </div>
     </div>
+  ) : (
+    <LoadingScreen />
   )
 }
 
