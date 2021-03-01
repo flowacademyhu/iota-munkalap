@@ -20,7 +20,7 @@ export default function Partner() {
       popUpMessage={popUpMessage}
       sendData={handleData}
       title={isCreate ? 'Partner létrehozása' : 'Adatok szerkesztése'}
-      partner={!isCreate && { partnerData }}
+      partner={!isCreate && partnerData}
     />
   )
 }
