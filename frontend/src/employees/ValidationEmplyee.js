@@ -13,14 +13,6 @@ export function schema() {
 }
 
 export function regSchema() {
-  const schema = yup.object().shape({
-    lastName: yup.string().required('A vezetéknév kötelező!'),
-    firstName: yup.string().required('A keresztnév kötelező!'),
-    email: yup
-      .string()
-      .required('Az email kötelező!')
-      .email('Nem megfelelő email cím!'),
-  })
   const passSchema = yup.object().shape({
     lastName: yup.string().required('A vezetéknév kötelező!'),
     firstName: yup.string().required('A keresztnév kötelező!'),
@@ -40,6 +32,5 @@ export function regSchema() {
       .required('Add meg a jelszót még egyszer!')
       .oneOf([yup.ref('password')], 'A két jelszó nem egyezik meg!'),
   })
-
-  return { schema, passSchema }
+  return regSchema
 }
