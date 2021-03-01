@@ -34,6 +34,10 @@ function WorkSheetForm({
     label: partner.nev,
     ...partner,
   }))
+  const worksheetPartner = worksheet && {
+    label: worksheet.partner.nev,
+    ...worksheet.partner,
+  }
 
   const finalize = useRef(false)
   const [date, setDate] = useState(new Date())
@@ -44,7 +48,7 @@ function WorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: '',
+              partnerId: worksheet?.partner?.partnerId || '',
               typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
@@ -84,6 +88,7 @@ function WorkSheetForm({
                     name="partnerId"
                     label="Partner"
                     placeholder="Partner neve"
+                    defaultValue={worksheetPartner}
                   />
                   <SelectInput
                     name="typeOfWork"

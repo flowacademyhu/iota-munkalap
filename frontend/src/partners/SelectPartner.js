@@ -5,7 +5,14 @@ import { useField } from 'formik'
 function SelectPartner({ ...props }) {
   const [showError, setShowError] = useState(false)
   const { error } = useField(props)[1]
-  const { setFieldValue, name, options, label, placeholder } = props
+  const {
+    setFieldValue,
+    name,
+    options,
+    label,
+    placeholder,
+    defaultValue,
+  } = props
 
   const handleChange = (partner) => {
     setFieldValue('partnerId', partner.partnerId)
@@ -24,6 +31,7 @@ function SelectPartner({ ...props }) {
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         className={`${showError ? 'is-invalid' : ''}`}
       />
       {showError && <div className="invalid-feedback">{error}</div>}
