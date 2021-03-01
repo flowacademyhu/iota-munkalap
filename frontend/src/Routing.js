@@ -6,7 +6,6 @@ import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
 import Worksheet from './worksheets/Worksheet'
 import AdminRoute from './AdminRoute'
-import SelectPartner from './partners/SelectPartner'
 import Partner from './partners/Partner'
 
 function Routing() {
