@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
 public interface PartnerRepository extends JpaRepository<Partner, String>, JpaSpecificationExecutor<Partner> {
 
     @Modifying
-    void updatePartnerstatus(String id, boolean status);
+    void updateEnabled(String id, boolean status);
 
 }

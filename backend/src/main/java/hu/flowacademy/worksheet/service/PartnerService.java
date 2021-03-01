@@ -14,6 +14,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
     private final KeycloakClientService keycloakClientService;
+    private Object Partner;
 
 
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
@@ -120,8 +122,10 @@ public class PartnerService {
         }
     }
 
-    public Partner setStatusPartner(String id, boolean status) throws ValidationException {
-        partnerRepository.updatePartnerstatus(id, status);
+    public Partner togglePartnerActivity(String id) throws ValidationException {
+        Optional<Partner> currentPartner = partnerRepository.findById(id);
+        boolean currentStatus = currentPartner.get().isEnabled();
+        partnerRepository.updateEnabled(id, !currentStatus);
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
 
