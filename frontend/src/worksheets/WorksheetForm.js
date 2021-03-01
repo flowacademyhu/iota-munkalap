@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
+import moment from 'moment'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
 import Input from '../Input'
@@ -6,7 +7,6 @@ import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
 import { TYPE_OF_WORK } from '../Const'
-import getCurrentDate from './Date'
 import schema from './ValidationWorkSheet'
 import {
   TYPE_OF_WORK_LIST,
@@ -15,8 +15,10 @@ import {
   TYPE_OF_PAYMENT_LIST,
 } from './WorksheetDropdownOptions'
 import Signature from './Signature'
+import CalendarDropDown from '../CalendarDropDown'
+import TextareaInput from '../TextareaInput'
 
-function UpdateWorkSheetForm({
+function WorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
@@ -24,6 +26,8 @@ function UpdateWorkSheetForm({
   title,
   worksheet,
 }) {
+  const finalize = useRef(false)
+  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -31,12 +35,33 @@ function UpdateWorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              localDateTime: getCurrentDate(),
+              partnerId: '',
+              typeOfWork: TYPE_OF_WORK_LIST[0].value,
+              customTypeOfWork: '',
+              assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
+              workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
+              numberOfEmployees: '',
+              overheadHour: '',
+              deliveryKm: '',
+              accountSerialNumber: '',
+              description: '',
+              usedMaterial: '',
+              typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
+              createdAt: '',
+              workerSignature: '',
+              proofOfEmployment: '',
+              worksheetStatus: 'CREATED',
               ...worksheet,
             }}
             validationSchema={schema}
-            onSubmit={(data) => {
-              sendData(data)
+            onSubmit={(values) => {
+              if (finalize.current) {
+                values.worksheetStatus = 'REPORTED'
+              } else {
+                values.worksheetStatus = 'CREATED'
+              }
+              values.createdAt = moment(date).format('yyyy-MM-DD')
+              sendData(values)
             }}
           >
             {({ values }) => {
@@ -76,7 +101,7 @@ function UpdateWorkSheetForm({
                   />
                   <Input
                     name="deliveryKm"
-                    label="Kiszállítás"
+                    label="Kiszállás"
                     type="number"
                     min="0"
                   />
@@ -85,10 +110,9 @@ function UpdateWorkSheetForm({
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
-                  <Input
+                  <TextareaInput
                     name="description"
                     label="Elvégzett munka leírása"
-                    type="text"
                   />
                   <Input
                     name="usedMaterial"
@@ -100,7 +124,8 @@ function UpdateWorkSheetForm({
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
-                  <span>Kelt: {getCurrentDate()}</span>
+                  <span>Kelt: </span>
+                  <CalendarDropDown date={date} setDate={setDate} />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
@@ -116,6 +141,15 @@ function UpdateWorkSheetForm({
                     <Button
                       text="Mentés"
                       type="submit"
+                      onClick={() => (finalize.current = false)}
+                      moreClassName="h-auto"
+                    />
+                  </div>
+                  <div className="buttons">
+                    <Button
+                      text="Mentés és készre jelentés"
+                      type="submit"
+                      onClick={() => (finalize.current = true)}
                       moreClassName="h-auto"
                     />
                   </div>
@@ -129,4 +163,4 @@ function UpdateWorkSheetForm({
   )
 }
 
-export default UpdateWorkSheetForm
+export default WorkSheetForm

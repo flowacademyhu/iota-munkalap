@@ -1,15 +1,18 @@
 import React from 'react'
-import DatePicker from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import hu from 'date-fns/locale/hu'
+registerLocale('hu', hu)
 
 function CalendarDropDown({ date, setDate, placeholderText }) {
   return (
     <DatePicker
+      locale="hu"
       selected={date}
       onChange={(date) => setDate(date)}
       dateFormat="yyyy.MM.dd"
       placeholderText={placeholderText}
-      className="mr-5 mb-5"
+      className="mr-2"
     />
   )
 }

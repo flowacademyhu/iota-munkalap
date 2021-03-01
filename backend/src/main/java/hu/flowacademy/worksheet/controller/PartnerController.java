@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
+import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -49,6 +51,15 @@ public class PartnerController {
                 .enabled(partnerDTO.getEnabled())
                 .build();
         return partnerService.createPartner(partner);
+    }
+
+    @GetMapping("/partners")
+    @RolesAllowed({"admin", "user"})
+    public List<Partner> findAll(@RequestParam(name = "page", required = false) Optional<Integer> page,
+                              @RequestParam(value = "limit", required = false) Optional<Integer> limit,
+                              @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
+                              @RequestParam(name = "searchCriteria", required = false) Optional<String> searchCriteria) {
+        return partnerService.filter(page, searchCriteria, limit, orderBy);
     }
 
     @PutMapping("/partners/{id}")

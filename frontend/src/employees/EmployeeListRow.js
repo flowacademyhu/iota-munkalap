@@ -1,30 +1,32 @@
 import React from 'react'
 import EditButton from '../specialButtons/EditButton'
+import InactivateButton from '../specialButtons/InactivateButton'
+import ActivateButton from '../specialButtons/ActivateButton'
 import { Link } from 'react-router-dom'
-import Button from '../Button'
 
-export default function EmployeeListRow({ user, onInactivate }) {
+export default function EmployeeListRow({
+  employee: { id, email, lastName, firstName, enabled },
+  onInactivate,
+  onActivate,
+}) {
   return (
-    <tr key={user.id}>
-      <th scope="row">{user.id}</th>
+    <tr key={id}>
+      <th scope="row">{id}</th>
       <td>
-        {user.lastName} {user.firstName}
+        {lastName} {firstName}
       </td>
-      <td>{user.email}</td>
-      <td>{user.enabled ? 'Aktív' : 'Inaktív'}</td>
+      <td>{email}</td>
+      <td>{enabled ? 'Aktív' : 'Inaktív'}</td>
       <td>
-        <div className="d-flex justify-content-around">
-          {user.enabled && (
-            <Button
-              onClick={onInactivate}
-              type="button"
-              className="btn btn-danger"
-              text="Inaktiválás"
-            />
-          )}
-          <Link to={`/employees/update/${user.id}`}>
+        <div>
+          <Link to={`/employees/update/${id}`}>
             <EditButton />
           </Link>
+          {enabled ? (
+            <InactivateButton onClick={onInactivate} />
+          ) : (
+            <ActivateButton onClick={onActivate} />
+          )}
         </div>
       </td>
     </tr>

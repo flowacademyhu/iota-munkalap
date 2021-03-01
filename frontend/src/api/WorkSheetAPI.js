@@ -1,23 +1,27 @@
 import api from './createApi'
 import moment from 'moment'
 
-function putWorkSheet(id, credentials) {
+function updateWorkSheet(id, credentials) {
   return api.put(`/worksheets/${id}`, credentials)
 }
 
-function getWorkSheets(startDate, endDate) {
+function getWorkSheets(startDate, endDate, status) {
   const minTime = startDate ? moment(startDate).format('yyyy.MM.DD') : null
   const maxTime = endDate ? moment(endDate).format('yyyy.MM.DD') : null
-  return api.get(`/worksheets/`, {
-    params: { minTime, maxTime },
-  })
+  return status === 'ALL'
+    ? api.get(`/worksheets/`, {
+        params: { minTime, maxTime },
+      })
+    : api.get(`/worksheets/`, {
+        params: { minTime, maxTime, status },
+      })
 }
 
 function getWorkSheet(id) {
   return api.get(`/worksheets/${id}`)
 }
 
-function postWorkSheet(credentials) {
+function createWorkSheet(credentials) {
   return api.post('/worksheets', credentials)
 }
 
@@ -40,8 +44,8 @@ async function finalizeWorkSheet(id) {
 export {
   getWorkSheets,
   getWorkSheet,
-  putWorkSheet,
-  postWorkSheet,
+  updateWorkSheet,
+  createWorkSheet,
   closeWorkSheet,
   finalizeWorkSheet,
 }

@@ -11,15 +11,26 @@ import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
+import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class PartnerService {
+
+    private final int DEFAULT_PAGE = 0;
+    private final String DEFAULT_ORDERBY = "nev";
 
     private final PartnerRepository partnerRepository;
     private final KeycloakClientService keycloakClientService;
@@ -118,6 +129,27 @@ public class PartnerService {
                 throw new ValidationException("The bank account format is not valid, missing numbers");
             }
         }
+    }
+
+    public List<Partner> filter(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<Partner> result = collectPartnersByCriteria(page, searchCriteria, limit, orderBy);
+        return searchCriteria.map(searchPart ->
+                result.stream().filter(partner -> filterContains(searchPart.toLowerCase(), partner))
+                        .collect(Collectors.toList()))
+                .orElse(result);
+    }
+
+    private List<Partner> collectPartnersByCriteria(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
+        List<Partner> result = partnerRepository.findAll(
+                buildSpecification(searchCriteria),
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(Integer.MAX_VALUE), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+        ).getContent();
+        return result;
+    }
+
+    private boolean filterContains(String searchPart, Partner partner) {
+        return partner.getAdoszam().toLowerCase().contains(searchPart) ||
+                stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
     }
 
     public Partner togglePartnerActivity(String id) throws ValidationException {

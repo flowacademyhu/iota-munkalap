@@ -1,8 +1,6 @@
 package hu.flowacademy.worksheet.controller;
 
-import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
-import hu.flowacademy.worksheet.enumCustom.OrderType;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,20 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
-import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
-import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
+import static hu.flowacademy.worksheet.helper.TestHelper.*;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.hasItem;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PartnerControllerTest {
 
-    private static final String PARTNER_EMAIL = "partner@partner.hu";
-    private static final String TELEFON = "06-30-123-45-67";
-    private static final OrderType MEGRENDELO_TIPUSA = LEGAL;
     private static final String NEV = "Teszt Partner";
     private static final String ROVID_NEV = "Teszt p";
     private static final String ADOSZAM = "01234567";
@@ -96,33 +88,14 @@ class PartnerControllerTest {
                 .body("szamlazasiCimHrsz", equalTo(HRSZ))
                 .body("Aktív", equalTo(ENABLED))
                 .extract().body().as(Partner.class);
-    }
-
-    private static PartnerDTO givenPartnerDTO() {
-        return PartnerDTO.builder()
-                .partnerEmail(PARTNER_EMAIL)
-                .telefon(TELEFON)
-                .megrendeloTipusa(MEGRENDELO_TIPUSA)
-                .nev(NEV)
-                .rovidNev(ROVID_NEV)
-                .adoszam(ADOSZAM)
-                .kAdoszamtipus(K_ADOSZAM_TIPUS)
-                .bankszamlaszam(BANKSZAMLASZAM)
-                .szamlazasiCimOrszagKod(ORSZAG_KOD)
-                .szamlazasiCimOrszagNev(ORSZAG_NEV)
-                .szamlazasiCimMegyeNev(MEGYE_NEV)
-                .szamlazasiCimIranyitoszam(IRANYITOSZAM)
-                .szamlazasiCimTelepulesNev(TELEPULESNEV)
-                .szamlazasiCimKerulet(KERULET)
-                .szamlazasiCimKozteruletNev(KOZTERULET_NEV)
-                .szamlazasiCimKozteruletJellegNev(JELLEG_NEV)
-                .szamlazasiCimHazszam(HAZSZAM)
-                .szamlazasiCimEpulet(EPULET)
-                .szamlazasiCimLepcsohaz(LEPCSOHAZ)
-                .szamlazasiCimSzint(SZINT)
-                .szamlazasiCimAjto(AJTO)
-                .szamlazasiCimHrsz(HRSZ)
-                .enabled(ENABLED)
-                .build();
+    @Test
+    public void testFilerUserReturnList() {
+        given()
+                .header(getAuthorization(adminLogin()))
+                .param("searchCriteria", "Teszt")
+                .when().get("api/partners")
+                .then()
+                .log().all()
+                .body("nev", hasItem(NEV));
     }
 }

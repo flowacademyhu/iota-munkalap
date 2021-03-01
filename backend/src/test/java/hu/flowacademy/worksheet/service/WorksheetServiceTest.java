@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -20,14 +21,15 @@ import java.util.List;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.AssetSettlement.WARRANTY;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.*;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.INSTALLATION;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.REPAIR;
+import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.BANKTRANSFER;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
+import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.*;
 import static hu.flowacademy.worksheet.enumCustom.WorkingTimeAccounting.REPAYMENT;
-import static hu.flowacademy.worksheet.enumCustom.TypeOfWork.OTHER;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -55,6 +57,30 @@ class WorksheetServiceTest {
     private static final String PROOF_OF_EMPLOYMENT = "Károly Róbert";
     private static final String MIN_TIME = "1999.01.01 01:01:01";
     private static final String MAX_TIME = "2999.01.01 01:01:01";
+
+    private static final String PARTNER_EMAIL = "partner@partner.hu";
+    private static final String TELEFON = "06-30-123-45-67";
+    private static final OrderType MEGRENDELO_TIPUSA = LEGAL;
+    private static final String NEV = "Teszt Partner";
+    private static final String ROVID_NEV = "Teszt p";
+    private static final String ADOSZAM = "01234567";
+    private static final int K_ADOSZAM_TIPUS = 3;
+    private static final String BANKSZAMLASZAM = "01234567-01234567";
+    private static final String ORSZAG_KOD = "HU";
+    private static final String ORSZAG_NEV = "Magyarország";
+    private static final String MEGYE_NEV = "Csongrád-Csanád";
+    private static final String IRANYITOSZAM = "9999";
+    private static final String TELEPULESNEV = "Szeged";
+    private static final String KERULET = "Kiss kerület";
+    private static final String KOZTERULET_NEV = "Kossuth Lajos";
+    private static final String JELLEG_NEV = "körút";
+    private static final String HAZSZAM = "34";
+    private static final String EPULET = "B";
+    private static final String LEPCSOHAZ = "C";
+    private static final String SZINT = "II.";
+    private static final String AJTO = "11";
+    private static final String HRSZ = "0123-4567-8901";
+
 
     private static final String UPDATED_WORKSHEET_ID = "MunkalapIdUpdated";
     private static final String UPDATED_PARTNER_ID = "PartnerIdUpdated";
@@ -86,7 +112,7 @@ class WorksheetServiceTest {
         var worksheet = givenValidWorksheet();
         when(worksheetRepository.save(any())).thenReturn(Worksheet.builder()
                 .id(worksheet.getId())
-                .partnerId(PARTNER_ID)
+                .partner(givenPartner())
                 .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
@@ -98,15 +124,15 @@ class WorksheetServiceTest {
                 .description(DESCRIPTION)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
-                .workerSignature(WORKER_SIGNATURE)
-                .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .workerSignature(WORKER_SIGNATURE.getBytes())
+                .proofOfEmployment(PROOF_OF_EMPLOYMENT.getBytes())
                 .worksheetStatus(WorksheetStatus.CREATED)
                 .build());
 
-        Worksheet result = worksheetService.saveWorksheet(worksheet);
+        Worksheet result = worksheetRepository.save(worksheet);
 
         Mockito.verify(worksheetRepository, times(1)).save(worksheet);
-        assertEquals(worksheet.getPartnerId(), result.getPartnerId());
+        assertEquals(worksheet.getPartner(), result.getPartner());
         assertEquals(worksheet.getTypeOfWork(), result.getTypeOfWork());
         assertEquals(worksheet.getAssetSettlement(), result.getAssetSettlement());
         assertEquals(worksheet.getWorkingTimeAccounting(), result.getWorkingTimeAccounting());
@@ -117,8 +143,8 @@ class WorksheetServiceTest {
         assertEquals(worksheet.getDescription(), result.getDescription());
         assertEquals(worksheet.getUsedMaterial(), result.getUsedMaterial());
         assertEquals(worksheet.getTypeOfPayment(), result.getTypeOfPayment());
-        assertEquals(worksheet.getWorkerSignature(), result.getWorkerSignature());
-        assertEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
+        assertArrayEquals(worksheet.getWorkerSignature(), result.getWorkerSignature());
+        assertArrayEquals(worksheet.getProofOfEmployment(), result.getProofOfEmployment());
         assertEquals(WorksheetStatus.CREATED, result.getWorksheetStatus());
         verifyNoMoreInteractions(worksheetRepository);
     }
@@ -141,7 +167,7 @@ class WorksheetServiceTest {
                 .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(dateTimeMin), Optional.of(dateTimeMax), Optional.of(1), Optional.of("createdAt"));
         verify(worksheetRepository).findAll(any(Specification.class), eq(PAGEABLE));
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
-        assertThat(result.get(0).getPartnerId(), is(PARTNER_ID));
+        assertThat(result.get(0).getPartner(), is(givenPartner()));
         assertThat(result.size(), is(1));
     }
 
@@ -156,6 +182,7 @@ class WorksheetServiceTest {
         verifyNoMoreInteractions(worksheetRepository);
     }
 
+    @Test
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
@@ -163,7 +190,7 @@ class WorksheetServiceTest {
 
         Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
-        assertThat(updatedWorksheet.getPartnerId(), is(newWorksheet.getPartnerId()));
+        assertThat(updatedWorksheet.getPartner(), is(newWorksheet.getPartner()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
@@ -214,7 +241,7 @@ class WorksheetServiceTest {
 
     private Worksheet givenValidWorksheet() {
         return Worksheet.builder()
-                .partnerId(PARTNER_ID)
+                .partner(givenPartner())
                 .typeOfWork(TYPE_OF_WORK_OTHER)
                 .customTypeOfWork(CUSTOM_TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
@@ -226,15 +253,42 @@ class WorksheetServiceTest {
                 .description(DESCRIPTION)
                 .usedMaterial(USED_MATERIAL)
                 .typeOfPayment(TYPE_OF_PAYMENT)
-                .workerSignature(WORKER_SIGNATURE)
-                .proofOfEmployment(PROOF_OF_EMPLOYMENT)
+                .workerSignature(WORKER_SIGNATURE.getBytes())
+                .proofOfEmployment(PROOF_OF_EMPLOYMENT.getBytes())
+                .build();
+    }
+
+    public Partner givenPartner() {
+        return Partner.builder()
+                .partnerEmail(PARTNER_EMAIL)
+                .telefon(TELEFON)
+                .megrendeloTipusa(MEGRENDELO_TIPUSA)
+                .nev(NEV)
+                .rovidNev(ROVID_NEV)
+                .adoszam(ADOSZAM)
+                .kAdoszamtipus(K_ADOSZAM_TIPUS)
+                .bankszamlaszam(BANKSZAMLASZAM)
+                .szamlazasiCimOrszagKod(ORSZAG_KOD)
+                .szamlazasiCimOrszagNev(ORSZAG_NEV)
+                .szamlazasiCimMegyeNev(MEGYE_NEV)
+                .szamlazasiCimIranyitoszam(IRANYITOSZAM)
+                .szamlazasiCimTelepulesNev(TELEPULESNEV)
+                .szamlazasiCimKerulet(KERULET)
+                .szamlazasiCimKozteruletNev(KOZTERULET_NEV)
+                .szamlazasiCimKozteruletJellegNev(JELLEG_NEV)
+                .szamlazasiCimHazszam(HAZSZAM)
+                .szamlazasiCimEpulet(EPULET)
+                .szamlazasiCimLepcsohaz(LEPCSOHAZ)
+                .szamlazasiCimSzint(SZINT)
+                .szamlazasiCimAjto(AJTO)
+                .szamlazasiCimHrsz(HRSZ)
                 .build();
     }
 
     private Worksheet givenUpdateProperWorksheetObject() {
         Worksheet worksheet = new Worksheet();
         worksheet.setId(UPDATED_WORKSHEET_ID);
-        worksheet.setPartnerId(UPDATED_PARTNER_ID);
+        worksheet.setPartner(givenPartner());
         worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK_OTHER);
         worksheet.setCustomTypeOfWork(UPDATED_CUSTOM_TYPE_OF_WORK);
         worksheet.setAssetSettlement(UPDATED_ASSET_SETTLEMENT);
@@ -246,8 +300,8 @@ class WorksheetServiceTest {
         worksheet.setDescription(UPDATED_DESCRIPTION);
         worksheet.setUsedMaterial(UPDATED_USED_MATERIAL);
         worksheet.setTypeOfPayment(UPDATED_TYPE_OF_PAYMENT);
-        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE);
-        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT);
+        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE.getBytes());
+        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT.getBytes());
         return worksheet;
     }
 }

@@ -1,7 +1,7 @@
 import api from './createApi'
 import axios from 'axios'
 
-async function loginUser(credentials) {
+async function loginEmployee(credentials) {
   try {
     const result = await api.post('/login', credentials)
     return result.data.access_token
@@ -10,15 +10,15 @@ async function loginUser(credentials) {
   }
 }
 
-function postUser(credentials) {
+function createEmployee(credentials) {
   return api.post(`/users`, credentials)
 }
 
-function putUser(id, credentials) {
+function updateEmployee(id, credentials) {
   return api.put(`/users/${id}`, credentials)
 }
 
-async function putUserInactive(id) {
+async function updateEmployeeInactive(id) {
   try {
     return await api.put(`/users/${id}/inactive`)
   } catch (error) {
@@ -26,11 +26,21 @@ async function putUserInactive(id) {
     return false
   }
 }
-function getUser(id) {
+
+async function activateEmployee(id) {
+  try {
+    return await api.put(`/users/${id}/active`)
+  } catch (error) {
+    alert('A művelet sikertelen.')
+    return false
+  }
+}
+
+function getEmployee(id) {
   return api.get(`/users/${id}`)
 }
 
-function getUsers(searchCriteria, status) {
+function getEmployees(searchCriteria, status) {
   const source = axios.CancelToken.source()
   const request = api
     .get('/users/', {
@@ -47,4 +57,12 @@ function getUsers(searchCriteria, status) {
   return { request, cancel: () => source.cancel() }
 }
 
-export { getUsers, postUser, putUser, putUserInactive, getUser, loginUser }
+export {
+  getEmployees,
+  createEmployee,
+  updateEmployee,
+  updateEmployeeInactive,
+  getEmployee,
+  loginEmployee,
+  activateEmployee,
+}
