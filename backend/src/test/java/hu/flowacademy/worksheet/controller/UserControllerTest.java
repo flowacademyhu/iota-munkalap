@@ -5,8 +5,6 @@ import hu.flowacademy.worksheet.dto.UserOperationDTO;
 import hu.flowacademy.worksheet.entity.User;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import org.h2.bnf.context.DbTableOrView;
-import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,8 @@ import java.util.Locale;
 import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
 import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(

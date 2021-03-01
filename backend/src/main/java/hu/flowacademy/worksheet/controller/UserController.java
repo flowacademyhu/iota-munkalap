@@ -62,7 +62,6 @@ public class UserController {
         return userService.update(id, user);
     }
 
-
     @PutMapping("/users/{id}/{status}")
     public User setUserStatus(@PathVariable("id") Long id,
                               @PathVariable(value = "status") Status status) throws ValidationException {
