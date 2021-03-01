@@ -1,6 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
-import { PATH_VARIABLES } from '../Const'
+import { Link } from 'react-router-dom'
 import EditButton from '../specialButtons/EditButton'
 import FinalizeButton from '../specialButtons/FinalizeButton'
 import CloseButton from '../specialButtons/CloseButton'
@@ -15,7 +14,6 @@ function WorkSheetOperationButtons({
   onPrint,
 }) {
   const { isAdmin } = useCurrentUser()
-  const history = useHistory()
 
   const isEditable = () => {
     if (status === 'CREATED') {
@@ -34,12 +32,9 @@ function WorkSheetOperationButtons({
 
   return (
     <>
-      <EditButton
-        hidden={!isEditable()}
-        onClick={() =>
-          history.push(`/${PATH_VARIABLES.WORKSHEET_UPDATE}/${id}`)
-        }
-      />
+      <Link to={`/worksheets/update/${id}`}>
+        <EditButton hidden={!isEditable()} />
+      </Link>
       <FinalizeButton hidden={status !== 'CREATED'} onClick={onFinalize} />
       {isAdmin && (
         <CloseButton hidden={status === 'CLOSED'} onClick={onClose} />
