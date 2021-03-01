@@ -2,7 +2,7 @@ import React from 'react'
 import Input from '../Input'
 
 export default function SearchEmployeeInput(props) {
-  const { label, name, keyword, onChangeKeyword } = props
+  const { name, keyword, onChangeKeyword } = props
 
   function handleChange(event) {
     onChangeKeyword(event.target.value)
@@ -13,9 +13,8 @@ export default function SearchEmployeeInput(props) {
       value={keyword}
       onChange={(event) => handleChange(event)}
       type="text"
-      placeholder="Keresés"
+      placeholder="Munkavállaló keresés"
       name={name}
-      label={label}
     />
   )
 }

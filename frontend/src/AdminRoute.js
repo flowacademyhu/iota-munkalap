@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import useCurrentUser from './hooks/useCurrentUser'
+import useCurrentEmployee from './hooks/useCurrentEmployee'
 
 function AdminRoute({ children, ...props }) {
-  const { isAdmin } = useCurrentUser()
+  const { isAdmin } = useCurrentEmployee()
   return isAdmin ? <Route {...props}>{children}</Route> : null
 }
 

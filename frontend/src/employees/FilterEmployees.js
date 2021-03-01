@@ -1,7 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-function FilterUsers(props) {
+export default function FilterEmployees(props) {
   const { status, onStatusChange } = props
 
   const handleInputChange = (event) => {
@@ -37,5 +37,3 @@ function FilterUsers(props) {
     </div>
   )
 }
-
-export default FilterUsers

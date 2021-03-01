@@ -6,8 +6,8 @@ import Input from '../Input'
 import Button from '../Button'
 import PopUp from '../PopUp'
 import SelectInput from '../SelectInput'
-import schema from './ValidationWorkSheet'
 import { TYPE_OF_WORK } from '../Const'
+import schema from './ValidationWorkSheet'
 import {
   TYPE_OF_WORK_LIST,
   ASSET_SETTLEMENT_LIST,
@@ -18,12 +18,13 @@ import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
 
-function CreateWorkSheetForm({
+function WorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
   sendData,
   title,
+  worksheet,
 }) {
   const finalize = useRef(false)
   return (
@@ -38,9 +39,9 @@ function CreateWorkSheetForm({
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
               workingTimeAccounting: WORKING_TIME_ACCOUNT_LIST[0].value,
-              numberOfEmployees: 0,
-              overheadHour: 0,
-              deliveryKm: 0,
+              numberOfEmployees: '',
+              overheadHour: '',
+              deliveryKm: '',
               accountSerialNumber: '',
               description: '',
               usedMaterial: '',
@@ -49,6 +50,7 @@ function CreateWorkSheetForm({
               workerSignature: '',
               proofOfEmployment: '',
               worksheetStatus: 'CREATED',
+              ...worksheet,
             }}
             validationSchema={schema}
             onSubmit={(values) => {
@@ -164,4 +166,4 @@ function CreateWorkSheetForm({
   )
 }
 
-export default CreateWorkSheetForm
+export default WorkSheetForm
