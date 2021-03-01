@@ -36,8 +36,8 @@ public class Worksheet {
             })
     @Column(name = "worksheet_id", nullable = false)
     private String id;
-    @Column(name = "partner_id")
-    private String partnerId; // FIXME Change to many to one in the future.
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Partner partner;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;

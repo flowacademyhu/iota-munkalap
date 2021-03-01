@@ -26,25 +26,7 @@ public class WorksheetController {
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
     public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
-        Worksheet worksheet = Worksheet.builder()
-                .partnerId(worksheetDTO.getPartnerId())
-                .typeOfWork(worksheetDTO.getTypeOfWork())
-                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
-                .assetSettlement(worksheetDTO.getAssetSettlement())
-                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
-                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
-                .overheadHour(worksheetDTO.getOverheadHour())
-                .deliveryKm(worksheetDTO.getDeliveryKm())
-                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
-                .description(worksheetDTO.getDescription())
-                .usedMaterial(worksheetDTO.getUsedMaterial())
-                .typeOfPayment(worksheetDTO.getTypeOfPayment())
-                .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
-                .worksheetStatus(worksheetDTO.getWorksheetStatus())
-                .build();
-        return worksheetService.saveWorksheet(worksheet);
+        return worksheetService.saveWorksheet(worksheetDTO);
     }
 
     @PutMapping("/worksheets/{id}/close")

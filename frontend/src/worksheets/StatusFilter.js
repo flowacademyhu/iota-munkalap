@@ -19,7 +19,7 @@ function StatusFilter(props) {
           name="filterWorkSheetByStatus"
         >
           {Object.keys(statusTranslation).map((actualStatus) => (
-            <option value={actualStatus}>
+            <option value={actualStatus} key={actualStatus}>
               {statusTranslation[actualStatus]}
             </option>
           ))}
