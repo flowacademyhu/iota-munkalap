@@ -2,7 +2,7 @@ import React from 'react'
 import logo from './img/uj_logo.png'
 import Dropdown from 'react-bootstrap/Dropdown'
 import LogOut from './LogOut'
-import UserData from './UserData'
+import EmployeeData from './EmployeeData'
 import ToolsButton from './ToolsButton'
 
 function Header() {
@@ -18,7 +18,7 @@ function Header() {
         </div>
 
         <div className="col text-center h5 p-0">
-          <UserData />
+          <EmployeeData />
         </div>
 
         <Dropdown className="col text-right p-0">
