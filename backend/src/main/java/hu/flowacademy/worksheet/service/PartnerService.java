@@ -122,8 +122,7 @@ public class PartnerService {
 
     public Partner togglePartnerActivity(String id) throws ValidationException {
         Optional<Partner> currentPartner = partnerRepository.findById(id);
-        boolean currentStatus = currentPartner.get().isEnabled();
-        partnerRepository.updateEnabled(id, !currentStatus);
+        partnerRepository.updateEnabled(id, !currentPartner.get().getEnabled());
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
 

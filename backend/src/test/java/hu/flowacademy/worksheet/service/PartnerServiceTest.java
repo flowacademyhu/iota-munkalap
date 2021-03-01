@@ -49,7 +49,7 @@ class PartnerServiceTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
-    private static final boolean ENABLED = true;
+    private static final Boolean ENABLED = true;
 
     private static final String INVALID_TEST_EMAIL = "partnerteszt.com";
     private static final String EMPTY_STRING = "";
@@ -170,7 +170,7 @@ class PartnerServiceTest {
         givenValidPartner();
         Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
         assertThat(result, notNullValue());
-        assertThat(result.get(), is(false));
+        assertThat(result.getEnabled(), is(false));
     }
 
     private Partner givenValidPartner() {
