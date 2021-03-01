@@ -25,7 +25,7 @@ function UpdateWorkSheetForm({
   title,
   worksheet,
 }) {
-  const [date, setDate] = useState(new Date())
+  //const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -33,16 +33,15 @@ function UpdateWorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              createdAt: '',
               ...worksheet,
             }}
             validationSchema={schema}
             onSubmit={(data) => {
-              data.createdAt = moment(date).format('yyyy-MM-DD')
+              data.createdAt = moment(data.createdAt).format('yyyy-MM-DD')
               sendData(data)
             }}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
@@ -104,7 +103,11 @@ function UpdateWorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: </span>
-                  <CalendarDropDown date={date} setDate={setDate} />
+                  <CalendarDropDown
+                    name="createdAt"
+                    setFieldValue={setFieldValue}
+                    value={values.createdAt}
+                  />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />

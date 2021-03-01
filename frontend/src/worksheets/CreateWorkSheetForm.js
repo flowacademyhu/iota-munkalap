@@ -26,7 +26,6 @@ function CreateWorkSheetForm({
   title,
 }) {
   const finalize = useRef(false)
-  const [date, setDate] = useState(new Date())
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -58,11 +57,11 @@ function CreateWorkSheetForm({
               } else {
                 values.worksheetStatus = 'CREATED'
               }
-              values.createdAt = moment(date).format('yyyy-MM-DD')
+              values.createdAt = moment(values.createdAt).format('yyyy-MM-DD')
               sendData(values)
             }}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
@@ -123,7 +122,11 @@ function CreateWorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: </span>
-                  <CalendarDropDown date={date} setDate={setDate} />
+                  <CalendarDropDown
+                    name="createdAt"
+                    setFieldValue={setFieldValue}
+                    value={values.createdAt}
+                  />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />

@@ -1,12 +1,13 @@
 import React from 'react'
+import { useField, useFormikContext } from 'formik'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-function CalendarDropDown({ date, setDate, placeholderText }) {
+function CalendarDropDown({ name, value, setFieldValue, placeholderText }) {
   return (
     <DatePicker
-      selected={date}
-      onChange={(date) => setDate(date)}
+      selected={(value && new Date(value)) || null}
+      onChange={(date) => setFieldValue(name, date)}
       dateFormat="yyyy.MM.dd"
       placeholderText={placeholderText}
       className="mr-2 mb-5"
