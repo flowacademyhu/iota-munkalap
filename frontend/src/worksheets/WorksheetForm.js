@@ -70,7 +70,6 @@ function WorkSheetForm({
                 values.worksheetStatus = 'CREATED'
               }
               values.createdAt = moment(date).format('yyyy-MM-DD')
-              console.log(values)
               sendData(values)
             }}
           >
@@ -78,7 +77,6 @@ function WorkSheetForm({
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
-                  {/* <Input name="partnerId" label="Partner" type="text" /> */}
                   <SelectPartner
                     options={partnersForSelect}
                     value={values.partnerId}
