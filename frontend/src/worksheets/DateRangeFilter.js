@@ -2,7 +2,7 @@ import React from 'react'
 import CalendarDropDown from '../CalendarDropDown'
 import Button from '../Button'
 
-function DateRangeFilter({ startDate, setStartDate, endDate, setEndDate }) {
+function DateRangeFilter({ startDate, onStartDate, endDate, onEndDate }) {
   return (
     <>
       <div className="ml-2">
@@ -10,19 +10,19 @@ function DateRangeFilter({ startDate, setStartDate, endDate, setEndDate }) {
         <div>
           <CalendarDropDown
             date={startDate}
-            setDate={setStartDate}
+            setDate={onStartDate}
             placeholderText="Intervallum kezdete"
           />
           <CalendarDropDown
             date={endDate}
-            setDate={setEndDate}
+            setDate={onEndDate}
             placeholderText="Intervallum vége"
           />
           <Button
             text="Összes"
             onClick={() => {
-              setStartDate(null)
-              setEndDate(null)
+              onStartDate(null)
+              onEndDate(null)
             }}
           />
         </div>

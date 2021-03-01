@@ -6,11 +6,11 @@ import Button from '../Button'
 
 function WorksheetListHeader({
   startDate,
-  setStartDate,
+  onStartDate,
   endDate,
-  setEndDate,
+  onEndDate,
   status,
-  setStatus,
+  onStatus,
 }) {
   return (
     <>
@@ -22,13 +22,13 @@ function WorksheetListHeader({
       <div className="d-flex flex-row justify-content-between">
         <DateRangeFilter
           startDate={startDate}
-          setStartDate={setStartDate}
+          onStartDate={onStartDate}
           endDate={endDate}
-          setEndDate={setEndDate}
+          onEndDate={onEndDate}
         />
         <div className="mr-2">
           <div>Szűrés állapot szerint:</div>
-          <StatusFilter status={status} onStatusChange={setStatus} />
+          <StatusFilter status={status} onStatusChange={onStatus} />
         </div>
       </div>
     </>

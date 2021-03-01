@@ -16,10 +16,10 @@ export default function TableListOfWorkSheets() {
     updateWorkSheets,
     startDate,
     endDate,
-    setStartDate,
-    setEndDate,
+    setStartDate: onStartDate,
+    setEndDate: onEndDate,
     status,
-    setStatus,
+    setStatus: onStatus,
   } = useWorkSheets()
 
   async function closeAndReload(id) {
@@ -36,11 +36,11 @@ export default function TableListOfWorkSheets() {
     <>
       <WorksheetListHeader
         startDate={startDate}
-        setStartDate={setStartDate}
+        onStartDate={onStartDate}
         endDate={endDate}
-        setEndDate={setEndDate}
+        onEndDate={onEndDate}
         status={status}
-        setStatus={setStatus}
+        onStatus={onStatus}
       />
       <div className="border border-secondary">
         <div className="container-fluid">
