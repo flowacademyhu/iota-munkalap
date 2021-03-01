@@ -2,12 +2,7 @@ import React from 'react'
 import CalendarDropDown from '../CalendarDropDown'
 import Button from '../Button'
 
-function FilterWorkSheetsByDate({
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
-}) {
+function DateRangeFilter({ startDate, setStartDate, endDate, setEndDate }) {
   return (
     <>
       <div className="ml-2">
@@ -36,4 +31,4 @@ function FilterWorkSheetsByDate({
   )
 }
 
-export default FilterWorkSheetsByDate
+export default DateRangeFilter

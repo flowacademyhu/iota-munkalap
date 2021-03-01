@@ -8,7 +8,7 @@ import LoadingScreen from '../LoadingScreen'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import workSheetPDF from './workSheetPDF'
-import FiltersAndNewWorkSheet from './FiltersAndNewWorkSheet'
+import WorksheetListHeader from './WorksheetListHeader'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -34,7 +34,7 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <FiltersAndNewWorkSheet
+      <WorksheetListHeader
         startDate={startDate}
         setStartDate={setStartDate}
         endDate={endDate}
