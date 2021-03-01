@@ -31,7 +31,7 @@ export default function WorkSheetForm({
 }) {
   const { partners } = usePartners()
   const partnersForSelect = partners?.map((partner) => ({
-    label: partner.nev,
+    label: partner.nev + ', a.sz.: ' + partner.adoszam,
     ...partner,
   }))
   const worksheetPartner = worksheet && {
