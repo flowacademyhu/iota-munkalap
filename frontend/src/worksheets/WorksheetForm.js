@@ -82,6 +82,8 @@ function WorkSheetForm({
                     value={values.partnerId}
                     setFieldValue={setFieldValue}
                     name="partnerId"
+                    label="Partner"
+                    placeholder="Partner neve"
                   />
                   <SelectInput
                     name="typeOfWork"
