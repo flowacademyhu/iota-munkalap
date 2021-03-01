@@ -3,7 +3,7 @@ import { TYPE_OF_WORK } from '../Const'
 
 export default function schema() {
   const schema = yup.object().shape({
-    // partnerId: yup.string().required('Partner megadása kötelező!'),
+    partnerId: yup.string().required('Partner megadása kötelező!'),
     typeOfWork: yup
       .string()
       .required('Munkavégzés jellegének megadása kötelező!'),

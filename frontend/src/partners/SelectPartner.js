@@ -2,8 +2,8 @@ import React from 'react'
 import Select from 'react-select'
 
 function SelectPartner({ setFieldValue, options }) {
-  const handleChange = (value) => {
-    setFieldValue('partnerId', value)
+  const handleChange = (partner) => {
+    setFieldValue('partnerId', partner.partnerId)
   }
 
   return <Select options={options} onChange={handleChange} />
