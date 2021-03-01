@@ -1,13 +1,26 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
-import usePartners from '../hooks/usePartners'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
 import EditButton from '../specialButtons/EditButton'
+import InactivateButton from '../specialButtons/InactivateButton'
+import ActivateButton from '../specialButtons/ActivateButton'
+import usePartners from '../hooks/usePartners'
+import { inactivatePartner, activatePartner } from '../api/PartnerAPI'
 
 export default function TableListofPartners() {
-  const { partners } = usePartners()
+  const { partners, updatePartners } = usePartners()
+
+  async function inactivateAndReload(id) {
+    await inactivatePartner(id)
+    updatePartners()
+  }
+
+  async function activateAndReload(id) {
+    await activatePartner(id)
+    updatePartners()
+  }
 
   return (
     <>
@@ -40,6 +53,17 @@ export default function TableListofPartners() {
                       <Link to={`/partners/update/${partner.id}`}>
                         <EditButton />
                       </Link>
+                    </td>
+                    <td>
+                      {partner.enabled ? (
+                        <InactivateButton
+                          onClick={() => inactivateAndReload(partner)}
+                        />
+                      ) : (
+                        <ActivateButton
+                          onClick={() => activateAndReload(partner)}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))
