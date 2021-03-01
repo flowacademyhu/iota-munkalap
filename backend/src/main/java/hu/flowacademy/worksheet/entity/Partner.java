@@ -69,6 +69,6 @@ public class Partner {
     private String szamlazasiCimAjto;
     @Column(name = "szamlazasi_cim_hrsz")
     private String szamlazasiCimHrsz;
-    @lombok.Getter
+    @Column(name = "Aktív")
     private boolean enabled;
 }

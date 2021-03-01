@@ -23,8 +23,6 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
     private final KeycloakClientService keycloakClientService;
-    private Object Partner;
-
 
     public Partner createPartner(@NonNull Partner partner) throws ValidationException {
         validatePartner(partner);

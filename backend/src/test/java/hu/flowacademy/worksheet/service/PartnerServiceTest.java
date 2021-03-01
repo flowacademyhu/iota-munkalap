@@ -166,15 +166,16 @@ class PartnerServiceTest {
     }
 
     @Test
-    public void givenAnExistingPartner_whenSwitchingStatus_thenSetStatusToReported() throws ValidationException {
+    public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
         givenValidPartner();
-        Partner result = PartnerService.togglePartnerActivity(partner.getPartnerId());
+        Partner result = PartnerService.togglePartnerActivity(PARTNER_ID);
         assertThat(result, notNullValue());
-        assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
+        assertThat(result.getEnabled(), is(false));
     }
 
     private Partner givenValidPartner() {
         return Partner.builder()
+                .enabled(ENABLED)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
