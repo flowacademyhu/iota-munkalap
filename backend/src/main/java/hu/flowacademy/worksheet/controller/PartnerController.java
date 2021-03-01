@@ -58,4 +58,10 @@ public class PartnerController {
                               @RequestParam(name = "searchCriteria", required = false) Optional<String> searchCriteria) {
         return partnerService.filter(page, searchCriteria, limit, orderBy);
     }
+
+    @GetMapping("/partners/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Partner getPartnerById(@PathVariable("id") String partnerId) throws ValidationException {
+        return partnerService.getPartnerById(partnerId);
+    }
 }
