@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class WorksheetServiceTest {
 
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("createdAt").ascending());
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("id").ascending());
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
@@ -139,7 +139,7 @@ class WorksheetServiceTest {
         LocalDate dateTimeMax = LocalDate.parse(MAX_TIME, formatter);
         LocalDate dateTimeMin = LocalDate.parse(MIN_TIME, formatter);
         List<Worksheet> result = worksheetService.collectWorksheetByCriteria(Optional
-                .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(dateTimeMin), Optional.of(dateTimeMax), Optional.of(1), Optional.of("createdAt"));
+                .of(WorksheetStatus.CREATED), Optional.of(0), Optional.of(dateTimeMin), Optional.of(dateTimeMax), Optional.of(1), Optional.of("id"));
         verify(worksheetRepository).findAll(any(Specification.class), eq(PAGEABLE));
         assertThat(result.get(0).getId(), is(WORKSHEET_ID));
         assertThat(result.get(0).getPartnerId(), is(PARTNER_ID));
