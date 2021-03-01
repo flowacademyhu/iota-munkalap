@@ -11,28 +11,15 @@ export default function Partner() {
     partnerData,
   } = usePartnerData()
 
-  return window.location.pathname === '/partners/new' ? (
-    <>
-      <PartnerForm
-        handleClick={handleClick}
-        sent={sent}
-        popUpMessage={popUpMessage}
-        sendData={savePartner}
-        title="Partner létrehozása"
-      />
-    </>
-  ) : (
-    <>
-      {partnerData && (
-        <PartnerForm
-          handleClick={handleClick}
-          sent={sent}
-          popUpMessage={popUpMessage}
-          sendData={savePartner}
-          title="Adatok módosítása"
-          partner={partnerData}
-        />
-      )}
-    </>
+  let isCreate = window.location.pathname === '/partners/new'
+  return (
+    <PartnerForm
+      handleClick={handleClick}
+      sent={sent}
+      popUpMessage={popUpMessage}
+      sendData={savePartner}
+      title={isCreate ? 'Partner létrehozása' : 'Adatok szerkesztése'}
+      partner={!isCreate && partnerData}
+    />
   )
 }
