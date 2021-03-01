@@ -8,6 +8,7 @@ import TableListofPartners from './partners/TableListofPartners'
 import CreateWorkSheet from './worksheets/CreateWorkSheet'
 import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
 import AdminRoute from './AdminRoute'
+import SelectPartner from './partners/SelectPartner'
 
 function Routing() {
   return (
@@ -23,7 +24,7 @@ function Routing() {
           <TableListOfEmployees />
         </AdminRoute>
         <Route path="/partners">
-          <TableListofPartners />
+          <SelectPartner />
         </Route>
         <Route path="/worksheets/new">
           <CreateWorkSheet />
