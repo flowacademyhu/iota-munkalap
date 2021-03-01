@@ -3,13 +3,17 @@ package hu.flowacademy.worksheet.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -37,6 +41,8 @@ public class Worksheet {
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)
     private TypeOfWork typeOfWork;
+    @Lob()
+    @Column(name = "custom_type_of_work")
     private String customTypeOfWork;
     @Enumerated(EnumType.STRING)
     @Column(name = "asset_settlement", nullable = false)
@@ -53,20 +59,25 @@ public class Worksheet {
     @Column(name = "account_serial_number")
     private String accountSerialNumber;
     @Lob
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", nullable = false, length = 3000)
     private String description;
     @Column(name = "used_material", nullable = false)
     private String usedMaterial;
     @Column(name = "type_of_payment", nullable = false)
     @Enumerated(EnumType.STRING)
     private TypeOfPayment typeOfPayment;
-    @Column(name = "createdAt", nullable = false)
+    @Column(name = "createdAtRealTime", nullable = false)
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
-    private LocalDateTime createdAt;
-    @Column(name = "worker_signature", nullable = false)
-    private String workerSignature;
-    @Column(name = "proof_of_employment", nullable = false)
-    private String proofOfEmployment;
+    private LocalDateTime createdAtRealTime;
+    @Column(name = "createdAt", nullable = false)
+    @JsonFormat(pattern = "yyyy.MM.dd")
+    private LocalDate createdAt;
+    @Lob
+    @Column(name = "worker_signature", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] workerSignature;
+    @Lob
+    @Column(name = "proof_of_employment", columnDefinition = "LONGBLOB", nullable = false)
+    private byte[] proofOfEmployment;
     @Enumerated(EnumType.STRING)
     private WorksheetStatus worksheetStatus;
     @CreatedBy

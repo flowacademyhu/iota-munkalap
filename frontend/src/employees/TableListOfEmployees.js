@@ -2,7 +2,7 @@ import React from 'react'
 import useUsers from '../hooks/useUsers'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { putUserInactive } from '../api/UserAPI'
+import { inactivateUser, activateUser } from '../api/UserAPI'
 import LoadingScreen from '../LoadingScreen'
 import SearchEmployeeInput from './SearchEmployeeInput'
 import { Formik, Form } from 'formik'
@@ -19,8 +19,13 @@ export default function TableListOfEmployees() {
     setStatus,
   } = useUsers()
 
-  async function updater(user) {
-    await putUserInactive(user.id)
+  async function inactivateAndReload(user) {
+    await inactivateUser(user.id)
+    updateUsers()
+  }
+
+  async function activateAndReload(user) {
+    await activateUser(user.id)
     updateUsers()
   }
 
@@ -38,7 +43,6 @@ export default function TableListOfEmployees() {
             <SearchEmployeeInput
               keyword={keyword}
               onChangeKeyword={setKeyword}
-              label="Munkatárs keresése"
               name="searchEmployee"
             />
           </Form>
@@ -63,13 +67,16 @@ export default function TableListOfEmployees() {
                   <EmployeeListRow
                     user={user}
                     key={user.id}
-                    onInactivate={() => updater(user)}
+                    onInactivate={() => inactivateAndReload(user)}
+                    onActivate={() => activateAndReload(user)}
                   />
                 ))
               ) : (
-                <td colspan="5">
-                  <LoadingScreen />
-                </td>
+                <tr>
+                  <td colSpan="5">
+                    <LoadingScreen />
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>

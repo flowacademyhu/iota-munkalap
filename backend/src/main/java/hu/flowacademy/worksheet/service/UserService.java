@@ -87,7 +87,7 @@ public class UserService {
     public List<User> filter(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
         List<User> result = collectUsersByCriteria(status, page, searchCriteria, limit, orderBy);
         return searchCriteria.map(searchPart ->
-                result.stream().filter(user -> filterContains(searchPart, user))
+                result.stream().filter(user -> filterContains(searchPart.toLowerCase(), user))
                         .collect(Collectors.toList()))
                         .orElse(result);
     }
@@ -101,9 +101,9 @@ public class UserService {
     }
 
     private boolean filterContains(String searchPart, User user) {
-        return stripAccents(user.getFirstName()).contains(stripAccents(searchPart)) ||
-                stripAccents(user.getLastName()).contains(stripAccents(searchPart)) ||
-                user.getEmail().contains(stripAccents(searchPart));
+        return stripAccents(user.getFirstName().toLowerCase()).contains(stripAccents(searchPart)) ||
+                stripAccents(user.getLastName().toLowerCase()).contains(stripAccents(searchPart)) ||
+                user.getEmail().toLowerCase().contains(stripAccents(searchPart));
     }
 
     public Optional<User> getUserById(Long userId) {

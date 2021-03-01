@@ -1,17 +1,34 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
+import FilterWorkSheets from './FilterWorkSheets'
 import EditButton from '../specialButtons/EditButton'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
-import { typeOfWork, status } from '../TranslationForWorkSheet'
+import {
+  typeOfWorkTranslation,
+  statusTranslation,
+} from './TranslationForWorkSheet'
 import useCurrentUser from '../hooks/useCurrentUser'
 import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
+import workSheetPDF from './workSheetPDF'
+import PdfButton from '../specialButtons/PdfButton'
 import FinalizeButton from '../specialButtons/FinalizeButton'
+import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
-  const { workSheets, updateWorkSheets } = useWorkSheets()
+  const {
+    workSheets,
+    updateWorkSheets,
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    status,
+    setStatus,
+  } = useWorkSheets()
+
   const { isAdmin } = useCurrentUser()
 
   async function closeAndReload(worksheet) {
@@ -26,10 +43,44 @@ export default function TableListOfWorkSheets() {
 
   return (
     <>
-      <div className="d-flex justify-content-between p-1">
+      <div className="py-1 my-3">
         <Link to={`/worksheets/new`}>
           <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
         </Link>
+      </div>
+      <div className="d-flex flex-row justify-content-between">
+        <div className="ml-2 d-flex flex-column">
+          <div className="d-block col-sm-">Szűrés dátum szerint:</div>
+          <div className="ml-2 d-flex flex-row my-3">
+            <span>
+              <CalendarDropDown
+                date={startDate}
+                setDate={setStartDate}
+                placeholderText="Intervallum kezdete"
+              />{' '}
+            </span>
+            <span>
+              <CalendarDropDown
+                date={endDate}
+                setDate={setEndDate}
+                placeholderText="Intervallum vége"
+              />{' '}
+            </span>
+            <span>
+              <Button
+                text="Összes"
+                onClick={() => {
+                  setStartDate(null)
+                  setEndDate(null)
+                }}
+              />
+            </span>
+          </div>
+        </div>
+        <div className="mr-2">
+          <div>Szűrés állapot szerint:</div>
+          <FilterWorkSheets status={status} onStatusChange={setStatus} />
+        </div>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid">
@@ -56,8 +107,8 @@ export default function TableListOfWorkSheets() {
                     </td>
                     <td>{worksheet.createdAt}</td>
                     <td>{worksheet.partnerId}</td>
-                    <td>{typeOfWork[worksheet.typeOfWork]}</td>
-                    <td>{status[worksheet.worksheetStatus]}</td>
+                    <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
+                    <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
                       <Link to={`/worksheets/update/${worksheet.id}`}>
                         <EditButton />
@@ -72,12 +123,16 @@ export default function TableListOfWorkSheets() {
                           onClick={() => closeAndReload(worksheet)}
                         />
                       )}
+                      <PdfButton
+                        hidden={worksheet.worksheetStatus === 'CREATED'}
+                        onClick={() => workSheetPDF(worksheet)}
+                      />
                     </td>
                   </tr>
                 ))
               ) : (
-                <tr colspan="5">
-                  <td>
+                <tr>
+                  <td colSpan="5">
                     <LoadingScreen />
                   </td>
                 </tr>
