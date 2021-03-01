@@ -6,6 +6,7 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,10 @@ public class WorksheetService {
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
+    private final PartnerRepository partnerRepository;
 
-    public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
+    public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
+        Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
         if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
             worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
@@ -42,8 +45,32 @@ public class WorksheetService {
         return worksheetRepository.save(worksheet);
     }
 
+    private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
+        return Worksheet.builder()
+                .partner(
+                        partnerRepository.findById(worksheetDTO.getPartnerId())
+                                .orElseThrow(() -> new ValidationException("No such partner in database"))
+                )
+                .typeOfWork(worksheetDTO.getTypeOfWork())
+                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
+                .assetSettlement(worksheetDTO.getAssetSettlement())
+                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
+                .overheadHour(worksheetDTO.getOverheadHour())
+                .deliveryKm(worksheetDTO.getDeliveryKm())
+                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
+                .description(worksheetDTO.getDescription())
+                .usedMaterial(worksheetDTO.getUsedMaterial())
+                .typeOfPayment(worksheetDTO.getTypeOfPayment())
+                .createdAt(worksheetDTO.getCreatedAt())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                .worksheetStatus(worksheetDTO.getWorksheetStatus())
+                .build();
+    }
+
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-        if (worksheet.getPartnerId() == null) {
+        if (worksheet.getPartner() == null) {
             throw new ValidationException("Partner value is null");
         }
         if (worksheet.getTypeOfWork() == null) {
@@ -97,7 +124,7 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
@@ -123,6 +150,25 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
         Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+        return fromWorksheetToWorksheetDTO(worksheet);
+    }
 
+    private WorksheetDTO fromWorksheetToWorksheetDTO(Worksheet worksheetReceived) {
+        return WorksheetDTO.builder()
+                .partnerId(worksheetReceived.getPartner().getPartnerId())
+                .typeOfWork(worksheetReceived.getTypeOfWork())
+                .customTypeOfWork(worksheetReceived.getCustomTypeOfWork())
+                .assetSettlement(worksheetReceived.getAssetSettlement())
+                .workingTimeAccounting(worksheetReceived.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetReceived.getNumberOfEmployees())
+                .overheadHour(worksheetReceived.getOverheadHour())
+                .deliveryKm(worksheetReceived.getDeliveryKm())
+                .accountSerialNumber(worksheetReceived.getAccountSerialNumber())
+                .description(worksheetReceived.getDescription())
+                .usedMaterial(worksheetReceived.getUsedMaterial())
+                .typeOfPayment(worksheetReceived.getTypeOfPayment())
+                .workerSignature(new String(worksheetReceived.getWorkerSignature()))
+                .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
+                .build();
     }
 }

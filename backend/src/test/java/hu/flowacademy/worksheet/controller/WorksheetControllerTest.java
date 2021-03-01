@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import com.github.javafaker.Faker;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.AssetSettlement;
 import hu.flowacademy.worksheet.enumCustom.TypeOfPayment;
@@ -21,8 +22,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static hu.flowacademy.worksheet.enumCustom.TypeOfPayment.CASH;
-import static hu.flowacademy.worksheet.helper.TestHelper.adminLogin;
-import static hu.flowacademy.worksheet.helper.TestHelper.getAuthorization;
+import static hu.flowacademy.worksheet.helper.TestHelper.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -33,9 +33,11 @@ import static org.hamcrest.Matchers.notNullValue;
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 class WorksheetControllerTest {
+
     private static final Faker faker = new Faker();
     private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
     private final static String PARTNER_ID = "PartnerId";
+
     private final static TypeOfWork TYPE_OF_WORK = TypeOfWork.REPAIR;
     private final static AssetSettlement ASSET_SETTLEMENT = AssetSettlement.REPAYMENT;
     private final static WorkingTimeAccounting WORKING_TIME_ACCOUNTING = WorkingTimeAccounting.REPAYMENT;
@@ -62,10 +64,13 @@ class WorksheetControllerTest {
 
     @Test
     public void testSuccessfulCreationReturns201() {
+        Partner toCheck = createPartner();
+        WorksheetDTO toSend = givenAWorksheetDTO();
+        toSend.setPartnerId(toCheck.getPartnerId());
         given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
-                .body(givenAWorksheetDTO())
+                .body(toSend)
                 .contentType(ContentType.JSON)
                 .when().post("api/worksheets").
                 then()
@@ -85,17 +90,21 @@ class WorksheetControllerTest {
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
                 .body("createdAt", equalTo(actualDate))
+                .body("partner.partnerId", equalTo(toCheck.getPartnerId()))
+                .body("partner.partnerEmail", equalTo(toCheck.getPartnerEmail()))
                 .statusCode(201)
                 .extract().body().as(Worksheet.class);
-
     }
 
     @Test
     public void checkTheDescriptionWith3000Character() {
+        Partner toCheck = createPartner();
+        WorksheetDTO toSend = givenWorksheetDescription();
+        toSend.setPartnerId(toCheck.getPartnerId());
         Worksheet worksheet = given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
-                .body(givenWorksheetDescription())
+                .body(toSend)
                 .contentType(ContentType.JSON)
                 .when().post("api/worksheets").
                         then()
@@ -105,12 +114,10 @@ class WorksheetControllerTest {
                 .assertThat()
                 .extract().as(Worksheet.class);
         assertThat(worksheet, Matchers.notNullValue());
-
     }
 
     private WorksheetDTO givenAWorksheetDTO() {
         return WorksheetDTO.builder()
-                .partnerId(PARTNER_ID)
                 .typeOfWork(TYPE_OF_WORK)
                 .assetSettlement(ASSET_SETTLEMENT)
                 .workingTimeAccounting(WORKING_TIME_ACCOUNTING)
