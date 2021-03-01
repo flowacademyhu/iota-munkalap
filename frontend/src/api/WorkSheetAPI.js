@@ -1,7 +1,7 @@
 import api from './createApi'
 import moment from 'moment'
 
-function putWorkSheet(id, credentials) {
+function updateWorkSheet(id, credentials) {
   return api.put(`/worksheets/${id}`, credentials)
 }
 
@@ -21,7 +21,7 @@ function getWorkSheet(id) {
   return api.get(`/worksheets/${id}`)
 }
 
-function postWorkSheet(credentials) {
+function createWorkSheet(credentials) {
   return api.post('/worksheets', credentials)
 }
 
@@ -44,8 +44,8 @@ async function finalizeWorkSheet(id) {
 export {
   getWorkSheets,
   getWorkSheet,
-  putWorkSheet,
-  postWorkSheet,
+  updateWorkSheet,
+  createWorkSheet,
   closeWorkSheet,
   finalizeWorkSheet,
 }

@@ -4,7 +4,7 @@ import EditButton from '../specialButtons/EditButton'
 import FinalizeButton from '../specialButtons/FinalizeButton'
 import CloseButton from '../specialButtons/CloseButton'
 import PdfButton from '../specialButtons/PdfButton'
-import useCurrentUser from '../hooks/useCurrentUser'
+import useCurrentEmployee from '../hooks/useCurrentEmployee'
 
 function WorkSheetOperationButtons({
   status,
@@ -13,7 +13,7 @@ function WorkSheetOperationButtons({
   onClose,
   onPrint,
 }) {
-  const { isAdmin } = useCurrentUser()
+  const { isAdmin } = useCurrentEmployee()
 
   const isEditable = () => {
     if (status === 'CREATED') {
