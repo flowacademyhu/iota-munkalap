@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -120,7 +121,8 @@ public class WorksheetService {
         ).getContent();
     }
 
-    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
-        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+    public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
+        Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+
     }
 }
