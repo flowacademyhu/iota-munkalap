@@ -61,7 +61,7 @@ public class PartnerController {
 
     @GetMapping("/partners/{id}")
     @RolesAllowed({"admin", "user"})
-    public Partner getPartnerById(@PathVariable("id") String partnerId) throws ValidationException {
-        return partnerService.getPartnerById(partnerId);
+    public Partner getPartnerById(@PathVariable("id") String id) throws ValidationException {
+        return partnerService.getPartnerById(id);
     }
 }

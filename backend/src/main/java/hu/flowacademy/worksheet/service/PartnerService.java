@@ -133,7 +133,7 @@ public class PartnerService {
                 stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
     }
 
-    public Partner getPartnerById(String partnerId) throws ValidationException {
-        return partnerRepository.findById(partnerId).orElseThrow(() -> new ValidationException("No partner with the given id " + partnerId));
+    public Partner getPartnerById(String id) throws ValidationException {
+        return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
 }
