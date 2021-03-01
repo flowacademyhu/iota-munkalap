@@ -30,7 +30,7 @@ import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.bui
 public class WorksheetService {
 
     private final int DEFAULT_PAGE = 0;
-    private final String DEFAULT_ORDERBY = "createdAt";
+    private final String DEFAULT_ORDERBY = "id";
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
@@ -145,7 +145,7 @@ public class WorksheetService {
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
         return worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
     }
 
