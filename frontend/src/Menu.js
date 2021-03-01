@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import useCurrentUser from './hooks/useCurrentUser'
+import useCurrentEmployee from './hooks/useCurrentEmployee'
 
 function Menu() {
-  const { isAdmin } = useCurrentUser()
+  const { isAdmin } = useCurrentEmployee()
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified mb-3 p-0">
       <ul className="navbar-nav w-100">

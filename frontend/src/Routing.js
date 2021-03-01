@@ -1,12 +1,10 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import TableListOfEmployees from './employees/TableListOfEmployees'
-import CreateEmployee from './employees/CreateEmployee'
-import UpdateEmployee from './employees/UpdateEmployee'
+import Employee from './employees/Employee'
 import TableListOfWorkSheets from './worksheets/TableListOfWorkSheets'
 import TableListofPartners from './partners/TableListofPartners'
-import CreateWorkSheet from './worksheets/CreateWorkSheet'
-import UpdateWorkSheet from './worksheets/UpdateWorkSheet'
+import Worksheet from './worksheets/Worksheet'
 import AdminRoute from './AdminRoute'
 
 function Routing() {
@@ -14,10 +12,10 @@ function Routing() {
     <div className="col-12">
       <Switch>
         <AdminRoute path="/employees/new">
-          <CreateEmployee />
+          <Employee />
         </AdminRoute>
         <AdminRoute path="/employees/update/:id">
-          <UpdateEmployee />
+          <Employee />
         </AdminRoute>
         <AdminRoute exact path="/employees">
           <TableListOfEmployees />
@@ -26,10 +24,10 @@ function Routing() {
           <TableListofPartners />
         </Route>
         <Route path="/worksheets/new">
-          <CreateWorkSheet />
+          <Worksheet />
         </Route>
         <Route path="/worksheets/update/:id">
-          <UpdateWorkSheet />
+          <Worksheet />
         </Route>
         <Route exact path="/worksheets">
           <TableListOfWorkSheets />
