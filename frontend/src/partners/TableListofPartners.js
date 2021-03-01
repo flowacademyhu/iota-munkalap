@@ -4,6 +4,7 @@ import usePartners from '../hooks/usePartners'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
+import EditButton from '../specialButtons/EditButton'
 
 export default function TableListofPartners() {
   const { partners } = usePartners()
@@ -35,7 +36,11 @@ export default function TableListofPartners() {
                     <td>{partner.nev}</td>
                     <Address partner={partner} />
                     <td>{partner.adoszam}</td>
-                    <td></td>
+                    <td>
+                      <Link to={`/partners/update/${partner.id}`}>
+                        <EditButton />
+                      </Link>
+                    </td>
                   </tr>
                 ))
               ) : (
