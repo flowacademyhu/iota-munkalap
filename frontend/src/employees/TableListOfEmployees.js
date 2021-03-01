@@ -43,7 +43,6 @@ export default function TableListOfEmployees() {
             <SearchEmployeeInput
               keyword={keyword}
               onChangeKeyword={setKeyword}
-              label="Munkatárs keresése"
               name="searchEmployee"
             />
           </Form>
