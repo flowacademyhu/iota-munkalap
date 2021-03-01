@@ -1,14 +1,21 @@
 import React from 'react'
 import useWorkSheets from '../hooks/useWorkSheets'
+import StatusFilter from './StatusFilter'
+import EditButton from '../specialButtons/EditButton'
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 import {
   typeOfWorkTranslation,
   statusTranslation,
 } from './TranslationForWorkSheet'
+import useCurrentEmployee from '../hooks/useCurrentEmployee'
+import CloseButton from '../specialButtons/CloseButton'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import workSheetPDF from './workSheetPDF'
-import WorksheetListHeader from './WorksheetListHeader'
+import PdfButton from '../specialButtons/PdfButton'
+import FinalizeButton from '../specialButtons/FinalizeButton'
+import CalendarDropDown from '../CalendarDropDown'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -16,32 +23,64 @@ export default function TableListOfWorkSheets() {
     updateWorkSheets,
     startDate,
     endDate,
-    setStartDate: onStartDate,
-    setEndDate: onEndDate,
+    setStartDate,
+    setEndDate,
     status,
-    setStatus: onStatus,
+    setStatus,
   } = useWorkSheets()
+  const { isAdmin } = useCurrentEmployee()
 
-  async function closeAndReload(id) {
-    await closeWorkSheet(id)
+  async function closeAndReload(worksheet) {
+    await closeWorkSheet(worksheet.id)
     updateWorkSheets()
   }
 
-  async function finalizeAndReload(id) {
-    await finalizeWorkSheet(id)
+  async function finalizeAndReload(worksheet) {
+    await finalizeWorkSheet(worksheet.id)
     updateWorkSheets()
   }
 
   return (
     <>
-      <WorksheetListHeader
-        startDate={startDate}
-        onStartDate={onStartDate}
-        endDate={endDate}
-        onEndDate={onEndDate}
-        status={status}
-        onStatus={onStatus}
-      />
+      <div className="py-1 my-3">
+        <Link to={`/worksheets/new`}>
+          <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
+        </Link>
+      </div>
+      <div className="d-flex flex-row justify-content-between">
+        <div className="ml-2 d-flex flex-column">
+          <div className="d-block col-sm-">Szűrés dátum szerint:</div>
+          <div className="ml-2 d-flex flex-row my-3">
+            <span>
+              <CalendarDropDown
+                date={startDate}
+                setDate={setStartDate}
+                placeholderText="Intervallum kezdete"
+              />{' '}
+            </span>
+            <span>
+              <CalendarDropDown
+                date={endDate}
+                setDate={setEndDate}
+                placeholderText="Intervallum vége"
+              />{' '}
+            </span>
+            <span>
+              <Button
+                text="Összes"
+                onClick={() => {
+                  setStartDate(null)
+                  setEndDate(null)
+                }}
+              />
+            </span>
+          </div>
+        </div>
+        <div className="mr-2">
+          <div>Szűrés állapot szerint:</div>
+          <StatusFilter status={status} onStatusChange={setStatus} />
+        </div>
+      </div>
       <div className="border border-secondary">
         <div className="container-fluid">
           <table className="table table-hover text-center">
@@ -53,7 +92,7 @@ export default function TableListOfWorkSheets() {
                 <th scope="col">Partner neve</th>
                 <th scope="col">Munkavégzés jellege</th>
                 <th scope="col">Állapot</th>
-                <th scope="col">Műveletek</th>
+                <th scope="col">Módosítás</th>
               </tr>
             </thead>
             <tbody>
@@ -70,12 +109,22 @@ export default function TableListOfWorkSheets() {
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>
-                      <WorkSheetOperationButtons
-                        status={worksheet.worksheetStatus}
-                        id={worksheet.id}
-                        onFinalize={() => finalizeAndReload(worksheet.id)}
-                        onClose={() => closeAndReload(worksheet.id)}
-                        onPrint={() => workSheetPDF(worksheet)}
+                      <Link to={`/worksheets/update/${worksheet.id}`}>
+                        <EditButton />
+                      </Link>
+                      <FinalizeButton
+                        hidden={worksheet.worksheetStatus !== 'CREATED'}
+                        onClick={() => finalizeAndReload(worksheet)}
+                      />
+                      {isAdmin && (
+                        <CloseButton
+                          hidden={worksheet.worksheetStatus === 'CLOSED'}
+                          onClick={() => closeAndReload(worksheet)}
+                        />
+                      )}
+                      <PdfButton
+                        hidden={worksheet.worksheetStatus === 'CREATED'}
+                        onClick={() => workSheetPDF(worksheet)}
                       />
                     </td>
                   </tr>
