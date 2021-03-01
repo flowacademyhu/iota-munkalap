@@ -26,6 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PartnerServiceTest {
 
+    private static final String PARTNER_ID = "partner123";
     private static final String PARTNER_EMAIL = "partner@partner.hu";
     private static final String TELEFON = "06-30-123-45-67";
     private static final OrderType MEGRENDELO_TIPUSA = LEGAL;
@@ -167,7 +168,7 @@ class PartnerServiceTest {
     @Test
     public void givenAnExistingPartner_whenSwitchingStatus_thenSetStatusToReported() throws ValidationException {
         givenValidPartner();
-        Partner result = PartnerService.setStatusWorksheet(WORKSHEET_ID, WorksheetStatus.CLOSED);
+        Partner result = PartnerService.togglePartnerActivity(partner.getPartnerId());
         assertThat(result, notNullValue());
         assertThat(result.getWorksheetStatus(), is(WorksheetStatus.CLOSED));
     }
