@@ -30,13 +30,13 @@ export default function TableListOfWorkSheets() {
   } = useWorkSheets()
   const { isAdmin } = useCurrentEmployee()
 
-  async function closeAndReload(worksheet) {
-    await closeWorkSheet(worksheet.id)
+  async function closeAndReload(id) {
+    await closeWorkSheet(id)
     updateWorkSheets()
   }
 
-  async function finalizeAndReload(worksheet) {
-    await finalizeWorkSheet(worksheet.id)
+  async function finalizeAndReload(id) {
+    await finalizeWorkSheet(id)
     updateWorkSheets()
   }
 
@@ -114,17 +114,17 @@ export default function TableListOfWorkSheets() {
                       </Link>
                       <FinalizeButton
                         hidden={worksheet.worksheetStatus !== 'CREATED'}
-                        onClick={() => finalizeAndReload(worksheet)}
+                        onClick={() => finalizeAndReload(worksheet.id)}
                       />
                       {isAdmin && (
                         <CloseButton
                           hidden={worksheet.worksheetStatus === 'CLOSED'}
-                          onClick={() => closeAndReload(worksheet)}
+                          onClick={() => closeAndReload(worksheet.id)}
                         />
                       )}
                       <PdfButton
                         hidden={worksheet.worksheetStatus === 'CREATED'}
-                        onClick={() => workSheetPDF(worksheet)}
+                        onClick={() => workSheetPDF(worksheet.id)}
                       />
                     </td>
                   </tr>
