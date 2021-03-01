@@ -132,4 +132,8 @@ public class PartnerService {
         return partner.getAdoszam().toLowerCase().contains(searchPart) ||
                 stripAccents(partner.getNev().toLowerCase()).contains(stripAccents(searchPart));
     }
+
+    public Partner getPartnerById(String id) throws ValidationException {
+        return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+    }
 }
