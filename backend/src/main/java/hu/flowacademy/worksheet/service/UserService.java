@@ -9,8 +9,14 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.KeycloakSecurityContext;
+import org.keycloak.representations.IDToken;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -116,5 +122,16 @@ public class UserService {
         toChange.setEnabled(status == Status.active);
         keycloakClientService.setUserStatus(toChange);
         return userRepository.save(toChange);
+    }
+
+    public Optional<User> getCurrentUser() {
+        return Optional.ofNullable(SecurityContextHolder.getContext())
+                .map(SecurityContext::getAuthentication)
+                .map(Authentication::getPrincipal)
+                .map(p -> (KeycloakPrincipal<KeycloakSecurityContext>) p)
+                .map(KeycloakPrincipal::getKeycloakSecurityContext)
+                .map(KeycloakSecurityContext::getToken)
+                .map(IDToken::getEmail)
+                .flatMap(userRepository::findFirstByEmail);
     }
 }
