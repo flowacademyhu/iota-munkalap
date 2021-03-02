@@ -4,9 +4,11 @@ import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.enumCustom.Status;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +74,11 @@ public class PartnerController {
     @RolesAllowed({"admin"})
     public Partner setUserStatus(@PathVariable("id") String id) throws ValidationException {
         return partnerService.togglePartnerActivity(id);
+    }
+
+    @PutMapping("/partners/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Partner updatePartner(@PathVariable("id") String id, @RequestBody Partner partner) throws ValidationException {
+        return partnerService.update(id, partner);
     }
 }

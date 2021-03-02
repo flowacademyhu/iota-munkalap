@@ -144,4 +144,10 @@ public class PartnerService {
         toToggle.setEnabled(!toToggle.getEnabled());
         return partnerRepository.save(toToggle);
     }
+
+    public Partner update(String id, Partner partnerReceived) throws ValidationException {
+        validatePartner(partnerReceived);
+        partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+        return partnerRepository.save(partnerReceived.toBuilder().partnerId(id).build());
+    }
 }
