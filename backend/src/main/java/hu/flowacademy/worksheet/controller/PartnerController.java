@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-@Slf4j
 @RestController
 @RequestMapping("api")
 public class PartnerController {

@@ -23,7 +23,6 @@ import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.build
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class PartnerService {
