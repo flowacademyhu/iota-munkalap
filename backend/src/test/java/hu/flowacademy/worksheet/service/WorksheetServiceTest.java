@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
@@ -174,11 +175,10 @@ class WorksheetServiceTest {
     @Test
     public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
         givenExistingOneWorksheet();
-        Worksheet result = worksheetService.getWorksheetById(WORKSHEET_ID);
+        WorksheetDTO result = worksheetService.getWorksheetById(WORKSHEET_ID);
 
         Mockito.verify(worksheetRepository, times(1)).findById(WORKSHEET_ID);
-        assertThat(result.getId(), notNullValue());
-        assertThat(result.getId(), is(WORKSHEET_ID));
+        assertThat(result.getPartnerId() , is(PARTNER_ID));
         verifyNoMoreInteractions(worksheetRepository);
     }
 
@@ -260,6 +260,7 @@ class WorksheetServiceTest {
 
     public Partner givenPartner() {
         return Partner.builder()
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
