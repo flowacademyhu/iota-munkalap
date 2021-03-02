@@ -74,4 +74,6 @@ public class Partner {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
     private List<Worksheet> worksheetList;
+    @Column(name = "aktiv")
+    private Boolean enabled;
 }
