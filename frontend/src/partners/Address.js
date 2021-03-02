@@ -8,8 +8,8 @@ export default function Address({ partner }) {
     szamlazasiCimEpulet,
   } = partner
   return (
-    <td>
+    <>
       {`${szamlazasiCimIranyitoszam} ${szamlazasiCimTelepulesNev}, ${szamlazasiCimKozteruletNev} ${szamlazasiCimKozteruletJellegNev} ${szamlazasiCimHazszam} ${szamlazasiCimEpulet}`}
-    </td>
+    </>
   )
 }

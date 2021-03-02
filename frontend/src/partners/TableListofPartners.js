@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import LoadingScreen from '../LoadingScreen'
 import usePartners from '../hooks/usePartners'
-import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
 import EditButton from '../specialButtons/EditButton'
@@ -18,40 +19,42 @@ export default function TableListofPartners() {
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
-          <table className="table table-hover table-striped text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Név</th>
-                <th scope="col">Cím</th>
-                <th scope="col">Adószám</th>
-                <th scope="col">Módosítás</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="table table-hover table-striped text-center">
+            <Thead>
+              <Tr>
+                <Th scope="col">#</Th>
+                <Th scope="col">Név</Th>
+                <Th scope="col">Cím</Th>
+                <Th scope="col">Adószám</Th>
+                <Th scope="col">Módosítás</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {partners ? (
                 partners.map((partner, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>{partner.nev}</td>
-                    <Address partner={partner} />
-                    <td>{partner.adoszam}</td>
-                    <td>
+                  <Tr key={index}>
+                    <Th scope="row">{index + 1}</Th>
+                    <Td>{partner.nev}</Td>
+                    <Td>
+                      <Address partner={partner} />
+                    </Td>
+                    <Td>{partner.adoszam}</Td>
+                    <Td>
                       <Link to={`/partners/update/${partner.id}`}>
                         <EditButton />
                       </Link>
-                    </td>
-                  </tr>
+                    </Td>
+                  </Tr>
                 ))
               ) : (
-                <tr>
-                  <td colSpan="5">
+                <Tr>
+                  <Td colSpan="5">
                     <LoadingScreen />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               )}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         </div>
       </div>
     </>
