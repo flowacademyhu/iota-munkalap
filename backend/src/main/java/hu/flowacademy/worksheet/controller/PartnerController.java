@@ -68,7 +68,7 @@ public class PartnerController {
         return partnerService.getPartnerById(id);
     }
 
-    @PutMapping("/users/{id}")
+    @PutMapping("/partners/{id}/setstatus")
     public Partner setUserStatus(@PathVariable("id") String id) throws ValidationException {
         return partnerService.togglePartnerActivity(id);
     }
