@@ -32,23 +32,34 @@ export default function TableListOfEmployees() {
 
   return (
     <>
-      <div className="d-flex flex-row justify-content-around p-5">
-        <Link to={`/employees/new`}>
-          <Button
-            text="Új munkavállaló létrehozása"
-            moreClassName="w-auto p-1"
-          />
-        </Link>
-        <Formik className="form-inline">
-          <Form>
-            <SearchEmployeeInput
-              keyword={keyword}
-              onChangeKeyword={setKeyword}
-              name="searchEmployee"
-            />
-          </Form>
-        </Formik>
-        <FilterEmployees status={status} onStatusChange={setStatus} />
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-4 d-flex justify-content-center">
+            <Link to={`/employees/new`}>
+              <Button
+                text="Új munkavállaló létrehozása"
+                moreClassName="w-auto p-1"
+              />
+            </Link>
+          </div>
+        </div>
+        <div className="row justify-content-between">
+          <div className="col-4 d-flex justify-content-center">
+            <Formik className="form-inline">
+              <Form>
+                <SearchEmployeeInput
+                  keyword={keyword}
+                  onChangeKeyword={setKeyword}
+                  name="searchEmployee"
+                />
+              </Form>
+            </Formik>
+          </div>
+
+          <div className="col-4 d-flex justify-content-center">
+            <FilterEmployees status={status} onStatusChange={setStatus} />
+          </div>
+        </div>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
