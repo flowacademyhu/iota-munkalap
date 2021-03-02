@@ -80,7 +80,6 @@ public class PartnerController {
     @PutMapping("/partners/{id}")
     @RolesAllowed({"admin", "user"})
     public Partner updatePartner(@PathVariable("id") String id, @RequestBody Partner partner) throws ValidationException {
-        log.debug("FFFFFFFFFF {}", partner);
         return partnerService.update(id, partner);
     }
 }
