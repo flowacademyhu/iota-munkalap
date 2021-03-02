@@ -44,7 +44,7 @@ export default function TableListOfWorkSheets() {
       />
       <div className="border border-secondary">
         <div className="container-fluid">
-          <table className="table table-hover text-center">
+          <table className="table table-hover table-striped text-center">
             <thead>
               <tr>
                 <th scope="col">#</th>

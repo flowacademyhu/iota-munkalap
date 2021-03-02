@@ -18,7 +18,7 @@ export default function TableListofPartners() {
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
-          <table className="table table-hover text-center">
+          <table className="table table-hover table-striped text-center">
             <thead>
               <tr>
                 <th scope="col">#</th>

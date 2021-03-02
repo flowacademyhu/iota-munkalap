@@ -54,7 +54,7 @@ export default function TableListOfEmployees() {
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
           <Table
-            className="table table-hover text-center"
+            className="table table-hover table-striped text-center"
             data-mobile-responsive="true"
           >
             <Thead>
