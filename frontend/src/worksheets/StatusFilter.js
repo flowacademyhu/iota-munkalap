@@ -10,7 +10,7 @@ function StatusFilter(props) {
   }
 
   return (
-    <div className="my-3">
+    <div>
       <form>
         <select
           value={status}
