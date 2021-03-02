@@ -7,6 +7,7 @@ import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,7 @@ import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.build
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 public class PartnerService {

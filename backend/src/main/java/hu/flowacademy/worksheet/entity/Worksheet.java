@@ -1,6 +1,8 @@
 package hu.flowacademy.worksheet.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import hu.flowacademy.worksheet.enumCustom.*;
 import hu.flowacademy.worksheet.generator.WorksheetSerialGenerator;
 import lombok.AllArgsConstructor;
@@ -36,7 +38,7 @@ public class Worksheet {
             })
     @Column(name = "worksheet_id", nullable = false)
     private String id;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     private Partner partner;
     @Enumerated(EnumType.STRING)
     @Column(name = "type_of_work", nullable = false)

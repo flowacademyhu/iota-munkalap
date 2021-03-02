@@ -6,6 +6,7 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 @RestController
 @RequestMapping("api")
 public class PartnerController {
@@ -69,6 +71,7 @@ public class PartnerController {
     @PutMapping("/partners/{id}")
     @RolesAllowed({"admin", "user"})
     public Partner updatePartner(@PathVariable("id") String id, @RequestBody Partner partner) throws ValidationException {
+        log.debug("FFFFFFFFFF {}", partner);
         return partnerService.update(id, partner);
     }
 }
