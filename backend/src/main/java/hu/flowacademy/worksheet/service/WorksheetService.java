@@ -10,15 +10,18 @@ import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +31,8 @@ import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.bui
 @RequiredArgsConstructor
 @Transactional
 public class WorksheetService {
+
+    private static final Logger log = LoggerFactory.getLogger(WorksheetService.class);
 
     private final int DEFAULT_PAGE = 0;
     private final String DEFAULT_ORDERBY = "createdAt";
@@ -43,10 +48,14 @@ public class WorksheetService {
             worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
         }
         worksheet.setCreatedAtRealTime(LocalDateTime.now());
+        log.info("Itt egy worksheet van, milyen? {}", worksheet);
         return worksheetRepository.save(worksheet);
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
+        log.info("Milyen worksheetDTO van itt? {}", worksheetDTO);
+        //Charset charset =
+
         return Worksheet.builder()
                 .partner(
                         partnerRepository.findById(worksheetDTO.getPartnerId())
@@ -64,7 +73,10 @@ public class WorksheetService {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+                //.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+                .workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
+                //byte[] byteArrray = encoder.encode(CharBuffer.wrap(inputString))
+                //                          .array();
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
@@ -139,6 +151,7 @@ public class WorksheetService {
         worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
         worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
         worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
+        log.info("Módosított update worksheet? {}", worksheetToUpdate);
         return worksheetRepository.save(worksheetToUpdate);
     }
 
@@ -151,6 +164,9 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
         Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+        //String convert to SVG,
+        log.info("Id alapján lekért worksheet? {}", worksheet);
+        log.info("Itt egy worksheet van, milyen? {}", fromWorksheetToWorksheetDTO(worksheet));
         return fromWorksheetToWorksheetDTO(worksheet);
     }
 
@@ -168,20 +184,19 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                .workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
+                //.workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
+                .workerSignature(StandardCharsets.US_ASCII.decode(ByteBuffer.wrap(worksheetReceived.getWorkerSignature())).toString())
                 .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
-/*
-* byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
-String encodedString = Base64.getEncoder().encodeToString(fileContent);
-The encodedString is a String of characters in the set of A-Za-z0-9+/, and the decoder rejects any characters outside of this set.
 
-4. Convert Base64 String to Image File
-Now we have a Base64 String, let’s decode it back to binary content and write to a new file:
+/*public void whenDecodeWithCharset_thenOK() {
+    byte[] byteArrray = { 72, 101, 108, 108, 111, 32, -10, 111,
+      114, 108, -63, 33 };
+    Charset charset = StandardCharsets.US_ASCII;
+    String string = charset.decode(ByteBuffer.wrap(byteArrray))
+                      .toString();
 
-byte[] decodedBytes = Base64.getDecoder().decode(encodedString);
-FileUtils.writeByteArrayToFile(new File(outputFileName), decodedBytes);
-
-* */
+    assertEquals("Hello �orl�!", string);
+}*/
