@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useRef } from 'react'
 import moment from 'moment'
 import { Formik, Form } from 'formik'
 import { Link } from 'react-router-dom'
@@ -17,6 +17,9 @@ import {
 import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
+import SearchSelect from '../SearchSelect'
+import usePartners from '../hooks/usePartners'
+import LoadingScreen from '../LoadingScreen'
 
 export default function WorkSheetForm({
   sent,
@@ -26,16 +29,21 @@ export default function WorkSheetForm({
   title,
   worksheet,
 }) {
+  const { partners } = usePartners()
+  const partnersForSelect = partners?.map((partner) => ({
+    label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
+    value: partner.partnerId,
+  }))
+
   const finalize = useRef(false)
-  const [date, setDate] = useState(new Date())
-  return (
+  return partnersForSelect ? (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: '',
+              partnerId: worksheet?.partner.partnerId || '',
               typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
@@ -47,7 +55,7 @@ export default function WorkSheetForm({
               description: '',
               usedMaterial: '',
               typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
-              createdAt: '',
+              createdAt: moment(new Date()).format('yyyy-MM-DD'),
               workerSignature: '',
               proofOfEmployment: '',
               worksheetStatus: 'CREATED',
@@ -60,15 +68,20 @@ export default function WorkSheetForm({
               } else {
                 values.worksheetStatus = 'CREATED'
               }
-              values.createdAt = moment(date).format('yyyy-MM-DD')
+              values.createdAt = moment(values.createdAt).format('yyyy-MM-DD')
               sendData(values)
             }}
           >
-            {({ values }) => {
+            {({ values, setFieldValue }) => {
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
-                  <Input name="partnerId" label="Partner" type="text" />
+                  <SearchSelect
+                    options={partnersForSelect}
+                    name="partnerId"
+                    label="Partner"
+                    placeholder="Partner neve"
+                  />
                   <SelectInput
                     name="typeOfWork"
                     label="Munkavégzés jellege"
@@ -125,7 +138,11 @@ export default function WorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: </span>
-                  <CalendarDropDown date={date} setDate={setDate} />
+                  <CalendarDropDown
+                    name="createdAt"
+                    setFieldValue={setFieldValue}
+                    value={values.createdAt}
+                  />
                   <div className="mt-3">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
@@ -160,5 +177,7 @@ export default function WorkSheetForm({
         </div>
       </div>
     </div>
+  ) : (
+    <LoadingScreen />
   )
 }

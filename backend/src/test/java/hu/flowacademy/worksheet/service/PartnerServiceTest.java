@@ -181,6 +181,45 @@ class PartnerServiceTest {
     }
 
     @Test
+    public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
+        givenExistingPartnerWhenUpdate();
+        Partner newPartner = givenValidPartner();
+        Partner updatedPartner = partnerService.update(PARTNER_ID, newPartner);
+
+        Mockito.verify(partnerRepository, times(1)).save(updatedPartner);
+        assertThat(updatedPartner, notNullValue());
+        assertThat(updatedPartner.getPartnerEmail(), is(newPartner.getPartnerEmail()));
+        assertThat(updatedPartner.getTelefon(), is(newPartner.getTelefon()));
+        assertThat(updatedPartner.getMegrendeloTipusa(), is(newPartner.getMegrendeloTipusa()));
+        assertThat(updatedPartner.getNev(), is(newPartner.getNev()));
+        assertThat(updatedPartner.getRovidNev(), is(newPartner.getRovidNev()));
+        assertThat(updatedPartner.getAdoszam(), is(newPartner.getAdoszam()));
+        assertThat(updatedPartner.getKAdoszamtipus(), is(newPartner.getKAdoszamtipus()));
+        assertThat(updatedPartner.getBankszamlaszam(), is(newPartner.getBankszamlaszam()));
+        assertThat(updatedPartner.getSzamlazasiCimOrszagKod(), is(newPartner.getSzamlazasiCimOrszagKod()));
+        assertThat(updatedPartner.getSzamlazasiCimOrszagNev(), is(newPartner.getSzamlazasiCimOrszagNev()));
+        assertThat(updatedPartner.getSzamlazasiCimMegyeNev(), is(newPartner.getSzamlazasiCimMegyeNev()));
+        assertThat(updatedPartner.getSzamlazasiCimIranyitoszam(), is(newPartner.getSzamlazasiCimIranyitoszam()));
+        assertThat(updatedPartner.getSzamlazasiCimTelepulesNev(), is(newPartner.getSzamlazasiCimTelepulesNev()));
+        assertThat(updatedPartner.getSzamlazasiCimKerulet(), is(newPartner.getSzamlazasiCimKerulet()));
+        assertThat(updatedPartner.getSzamlazasiCimKozteruletNev(), is(newPartner.getSzamlazasiCimKozteruletNev()));
+        assertThat(updatedPartner.getSzamlazasiCimKozteruletJellegNev(), is(newPartner.getSzamlazasiCimKozteruletJellegNev()));
+        assertThat(updatedPartner.getSzamlazasiCimHazszam(), is(newPartner.getSzamlazasiCimHazszam()));
+        assertThat(updatedPartner.getSzamlazasiCimEpulet(), is(newPartner.getSzamlazasiCimEpulet()));
+        assertThat(updatedPartner.getSzamlazasiCimLepcsohaz(), is(newPartner.getSzamlazasiCimLepcsohaz()));
+        assertThat(updatedPartner.getSzamlazasiCimSzint(), is(newPartner.getSzamlazasiCimSzint()));
+        assertThat(updatedPartner.getSzamlazasiCimAjto(), is(newPartner.getSzamlazasiCimAjto()));
+        assertThat(updatedPartner.getSzamlazasiCimHrsz(), is(newPartner.getSzamlazasiCimHrsz()));
+        verifyNoMoreInteractions(partnerRepository);
+    }
+
+    private void givenExistingPartnerWhenUpdate() {
+        when(partnerRepository.findById(PARTNER_ID))
+                .thenReturn(Optional.of(givenPartnerWithProperId()));
+        when(partnerRepository.save(any(Partner.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    @Test
     public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
         givenExistingPartner();
         Partner result = partnerService.togglePartnerActivity(PARTNER_ID);

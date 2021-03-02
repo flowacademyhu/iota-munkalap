@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.*;
@@ -103,6 +104,8 @@ class WorksheetServiceTest {
     private WorksheetRepository worksheetRepository;
     @Mock
     private PagingProperties pagingProperties;
+    @Mock
+    private PartnerService partnerService;
 
     @InjectMocks
     private WorksheetService worksheetService;
@@ -174,23 +177,23 @@ class WorksheetServiceTest {
     @Test
     public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
         givenExistingOneWorksheet();
-        Worksheet result = worksheetService.getWorksheetById(WORKSHEET_ID);
+        WorksheetDTO result = worksheetService.getWorksheetById(WORKSHEET_ID);
 
         Mockito.verify(worksheetRepository, times(1)).findById(WORKSHEET_ID);
-        assertThat(result.getId(), notNullValue());
-        assertThat(result.getId(), is(WORKSHEET_ID));
+        assertThat(result.getPartnerId() , is(PARTNER_ID));
         verifyNoMoreInteractions(worksheetRepository);
     }
 
     @Test
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
+        givenExistingPartner();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
         Worksheet updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
 
         Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
-        assertThat(updatedWorksheet.getPartner(), is(newWorksheet.getPartner()));
+        assertThat(updatedWorksheet.getPartner().getPartnerId(), is(newWorksheet.getPartner().getPartnerId()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
@@ -205,6 +208,10 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature()));
         assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment()));
         verifyNoMoreInteractions(worksheetRepository);
+    }
+
+    private void givenExistingPartner() throws ValidationException {
+        when(partnerService.getPartnerById(anyString())).thenReturn(givenPartner());
     }
 
     private void givenExistingWorksheet() {
@@ -260,6 +267,7 @@ class WorksheetServiceTest {
 
     public Partner givenPartner() {
         return Partner.builder()
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
