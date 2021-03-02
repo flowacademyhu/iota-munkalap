@@ -117,7 +117,8 @@ public class WorksheetService {
         return worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + id));
     }
 
-    public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
+    public Worksheet update(String id, WorksheetDTO worksheetReceivedDTO) throws ValidationException {
+        Worksheet worksheetReceived = buildWorksheet(worksheetReceivedDTO);
         validateWorksheet(worksheetReceived);
         Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
         return addedWorksheet(worksheetReceived, worksheetToUpdate);
