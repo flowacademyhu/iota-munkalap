@@ -211,7 +211,7 @@ class WorksheetServiceTest {
     }
 
     private void givenExistingPartner() throws ValidationException {
-        when(partnerService.getPartnerById(any())).thenReturn(givenPartner());
+        when(partnerService.getPartnerById(anyString())).thenReturn(givenPartner());
     }
 
     private void givenExistingWorksheet() {
