@@ -2,7 +2,6 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
-import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -11,6 +10,7 @@ import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,10 +48,11 @@ public class WorksheetService {
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
+
         return Worksheet.builder()
                 .partner(
                         partnerRepository.findById(worksheetDTO.getPartnerId())
-                                .orElseThrow(()-> new ValidationException("No such partner in database"))
+                                .orElseThrow(() -> new ValidationException("No such partner in database"))
                 )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
@@ -149,7 +151,28 @@ public class WorksheetService {
         ).getContent();
     }
 
-    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
-        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+    public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
+        Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+        return buildDTO(worksheet);
+    }
+
+    private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
+        return WorksheetDTO.builder()
+                .partnerId(worksheetReceived.getPartner().getPartnerId())
+                .typeOfWork(worksheetReceived.getTypeOfWork())
+                .customTypeOfWork(worksheetReceived.getCustomTypeOfWork())
+                .assetSettlement(worksheetReceived.getAssetSettlement())
+                .workingTimeAccounting(worksheetReceived.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetReceived.getNumberOfEmployees())
+                .overheadHour(worksheetReceived.getOverheadHour())
+                .deliveryKm(worksheetReceived.getDeliveryKm())
+                .accountSerialNumber(worksheetReceived.getAccountSerialNumber())
+                .description(worksheetReceived.getDescription())
+                .usedMaterial(worksheetReceived.getUsedMaterial())
+                .typeOfPayment(worksheetReceived.getTypeOfPayment())
+                .workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
+                .proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
+                .build();
     }
 }
+
