@@ -14,21 +14,27 @@ function WorksheetListHeader({
 }) {
   return (
     <>
-      <div className="py-1">
-        <Link to={`/worksheets/new`}>
-          <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
-        </Link>
+      <div className="row justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center">
+          <Link to={`/worksheets/new`}>
+            <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
+          </Link>
+        </div>
       </div>
-      <div className="d-flex flex-row justify-content-between">
-        <DateRangeFilter
-          startDate={startDate}
-          onStartDate={onStartDate}
-          endDate={endDate}
-          onEndDate={onEndDate}
-        />
-        <div className="mr-2">
+      <div className="row justify-content-between">
+        <div className="col-sm-6 d-flex flex-column align-items-center">
+          <DateRangeFilter
+            startDate={startDate}
+            onStartDate={onStartDate}
+            endDate={endDate}
+            onEndDate={onEndDate}
+          />
+        </div>
+        <div className="col-sm-4 d-flex flex-column align-items-center">
           <div>Szűrés állapot szerint:</div>
-          <StatusFilter status={status} onStatusChange={onStatus} />
+          <div>
+            <StatusFilter status={status} onStatusChange={onStatus} />
+          </div>
         </div>
       </div>
     </>
