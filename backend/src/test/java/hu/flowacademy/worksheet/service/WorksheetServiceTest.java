@@ -104,6 +104,8 @@ class WorksheetServiceTest {
     private WorksheetRepository worksheetRepository;
     @Mock
     private PagingProperties pagingProperties;
+    @Mock
+    private PartnerService partnerService;
 
     @InjectMocks
     private WorksheetService worksheetService;
@@ -185,12 +187,13 @@ class WorksheetServiceTest {
     @Test
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
+        givenExistingPartner();
         Worksheet newWorksheet = givenUpdateProperWorksheetObject();
         Worksheet updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
 
         Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
-        assertThat(updatedWorksheet.getPartner(), is(newWorksheet.getPartner()));
+        assertThat(updatedWorksheet.getPartner().getPartnerId(), is(newWorksheet.getPartner().getPartnerId()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
@@ -205,6 +208,10 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature()));
         assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment()));
         verifyNoMoreInteractions(worksheetRepository);
+    }
+
+    private void givenExistingPartner() throws ValidationException {
+        when(partnerService.getPartnerById(any())).thenReturn(givenPartner());
     }
 
     private void givenExistingWorksheet() {
