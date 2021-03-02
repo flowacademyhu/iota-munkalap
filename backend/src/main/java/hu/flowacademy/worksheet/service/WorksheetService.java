@@ -34,24 +34,24 @@ public class WorksheetService {
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
-    private final PartnerRepository partnerRepository;
+    private final PartnerService partnerService;
+    private final UserService userService;
 
     public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
-        if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
-            worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
-        }
-        worksheet.setCreatedAtRealTime(LocalDateTime.now());
-        return worksheetRepository.save(worksheet);
+        return worksheetRepository.save(worksheet.toBuilder()
+                .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
+                        : worksheet.getWorksheetStatus())
+                .createdBy(userService.getCurrentUser().orElseThrow())
+                .createdAtRealTime(LocalDateTime.now())
+                .build());
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
-
         return Worksheet.builder()
                 .partner(
-                        partnerRepository.findById(worksheetDTO.getPartnerId())
-                                .orElseThrow(() -> new ValidationException("No such partner in database"))
+                        partnerService.getPartnerById(worksheetDTO.getPartnerId())
                 )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
@@ -125,8 +125,7 @@ public class WorksheetService {
     }
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
-        validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
+        worksheetToUpdate.setPartner(partnerService.getPartnerById(worksheetReceived.getPartner().getPartnerId()));
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
