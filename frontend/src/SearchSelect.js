@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { useField } from 'formik'
 
-function SelectPartner({ ...props }) {
+function SearchSelect({ ...props }) {
   const [field, { touched, error }, { setValue, setTouched }] = useField(props)
   const { name, label, options, placeholder } = props
   const showError = touched && error
@@ -27,4 +27,4 @@ function SelectPartner({ ...props }) {
   )
 }
 
-export default SelectPartner
+export default SearchSelect

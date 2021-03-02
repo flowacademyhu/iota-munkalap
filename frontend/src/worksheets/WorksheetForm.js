@@ -17,7 +17,7 @@ import {
 import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
-import SelectPartner from '../partners/SelectPartner'
+import SearchSelect from '../SearchSelect'
 import usePartners from '../hooks/usePartners'
 import LoadingScreen from '../LoadingScreen'
 
@@ -76,7 +76,7 @@ export default function WorkSheetForm({
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
-                  <SelectPartner
+                  <SearchSelect
                     options={partnersForSelect}
                     name="partnerId"
                     label="Partner"
