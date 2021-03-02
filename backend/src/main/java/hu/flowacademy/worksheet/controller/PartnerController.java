@@ -2,6 +2,8 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
@@ -49,6 +51,7 @@ public class PartnerController {
                 .szamlazasiCimSzint(partnerDTO.getSzamlazasiCimSzint())
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
+                .enabled(partnerDTO.getEnabled())
                 .build();
         return partnerService.createPartner(partner);
     }
@@ -66,6 +69,12 @@ public class PartnerController {
     @RolesAllowed({"admin", "user"})
     public Partner getPartnerById(@PathVariable("id") String id) throws ValidationException {
         return partnerService.getPartnerById(id);
+    }
+
+    @PutMapping("/partners/{id}/setstatus")
+    @RolesAllowed({"admin"})
+    public Partner setUserStatus(@PathVariable("id") String id) throws ValidationException {
+        return partnerService.togglePartnerActivity(id);
     }
 
     @PutMapping("/partners/{id}")

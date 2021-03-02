@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
@@ -32,10 +32,12 @@ public class PartnerService {
     private final String DEFAULT_ORDERBY = "nev";
 
     private final PartnerRepository partnerRepository;
+    private final KeycloakClientService keycloakClientService;
 
     public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
         orderTypeFormat(partner);
+        partner.setEnabled(true);
         return partnerRepository.save(partner);
     }
 
@@ -138,6 +140,12 @@ public class PartnerService {
 
     public Partner getPartnerById(String id) throws ValidationException {
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+    }
+
+    public Partner togglePartnerActivity(String id) throws ValidationException {
+        Partner toToggle = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
+        toToggle.setEnabled(!toToggle.getEnabled());
+        return partnerRepository.save(toToggle);
     }
 
     public Partner update(String id, Partner partnerReceived) throws ValidationException {

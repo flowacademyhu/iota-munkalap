@@ -6,9 +6,9 @@ import {
 } from './TranslationForWorkSheet'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
+import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 
 export default function TableListOfWorkSheets() {
   const {

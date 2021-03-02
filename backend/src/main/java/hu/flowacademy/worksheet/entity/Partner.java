@@ -71,4 +71,6 @@ public class Partner {
     private String szamlazasiCimAjto;
     @Column(name = "szamlazasi_cim_hrsz")
     private String szamlazasiCimHrsz;
+    @Column(name = "aktív")
+    private Boolean enabled;
 }
