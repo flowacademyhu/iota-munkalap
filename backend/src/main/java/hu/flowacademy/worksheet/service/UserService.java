@@ -95,15 +95,18 @@ public class UserService {
         return searchCriteria.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart.toLowerCase(), user))
                         .collect(Collectors.toList()))
-                        .orElse(result);
+                .orElse(result);
     }
 
     private List<User> collectUsersByCriteria(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<User> result = userRepository.findAll(
+        return page.isEmpty() ?
+                userRepository.findAll(
+                        buildSpecification(status, searchCriteria),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                : userRepository.findAll(
                 buildSpecification(status, searchCriteria),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
-        return result;
     }
 
     private boolean filterContains(String searchPart, User user) {
@@ -118,7 +121,7 @@ public class UserService {
     }
 
     public User setUserActivity(Long id, Status status) throws ValidationException {
-        User toChange = userRepository.findById(id).orElseThrow(()-> new ValidationException("No user with provided ID"));
+        User toChange = userRepository.findById(id).orElseThrow(() -> new ValidationException("No user with provided ID"));
         toChange.setEnabled(status == Status.active);
         keycloakClientService.setUserStatus(toChange);
         return userRepository.save(toChange);
