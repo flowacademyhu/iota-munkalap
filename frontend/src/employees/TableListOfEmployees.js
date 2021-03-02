@@ -33,7 +33,7 @@ export default function TableListOfEmployees() {
   return (
     <>
       <div className="row justify-content-center">
-        <div className="col-sm-4 d-flex justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center my-3">
           <Link to={`/employees/new`}>
             <Button
               text="Új munkavállaló létrehozása"

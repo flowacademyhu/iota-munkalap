@@ -12,7 +12,7 @@ export default function TableListofPartners() {
 
   return (
     <>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center my-3">
         <Link to={`/partners/new`}>
           <Button text="Új partner létrehozása" moreClassName="w-auto p-1" />
         </Link>

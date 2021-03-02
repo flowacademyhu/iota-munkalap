@@ -15,7 +15,7 @@ function WorksheetListHeader({
   return (
     <>
       <div className="row justify-content-center">
-        <div className="col-sm-4 d-flex justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center my-3">
           <Link to={`/worksheets/new`}>
             <Button text="Új munkalap létrehozása" moreClassName="w-auto p-1" />
           </Link>
