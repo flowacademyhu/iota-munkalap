@@ -22,6 +22,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +74,8 @@ public class WorksheetService {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                //.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
-                .workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
+                .workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+                //.workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
                 //byte[] byteArrray = encoder.encode(CharBuffer.wrap(inputString)).array();
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
@@ -183,8 +184,8 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                //.workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
-                .workerSignature(StandardCharsets.US_ASCII.decode(ByteBuffer.wrap(worksheetReceived.getWorkerSignature())).toString())
+                .workerSignature(Base64.getEncoder().encodeToString(worksheetReceived.getWorkerSignature()))
+                //.workerSignature(StandardCharsets.US_ASCII.decode(ByteBuffer.wrap(worksheetReceived.getWorkerSignature())).toString())
                 .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
