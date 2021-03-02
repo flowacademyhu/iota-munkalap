@@ -28,6 +28,8 @@ export default function WorkSheetForm({
 }) {
   const finalize = useRef(false)
   const [date, setDate] = useState(new Date())
+  const editable = (worksheetStatus === 'REPORTED' & worksheetStatus === 'CLOSED' ? false : true)
+  
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
@@ -70,6 +72,7 @@ export default function WorkSheetForm({
                   <h1 className="text-center">{title}</h1>
                   <Input name="partnerId" label="Partner" type="text" />
                   <SelectInput
+                    disabled={editable}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -88,6 +91,7 @@ export default function WorkSheetForm({
                     container={WORKING_TIME_ACCOUNT_LIST}
                   />
                   <Input
+                    disabled={
                     name="numberOfEmployees"
                     label="Létszám"
                     type="number"
