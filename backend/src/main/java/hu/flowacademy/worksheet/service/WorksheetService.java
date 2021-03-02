@@ -11,6 +11,7 @@ import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -153,6 +155,7 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
         Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
+        log.info("BIG LOG, BUILD DTO WORKSHEET{}", buildDTO(worksheet));
         return buildDTO(worksheet);
     }
 
