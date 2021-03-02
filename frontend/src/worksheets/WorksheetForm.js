@@ -18,7 +18,7 @@ import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
 
-function WorkSheetForm({
+export default function WorkSheetForm({
   sent,
   handleClick,
   popUpMessage,
@@ -163,5 +163,3 @@ function WorkSheetForm({
     </div>
   )
 }
-
-export default WorkSheetForm

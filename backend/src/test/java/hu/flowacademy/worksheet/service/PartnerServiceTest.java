@@ -1,7 +1,11 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import org.junit.jupiter.api.Test;
@@ -11,7 +15,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,6 +30,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PartnerServiceTest {
 
+    private static final String PARTNER_ID = "Partner_id1";
     private static final String PARTNER_EMAIL = "partner@partner.hu";
     private static final String TELEFON = "06-30-123-45-67";
     private static final OrderType MEGRENDELO_TIPUSA = LEGAL;
@@ -42,6 +53,7 @@ class PartnerServiceTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    private static final Boolean ENABLED = true;
 
     private static final String INVALID_TEST_EMAIL = "partnerteszt.com";
     private static final String EMPTY_STRING = "";
@@ -61,7 +73,7 @@ class PartnerServiceTest {
     public void givenNewPartner_whenSavingPartner_thenGreatSuccess() throws ValidationException {
         var partner = givenValidPartner();
         when(partnerRepository.save(any())).thenReturn(Partner.builder()
-                .partnerId(partner.getPartnerId())
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
@@ -84,6 +96,7 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build());
 
         Partner result = partnerService.createPartner(partner);
@@ -156,8 +169,37 @@ class PartnerServiceTest {
         assertThrows(ValidationException.class, () -> partnerService.createPartner(partnerData));
     }
 
+    @Test
+    public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
+        givenExistingOnePartner();
+        Partner result = partnerService.getPartnerById(PARTNER_ID);
+
+        Mockito.verify(partnerRepository, times(1)).findById(PARTNER_ID);
+        assertThat(result.getPartnerId(), notNullValue());
+        assertThat(result.getPartnerId(), is(PARTNER_ID));
+        verifyNoMoreInteractions(partnerRepository);
+    }
+
+    @Test
+    public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
+        givenExistingPartner();
+        Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
+        assertThat(result, notNullValue());
+        assertThat(result.getEnabled(), notNullValue());
+        assertThat(result.getEnabled(), is(false));
+    }
+
+    private void givenExistingPartner() {
+        Partner partner = new Partner();
+        partner.setPartnerId(PARTNER_ID);
+        partner.setEnabled(true);
+        when(partnerRepository.findById(PARTNER_ID)).thenReturn(Optional.of(partner));
+        when(partnerRepository.save(any(Partner.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
     private Partner givenValidPartner() {
         return Partner.builder()
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
@@ -180,6 +222,15 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build();
+    }
+
+    private void givenExistingOnePartner() {
+        when(partnerRepository.findById(PARTNER_ID)).thenReturn(Optional.of(givenPartnerWithProperId()));
+    }
+
+    private Partner givenPartnerWithProperId() {
+        return givenValidPartner().toBuilder().partnerId(PARTNER_ID).build();
     }
 }

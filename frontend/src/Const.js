@@ -8,12 +8,8 @@ export const CUSTOMER_TYPE = {
 
 export const PATH_VARIABLES = {
   EMPLOYEE: 'employees',
-  EMPLOYEE_NEW: 'new',
-  EMPLOYEE_UPDATE: 'update',
   WORKSHEET: 'worksheets',
-  WORKSHEET_NEW: 'new',
-  WORKSHEET_UPDATE: 'update',
   PARTNER: 'partners',
-  PARTNER_NEW: 'new',
-  PARTNER_UPDATE: 'update',
+  NEW: 'new',
+  UPDATE: 'update',
 }
