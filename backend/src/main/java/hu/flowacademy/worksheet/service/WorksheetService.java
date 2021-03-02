@@ -20,7 +20,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -154,10 +153,10 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
         Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
-        return fromWorksheetToWorksheetDTO(worksheet);
+        return buildDTO(worksheet);
     }
 
-    private WorksheetDTO fromWorksheetToWorksheetDTO(Worksheet worksheetReceived) {
+    private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
         return WorksheetDTO.builder()
                 .partnerId(worksheetReceived.getPartner().getPartnerId())
                 .typeOfWork(worksheetReceived.getTypeOfWork())

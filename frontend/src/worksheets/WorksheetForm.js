@@ -61,7 +61,6 @@ export default function WorkSheetForm({
                 values.worksheetStatus = 'CREATED'
               }
               values.createdAt = moment(date).format('yyyy-MM-DD')
-              console.log(values)
               sendData(values)
             }}
           >
