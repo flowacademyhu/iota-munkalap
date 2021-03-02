@@ -16,8 +16,7 @@ export default function PartnerForm({
   title,
   partner,
 }) {
-
-  const initialValues={
+  const initialValues = {
     partnerEmail: partner?.partnerEmail || '',
     telefon: partner?.telefon || '',
     megrendeloTipusa: partner?.megrendeloTipusa || '',
@@ -33,7 +32,8 @@ export default function PartnerForm({
     szamlazasiCimTelepulesNev: partner?.szamlazasiCimTelepulesNev || '',
     szamlazasiCimKerulet: partner?.szamlazasiCimKerulet || '',
     szamlazasiCimKozteruletNev: partner?.szamlazasiCimKozteruletNev || '',
-    szamlazasiCimKozteruletJellegNev: partner?.szamlazasiCimKozteruletJellegNev || '',
+    szamlazasiCimKozteruletJellegNev:
+      partner?.szamlazasiCimKozteruletJellegNev || '',
     szamlazasiCimHazszam: partner?.szamlazasiCimHazszam || '',
     szamlazasiCimEpulet: partner?.szamlazasiCimEpulet || '',
     szamlazasiCimLepcsohaz: partner?.szamlazasiCimLepcsohaz || '',
@@ -48,9 +48,7 @@ export default function PartnerForm({
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={
-              initialValues
-            }
+            initialValues={initialValues}
             validationSchema={schema}
             onSubmit={(values) => {
               sendData(values)
