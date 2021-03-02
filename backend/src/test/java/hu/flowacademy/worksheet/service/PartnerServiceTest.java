@@ -2,7 +2,6 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
-import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
-import static hu.flowacademy.worksheet.enumCustom.OrderType.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;

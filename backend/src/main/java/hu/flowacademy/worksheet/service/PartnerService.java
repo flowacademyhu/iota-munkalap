@@ -1,11 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
-import hu.flowacademy.worksheet.entity.User;
-import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
-import hu.flowacademy.worksheet.enumCustom.Status;
-import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
@@ -14,11 +10,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
