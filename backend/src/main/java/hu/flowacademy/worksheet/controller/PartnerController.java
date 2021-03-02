@@ -60,9 +60,9 @@ public class PartnerController {
         return partnerService.filter(page, searchCriteria, limit, orderBy);
     }
 
-    @PutMapping("/partners/{id}")
-    public Partner setPartnerStatus(@PathVariable("id") String id) throws ValidationException {
-        return partnerService.togglePartnerActivity(id);
+    @GetMapping("/partners/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Partner getPartnerById(@PathVariable("id") String id) throws ValidationException {
+        return partnerService.getPartnerById(id);
     }
-
 }

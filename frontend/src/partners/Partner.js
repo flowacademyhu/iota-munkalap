@@ -4,7 +4,7 @@ import usePartnerData from '../hooks/usePartnerData'
 
 export default function Partner() {
   const {
-    handleData,
+    savePartner,
     handleClick,
     popUpMessage,
     sent,
@@ -12,13 +12,12 @@ export default function Partner() {
   } = usePartnerData()
 
   let isCreate = window.location.pathname === '/partners/new'
-
   return (
     <PartnerForm
       handleClick={handleClick}
       sent={sent}
       popUpMessage={popUpMessage}
-      sendData={handleData}
+      sendData={savePartner}
       title={isCreate ? 'Partner létrehozása' : 'Adatok szerkesztése'}
       partner={!isCreate && partnerData}
     />

@@ -1,6 +1,7 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
@@ -10,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
 import static org.hamcrest.CoreMatchers.is;
@@ -23,7 +26,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class PartnerServiceTest {
 
-    private static final String PARTNER_ID = "ID123";
+    private static final String PARTNER_ID = "Partner_id1";
     private static final String PARTNER_EMAIL = "partner@partner.hu";
     private static final String TELEFON = "06-30-123-45-67";
     private static final OrderType MEGRENDELO_TIPUSA = LEGAL;
@@ -163,6 +166,17 @@ class PartnerServiceTest {
     }
 
     @Test
+    public void givenAWorksheetId_whenGetAWorksheet_thenGotTheWorksheet() throws ValidationException {
+        givenExistingOnePartner();
+        Partner result = partnerService.getPartnerById(PARTNER_ID);
+
+        Mockito.verify(partnerRepository, times(1)).findById(PARTNER_ID);
+        assertThat(result.getPartnerId(), notNullValue());
+        assertThat(result.getPartnerId(), is(PARTNER_ID));
+        verifyNoMoreInteractions(partnerRepository);
+    }
+
+    @Test
     public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
         Partner result = Partner.builder().partnerId(PARTNER_ID).enabled(ENABLED).build();
         assertThat(result, notNullValue());
@@ -196,5 +210,13 @@ class PartnerServiceTest {
                 .szamlazasiCimHrsz(HRSZ)
                 .enabled(ENABLED)
                 .build();
+    }
+
+    private void givenExistingOnePartner() {
+        when(partnerRepository.findById(PARTNER_ID)).thenReturn(Optional.of(givenPartnerWithProperId()));
+    }
+
+    private Partner givenPartnerWithProperId() {
+        return givenValidPartner().toBuilder().partnerId(PARTNER_ID).build();
     }
 }
