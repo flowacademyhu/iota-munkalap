@@ -53,8 +53,6 @@ export default function TableListofPartners() {
                       <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />
                       </Link>
-                    </td>
-                    <td>
                       {partner.enabled ? (
                         <InactivateButton
                           onClick={() => inactivateAndReload(partner.partnerId)}
