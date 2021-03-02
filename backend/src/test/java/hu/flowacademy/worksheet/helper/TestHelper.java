@@ -91,7 +91,6 @@ public class TestHelper {
                 .body("szamlazasiCimSzint", equalTo(SZINT))
                 .body("szamlazasiCimAjto", equalTo(AJTO))
                 .body("szamlazasiCimHrsz", equalTo(HRSZ))
-                .body("aktiv", equalTo(ENABLED))
                 .extract().body().as(Partner.class);
     }
 
