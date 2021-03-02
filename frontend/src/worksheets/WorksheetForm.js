@@ -40,7 +40,6 @@ export default function WorkSheetForm({
   }
 
   const finalize = useRef(false)
-  const [date, setDate] = useState(new Date())
   return partnersForSelect ? (
     <div className="container my-5">
       <div className="row justify-content-center">
