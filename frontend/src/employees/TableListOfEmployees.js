@@ -1,6 +1,8 @@
 import React from 'react'
-import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
+import useEmployees from '../hooks/useEmployees'
 import Button from '../Button'
 import { updateEmployeeInactive, activateEmployee } from '../api/EmployeeAPI'
 import LoadingScreen from '../LoadingScreen'
@@ -51,17 +53,20 @@ export default function TableListOfEmployees() {
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
-          <table className="table table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Név</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Státusz</th>
-                <th scope="col">Módosítás</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table
+            className="table table-hover text-center"
+            data-mobile-responsive="true"
+          >
+            <Thead>
+              <Tr>
+                <Th scope="col">#</Th>
+                <Th scope="col">Név</Th>
+                <Th scope="col">E-mail</Th>
+                <Th scope="col">Státusz</Th>
+                <Th scope="col">Módosítás</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {employees ? (
                 employees.map((employee) => (
                   <EmployeeListRow
@@ -71,14 +76,14 @@ export default function TableListOfEmployees() {
                   />
                 ))
               ) : (
-                <tr>
-                  <td colSpan="5">
+                <Tr>
+                  <Td colSpan="5">
                     <LoadingScreen />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               )}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         </div>
       </div>
     </>
