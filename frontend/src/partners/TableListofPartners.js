@@ -50,18 +50,18 @@ export default function TableListofPartners() {
                     <Address partner={partner} />
                     <td>{partner.adoszam}</td>
                     <td>
-                      <Link to={`/partners/update/${partner.id}`}>
+                      <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />
                       </Link>
                     </td>
                     <td>
                       {partner.enabled ? (
                         <InactivateButton
-                          onClick={() => inactivateAndReload(partner)}
+                          onClick={() => inactivateAndReload(partner.partnerId)}
                         />
                       ) : (
                         <ActivateButton
-                          onClick={() => activateAndReload(partner)}
+                          onClick={() => activateAndReload(partner.partnerId)}
                         />
                       )}
                     </td>
