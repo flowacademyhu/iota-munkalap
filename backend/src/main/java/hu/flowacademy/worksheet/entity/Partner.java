@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "partnerCustom")
-@EntityListeners(AuditingEntityListener.class)
 public class Partner {
 
     @Id

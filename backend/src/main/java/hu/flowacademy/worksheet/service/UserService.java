@@ -12,15 +12,15 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.*;
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.buildSpecification;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 
