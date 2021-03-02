@@ -42,7 +42,7 @@ public class WorksheetService {
         validateWorksheet(worksheet);
         return worksheetRepository.save(worksheet.toBuilder()
                 .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
-                        : worksheet.getWorksheetStatus())
+                        : WorksheetStatus.REPORTED)
                 .createdBy(userService.getCurrentUser().orElseThrow())
                 .createdAtRealTime(LocalDateTime.now())
                 .build());
