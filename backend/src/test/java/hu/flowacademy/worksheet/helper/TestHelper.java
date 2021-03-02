@@ -38,6 +38,7 @@ public class TestHelper {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    private static final Boolean ENABLED = true;
 
     public static Header getAuthorization(String token) {
         return new Header("Authorization", "Bearer " + token);
@@ -90,6 +91,7 @@ public class TestHelper {
                 .body("szamlazasiCimSzint", equalTo(SZINT))
                 .body("szamlazasiCimAjto", equalTo(AJTO))
                 .body("szamlazasiCimHrsz", equalTo(HRSZ))
+                .body("aktiv", equalTo(ENABLED))
                 .extract().body().as(Partner.class);
     }
 
@@ -117,6 +119,7 @@ public class TestHelper {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build();
     }
 }
