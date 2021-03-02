@@ -27,18 +27,19 @@ export default function Signature(props) {
 
   return (
     <>
-      <SignaturePad
-        id={props.name}
-        ref={signaturePadRef}
-        options={{
-          minWidth: 1,
-          maxWidth: 4,
-          penColor: 'rgb(30, 30, 30)',
-          onEnd,
-        }}
-      />
+      <div className="border border-secondary mb-1">
+        <SignaturePad
+          ref={signaturePadRef}
+          options={{
+            minWidth: 1,
+            maxWidth: 4,
+            penColor: 'rgb(30, 30, 30)',
+            onEnd,
+          }}
+        />
+      </div>
       <span className="btn btn-success" onClick={clear}>
-        Clear
+        Törlés
       </span>
     </>
   )

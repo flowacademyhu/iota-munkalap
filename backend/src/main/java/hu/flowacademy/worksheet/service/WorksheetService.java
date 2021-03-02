@@ -1,10 +1,13 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
+import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -27,12 +30,14 @@ import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.bui
 public class WorksheetService {
 
     private final int DEFAULT_PAGE = 0;
-    private final String DEFAULT_ORDERBY = "createdAt";
+    private final String DEFAULT_ORDERBY = "id";
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
+    private final PartnerRepository partnerRepository;
 
-    public Worksheet saveWorksheet(@NonNull Worksheet worksheet) throws ValidationException {
+    public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
+        Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
         if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
             worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
@@ -41,8 +46,32 @@ public class WorksheetService {
         return worksheetRepository.save(worksheet);
     }
 
+    private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
+        return Worksheet.builder()
+                .partner(
+                        partnerRepository.findById(worksheetDTO.getPartnerId())
+                                .orElseThrow(()-> new ValidationException("No such partner in database"))
+                )
+                .typeOfWork(worksheetDTO.getTypeOfWork())
+                .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
+                .assetSettlement(worksheetDTO.getAssetSettlement())
+                .workingTimeAccounting(worksheetDTO.getWorkingTimeAccounting())
+                .numberOfEmployees(worksheetDTO.getNumberOfEmployees())
+                .overheadHour(worksheetDTO.getOverheadHour())
+                .deliveryKm(worksheetDTO.getDeliveryKm())
+                .accountSerialNumber(worksheetDTO.getAccountSerialNumber())
+                .description(worksheetDTO.getDescription())
+                .usedMaterial(worksheetDTO.getUsedMaterial())
+                .typeOfPayment(worksheetDTO.getTypeOfPayment())
+                .createdAt(worksheetDTO.getCreatedAt())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                .worksheetStatus(worksheetDTO.getWorksheetStatus())
+                .build();
+    }
+
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
-        if (worksheet.getPartnerId() == null) {
+        if (worksheet.getPartner() == null) {
             throw new ValidationException("Partner value is null");
         }
         if (worksheet.getTypeOfWork() == null) {
@@ -96,7 +125,7 @@ public class WorksheetService {
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartnerId(worksheetReceived.getPartnerId());
+        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
@@ -116,7 +145,7 @@ public class WorksheetService {
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
         return worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
     }
 
