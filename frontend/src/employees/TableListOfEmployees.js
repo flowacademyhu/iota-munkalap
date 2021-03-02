@@ -54,7 +54,7 @@ export default function TableListOfEmployees() {
             </Form>
           </Formik>
         </div>
-        <div className="col-sm-4 d-flex justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center mb-3">
           <FilterEmployees status={status} onStatusChange={setStatus} />
         </div>
       </div>

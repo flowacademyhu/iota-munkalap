@@ -8,14 +8,14 @@ function DateRangeFilter({ startDate, onStartDate, endDate, onEndDate }) {
       <div>Szűrés dátum szerint:</div>
       <div className="row align-items-center">
         <div className="col-md-10 row">
-          <div className="col-xl-5 mx-3 d-flex justify-content-center">
+          <div className="col-xl-5 mx-3 d-flex justify-content-center my-1">
             <CalendarDropDown
               date={startDate}
               setDate={onStartDate}
               placeholderText="Intervallum kezdete"
             />
           </div>
-          <div className="col-xl-5 mx-3 d-flex justify-content-center">
+          <div className="col-xl-5 mx-3 d-flex justify-content-center my-1">
             <CalendarDropDown
               date={endDate}
               setDate={onEndDate}
@@ -23,7 +23,7 @@ function DateRangeFilter({ startDate, onStartDate, endDate, onEndDate }) {
             />
           </div>
         </div>
-        <div className="col-md-2 d-flex justify-content-center">
+        <div className="col-md-2 d-flex justify-content-center my-1">
           <Button
             text="Összes"
             onClick={() => {
