@@ -26,7 +26,6 @@ function SelectPartner({ ...props }) {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <Select
-        id={name}
         options={options}
         onChange={handleChange}
         onBlur={handleBlur}
