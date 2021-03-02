@@ -32,35 +32,33 @@ export default function TableListOfEmployees() {
 
   return (
     <>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-sm-4 d-flex justify-content-center">
-            <Link to={`/employees/new`}>
-              <Button
-                text="Új munkavállaló létrehozása"
-                moreClassName="w-auto p-1"
-              />
-            </Link>
-          </div>
-        </div>
-        <div className="row justify-content-between">
-          <div className="col-sm-4 d-flex justify-content-center">
-            <Formik className="form-inline">
-              <Form>
-                <SearchEmployeeInput
-                  keyword={keyword}
-                  onChangeKeyword={setKeyword}
-                  name="searchEmployee"
-                />
-              </Form>
-            </Formik>
-          </div>
-
-          <div className="col-sm-4 d-flex justify-content-center">
-            <FilterEmployees status={status} onStatusChange={setStatus} />
-          </div>
+      <div className="row justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center">
+          <Link to={`/employees/new`}>
+            <Button
+              text="Új munkavállaló létrehozása"
+              moreClassName="w-auto p-1"
+            />
+          </Link>
         </div>
       </div>
+      <div className="row justify-content-between">
+        <div className="col-sm-4 d-flex justify-content-center">
+          <Formik className="form-inline">
+            <Form>
+              <SearchEmployeeInput
+                keyword={keyword}
+                onChangeKeyword={setKeyword}
+                name="searchEmployee"
+              />
+            </Form>
+          </Formik>
+        </div>
+        <div className="col-sm-4 d-flex justify-content-center">
+          <FilterEmployees status={status} onStatusChange={setStatus} />
+        </div>
+      </div>
+
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
           <Table
