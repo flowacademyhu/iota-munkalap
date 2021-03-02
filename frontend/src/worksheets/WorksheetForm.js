@@ -55,7 +55,7 @@ export default function WorkSheetForm({
               description: '',
               usedMaterial: '',
               typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
-              createdAt: '',
+              createdAt: moment(new Date()).format('yyyy-MM-DD'),
               workerSignature: '',
               proofOfEmployment: '',
               worksheetStatus: 'CREATED',
