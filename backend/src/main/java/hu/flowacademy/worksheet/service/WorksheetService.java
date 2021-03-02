@@ -75,8 +75,7 @@ public class WorksheetService {
                 .createdAt(worksheetDTO.getCreatedAt())
                 //.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
                 .workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
-                //byte[] byteArrray = encoder.encode(CharBuffer.wrap(inputString))
-                //                          .array();
+                //byte[] byteArrray = encoder.encode(CharBuffer.wrap(inputString)).array();
                 .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
@@ -191,12 +190,3 @@ public class WorksheetService {
     }
 }
 
-/*public void whenDecodeWithCharset_thenOK() {
-    byte[] byteArrray = { 72, 101, 108, 108, 111, 32, -10, 111,
-      114, 108, -63, 33 };
-    Charset charset = StandardCharsets.US_ASCII;
-    String string = charset.decode(ByteBuffer.wrap(byteArrray))
-                      .toString();
-
-    assertEquals("Hello �orl�!", string);
-}*/
