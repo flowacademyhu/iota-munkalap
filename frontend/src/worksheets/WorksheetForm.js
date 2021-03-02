@@ -32,12 +32,8 @@ export default function WorkSheetForm({
   const { partners } = usePartners()
   const partnersForSelect = partners?.map((partner) => ({
     label: partner.nev + ', a.sz.: ' + partner.adoszam,
-    ...partner,
+    value: partner.partnerId,
   }))
-  const worksheetPartner = worksheet && {
-    label: worksheet.partner.nev,
-    ...worksheet.partner,
-  }
 
   const finalize = useRef(false)
   return partnersForSelect ? (
@@ -82,12 +78,9 @@ export default function WorkSheetForm({
                   <h1 className="text-center">{title}</h1>
                   <SelectPartner
                     options={partnersForSelect}
-                    value={values.partnerId}
-                    setFieldValue={setFieldValue}
                     name="partnerId"
                     label="Partner"
                     placeholder="Partner neve"
-                    defaultValue={worksheetPartner}
                   />
                   <SelectInput
                     name="typeOfWork"
