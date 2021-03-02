@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Optional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.PartnerSpecification.buildSpecification;
@@ -143,5 +143,11 @@ public class PartnerService {
         Partner toToggle = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
         toToggle.setEnabled(!toToggle.getEnabled());
         return partnerRepository.save(toToggle);
+    }
+
+    public Partner update(String id, Partner partnerReceived) throws ValidationException {
+        validatePartner(partnerReceived);
+        partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+        return partnerRepository.save(partnerReceived.toBuilder().partnerId(id).build());
     }
 }
