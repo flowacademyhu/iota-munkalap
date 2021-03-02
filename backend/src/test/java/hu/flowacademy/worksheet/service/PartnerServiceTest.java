@@ -1,8 +1,11 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
@@ -178,9 +182,19 @@ class PartnerServiceTest {
 
     @Test
     public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
-        Partner result = Partner.builder().partnerId(PARTNER_ID).enabled(ENABLED).build();
+        givenExistingPartner();
+        Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
         assertThat(result, notNullValue());
-        assertThat(result.getEnabled(), is(true));
+        assertThat(result.getEnabled(), notNullValue());
+        assertThat(result.getEnabled(), is(false));
+    }
+
+    private void givenExistingPartner() {
+        Partner partner = new Partner();
+        partner.setPartnerId(PARTNER_ID);
+        partner.setEnabled(true);
+        when(partnerRepository.findById(PARTNER_ID)).thenReturn(Optional.of(partner));
+        when(partnerRepository.save(any(Partner.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
     }
 
     private Partner givenValidPartner() {

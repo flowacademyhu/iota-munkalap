@@ -8,8 +8,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PartnerRepository extends JpaRepository<Partner, String>, JpaSpecificationExecutor<Partner> {
-
-    @Modifying
-    void updateEnabled(String id, Boolean status);
-
 }

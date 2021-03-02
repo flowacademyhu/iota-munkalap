@@ -34,6 +34,7 @@ public class PartnerService {
     public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
         orderTypeFormat(partner);
+        partner.setEnabled(true);
         return partnerRepository.save(partner);
     }
 
