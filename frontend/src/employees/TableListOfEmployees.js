@@ -34,7 +34,7 @@ export default function TableListOfEmployees() {
     <>
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-4 d-flex justify-content-center">
+          <div className="col-sm-4 d-flex justify-content-center">
             <Link to={`/employees/new`}>
               <Button
                 text="Új munkavállaló létrehozása"
@@ -44,7 +44,7 @@ export default function TableListOfEmployees() {
           </div>
         </div>
         <div className="row justify-content-between">
-          <div className="col-4 d-flex justify-content-center">
+          <div className="col-sm-4 d-flex justify-content-center">
             <Formik className="form-inline">
               <Form>
                 <SearchEmployeeInput
@@ -56,7 +56,7 @@ export default function TableListOfEmployees() {
             </Formik>
           </div>
 
-          <div className="col-4 d-flex justify-content-center">
+          <div className="col-sm-4 d-flex justify-content-center">
             <FilterEmployees status={status} onStatusChange={setStatus} />
           </div>
         </div>
