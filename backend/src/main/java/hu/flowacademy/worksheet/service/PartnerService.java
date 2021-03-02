@@ -136,4 +136,37 @@ public class PartnerService {
     public Partner getPartnerById(String id) throws ValidationException {
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
+
+    public Partner update(String id, Partner partnerReceived) throws ValidationException {
+        validatePartner(partnerReceived);
+        Partner partnerToUpdate = partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + partnerReceived.getPartnerId()));
+        return addedPartner(partnerReceived, partnerToUpdate);
+    }
+
+    private Partner addedPartner(Partner partnerReceived, Partner partnerToUpdate) throws ValidationException {
+        validatePartner(partnerReceived);
+        partnerToUpdate.setPartnerEmail(partnerReceived.getPartnerEmail());
+        partnerToUpdate.setTelefon(partnerReceived.getTelefon());
+        partnerToUpdate.setMegrendeloTipusa(partnerReceived.getMegrendeloTipusa());
+        partnerToUpdate.setNev(partnerReceived.getNev());
+        partnerToUpdate.setRovidNev(partnerReceived.getRovidNev());
+        partnerToUpdate.setAdoszam(partnerReceived.getAdoszam());
+        partnerToUpdate.setKAdoszamtipus(partnerReceived.getKAdoszamtipus());
+        partnerToUpdate.setBankszamlaszam(partnerReceived.getBankszamlaszam());
+        partnerToUpdate.setSzamlazasiCimOrszagKod(partnerReceived.getSzamlazasiCimOrszagKod());
+        partnerToUpdate.setSzamlazasiCimOrszagNev(partnerReceived.getSzamlazasiCimOrszagNev());
+        partnerToUpdate.setSzamlazasiCimMegyeNev(partnerReceived.getSzamlazasiCimMegyeNev());
+        partnerToUpdate.setSzamlazasiCimIranyitoszam(partnerReceived.getSzamlazasiCimIranyitoszam());
+        partnerToUpdate.setSzamlazasiCimTelepulesNev(partnerReceived.getSzamlazasiCimTelepulesNev());
+        partnerToUpdate.setSzamlazasiCimKerulet(partnerReceived.getSzamlazasiCimKerulet());
+        partnerToUpdate.setSzamlazasiCimKozteruletNev(partnerReceived.getSzamlazasiCimKozteruletNev());
+        partnerToUpdate.setSzamlazasiCimKozteruletJellegNev(partnerReceived.getSzamlazasiCimKozteruletJellegNev());
+        partnerToUpdate.setSzamlazasiCimHazszam(partnerReceived.getSzamlazasiCimHazszam());
+        partnerToUpdate.setSzamlazasiCimEpulet(partnerReceived.getSzamlazasiCimEpulet());
+        partnerToUpdate.setSzamlazasiCimLepcsohaz(partnerReceived.getSzamlazasiCimLepcsohaz());
+        partnerToUpdate.setSzamlazasiCimSzint(partnerReceived.getSzamlazasiCimSzint());
+        partnerToUpdate.setSzamlazasiCimAjto(partnerReceived.getSzamlazasiCimAjto());
+        partnerToUpdate.setSzamlazasiCimHrsz(partnerReceived.getSzamlazasiCimHrsz());
+        return partnerRepository.save(partnerToUpdate);
+    }
 }

@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.controller;
 
 import hu.flowacademy.worksheet.dto.PartnerDTO;
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.service.PartnerService;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,11 @@ public class PartnerController {
     @RolesAllowed({"admin", "user"})
     public Partner getPartnerById(@PathVariable("id") String id) throws ValidationException {
         return partnerService.getPartnerById(id);
+    }
+
+    @PutMapping("/partners/{id}")
+    @RolesAllowed({"admin", "user"})
+    public Partner updatePartner(@PathVariable("id") String id, @RequestBody Partner partner) throws ValidationException {
+        return partnerService.update(id, partner);
     }
 }
