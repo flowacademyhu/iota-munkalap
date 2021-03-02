@@ -50,7 +50,7 @@ public class WorksheetService {
         return Worksheet.builder()
                 .partner(
                         partnerRepository.findById(worksheetDTO.getPartnerId())
-                                .orElseThrow(()-> new ValidationException("No such partner in database"))
+                                .orElseThrow(() -> new ValidationException("No such partner in database"))
                 )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
@@ -119,27 +119,8 @@ public class WorksheetService {
 
     public Worksheet update(String id, Worksheet worksheetReceived) throws ValidationException {
         validateWorksheet(worksheetReceived);
-        Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
-        return addedWorksheet(worksheetReceived, worksheetToUpdate);
-    }
-
-    private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
-        validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
-        worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
-        worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
-        worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
-        worksheetToUpdate.setWorkingTimeAccounting(worksheetReceived.getWorkingTimeAccounting());
-        worksheetToUpdate.setNumberOfEmployees(worksheetReceived.getNumberOfEmployees());
-        worksheetToUpdate.setOverheadHour(worksheetReceived.getOverheadHour());
-        worksheetToUpdate.setDeliveryKm(worksheetReceived.getDeliveryKm());
-        worksheetToUpdate.setAccountSerialNumber(worksheetReceived.getAccountSerialNumber());
-        worksheetToUpdate.setDescription(worksheetReceived.getDescription());
-        worksheetToUpdate.setUsedMaterial(worksheetReceived.getUsedMaterial());
-        worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
-        worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
-        worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
-        return worksheetRepository.save(worksheetToUpdate);
+        worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + id));
+        return worksheetRepository.save(worksheetReceived.toBuilder().id(id).build());
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
