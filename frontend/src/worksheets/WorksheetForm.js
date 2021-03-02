@@ -31,7 +31,7 @@ export default function WorkSheetForm({
 }) {
   const { partners } = usePartners()
   const partnersForSelect = partners?.map((partner) => ({
-    label: partner.nev + ', a.sz.: ' + partner.adoszam,
+    label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
     value: partner.partnerId,
   }))
 
@@ -43,7 +43,7 @@ export default function WorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: worksheet?.partner?.partnerId || '',
+              partnerId: worksheet?.partner.partnerId || '',
               typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
