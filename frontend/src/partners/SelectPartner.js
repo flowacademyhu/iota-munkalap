@@ -4,7 +4,7 @@ import { useField } from 'formik'
 
 function SelectPartner({ ...props }) {
   const [showError, setShowError] = useState(false)
-  const { error } = useField(props)[1]
+  const { error, touched } = useField(props)[1]
   const {
     setFieldValue,
     name,
@@ -13,6 +13,10 @@ function SelectPartner({ ...props }) {
     placeholder,
     defaultValue,
   } = props
+
+  if (touched && !showError) {
+    setShowError(true)
+  }
 
   const handleChange = (partner) => {
     setFieldValue('partnerId', partner.partnerId)
