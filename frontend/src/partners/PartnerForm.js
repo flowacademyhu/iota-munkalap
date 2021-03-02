@@ -16,37 +16,41 @@ export default function PartnerForm({
   title,
   partner,
 }) {
+
+  const initialValues={
+    partnerEmail: partner?.partnerEmail || '',
+    telefon: partner?.telefon || '',
+    megrendeloTipusa: partner?.megrendeloTipusa || '',
+    nev: partner?.nev || '',
+    rovidNev: partner?.rovidNev || '',
+    adoszam: partner?.adoszam || '',
+    kadoszamtipus: partner?.kadoszamtipus || '',
+    bankszamlaszam: partner?.bankszamlaszam || '',
+    szamlazasiCimOrszagKod: partner?.szamlazasiCimOrszagKod || '',
+    szamlazasiCimOrszagNev: partner?.szamlazasiCimOrszagNev || '',
+    szamlazasiCimMegyeNev: partner?.szamlazasiCimMegyeNev || '',
+    szamlazasiCimIranyitoszam: partner?.szamlazasiCimIranyitoszam || '',
+    szamlazasiCimTelepulesNev: partner?.szamlazasiCimTelepulesNev || '',
+    szamlazasiCimKerulet: partner?.szamlazasiCimKerulet || '',
+    szamlazasiCimKozteruletNev: partner?.szamlazasiCimKozteruletNev || '',
+    szamlazasiCimKozteruletJellegNev: partner?.szamlazasiCimKozteruletJellegNev || '',
+    szamlazasiCimHazszam: partner?.szamlazasiCimHazszam || '',
+    szamlazasiCimEpulet: partner?.szamlazasiCimEpulet || '',
+    szamlazasiCimLepcsohaz: partner?.szamlazasiCimLepcsohaz || '',
+    szamlazasiCimSzint: partner?.szamlazasiCimSzint || '',
+    szamlazasiCimAjto: partner?.szamlazasiCimAjto || '',
+    szamlazasiCimHrsz: partner?.szamlazasiCimHrsz || '',
+  }
+
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
         <div className="col-12">
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
-            initialValues={{
-              partnerEmail: '',
-              telefon: '',
-              megrendeloTipusa: '',
-              nev: '',
-              rovidNev: '',
-              adoszam: '',
-              kadoszamtipus: '',
-              bankszamlaszam: '',
-              szamlazasiCimOrszagKod: '',
-              szamlazasiCimOrszagNev: '',
-              szamlazasiCimMegyeNev: '',
-              szamlazasiCimIranyitoszam: '',
-              szamlazasiCimTelepulesNev: '',
-              szamlazasiCimKerulet: '',
-              szamlazasiCimKozteruletNev: '',
-              szamlazasiCimKozteruletJellegNev: '',
-              szamlazasiCimHazszam: '',
-              szamlazasiCimEpulet: '',
-              szamlazasiCimLepcsohaz: '',
-              szamlazasiCimSzint: '',
-              szamlazasiCimAjto: '',
-              szamlazasiCimHrsz: '',
-              ...partner,
-            }}
+            initialValues={
+              initialValues
+            }
             validationSchema={schema}
             onSubmit={(values) => {
               sendData(values)
