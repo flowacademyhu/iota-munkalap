@@ -69,6 +69,7 @@ public class PartnerController {
     }
 
     @PutMapping("/partners/{id}/setstatus")
+    @RolesAllowed({"admin"})
     public Partner setUserStatus(@PathVariable("id") String id) throws ValidationException {
         return partnerService.togglePartnerActivity(id);
     }
