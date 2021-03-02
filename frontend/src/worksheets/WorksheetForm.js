@@ -28,10 +28,6 @@ export default function WorkSheetForm({
 }) {
   const finalize = useRef(false)
   const [date, setDate] = useState(new Date())
-  const editable =
-    (worksheetStatus === 'REPORTED') & (worksheetStatus === 'CLOSED')
-      ? false
-      : true
 
   return (
     <div className="container my-5">
@@ -70,12 +66,23 @@ export default function WorkSheetForm({
             }}
           >
             {({ values }) => {
+              const notEditable =
+                values.worksheetStatus === 'REPORTED' ||
+                values.worksheetStatus === 'CLOSED'
+                  ? true
+                  : false
+
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
-                  <Input name="partnerId" label="Partner" type="text" />
+                  <Input
+                    name="partnerId"
+                    label="Partner"
+                    type="text"
+                    disabled={notEditable}
+                  />
                   <SelectInput
-                    disabled={editable}
+                    options={{ disabled: true, readOnly: true }}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -94,34 +101,39 @@ export default function WorkSheetForm({
                     container={WORKING_TIME_ACCOUNT_LIST}
                   />
                   <Input
-                    disabled={editable}
+                    disabled={notEditable}
                     name="numberOfEmployees"
                     label="Létszám"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={notEditable}
                     name="overheadHour"
                     label="Rezsióra"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={notEditable}
                     name="deliveryKm"
                     label="Kiszállás"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={notEditable}
                     name="accountSerialNumber"
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
                   />
                   <TextareaInput
+                    disabled={notEditable}
                     name="description"
                     label="Elvégzett munka leírása"
                   />
                   <Input
+                    disabled={notEditable}
                     name="usedMaterial"
                     label="Felhasznált anyagok"
                     type="text"
@@ -132,18 +144,29 @@ export default function WorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: </span>
-                  <CalendarDropDown date={date} setDate={setDate} />
+                  <CalendarDropDown
+                    disabled={notEditable}
+                    date={date}
+                    setDate={setDate}
+                  />
                   <div className="mt-3">
                     Munkát elvégezte:
-                    <Signature name="workerSignature" />
+                    <Signature name="workerSignature" disabled={notEditable} />
                   </div>
                   <div className="mt-3">
                     Munkavégzést igazolja:
-                    <Signature name="proofOfEmployment" />
+                    <Signature
+                      name="proofOfEmployment"
+                      disabled={notEditable}
+                    />
                   </div>
                   <div className="buttons">
                     <Link to="/worksheets">
-                      <Button text="Mégse" moreClassName="h-auto" />
+                      <Button
+                        text="Mégse"
+                        moreClassName="h-auto"
+                        disabled={notEditable}
+                      />
                     </Link>
                     <Button
                       text="Mentés"
