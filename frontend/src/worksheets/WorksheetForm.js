@@ -132,7 +132,7 @@ export default function WorkSheetForm({
                     min="0"
                   />
                   <TextareaInput
-                    disable={disabled}
+                    disabled={disabled}
                     name="description"
                     label="Elvégzett munka leírása"
                   />
@@ -156,7 +156,7 @@ export default function WorkSheetForm({
                   />
                   <span>Kelt: </span>
                   <CalendarDropDown
-                    disable={disabled}
+                    disabled={disabled}
                     name="createdAt"
                     setFieldValue={setFieldValue}
                     value={values.createdAt}
