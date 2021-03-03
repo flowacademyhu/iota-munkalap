@@ -1,13 +1,15 @@
 import React from 'react'
 import LoadingScreen from '../LoadingScreen'
-import usePartners from '../hooks/usePartners'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
 import EditButton from '../specialButtons/EditButton'
+import InactivateButton from '../specialButtons/InactivateButton'
+import ActivateButton from '../specialButtons/ActivateButton'
+import usePartners from '../hooks/usePartners'
 
 export default function TableListofPartners() {
-  const { partners } = usePartners()
+  const { partners, activate, inactivate } = usePartners()
 
   return (
     <>
@@ -37,9 +39,18 @@ export default function TableListofPartners() {
                     <Address partner={partner} />
                     <td>{partner.adoszam}</td>
                     <td>
-                      <Link to={`/partners/update/${partner.id}`}>
+                      <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />
                       </Link>
+                      {partner.enabled ? (
+                        <InactivateButton
+                          onClick={() => inactivate(partner.partnerId)}
+                        />
+                      ) : (
+                        <ActivateButton
+                          onClick={() => activate(partner.partnerId)}
+                        />
+                      )}
                     </td>
                   </tr>
                 ))
