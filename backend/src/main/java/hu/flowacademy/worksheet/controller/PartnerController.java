@@ -46,7 +46,6 @@ public class PartnerController {
                 .szamlazasiCimSzint(partnerDTO.getSzamlazasiCimSzint())
                 .szamlazasiCimAjto(partnerDTO.getSzamlazasiCimAjto())
                 .szamlazasiCimHrsz(partnerDTO.getSzamlazasiCimHrsz())
-                .enabled(partnerDTO.getEnabled())
                 .build();
         return partnerService.createPartner(partner);
     }
@@ -64,17 +63,5 @@ public class PartnerController {
     @RolesAllowed({"admin", "user"})
     public Partner getPartnerById(@PathVariable("id") String id) throws ValidationException {
         return partnerService.getPartnerById(id);
-    }
-
-    @PutMapping("/partners/{id}/setstatus")
-    @RolesAllowed({"admin"})
-    public Partner setUserStatus(@PathVariable("id") String id) throws ValidationException {
-        return partnerService.togglePartnerActivity(id);
-    }
-
-    @PutMapping("/partners/{id}")
-    @RolesAllowed({"admin", "user"})
-    public Partner updatePartner(@PathVariable("id") String id, @RequestBody Partner partner) throws ValidationException {
-        return partnerService.update(id, partner);
     }
 }

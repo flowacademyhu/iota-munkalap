@@ -63,7 +63,7 @@ public class WorksheetController {
 
     @GetMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
-    public WorksheetDTO getWorksheetById(@PathVariable("id") String worksheetId) throws ValidationException {
+    public Worksheet getWorksheetById(@PathVariable("id") String worksheetId) throws ValidationException {
         return worksheetService.getWorksheetById(worksheetId);
     }
 }

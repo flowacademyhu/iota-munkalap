@@ -2,22 +2,23 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
+import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,24 +34,23 @@ public class WorksheetService {
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
-    private final PartnerService partnerService;
-    private final UserService userService;
+    private final PartnerRepository partnerRepository;
 
     public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
-        return worksheetRepository.save(worksheet.toBuilder()
-                .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
-                        : WorksheetStatus.REPORTED)
-                .createdBy(userService.getCurrentUser().orElseThrow())
-                .createdAtRealTime(LocalDateTime.now())
-                .build());
+        if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
+            worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
+        }
+        worksheet.setCreatedAtRealTime(LocalDateTime.now());
+        return worksheetRepository.save(worksheet);
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
         return Worksheet.builder()
                 .partner(
-                        partnerService.getPartnerById(worksheetDTO.getPartnerId())
+                        partnerRepository.findById(worksheetDTO.getPartnerId())
+                                .orElseThrow(()-> new ValidationException("No such partner in database"))
                 )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
@@ -124,7 +124,8 @@ public class WorksheetService {
     }
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
-        worksheetToUpdate.setPartner(partnerService.getPartnerById(worksheetReceived.getPartner().getPartnerId()));
+        validateWorksheet(worksheetReceived);
+        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
@@ -142,38 +143,13 @@ public class WorksheetService {
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
-        return page.isEmpty() ?
-                worksheetRepository.findAll(
-                        buildSpecification(status, maxTime, minTime),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
-                : worksheetRepository.findAll(
+        return worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
     }
 
-    public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
-        Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
-        return buildDTO(worksheet);
-    }
-
-    private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
-        return WorksheetDTO.builder()
-                .partnerId(worksheetReceived.getPartner().getPartnerId())
-                .typeOfWork(worksheetReceived.getTypeOfWork())
-                .customTypeOfWork(worksheetReceived.getCustomTypeOfWork())
-                .assetSettlement(worksheetReceived.getAssetSettlement())
-                .workingTimeAccounting(worksheetReceived.getWorkingTimeAccounting())
-                .numberOfEmployees(worksheetReceived.getNumberOfEmployees())
-                .overheadHour(worksheetReceived.getOverheadHour())
-                .deliveryKm(worksheetReceived.getDeliveryKm())
-                .accountSerialNumber(worksheetReceived.getAccountSerialNumber())
-                .description(worksheetReceived.getDescription())
-                .usedMaterial(worksheetReceived.getUsedMaterial())
-                .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                .workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
-                .proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
-                .build();
+    public Worksheet getWorksheetById(String worksheetId) throws ValidationException {
+        return worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
     }
 }
-

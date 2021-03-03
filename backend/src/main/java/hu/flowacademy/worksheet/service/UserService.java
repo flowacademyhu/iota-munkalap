@@ -9,24 +9,18 @@ import hu.flowacademy.worksheet.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.KeycloakSecurityContext;
-import org.keycloak.representations.IDToken;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static hu.flowacademy.worksheet.service.filter.UserSpecification.buildSpecification;
+import static hu.flowacademy.worksheet.service.filter.UserSpecification.*;
 import static org.apache.commons.lang3.StringUtils.stripAccents;
 
 
@@ -95,18 +89,15 @@ public class UserService {
         return searchCriteria.map(searchPart ->
                 result.stream().filter(user -> filterContains(searchPart.toLowerCase(), user))
                         .collect(Collectors.toList()))
-                .orElse(result);
+                        .orElse(result);
     }
 
     private List<User> collectUsersByCriteria(Optional<Boolean> status, Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        return page.isEmpty() ?
-                userRepository.findAll(
-                        buildSpecification(status, searchCriteria),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
-                : userRepository.findAll(
+        List<User> result = userRepository.findAll(
                 buildSpecification(status, searchCriteria),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
+        return result;
     }
 
     private boolean filterContains(String searchPart, User user) {
@@ -121,20 +112,9 @@ public class UserService {
     }
 
     public User setUserActivity(Long id, Status status) throws ValidationException {
-        User toChange = userRepository.findById(id).orElseThrow(() -> new ValidationException("No user with provided ID"));
+        User toChange = userRepository.findById(id).orElseThrow(()-> new ValidationException("No user with provided ID"));
         toChange.setEnabled(status == Status.active);
         keycloakClientService.setUserStatus(toChange);
         return userRepository.save(toChange);
-    }
-
-    public Optional<User> getCurrentUser() {
-        return Optional.ofNullable(SecurityContextHolder.getContext())
-                .map(SecurityContext::getAuthentication)
-                .map(Authentication::getPrincipal)
-                .map(p -> (KeycloakPrincipal<KeycloakSecurityContext>) p)
-                .map(KeycloakPrincipal::getKeycloakSecurityContext)
-                .map(KeycloakSecurityContext::getToken)
-                .map(IDToken::getEmail)
-                .flatMap(userRepository::findFirstByEmail);
     }
 }

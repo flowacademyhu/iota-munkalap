@@ -1,13 +1,16 @@
 package hu.flowacademy.worksheet.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +18,7 @@ import javax.persistence.*;
 @Entity
 @Builder(toBuilder = true)
 @Table(name = "partnerCustom")
+@EntityListeners(AuditingEntityListener.class)
 public class Partner {
 
     @Id
@@ -67,6 +71,7 @@ public class Partner {
     private String szamlazasiCimAjto;
     @Column(name = "szamlazasi_cim_hrsz")
     private String szamlazasiCimHrsz;
-    @Column(name = "aktiv")
-    private Boolean enabled;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+    private List<Worksheet> worksheetList;
 }
