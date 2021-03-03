@@ -1,6 +1,7 @@
 import React from 'react'
 import PartnerForm from './PartnerForm'
 import usePartnerData from '../hooks/usePartnerData'
+import LoadingScreen from '../LoadingScreen'
 
 export default function Partner() {
   const {
@@ -11,28 +12,17 @@ export default function Partner() {
     partnerData,
   } = usePartnerData()
 
-  return window.location.pathname === '/partners/new' ? (
+  let isCreate = window.location.pathname === '/partners/new'
+  return isCreate || partnerData ? (
     <PartnerForm
       handleClick={handleClick}
       sent={sent}
       popUpMessage={popUpMessage}
       sendData={savePartner}
-      title="Partner létrehozása"
-      isCreate={true}
+      title={isCreate ? 'Partner létrehozása' : 'Adatok szerkesztése'}
+      partner={partnerData}
     />
   ) : (
-    <>
-      {partnerData && (
-        <PartnerForm
-          handleClick={handleClick}
-          sent={sent}
-          popUpMessage={popUpMessage}
-          sendData={savePartner}
-          title="Adatok szerkesztése"
-          isCreate={false}
-          partner={partnerData}
-        />
-      )}{' '}
-    </>
+    <LoadingScreen />
   )
 }

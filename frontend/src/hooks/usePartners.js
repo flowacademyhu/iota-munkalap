@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react'
-import { getPartners } from '../api/PartnerAPI'
+import {
+  getPartners,
+  activatePartner,
+  inactivatePartner,
+} from '../api/PartnerAPI'
 
 export default function usePartners() {
   const [partners, setPartners] = useState()
@@ -11,6 +15,16 @@ export default function usePartners() {
     }
   }, [])
 
+  async function inactivate(id) {
+    await inactivatePartner(id)
+    updatePartners()
+  }
+
+  async function activate(id) {
+    await activatePartner(id)
+    updatePartners()
+  }
+
   useEffect(() => {
     updatePartners()
   }, [updatePartners])
@@ -18,5 +32,7 @@ export default function usePartners() {
   return {
     partners,
     updatePartners,
+    activate,
+    inactivate,
   }
 }

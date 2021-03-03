@@ -1,6 +1,7 @@
 import React from 'react'
 import EmployeeForm from './EmployeeForm'
 import useEmployeeData from '../hooks/useEmployeeData'
+import LoadingScreen from '../LoadingScreen'
 
 export default function Employee() {
   const {
@@ -11,30 +12,17 @@ export default function Employee() {
     employeeData,
   } = useEmployeeData()
 
-  return window.location.pathname === '/employees/new' ? (
-    <>
-      <EmployeeForm
-        handleClick={handleClick}
-        sent={sent}
-        popUpMessage={popUpMessage}
-        sendData={saveEmployee}
-        title="Új munkatárs létrehozása"
-        isCreate={true}
-      />
-    </>
+  let isCreate = window.location.pathname === '/employees/new'
+  return isCreate || employeeData ? (
+    <EmployeeForm
+      handleClick={handleClick}
+      sent={sent}
+      popUpMessage={popUpMessage}
+      sendData={saveEmployee}
+      title={isCreate ? 'Munkatárs létrehozása' : 'Adatok szerkesztése'}
+      employee={employeeData}
+    />
   ) : (
-    <>
-      {employeeData && (
-        <EmployeeForm
-          handleClick={handleClick}
-          sent={sent}
-          popUpMessage={popUpMessage}
-          sendData={saveEmployee}
-          title="Adatok módosítása"
-          employee={employeeData}
-          isCreate={false}
-        />
-      )}
-    </>
+    <LoadingScreen />
   )
 }

@@ -5,10 +5,10 @@ import useCurrentEmployee from './hooks/useCurrentEmployee'
 function Menu() {
   const { isAdmin } = useCurrentEmployee()
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified mb-3 p-0">
+    <nav className="navbar navbar-expand-sm navbar-dark bg-success nav-justified p-0">
       <ul className="navbar-nav w-100">
         {isAdmin && (
-          <li className="nav-item border-right border-white p-2">
+          <li className="nav-item border border-white p-2">
             <NavLink
               className="nav-link font-weight-bold"
               activeClassName="active"
@@ -18,7 +18,7 @@ function Menu() {
             </NavLink>
           </li>
         )}
-        <li className="nav-item p-2">
+        <li className="nav-item p-2 border border-white">
           <NavLink
             className="nav-link font-weight-bold"
             activeClassName="active"
@@ -27,7 +27,7 @@ function Menu() {
             Munkalapok
           </NavLink>
         </li>
-        <li className="nav-item border-left border-white p-2">
+        <li className="nav-item border border-white p-2">
           <NavLink
             className="nav-link font-weight-bold"
             activeClassName="active"

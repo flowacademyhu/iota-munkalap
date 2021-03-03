@@ -5,20 +5,16 @@ import LogOut from './LogOut'
 import EmployeeData from './EmployeeData'
 import ToolsButton from './ToolsButton'
 
-function Header() {
+function HeaderForMobile() {
   return (
-    <div className="my-3">
-      <div className="row align-items-center flex-nowrap">
-        <div className="col flex-shrink-0">
+    <>
+      <div className="row my-2">
+        <div className="col">
           <img
             className="col-auto logo p-0 m-0"
             src={logo}
             alt="ingo stop logo"
           />
-        </div>
-
-        <div className="col text-center h5 flex-shrink-1 text-truncate">
-          <EmployeeData />
         </div>
 
         <Dropdown className="col text-right">
@@ -35,8 +31,11 @@ function Header() {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-    </div>
+      <div className="col text-center h5">
+        <EmployeeData />
+      </div>
+    </>
   )
 }
 
-export default Header
+export default HeaderForMobile

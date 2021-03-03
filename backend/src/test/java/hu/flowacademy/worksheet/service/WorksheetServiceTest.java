@@ -191,7 +191,6 @@ class WorksheetServiceTest {
         WorksheetDTO newWorksheet = givenUpdateProperWorksheetObject();
         WorksheetDTO updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
 
-        //Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
@@ -204,8 +203,6 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet.getDescription(), is(newWorksheet.getDescription()));
         assertThat(updatedWorksheet.getUsedMaterial(), is(newWorksheet.getUsedMaterial()));
         assertThat(updatedWorksheet.getTypeOfPayment(), is(newWorksheet.getTypeOfPayment()));
-        assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature().getBytes()));
-        assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment().getBytes()));
         verifyNoMoreInteractions(worksheetRepository);
     }
 
