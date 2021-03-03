@@ -73,8 +73,6 @@ export default function WorkSheetForm({
                   ? true
                   : false
 
-              let isClosed = values.worksheetStatus === 'Closed'
-
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
