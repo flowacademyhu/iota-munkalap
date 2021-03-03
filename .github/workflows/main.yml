@@ -135,7 +135,7 @@ jobs:
           java-version: 11
       
       - name: Start keycloak
-        run: docker-compose run -d --service-ports keycloak
+        run: docker-compose up -d keycloak
 
       - name: Wait until keycloak is up
         uses: nev7n/wait_for_response@v1
@@ -144,6 +144,9 @@ jobs:
           responseCode: 200
           timeout: 30000
           interval: 500
+
+      - name: Import Realm configuration
+        run: ./import_realm.sh
 
       - name: Run maven test
         run: mvn -B clean test

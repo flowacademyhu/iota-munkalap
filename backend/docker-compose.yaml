@@ -3,11 +3,31 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:12.0.2
     hostname: keycloak
+    depends_on:
+      - mysql_keycloak
     ports:
       - 8180:8080
-    entrypoint: "/keycloak/entrypoint.sh"
+    environment:
+      KEYCLOAK_USER: gyanyim
+      KEYCLOAK_PASSWORD: "snxTZr9$$5GGnS7w"
+      PROXY_ADDRESS_FORWARDING: "true"
+      DB_VENDOR: mysql
+      DB_ADDR: mysql_keycloak
+      DB_DATABASE: worksheet_keycloak
+      DB_USER: worksheet_keycloak
+      DB_PASSWORD: worksheet_keycloak 
+    command: ["-b", "0.0.0.0", "-Djboss.bind.address.private=127.0.0.1", "-Djboss.bind.address=0.0.0.0", "-Dkeycloak.profile.feature.upload_scripts=enabled"]
     volumes:
       - ./keycloak:/keycloak
+  mysql_keycloak:
+    image: mysql:5.7
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: worksheet_keycloak
+      MYSQL_USER: worksheet_keycloak
+      MYSQL_PASSWORD: worksheet_keycloak
   mysql:
     image: mysql:5.7
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci
