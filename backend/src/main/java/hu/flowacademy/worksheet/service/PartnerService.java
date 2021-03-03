@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -10,9 +11,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,10 +30,13 @@ public class PartnerService {
     private final String DEFAULT_ORDERBY = "nev";
 
     private final PartnerRepository partnerRepository;
-
+    private final KeycloakClientService keycloakClientService;
+    private final PagingProperties pagingProperties;
+    
     public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
         orderTypeFormat(partner);
+        partner.setEnabled(true);
         return partnerRepository.save(partner);
     }
 
@@ -121,11 +125,14 @@ public class PartnerService {
     }
 
     private List<Partner> collectPartnersByCriteria(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<Partner> result = partnerRepository.findAll(
+        return page.isEmpty() ?
+                partnerRepository.findAll(
+                        buildSpecification(searchCriteria),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                : partnerRepository.findAll(
                 buildSpecification(searchCriteria),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(Integer.MAX_VALUE), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
-        return result;
     }
 
     private boolean filterContains(String searchPart, Partner partner) {
@@ -135,5 +142,17 @@ public class PartnerService {
 
     public Partner getPartnerById(String id) throws ValidationException {
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+    }
+
+    public Partner togglePartnerActivity(String id) throws ValidationException {
+        Partner toToggle = partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with provided ID"));
+        toToggle.setEnabled(!toToggle.getEnabled());
+        return partnerRepository.save(toToggle);
+    }
+
+    public Partner update(String id, Partner partnerReceived) throws ValidationException {
+        validatePartner(partnerReceived);
+        partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+        return partnerRepository.save(partnerReceived.toBuilder().partnerId(id).build());
     }
 }

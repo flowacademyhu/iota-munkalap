@@ -6,9 +6,9 @@ import {
 } from './TranslationForWorkSheet'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
+import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -66,7 +66,7 @@ export default function TableListOfWorkSheets() {
                       {worksheet.createdBy.firstName}
                     </td>
                     <td>{worksheet.createdAt}</td>
-                    <td>{worksheet.partnerId}</td>
+                    <td>{worksheet.partner.nev}</td>
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>

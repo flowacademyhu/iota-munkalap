@@ -1,8 +1,11 @@
 package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.entity.Partner;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.Role;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.enumCustom.OrderType.LEGAL;
@@ -49,6 +53,7 @@ class PartnerServiceTest {
     private static final String SZINT = "II.";
     private static final String AJTO = "11";
     private static final String HRSZ = "0123-4567-8901";
+    private static final Boolean ENABLED = true;
 
     private static final String INVALID_TEST_EMAIL = "partnerteszt.com";
     private static final String EMPTY_STRING = "";
@@ -68,7 +73,7 @@ class PartnerServiceTest {
     public void givenNewPartner_whenSavingPartner_thenGreatSuccess() throws ValidationException {
         var partner = givenValidPartner();
         when(partnerRepository.save(any())).thenReturn(Partner.builder()
-                .partnerId(partner.getPartnerId())
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
@@ -91,6 +96,7 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build());
 
         Partner result = partnerService.createPartner(partner);
@@ -174,8 +180,65 @@ class PartnerServiceTest {
         verifyNoMoreInteractions(partnerRepository);
     }
 
+    @Test
+    public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
+        givenExistingPartnerWhenUpdate();
+        Partner newPartner = givenValidPartner();
+        Partner updatedPartner = partnerService.update(PARTNER_ID, newPartner);
+
+        Mockito.verify(partnerRepository, times(1)).save(updatedPartner);
+        assertThat(updatedPartner, notNullValue());
+        assertThat(updatedPartner.getPartnerEmail(), is(newPartner.getPartnerEmail()));
+        assertThat(updatedPartner.getTelefon(), is(newPartner.getTelefon()));
+        assertThat(updatedPartner.getMegrendeloTipusa(), is(newPartner.getMegrendeloTipusa()));
+        assertThat(updatedPartner.getNev(), is(newPartner.getNev()));
+        assertThat(updatedPartner.getRovidNev(), is(newPartner.getRovidNev()));
+        assertThat(updatedPartner.getAdoszam(), is(newPartner.getAdoszam()));
+        assertThat(updatedPartner.getKAdoszamtipus(), is(newPartner.getKAdoszamtipus()));
+        assertThat(updatedPartner.getBankszamlaszam(), is(newPartner.getBankszamlaszam()));
+        assertThat(updatedPartner.getSzamlazasiCimOrszagKod(), is(newPartner.getSzamlazasiCimOrszagKod()));
+        assertThat(updatedPartner.getSzamlazasiCimOrszagNev(), is(newPartner.getSzamlazasiCimOrszagNev()));
+        assertThat(updatedPartner.getSzamlazasiCimMegyeNev(), is(newPartner.getSzamlazasiCimMegyeNev()));
+        assertThat(updatedPartner.getSzamlazasiCimIranyitoszam(), is(newPartner.getSzamlazasiCimIranyitoszam()));
+        assertThat(updatedPartner.getSzamlazasiCimTelepulesNev(), is(newPartner.getSzamlazasiCimTelepulesNev()));
+        assertThat(updatedPartner.getSzamlazasiCimKerulet(), is(newPartner.getSzamlazasiCimKerulet()));
+        assertThat(updatedPartner.getSzamlazasiCimKozteruletNev(), is(newPartner.getSzamlazasiCimKozteruletNev()));
+        assertThat(updatedPartner.getSzamlazasiCimKozteruletJellegNev(), is(newPartner.getSzamlazasiCimKozteruletJellegNev()));
+        assertThat(updatedPartner.getSzamlazasiCimHazszam(), is(newPartner.getSzamlazasiCimHazszam()));
+        assertThat(updatedPartner.getSzamlazasiCimEpulet(), is(newPartner.getSzamlazasiCimEpulet()));
+        assertThat(updatedPartner.getSzamlazasiCimLepcsohaz(), is(newPartner.getSzamlazasiCimLepcsohaz()));
+        assertThat(updatedPartner.getSzamlazasiCimSzint(), is(newPartner.getSzamlazasiCimSzint()));
+        assertThat(updatedPartner.getSzamlazasiCimAjto(), is(newPartner.getSzamlazasiCimAjto()));
+        assertThat(updatedPartner.getSzamlazasiCimHrsz(), is(newPartner.getSzamlazasiCimHrsz()));
+        verifyNoMoreInteractions(partnerRepository);
+    }
+
+    private void givenExistingPartnerWhenUpdate() {
+        when(partnerRepository.findById(PARTNER_ID))
+                .thenReturn(Optional.of(givenPartnerWithProperId()));
+        when(partnerRepository.save(any(Partner.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
+    @Test
+    public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
+        givenExistingPartner();
+        Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
+        assertThat(result, notNullValue());
+        assertThat(result.getEnabled(), notNullValue());
+        assertThat(result.getEnabled(), is(false));
+    }
+
+    private void givenExistingPartner() {
+        Partner partner = new Partner();
+        partner.setPartnerId(PARTNER_ID);
+        partner.setEnabled(true);
+        when(partnerRepository.findById(PARTNER_ID)).thenReturn(Optional.of(partner));
+        when(partnerRepository.save(any(Partner.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
+    }
+
     private Partner givenValidPartner() {
         return Partner.builder()
+                .partnerId(PARTNER_ID)
                 .partnerEmail(PARTNER_EMAIL)
                 .telefon(TELEFON)
                 .megrendeloTipusa(MEGRENDELO_TIPUSA)
@@ -198,6 +261,7 @@ class PartnerServiceTest {
                 .szamlazasiCimSzint(SZINT)
                 .szamlazasiCimAjto(AJTO)
                 .szamlazasiCimHrsz(HRSZ)
+                .enabled(ENABLED)
                 .build();
     }
 
