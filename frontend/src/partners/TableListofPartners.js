@@ -37,7 +37,7 @@ export default function TableListofPartners() {
                     <Address partner={partner} />
                     <td>{partner.adoszam}</td>
                     <td>
-                      <Link to={`/partners/update/${partner.id}`}>
+                      <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />
                       </Link>
                     </td>

@@ -57,8 +57,8 @@ public class WorksheetController {
 
     @PutMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
-    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
-        return worksheetService.update(worksheetId, worksheet);
+    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+        return worksheetService.update(worksheetId, worksheetDTO);
     }
 
     @GetMapping("/worksheets/{id}")
