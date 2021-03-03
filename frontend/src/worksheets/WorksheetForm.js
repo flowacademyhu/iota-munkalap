@@ -147,11 +147,11 @@ export default function WorkSheetForm({
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-3 mb-5">
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>
-                  <div className="buttons mt-5">
+                  <div className="buttons mb-3">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />
                     </Link>
@@ -162,7 +162,7 @@ export default function WorkSheetForm({
                       moreClassName="h-auto"
                     />
                   </div>
-                  <div className="buttons my-3">
+                  <div className="buttons">
                     <Button
                       text="Mentés és készre jelentés"
                       type="submit"
