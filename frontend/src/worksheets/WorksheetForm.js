@@ -90,7 +90,7 @@ export default function WorkSheetForm({
                     placeholder="Partner neve"
                   />
                   <SelectInput
-                    disable={disabled}
+                    disabled={disabled}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -99,13 +99,13 @@ export default function WorkSheetForm({
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
                   )}
                   <SelectInput
-                    disable={disabled}
+                    disabled={disabled}
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
                     container={ASSET_SETTLEMENT_LIST}
                   />
                   <SelectInput
-                    disable={disabled}
+                    disabled={disabled}
                     name="workingTimeAccounting"
                     label="Munkaidő elszámolás módja"
                     container={WORKING_TIME_ACCOUNT_LIST}
@@ -143,7 +143,7 @@ export default function WorkSheetForm({
                     type="text"
                   />
                   <SelectInput
-                    disable={disabled}
+                    disabled={disabled}
                     name="typeOfPayment"
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
