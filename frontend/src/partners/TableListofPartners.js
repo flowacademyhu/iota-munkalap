@@ -54,8 +54,8 @@ export default function TableListofPartners() {
                           onClick={() => activate(partner.partnerId)}
                         />
                       )}
-                    </td>
-                  </tr>
+                    </Td>
+                  </Tr>
                 ))
               ) : (
                 <Tr>
