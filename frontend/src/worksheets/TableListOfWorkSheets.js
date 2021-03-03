@@ -11,7 +11,7 @@ import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 
-export default function TableListOfWorkSheets() {
+export default function TableListOfWorkSheets() {  
   const {
     workSheets,
     updateWorkSheets,
@@ -60,24 +60,11 @@ export default function TableListOfWorkSheets() {
             <Tbody>
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
-                  <tr key={index}>
-                    <th scope="row">{worksheet.id}</th>
-                    <td>
-                      {worksheet.createdBy}
-                    </td>
-                    <td>{worksheet.createdAt}</td>
-                    <td>{worksheet.partnerName}</td>
-                    <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
-                    <td>{statusTranslation[worksheet.worksheetStatus]}</td>
-                    <td>
                   <Tr key={index}>
                     <Th scope="row">{worksheet.id}</Th>
-                    <Td>
-                      {worksheet.createdBy.lastName}{' '}
-                      {worksheet.createdBy.firstName}
-                    </Td>
+                    <Td>{worksheet.createdBy}</Td>
                     <Td>{worksheet.createdAt}</Td>
-                    <Td>{worksheet.partner.nev}</Td>
+                    <Td>{worksheet.partnerName}</Td>
                     <Td>{typeOfWorkTranslation[worksheet.typeOfWork]}</Td>
                     <Td>{statusTranslation[worksheet.worksheetStatus]}</Td>
                     <Td>

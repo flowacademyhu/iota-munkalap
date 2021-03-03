@@ -10,25 +10,19 @@ import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
-
 
 @Service
 @RequiredArgsConstructor
@@ -163,13 +157,13 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
        return buildDTO(worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId)));
-
-
     }
 
     private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
         return WorksheetDTO.builder()
+                .id(worksheetReceived.getId())
                 .partnerId(worksheetReceived.getPartner().getPartnerId())
+                .partnerName(worksheetReceived.getPartner().getNev())
                 .typeOfWork(worksheetReceived.getTypeOfWork())
                 .customTypeOfWork(worksheetReceived.getCustomTypeOfWork())
                 .assetSettlement(worksheetReceived.getAssetSettlement())
@@ -182,6 +176,8 @@ public class WorksheetService {
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
                 .createdBy(Optional.ofNullable(worksheetReceived.getCreatedBy()).map(User::getFullName).orElse(""))
+                .createdAt(worksheetReceived.getCreatedAt())
+                .worksheetStatus(worksheetReceived.getWorksheetStatus())
                 .workerSignature(new String(worksheetReceived.getWorkerSignature()))
                 .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorksheetDTO {
-
+    private String id;
     private String partnerId;
     private String partnerName;
     private TypeOfWork typeOfWork;
