@@ -83,7 +83,7 @@ export default function WorkSheetForm({
                 <Form>
                   <h1 className="text-center">{title}</h1>
                   <SearchSelect
-                    disable={disabled}
+                    disabled={disabled}
                     options={partnersForSelect}
                     name="partnerId"
                     label="Partner"
