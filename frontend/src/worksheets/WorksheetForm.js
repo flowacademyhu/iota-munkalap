@@ -17,6 +17,7 @@ import {
 import Signature from './Signature'
 import CalendarDropDown from '../CalendarDropDown'
 import TextareaInput from '../TextareaInput'
+import '../style.css'
 
 export default function WorkSheetForm({
   sent,
@@ -66,7 +67,7 @@ export default function WorkSheetForm({
             }}
           >
             {({ values }) => {
-              const notEditable =
+              let notEditable =
                 values.worksheetStatus === 'REPORTED' ||
                 values.worksheetStatus === 'CLOSED'
                   ? true
@@ -82,7 +83,7 @@ export default function WorkSheetForm({
                     disabled={notEditable}
                   />
                   <SelectInput
-                    options={{ disabled: true, readOnly: true }}
+                    //status={notEditable}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -128,6 +129,7 @@ export default function WorkSheetForm({
                     type="text"
                   />
                   <TextareaInput
+                    status={notEditable}
                     disabled={notEditable}
                     name="description"
                     label="Elvégzett munka leírása"

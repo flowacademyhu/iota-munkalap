@@ -6,17 +6,22 @@ export default function SelectInput({
   handleChange,
   label,
   container,
+  status,
   ...props
 }) {
   const [field, meta] = useField(props)
   const { error, touched } = meta
   const showError = touched && error
 
+  let notEditable =
+    status === 'REPORTED' || status === 'CLOSED' ? 'true' : 'false'
+
   return (
     <div className="form-group my-4">
       <Form.Group controlId="exampleForm.SelectCustom">
         <Form.Label>{label}</Form.Label>
         <Form.Control
+          //disabled={notEditable}
           {...field}
           as="select"
           custom
