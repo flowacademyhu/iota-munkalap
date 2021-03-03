@@ -220,9 +220,10 @@ class PartnerServiceTest {
     }
 
     @Test
-    public void givenAnExistingPartner_whenToggleStatus_thenSetStatusToReported() throws ValidationException {
+    public void givenAnExistingPartner_whenSETTINGActivity_thenActivityIsUpdated() throws ValidationException {
         givenExistingPartner();
-        Partner result = partnerService.togglePartnerActivity(PARTNER_ID);
+        Partner result = partnerService.setPartnerActivity(PARTNER_ID, Status.inactive);
+        Mockito.verify(partnerRepository, times(1)).save(result);
         assertThat(result, notNullValue());
         assertThat(result.getEnabled(), notNullValue());
         assertThat(result.getEnabled(), is(false));
