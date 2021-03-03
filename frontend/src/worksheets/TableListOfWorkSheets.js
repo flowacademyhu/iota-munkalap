@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import useWorkSheets from '../hooks/useWorkSheets'
 import {
   typeOfWorkTranslation,
@@ -44,32 +45,32 @@ export default function TableListOfWorkSheets() {
       />
       <div className="border border-secondary">
         <div className="container-fluid">
-          <table className="table table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Létrehozó munkatárs</th>
-                <th scope="col">Felvétel időpontja</th>
-                <th scope="col">Partner neve</th>
-                <th scope="col">Munkavégzés jellege</th>
-                <th scope="col">Állapot</th>
-                <th scope="col">Műveletek</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="table table-hover table-striped text-center">
+            <Thead>
+              <Tr>
+                <Th scope="col">#</Th>
+                <Th scope="col">Létrehozó munkatárs</Th>
+                <Th scope="col">Felvétel időpontja</Th>
+                <Th scope="col">Partner neve</Th>
+                <Th scope="col">Munkavégzés jellege</Th>
+                <Th scope="col">Állapot</Th>
+                <Th scope="col">Műveletek</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {workSheets ? (
                 workSheets.map((worksheet, index) => (
-                  <tr key={index}>
-                    <th scope="row">{worksheet.id}</th>
-                    <td>
+                  <Tr key={index}>
+                    <Th scope="row">{worksheet.id}</Th>
+                    <Td>
                       {worksheet.createdBy.lastName}{' '}
                       {worksheet.createdBy.firstName}
-                    </td>
-                    <td>{worksheet.createdAt}</td>
-                    <td>{worksheet.partner.nev}</td>
-                    <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
-                    <td>{statusTranslation[worksheet.worksheetStatus]}</td>
-                    <td>
+                    </Td>
+                    <Td>{worksheet.createdAt}</Td>
+                    <Td>{worksheet.partner.nev}</Td>
+                    <Td>{typeOfWorkTranslation[worksheet.typeOfWork]}</Td>
+                    <Td>{statusTranslation[worksheet.worksheetStatus]}</Td>
+                    <Td>
                       <WorkSheetOperationButtons
                         status={worksheet.worksheetStatus}
                         id={worksheet.id}
@@ -77,18 +78,18 @@ export default function TableListOfWorkSheets() {
                         onClose={() => closeAndReload(worksheet.id)}
                         onPrint={() => workSheetPDF(worksheet)}
                       />
-                    </td>
-                  </tr>
+                    </Td>
+                  </Tr>
                 ))
               ) : (
-                <tr>
-                  <td colSpan="5">
+                <Tr>
+                  <Td colSpan="5">
                     <LoadingScreen />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               )}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         </div>
       </div>
     </>

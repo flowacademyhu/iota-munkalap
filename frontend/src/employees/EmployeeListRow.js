@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Tr, Th, Td } from 'react-super-responsive-table'
 import EditButton from '../specialButtons/EditButton'
 import InactivateButton from '../specialButtons/InactivateButton'
 import ActivateButton from '../specialButtons/ActivateButton'
-import { Link } from 'react-router-dom'
 
 export default function EmployeeListRow({
   employee: { id, email, lastName, firstName, enabled },
@@ -10,14 +11,14 @@ export default function EmployeeListRow({
   onActivate,
 }) {
   return (
-    <tr key={id}>
-      <th scope="row">{id}</th>
-      <td>
+    <Tr key={id}>
+      <Th scope="row">{id}</Th>
+      <Td>
         {lastName} {firstName}
-      </td>
-      <td>{email}</td>
-      <td>{enabled ? 'Aktív' : 'Inaktív'}</td>
-      <td>
+      </Td>
+      <Td>{email}</Td>
+      <Td>{enabled ? 'Aktív' : 'Inaktív'}</Td>
+      <Td>
         <div>
           <Link to={`/employees/update/${id}`}>
             <EditButton />
@@ -28,7 +29,7 @@ export default function EmployeeListRow({
             <ActivateButton onClick={onActivate} />
           )}
         </div>
-      </td>
-    </tr>
+      </Td>
+    </Tr>
   )
 }
