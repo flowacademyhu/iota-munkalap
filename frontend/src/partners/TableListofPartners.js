@@ -7,20 +7,9 @@ import EditButton from '../specialButtons/EditButton'
 import InactivateButton from '../specialButtons/InactivateButton'
 import ActivateButton from '../specialButtons/ActivateButton'
 import usePartners from '../hooks/usePartners'
-import { inactivatePartner, activatePartner } from '../api/PartnerAPI'
 
 export default function TableListofPartners() {
-  const { partners, updatePartners } = usePartners()
-
-  async function inactivateAndReload(id) {
-    await inactivatePartner(id)
-    updatePartners()
-  }
-
-  async function activateAndReload(id) {
-    await activatePartner(id)
-    updatePartners()
-  }
+  const { partners, activate, inactivate } = usePartners()
 
   return (
     <>
@@ -55,11 +44,11 @@ export default function TableListofPartners() {
                       </Link>
                       {partner.enabled ? (
                         <InactivateButton
-                          onClick={() => inactivateAndReload(partner.partnerId)}
+                          onClick={() => inactivate(partner.partnerId)}
                         />
                       ) : (
                         <ActivateButton
-                          onClick={() => activateAndReload(partner.partnerId)}
+                          onClick={() => activate(partner.partnerId)}
                         />
                       )}
                     </td>
