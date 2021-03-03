@@ -25,7 +25,7 @@ public class WorksheetController {
     @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
-    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+    public WorksheetDTO createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         return worksheetService.saveWorksheet(worksheetDTO);
     }
 
@@ -57,7 +57,7 @@ public class WorksheetController {
 
     @PutMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
-    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+    public WorksheetDTO updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         return worksheetService.update(worksheetId, worksheetDTO);
     }
 

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -40,15 +41,15 @@ public class WorksheetService {
     private final PartnerService partnerService;
     private final UserService userService;
 
-    public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
+    public WorksheetDTO saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
-        return worksheetRepository.save(worksheet.toBuilder()
+        return buildDTO(worksheetRepository.save(worksheet.toBuilder()
                 .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
                         : WorksheetStatus.REPORTED)
                 .createdBy(userService.getCurrentUser().orElseThrow())
                 .createdAtRealTime(LocalDateTime.now())
-                .build());
+                .build()));
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
@@ -68,20 +69,11 @@ public class WorksheetService {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                //.workerSignature(worksheetDTO.getWorkerSignature().getBytes())
-                //.proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
-                //.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
-                //.proofOfEmployment(Base64.getDecoder().decode(worksheetDTO.getProofOfEmployment()))
-                //.workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
-                //.proofOfEmployment(StandardCharsets.US_ASCII.encode(worksheetDTO.getProofOfEmployment()).array())
+                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
-
-    /*.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
-//.workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
-.proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())*/
-
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
         if (worksheet.getPartner() == null) {
@@ -130,11 +122,11 @@ public class WorksheetService {
         return worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + id));
     }
 
-    public Worksheet update(String id, WorksheetDTO worksheetReceivedDTO) throws ValidationException {
+    public WorksheetDTO update(String id, WorksheetDTO worksheetReceivedDTO) throws ValidationException {
         Worksheet worksheetReceived = buildWorksheet(worksheetReceivedDTO);
         validateWorksheet(worksheetReceived);
         Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
-        return addedWorksheet(worksheetReceived, worksheetToUpdate);
+        return buildDTO(addedWorksheet(worksheetReceived, worksheetToUpdate));
     }
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
@@ -167,9 +159,9 @@ public class WorksheetService {
     }
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
-        Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
-        //log.info("BIG LOG, BUILD DTO WORKSHEET{}", buildDTO(worksheet));
-        return buildDTO(worksheet);
+       return buildDTO(worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId)));
+
+
     }
 
     private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
@@ -186,8 +178,8 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                //.workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
-                //.proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
+                .workerSignature(new String(worksheetReceived.getWorkerSignature()))
+                .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
