@@ -1,6 +1,7 @@
 import React from 'react'
-import useEmployees from '../hooks/useEmployees'
 import { Link } from 'react-router-dom'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
+import useEmployees from '../hooks/useEmployees'
 import Button from '../Button'
 import { updateEmployeeInactive, activateEmployee } from '../api/EmployeeAPI'
 import LoadingScreen from '../LoadingScreen'
@@ -31,37 +32,49 @@ export default function TableListOfEmployees() {
 
   return (
     <>
-      <div className="d-flex flex-row justify-content-around p-5">
-        <Link to={`/employees/new`}>
-          <Button
-            text="Új munkavállaló létrehozása"
-            moreClassName="w-auto p-1"
-          />
-        </Link>
-        <Formik className="form-inline">
-          <Form>
-            <SearchEmployeeInput
-              keyword={keyword}
-              onChangeKeyword={setKeyword}
-              name="searchEmployee"
+      <div className="row justify-content-center">
+        <div className="col-sm-4 d-flex justify-content-center my-3">
+          <Link to={`/employees/new`}>
+            <Button
+              text="Új munkavállaló létrehozása"
+              moreClassName="w-auto p-1"
             />
-          </Form>
-        </Formik>
-        <FilterEmployees status={status} onStatusChange={setStatus} />
+          </Link>
+        </div>
       </div>
+      <div className="row justify-content-between">
+        <div className="col-sm-4 d-flex justify-content-center">
+          <Formik className="form-inline">
+            <Form>
+              <SearchEmployeeInput
+                keyword={keyword}
+                onChangeKeyword={setKeyword}
+                name="searchEmployee"
+              />
+            </Form>
+          </Formik>
+        </div>
+        <div className="col-sm-4 d-flex justify-content-center mb-3">
+          <FilterEmployees status={status} onStatusChange={setStatus} />
+        </div>
+      </div>
+
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
-          <table className="table table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Név</th>
-                <th scope="col">E-mail</th>
-                <th scope="col">Státusz</th>
-                <th scope="col">Módosítás</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table
+            className="table table-hover table-striped text-center"
+            data-mobile-responsive="true"
+          >
+            <Thead>
+              <Tr>
+                <Th scope="col">#</Th>
+                <Th scope="col">Név</Th>
+                <Th scope="col">E-mail</Th>
+                <Th scope="col">Státusz</Th>
+                <Th scope="col">Módosítás</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {employees ? (
                 employees.map((employee) => (
                   <EmployeeListRow
@@ -71,14 +84,14 @@ export default function TableListOfEmployees() {
                   />
                 ))
               ) : (
-                <tr>
-                  <td colSpan="5">
+                <Tr>
+                  <Td colSpan="5">
                     <LoadingScreen />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               )}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         </div>
       </div>
     </>
