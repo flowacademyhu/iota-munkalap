@@ -5,8 +5,8 @@ export default function EmployeeData() {
   const { name, email } = useCurrentEmployee()
   return (
     <>
-      <div>{name || ''}</div>
-      <div>{email || ''}</div>
+      <div className="text-truncate">{name || ''}</div>
+      <div className="text-truncate">{email || ''}</div>
     </>
   )
 }

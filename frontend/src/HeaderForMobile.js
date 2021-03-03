@@ -9,7 +9,7 @@ function HeaderForMobile() {
   return (
     <>
       <div className="row my-2">
-        <div className="col p-0">
+        <div className="col">
           <img
             className="col-auto logo p-0 m-0"
             src={logo}
@@ -17,7 +17,7 @@ function HeaderForMobile() {
           />
         </div>
 
-        <Dropdown className="col text-right p-0">
+        <Dropdown className="col text-right">
           <Dropdown.Toggle
             className="bg-transparent border-light w-auto p-0"
             id="dropdown-basic"
@@ -31,7 +31,7 @@ function HeaderForMobile() {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <div className="col text-center h5 p-0">
+      <div className="col text-center h5">
         <EmployeeData />
       </div>
     </>

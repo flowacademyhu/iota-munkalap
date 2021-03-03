@@ -8,7 +8,7 @@ import './style.css'
 import Routing from './Routing'
 
 export default function Page() {
-  const isMobile = useMediaQuery({ query: `(max-width: 600px)` })
+  const isMobile = useMediaQuery({ query: `(max-width: 576px)` })
   return (
     <Router>
       <header>

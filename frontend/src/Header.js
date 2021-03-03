@@ -8,8 +8,8 @@ import ToolsButton from './ToolsButton'
 function Header() {
   return (
     <div className="my-3">
-      <div className="row align-items-center m-0">
-        <div className="col p-0">
+      <div className="row align-items-center flex-nowrap">
+        <div className="col flex-shrink-0">
           <img
             className="col-auto logo p-0 m-0"
             src={logo}
@@ -17,11 +17,11 @@ function Header() {
           />
         </div>
 
-        <div className="col text-center h5 p-0">
+        <div className="col text-center h5 flex-shrink-1 text-truncate">
           <EmployeeData />
         </div>
 
-        <Dropdown className="col text-right p-0">
+        <Dropdown className="col text-right">
           <Dropdown.Toggle
             className="bg-transparent border-light w-auto p-0"
             id="dropdown-basic"
