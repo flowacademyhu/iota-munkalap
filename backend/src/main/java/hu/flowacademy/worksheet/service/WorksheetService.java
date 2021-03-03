@@ -140,6 +140,7 @@ public class WorksheetService {
         worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
         worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
         worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
+        worksheetToUpdate.setCreatedAt(worksheetReceived.getCreatedAt());
         return worksheetRepository.save(worksheetToUpdate);
     }
 
