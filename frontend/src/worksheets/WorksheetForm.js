@@ -76,8 +76,6 @@ export default function WorkSheetForm({
               let disabled =
                 values.worksheetStatus === 'REPORTED' ||
                 values.worksheetStatus === 'CLOSED'
-                  ? true
-                  : false
 
               let isReported = values.worksheetStatus === 'REPORTED'
 
