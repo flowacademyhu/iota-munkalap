@@ -11,7 +11,7 @@
  7. (Optional) if you've changed the Keycloak's configuration and want to export the latest realm config then run `export_realm.sh` and commit the realm.json file
  8. (Optional) Databases are persisted between `docker-compose up`-s, if you want to reset the DB's to a brand new, clean state then run `docker-compose down`
 
-## Start and stop frontend
+## Start and stop the frontend
 
  1. Go to the frontend folder with `cd frontend`
  2. Run `npm install`
