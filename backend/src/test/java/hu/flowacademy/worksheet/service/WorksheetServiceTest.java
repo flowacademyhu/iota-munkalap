@@ -189,9 +189,8 @@ class WorksheetServiceTest {
         givenExistingWorksheetWhenUpdate();
         givenExistingPartner();
         WorksheetDTO newWorksheet = givenUpdateProperWorksheetObject();
-        Worksheet updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
+        WorksheetDTO updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
 
-        Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
