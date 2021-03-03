@@ -135,7 +135,7 @@ jobs:
           java-version: 11
       
       - name: Start keycloak
-        run: docker-compose up -d --service-ports keycloak
+        run: docker-compose up -d keycloak
 
       - name: Wait until keycloak is up
         uses: nev7n/wait_for_response@v1
