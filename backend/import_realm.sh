@@ -2,4 +2,4 @@
 
 set -euo pipefail
 
-docker-compose exec keycloak /keycloak/import.sh
+docker-compose exec -T keycloak /keycloak/import.sh
