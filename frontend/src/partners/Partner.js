@@ -11,8 +11,6 @@ export default function Partner() {
     partnerData,
   } = usePartnerData()
 
-  console.log(partnerData)
-
   return window.location.pathname === '/partners/new' ? (
     <PartnerForm
       handleClick={handleClick}
