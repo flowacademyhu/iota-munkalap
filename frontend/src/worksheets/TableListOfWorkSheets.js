@@ -67,7 +67,7 @@ export default function TableListOfWorkSheets() {
                       {worksheet.createdBy.firstName}
                     </Td>
                     <Td>{worksheet.createdAt}</Td>
-                    <Td>{worksheet.partnerId}</Td>
+                    <Td>{worksheet.partner.nev}</Td>
                     <Td>{typeOfWorkTranslation[worksheet.typeOfWork]}</Td>
                     <Td>{statusTranslation[worksheet.worksheetStatus]}</Td>
                     <Td>
