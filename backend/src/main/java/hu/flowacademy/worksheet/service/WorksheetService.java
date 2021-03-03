@@ -142,7 +142,11 @@ public class WorksheetService {
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
-        return worksheetRepository.findAll(
+        return page.isEmpty() ?
+                worksheetRepository.findAll(
+                        buildSpecification(status, maxTime, minTime),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+                : worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
