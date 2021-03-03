@@ -36,15 +36,15 @@ public class WorksheetService {
     private final PartnerService partnerService;
     private final UserService userService;
 
-    public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
+    public WorksheetDTO saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
-        return worksheetRepository.save(worksheet.toBuilder()
+        return buildDTO(worksheetRepository.save(worksheet.toBuilder()
                 .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
                         : WorksheetStatus.REPORTED)
                 .createdBy(userService.getCurrentUser().orElseThrow())
                 .createdAtRealTime(LocalDateTime.now())
-                .build());
+                .build()));
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
@@ -117,11 +117,11 @@ public class WorksheetService {
         return worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + id));
     }
 
-    public Worksheet update(String id, WorksheetDTO worksheetReceivedDTO) throws ValidationException {
+    public WorksheetDTO update(String id, WorksheetDTO worksheetReceivedDTO) throws ValidationException {
         Worksheet worksheetReceived = buildWorksheet(worksheetReceivedDTO);
         validateWorksheet(worksheetReceived);
         Worksheet worksheetToUpdate = worksheetRepository.findById(id).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetReceived.getId()));
-        return addedWorksheet(worksheetReceived, worksheetToUpdate);
+        return buildDTO(addedWorksheet(worksheetReceived, worksheetToUpdate));
     }
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
