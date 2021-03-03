@@ -16,8 +16,6 @@ export default function PartnerForm({
   title,
   partner,
 }) {
-  const initialValues = {}
-
   return (
     <div className="container my-5">
       <div className="row justify-content-center">
