@@ -149,7 +149,7 @@ export default function WorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <Input
-                    disabled={isReported ? false : disable}
+                    disable={isReported ? false : disabled}
                     name="accountSerialNumber"
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
