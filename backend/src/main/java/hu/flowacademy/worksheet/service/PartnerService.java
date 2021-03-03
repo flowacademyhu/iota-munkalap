@@ -56,9 +56,6 @@ public class PartnerService {
         if (!StringUtils.hasText(partner.getNev())) {
             throw new ValidationException("The partner name is null");
         }
-        if (!StringUtils.hasText(partner.getRovidNev())) {
-            throw new ValidationException("The partner short name is null");
-        }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
         }

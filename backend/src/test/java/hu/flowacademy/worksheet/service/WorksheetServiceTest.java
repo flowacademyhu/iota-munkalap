@@ -188,12 +188,10 @@ class WorksheetServiceTest {
     public void givenNewWorksheetObject_whenUpdateWorksheet_thenWorksheetUpdated() throws ValidationException {
         givenExistingWorksheetWhenUpdate();
         givenExistingPartner();
-        Worksheet newWorksheet = givenUpdateProperWorksheetObject();
-        Worksheet updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
+        WorksheetDTO newWorksheet = givenUpdateProperWorksheetObject();
+        WorksheetDTO updatedWorksheet = worksheetService.update(WORKSHEET_ID, newWorksheet);
 
-        Mockito.verify(worksheetRepository, times(1)).save(updatedWorksheet);
         assertThat(updatedWorksheet, notNullValue());
-        assertThat(updatedWorksheet.getPartner().getPartnerId(), is(newWorksheet.getPartner().getPartnerId()));
         assertThat(updatedWorksheet.getTypeOfWork(), is(newWorksheet.getTypeOfWork()));
         assertThat(updatedWorksheet.getCustomTypeOfWork(), is(newWorksheet.getCustomTypeOfWork()));
         assertThat(updatedWorksheet.getAssetSettlement(), is(newWorksheet.getAssetSettlement()));
@@ -205,8 +203,6 @@ class WorksheetServiceTest {
         assertThat(updatedWorksheet.getDescription(), is(newWorksheet.getDescription()));
         assertThat(updatedWorksheet.getUsedMaterial(), is(newWorksheet.getUsedMaterial()));
         assertThat(updatedWorksheet.getTypeOfPayment(), is(newWorksheet.getTypeOfPayment()));
-        assertThat(updatedWorksheet.getWorkerSignature(), is(newWorksheet.getWorkerSignature()));
-        assertThat(updatedWorksheet.getProofOfEmployment(), is(newWorksheet.getProofOfEmployment()));
         verifyNoMoreInteractions(worksheetRepository);
     }
 
@@ -293,10 +289,9 @@ class WorksheetServiceTest {
                 .build();
     }
 
-    private Worksheet givenUpdateProperWorksheetObject() {
-        Worksheet worksheet = new Worksheet();
-        worksheet.setId(UPDATED_WORKSHEET_ID);
-        worksheet.setPartner(givenPartner());
+    private WorksheetDTO givenUpdateProperWorksheetObject() {
+        WorksheetDTO worksheet = new WorksheetDTO();
+        worksheet.setPartnerId(PARTNER_ID);
         worksheet.setTypeOfWork(UPDATED_TYPE_OF_WORK_OTHER);
         worksheet.setCustomTypeOfWork(UPDATED_CUSTOM_TYPE_OF_WORK);
         worksheet.setAssetSettlement(UPDATED_ASSET_SETTLEMENT);
@@ -308,8 +303,8 @@ class WorksheetServiceTest {
         worksheet.setDescription(UPDATED_DESCRIPTION);
         worksheet.setUsedMaterial(UPDATED_USED_MATERIAL);
         worksheet.setTypeOfPayment(UPDATED_TYPE_OF_PAYMENT);
-        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE.getBytes());
-        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT.getBytes());
+        worksheet.setWorkerSignature(UPDATED_WORKER_SIGNATURE);
+        worksheet.setProofOfEmployment(UPDATED_PROOF_OF_EMPLOYMENT);
         return worksheet;
     }
 }
