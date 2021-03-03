@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import LoadingScreen from '../LoadingScreen'
 import usePartners from '../hooks/usePartners'
-import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
 import EditButton from '../specialButtons/EditButton'
 import InactivateButton from '../specialButtons/InactivateButton'
 import ActivateButton from '../specialButtons/ActivateButton'
-import usePartners from '../hooks/usePartners'
 
 export default function TableListofPartners() {
   const { partners, activate, inactivate } = usePartners()
