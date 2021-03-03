@@ -6,27 +6,27 @@ import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
 import hu.flowacademy.worksheet.exception.ValidationException;
-import hu.flowacademy.worksheet.repository.PartnerRepository;
 import hu.flowacademy.worksheet.repository.WorksheetRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
 import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -37,24 +37,24 @@ public class WorksheetService {
 
     private final WorksheetRepository worksheetRepository;
     private final PagingProperties pagingProperties;
-    private final PartnerRepository partnerRepository;
+    private final PartnerService partnerService;
+    private final UserService userService;
 
     public Worksheet saveWorksheet(@NonNull WorksheetDTO worksheetDTO) throws ValidationException {
         Worksheet worksheet = buildWorksheet(worksheetDTO);
         validateWorksheet(worksheet);
-        if (worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED) {
-            worksheet.setWorksheetStatus(WorksheetStatus.CREATED);
-        }
-        worksheet.setCreatedAtRealTime(LocalDateTime.now());
-        return worksheetRepository.save(worksheet);
+        return worksheetRepository.save(worksheet.toBuilder()
+                .worksheetStatus(worksheet.getWorksheetStatus() != WorksheetStatus.REPORTED ? WorksheetStatus.CREATED
+                        : WorksheetStatus.REPORTED)
+                .createdBy(userService.getCurrentUser().orElseThrow())
+                .createdAtRealTime(LocalDateTime.now())
+                .build());
     }
 
     private Worksheet buildWorksheet(WorksheetDTO worksheetDTO) throws ValidationException {
-
         return Worksheet.builder()
                 .partner(
-                        partnerRepository.findById(worksheetDTO.getPartnerId())
-                                .orElseThrow(() -> new ValidationException("No such partner in database"))
+                        partnerService.getPartnerById(worksheetDTO.getPartnerId())
                 )
                 .typeOfWork(worksheetDTO.getTypeOfWork())
                 .customTypeOfWork(worksheetDTO.getCustomTypeOfWork())
@@ -68,11 +68,20 @@ public class WorksheetService {
                 .usedMaterial(worksheetDTO.getUsedMaterial())
                 .typeOfPayment(worksheetDTO.getTypeOfPayment())
                 .createdAt(worksheetDTO.getCreatedAt())
-                .workerSignature(worksheetDTO.getWorkerSignature().getBytes())
-                .proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                //.workerSignature(worksheetDTO.getWorkerSignature().getBytes())
+                //.proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())
+                //.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+                //.proofOfEmployment(Base64.getDecoder().decode(worksheetDTO.getProofOfEmployment()))
+                //.workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
+                //.proofOfEmployment(StandardCharsets.US_ASCII.encode(worksheetDTO.getProofOfEmployment()).array())
                 .worksheetStatus(worksheetDTO.getWorksheetStatus())
                 .build();
     }
+
+    /*.workerSignature(Base64.getDecoder().decode(worksheetDTO.getWorkerSignature()))
+//.workerSignature(StandardCharsets.US_ASCII.encode(worksheetDTO.getWorkerSignature()).array())
+.proofOfEmployment(worksheetDTO.getProofOfEmployment().getBytes())*/
+
 
     private void validateWorksheet(Worksheet worksheet) throws ValidationException {
         if (worksheet.getPartner() == null) {
@@ -128,8 +137,7 @@ public class WorksheetService {
     }
 
     private Worksheet addedWorksheet(Worksheet worksheetReceived, Worksheet worksheetToUpdate) throws ValidationException {
-        validateWorksheet(worksheetReceived);
-        worksheetToUpdate.setPartner(worksheetReceived.getPartner());
+        worksheetToUpdate.setPartner(partnerService.getPartnerById(worksheetReceived.getPartner().getPartnerId()));
         worksheetToUpdate.setTypeOfWork(worksheetReceived.getTypeOfWork());
         worksheetToUpdate.setCustomTypeOfWork(worksheetReceived.getCustomTypeOfWork());
         worksheetToUpdate.setAssetSettlement(worksheetReceived.getAssetSettlement());
@@ -147,7 +155,11 @@ public class WorksheetService {
     }
 
     public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
-        return worksheetRepository.findAll(
+        return page.isEmpty() ?
+                worksheetRepository.findAll(
+                        buildSpecification(status, maxTime, minTime),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+                : worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
@@ -155,7 +167,7 @@ public class WorksheetService {
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
         Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
-        log.info("BIG LOG, BUILD DTO WORKSHEET{}", buildDTO(worksheet));
+        //log.info("BIG LOG, BUILD DTO WORKSHEET{}", buildDTO(worksheet));
         return buildDTO(worksheet);
     }
 
@@ -173,9 +185,8 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                .workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
-                .proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
+                //.workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
+                //.proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
-
