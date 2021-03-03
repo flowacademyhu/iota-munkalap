@@ -14,7 +14,7 @@ function StatusFilter(props) {
       <form>
         <select
           value={status}
-          className="btn btn-success"
+          className="btn border-dark"
           onChange={handleInputChange}
           name="filterWorkSheetByStatus"
         >
