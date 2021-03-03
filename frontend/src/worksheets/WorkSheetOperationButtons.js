@@ -33,7 +33,7 @@ function WorkSheetOperationButtons({
   return (
     <>
       <Link to={`/worksheets/update/${id}`}>
-        <EditButton hidden={!isEditable()} />
+        <EditButton />
       </Link>
       <FinalizeButton hidden={status !== 'CREATED'} onClick={onFinalize} />
       {isAdmin && (
