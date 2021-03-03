@@ -66,7 +66,8 @@ export default function WorkSheetForm({
               sendData(values)
             }}
           >
-            {({ values }) => {
+
+            {({ values, setFieldValue }) => {
               let notEditable =
                 values.worksheetStatus === 'REPORTED' ||
                 values.worksheetStatus === 'CLOSED'
