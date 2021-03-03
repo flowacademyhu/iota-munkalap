@@ -30,6 +30,8 @@ export default function Signature(props) {
       <div className="border border-secondary mb-1">
         <SignaturePad
           ref={signaturePadRef}
+          width={400}
+          height={300}
           options={{
             minWidth: 1,
             maxWidth: 4,

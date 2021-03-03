@@ -45,7 +45,7 @@ public class WorksheetController {
 
     @GetMapping("/worksheets")
     @RolesAllowed({"admin", "user"})
-    public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
+    public List<WorksheetDTO> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
                                             @DateTimeFormat(pattern = "yyyy.MM.dd") @RequestParam (value = "maxTime") Optional<LocalDate> maxTime,

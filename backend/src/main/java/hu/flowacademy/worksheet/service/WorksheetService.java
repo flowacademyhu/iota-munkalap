@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -17,9 +18,9 @@ import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
 
@@ -139,11 +140,12 @@ public class WorksheetService {
         worksheetToUpdate.setTypeOfPayment(worksheetReceived.getTypeOfPayment());
         worksheetToUpdate.setWorkerSignature(worksheetReceived.getWorkerSignature());
         worksheetToUpdate.setProofOfEmployment(worksheetReceived.getProofOfEmployment());
+        worksheetToUpdate.setCreatedAt(worksheetReceived.getCreatedAt());
         return worksheetRepository.save(worksheetToUpdate);
     }
 
-    public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
-        return page.isEmpty() ?
+    public List<WorksheetDTO> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
+        List <Worksheet> worksheetList = page.isEmpty() ?
                 worksheetRepository.findAll(
                         buildSpecification(status, maxTime, minTime),
                         Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
@@ -151,16 +153,18 @@ public class WorksheetService {
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
+        return worksheetList.stream().map(this::buildDTO).collect(Collectors.toList());
     }
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
-        Worksheet worksheet = worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId));
-        return buildDTO(worksheet);
+       return buildDTO(worksheetRepository.findById(worksheetId).orElseThrow(() -> new ValidationException("No worksheet with the given id " + worksheetId)));
     }
 
     private WorksheetDTO buildDTO(Worksheet worksheetReceived) {
         return WorksheetDTO.builder()
+                .id(worksheetReceived.getId())
                 .partnerId(worksheetReceived.getPartner().getPartnerId())
+                .partnerName(worksheetReceived.getPartner().getNev())
                 .typeOfWork(worksheetReceived.getTypeOfWork())
                 .customTypeOfWork(worksheetReceived.getCustomTypeOfWork())
                 .assetSettlement(worksheetReceived.getAssetSettlement())
@@ -172,9 +176,11 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
-                .workerSignature(Arrays.toString(worksheetReceived.getWorkerSignature()))
-                .proofOfEmployment(Arrays.toString(worksheetReceived.getProofOfEmployment()))
+                .createdBy(Optional.ofNullable(worksheetReceived.getCreatedBy()).map(User::getFullName).orElse(""))
+                .createdAt(worksheetReceived.getCreatedAt())
+                .worksheetStatus(worksheetReceived.getWorksheetStatus())
+                .workerSignature(new String(worksheetReceived.getWorkerSignature()))
+                .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
     }
 }
-

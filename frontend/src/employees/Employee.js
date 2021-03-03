@@ -15,6 +15,7 @@ export default function Employee() {
   let isCreate = window.location.pathname === '/employees/new'
   return isCreate || employeeData ? (
     <EmployeeForm
+      isCreate={isCreate}
       handleClick={handleClick}
       sent={sent}
       popUpMessage={popUpMessage}

@@ -62,12 +62,9 @@ export default function TableListOfWorkSheets() {
                 workSheets.map((worksheet, index) => (
                   <Tr key={index}>
                     <Th scope="row">{worksheet.id}</Th>
-                    <Td>
-                      {worksheet.createdBy.lastName}{' '}
-                      {worksheet.createdBy.firstName}
-                    </Td>
+                    <Td>{worksheet.createdBy}</Td>
                     <Td>{worksheet.createdAt}</Td>
-                    <Td>{worksheet.partner.nev}</Td>
+                    <Td>{worksheet.partnerName}</Td>
                     <Td>{typeOfWorkTranslation[worksheet.typeOfWork]}</Td>
                     <Td>{statusTranslation[worksheet.worksheetStatus]}</Td>
                     <Td>
