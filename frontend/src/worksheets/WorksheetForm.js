@@ -43,7 +43,7 @@ export default function WorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: worksheet?.partner.partnerId || '',
+              partnerId: worksheet?.partnerId || '',
               typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
