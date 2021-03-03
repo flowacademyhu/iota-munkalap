@@ -11,7 +11,7 @@ import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 
-export default function TableListOfWorkSheets() {  
+export default function TableListOfWorkSheets() {
   const {
     workSheets,
     updateWorkSheets,
