@@ -15,21 +15,6 @@ function WorkSheetOperationButtons({
 }) {
   const { isAdmin } = useCurrentEmployee()
 
-  const isEditable = () => {
-    if (status === 'CREATED') {
-      return true
-    }
-    if (status === 'CLOSED') {
-      return false
-    }
-    if (status === 'REPORTED') {
-      if (isAdmin) {
-        return true
-      }
-    }
-    return false
-  }
-
   return (
     <>
       <Link to={`/worksheets/update/${id}`}>
