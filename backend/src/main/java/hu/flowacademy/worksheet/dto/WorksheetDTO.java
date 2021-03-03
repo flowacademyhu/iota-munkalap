@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class WorksheetDTO {
 
     private String partnerId;
+    private String partnerName;
     private TypeOfWork typeOfWork;
     private String customTypeOfWork;
     private AssetSettlement assetSettlement;

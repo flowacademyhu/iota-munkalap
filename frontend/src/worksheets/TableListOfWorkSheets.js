@@ -62,11 +62,10 @@ export default function TableListOfWorkSheets() {
                   <tr key={index}>
                     <th scope="row">{worksheet.id}</th>
                     <td>
-                      {worksheet.createdBy.lastName}{' '}
-                      {worksheet.createdBy.firstName}
+                      {worksheet.createdBy}
                     </td>
                     <td>{worksheet.createdAt}</td>
-                    <td>{worksheet.partner.nev}</td>
+                    <td>{worksheet.partnerName}</td>
                     <td>{typeOfWorkTranslation[worksheet.typeOfWork]}</td>
                     <td>{statusTranslation[worksheet.worksheetStatus]}</td>
                     <td>

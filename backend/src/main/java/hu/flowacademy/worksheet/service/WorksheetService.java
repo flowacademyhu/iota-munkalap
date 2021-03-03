@@ -2,6 +2,7 @@ package hu.flowacademy.worksheet.service;
 
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.dto.WorksheetDTO;
+import hu.flowacademy.worksheet.entity.User;
 import hu.flowacademy.worksheet.entity.Worksheet;
 import hu.flowacademy.worksheet.enumCustom.TypeOfWork;
 import hu.flowacademy.worksheet.enumCustom.WorksheetStatus;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static hu.flowacademy.worksheet.service.filter.WorksheetSpecification.buildSpecification;
 
@@ -147,8 +149,8 @@ public class WorksheetService {
         return worksheetRepository.save(worksheetToUpdate);
     }
 
-    public List<Worksheet> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
-        return page.isEmpty() ?
+    public List<WorksheetDTO> collectWorksheetByCriteria(Optional<WorksheetStatus> status, Optional<Integer> page, Optional<LocalDate> minTime, Optional<LocalDate> maxTime, Optional<Integer> limit, Optional<String> orderBy) {
+        List <Worksheet> worksheetList = page.isEmpty() ?
                 worksheetRepository.findAll(
                         buildSpecification(status, maxTime, minTime),
                         Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
@@ -156,6 +158,7 @@ public class WorksheetService {
                 buildSpecification(status, maxTime, minTime),
                 PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
         ).getContent();
+        return worksheetList.stream().map(this::buildDTO).collect(Collectors.toList());
     }
 
     public WorksheetDTO getWorksheetById(String worksheetId) throws ValidationException {
@@ -178,6 +181,7 @@ public class WorksheetService {
                 .description(worksheetReceived.getDescription())
                 .usedMaterial(worksheetReceived.getUsedMaterial())
                 .typeOfPayment(worksheetReceived.getTypeOfPayment())
+                .createdBy(Optional.ofNullable(worksheetReceived.getCreatedBy()).map(User::getFullName).orElse(""))
                 .workerSignature(new String(worksheetReceived.getWorkerSignature()))
                 .proofOfEmployment(new String(worksheetReceived.getProofOfEmployment()))
                 .build();
