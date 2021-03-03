@@ -18,7 +18,7 @@ function createPartner(credentials) {
 
 async function inactivatePartner(id) {
   try {
-    return await api.put(`/partners/${id}/setstatus`)
+    return await api.put(`partners/${id}/inactive`)
   } catch (error) {
     alert('A művelet sikertelen.')
     return false
@@ -27,7 +27,7 @@ async function inactivatePartner(id) {
 
 async function activatePartner(id) {
   try {
-    return await api.put(`/partners/${id}/setstatus`)
+    return await api.put(`/partners/${id}/active`)
   } catch (error) {
     alert('A művelet sikertelen.')
     return false
