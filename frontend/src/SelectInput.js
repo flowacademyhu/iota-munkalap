@@ -13,15 +13,12 @@ export default function SelectInput({
   const { error, touched } = meta
   const showError = touched && error
 
-  let notEditable =
-    status === 'REPORTED' || status === 'CLOSED' ? 'true' : 'false'
-
   return (
     <div className="form-group my-4">
       <Form.Group controlId="exampleForm.SelectCustom">
         <Form.Label>{label}</Form.Label>
         <Form.Control
-          //disabled={notEditable}
+          disabled={status}
           {...field}
           as="select"
           custom

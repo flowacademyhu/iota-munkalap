@@ -73,6 +73,8 @@ export default function WorkSheetForm({
                   ? true
                   : false
 
+              let isClosed = values.worksheetStatus === 'Closed'
+
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
@@ -83,7 +85,7 @@ export default function WorkSheetForm({
                     disabled={notEditable}
                   />
                   <SelectInput
-                    //status={notEditable}
+                    status={notEditable}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -92,11 +94,13 @@ export default function WorkSheetForm({
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
                   )}
                   <SelectInput
+                    status={notEditable}
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
                     container={ASSET_SETTLEMENT_LIST}
                   />
                   <SelectInput
+                    status={notEditable}
                     name="workingTimeAccounting"
                     label="Munkaidő elszámolás módja"
                     container={WORKING_TIME_ACCOUNT_LIST}
@@ -123,7 +127,6 @@ export default function WorkSheetForm({
                     min="0"
                   />
                   <Input
-                    disabled={notEditable}
                     name="accountSerialNumber"
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"
@@ -141,21 +144,23 @@ export default function WorkSheetForm({
                     type="text"
                   />
                   <SelectInput
+                    status={notEditable}
                     name="typeOfPayment"
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <span>Kelt: </span>
                   <CalendarDropDown
+                    status={notEditable}
                     disabled={notEditable}
                     date={date}
                     setDate={setDate}
                   />
-                  <div className="mt-3">
+                  <div className={notEditable ? 'hidden' : 'mt-3'}>
                     Munkát elvégezte:
                     <Signature name="workerSignature" disabled={notEditable} />
                   </div>
-                  <div className="mt-3">
+                  <div className={notEditable ? 'hidden' : 'mt-3'}>
                     Munkavégzést igazolja:
                     <Signature
                       name="proofOfEmployment"
