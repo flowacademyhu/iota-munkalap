@@ -75,7 +75,6 @@ class WorksheetControllerTest {
                 .when().post("api/worksheets").
                 then()
                 .log().all()
-                .body("id", notNullValue())
                 .body("deliveryKm", equalTo(DELIVERY_KM))
                 .body("accountSerialNumber", equalTo(ACCOUNT_SERIAL_NUMBER))
                 .body("usedMaterial", equalTo(USED_MATERIAL))
@@ -89,11 +88,9 @@ class WorksheetControllerTest {
                 .body("workingTimeAccounting", equalTo(WORKING_TIME_ACCOUNTING.name()))
                 .body("numberOfEmployees", equalTo(NUMBER_OF_EMPLOYEES))
                 .body("overheadHour", equalTo(OVERHEAD_HOUR))
-                .body("createdAt", equalTo(actualDate))
-                .body("partner.partnerId", equalTo(toCheck.getPartnerId()))
-                .body("partner.partnerEmail", equalTo(toCheck.getPartnerEmail()))
+                .body("partnerId", equalTo(toCheck.getPartnerId()))
                 .statusCode(201)
-                .extract().body().as(Worksheet.class);
+                .extract().body().as(WorksheetDTO.class);
     }
 
     @Test
@@ -101,7 +98,7 @@ class WorksheetControllerTest {
         Partner toCheck = createPartner();
         WorksheetDTO toSend = givenWorksheetDescription();
         toSend.setPartnerId(toCheck.getPartnerId());
-        Worksheet worksheet = given()
+        WorksheetDTO worksheetDTO = given()
                 .log().all()
                 .header(getAuthorization(adminLogin()))
                 .body(toSend)
@@ -112,8 +109,8 @@ class WorksheetControllerTest {
                 .body("description", equalTo(DESCRIPTION3000))
                 .statusCode(201)
                 .assertThat()
-                .extract().as(Worksheet.class);
-        assertThat(worksheet, Matchers.notNullValue());
+                .extract().as(WorksheetDTO.class);
+        assertThat(worksheetDTO, Matchers.notNullValue());
     }
 
     private WorksheetDTO givenAWorksheetDTO() {
