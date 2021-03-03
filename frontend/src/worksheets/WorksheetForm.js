@@ -73,16 +73,26 @@ export default function WorkSheetForm({
             }}
           >
             {({ values, setFieldValue }) => {
+              let notEditable =
+                values.worksheetStatus === 'REPORTED' ||
+                values.worksheetStatus === 'CLOSED'
+                  ? true
+                  : false
+
+              let isReported = values.worksheetStatus === 'Reported'
+
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
                   <SearchSelect
+                    status={notEditable}
                     options={partnersForSelect}
                     name="partnerId"
                     label="Partner"
                     placeholder="Partner neve"
                   />
                   <SelectInput
+                    status={notEditable}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -91,63 +101,73 @@ export default function WorkSheetForm({
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
                   )}
                   <SelectInput
+                    status={notEditable}
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
                     container={ASSET_SETTLEMENT_LIST}
                   />
                   <SelectInput
+                    status={notEditable}
                     name="workingTimeAccounting"
                     label="Munkaidő elszámolás módja"
                     container={WORKING_TIME_ACCOUNT_LIST}
                   />
                   <Input
+                    disabled={notEditable}
                     name="numberOfEmployees"
                     label="Létszám"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={notEditable}
                     name="overheadHour"
                     label="Rezsióra"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={notEditable}
                     name="deliveryKm"
                     label="Kiszállás"
                     type="number"
                     min="0"
                   />
-                  <Input
-                    name="accountSerialNumber"
-                    label="A munkalaphoz tartozó számla sorszáma"
-                    type="text"
-                  />
                   <TextareaInput
+                    status={notEditable}
                     name="description"
                     label="Elvégzett munka leírása"
                   />
                   <Input
+                    disabled={notEditable}
                     name="usedMaterial"
                     label="Felhasznált anyagok"
                     type="text"
                   />
                   <SelectInput
+                    status={notEditable}
                     name="typeOfPayment"
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
+                  <Input
+                    disabled={isReported ? false : notEditable}
+                    name="accountSerialNumber"
+                    label="A munkalaphoz tartozó számla sorszáma"
+                    type="text"
+                  />
                   <span>Kelt: </span>
                   <CalendarDropDown
+                    status={notEditable}
                     name="createdAt"
                     setFieldValue={setFieldValue}
                     value={values.createdAt}
                   />
-                  <div className="mt-3">
+                  <div className={notEditable ? 'hidden' : 'mt-3'}>
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div className="mt-3">
+                  <div className={notEditable ? 'hidden' : 'mt-3'}>
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>

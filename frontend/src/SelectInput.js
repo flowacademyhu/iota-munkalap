@@ -6,6 +6,7 @@ export default function SelectInput({
   handleChange,
   label,
   container,
+  status,
   ...props
 }) {
   const [field, meta] = useField(props)
@@ -17,6 +18,7 @@ export default function SelectInput({
       <Form.Group controlId="exampleForm.SelectCustom">
         <Form.Label>{label}</Form.Label>
         <Form.Control
+          disabled={status}
           {...field}
           as="select"
           custom
