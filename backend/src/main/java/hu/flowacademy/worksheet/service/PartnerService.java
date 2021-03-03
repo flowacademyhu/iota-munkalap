@@ -1,5 +1,6 @@
 package hu.flowacademy.worksheet.service;
 
+import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
 import hu.flowacademy.worksheet.exception.ValidationException;
@@ -30,7 +31,8 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
     private final KeycloakClientService keycloakClientService;
-
+    private final PagingProperties pagingProperties;
+    
     public Partner createPartner(Partner partner) throws ValidationException {
         validatePartner(partner);
         orderTypeFormat(partner);
@@ -120,11 +122,14 @@ public class PartnerService {
     }
 
     private List<Partner> collectPartnersByCriteria(Optional<Integer> page, Optional<String> searchCriteria, Optional<Integer> limit, Optional<String> orderBy) {
-        List<Partner> result = partnerRepository.findAll(
+        return page.isEmpty() ?
+                partnerRepository.findAll(
+                        buildSpecification(searchCriteria),
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                : partnerRepository.findAll(
                 buildSpecification(searchCriteria),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(Integer.MAX_VALUE), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
-        return result;
     }
 
     private boolean filterContains(String searchPart, Partner partner) {
@@ -137,7 +142,7 @@ public class PartnerService {
     }
 
     public Partner togglePartnerActivity(String id) throws ValidationException {
-        Partner toToggle = partnerRepository.findById(id).orElseThrow(()-> new ValidationException("No partner with provided ID"));
+        Partner toToggle = partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with provided ID"));
         toToggle.setEnabled(!toToggle.getEnabled());
         return partnerRepository.save(toToggle);
     }
