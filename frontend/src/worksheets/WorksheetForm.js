@@ -79,7 +79,7 @@ export default function WorkSheetForm({
                   ? true
                   : false
 
-              let isReported = values.worksheetStatus === 'Reported'
+              let isReported = values.worksheetStatus === 'REPORTED'
 
               return (
                 <Form>
@@ -151,7 +151,9 @@ export default function WorkSheetForm({
                     container={TYPE_OF_PAYMENT_LIST}
                   />
                   <Input
-                    disabled={isReported ? false : notEditable}
+                    //disabled={isReported ? false : notEditable}
+                    //disabled="false"
+                    disabled={isReported ? false : true}
                     name="accountSerialNumber"
                     label="A munkalaphoz tartozó számla sorszáma"
                     type="text"

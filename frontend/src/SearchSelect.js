@@ -2,7 +2,7 @@ import React from 'react'
 import Select from 'react-select'
 import { useField } from 'formik'
 
-function SearchSelect({ ...props }) {
+function SearchSelect({ status, ...props }) {
   const [field, { touched, error }, { setValue, setTouched }] = useField(props)
   const { name, label, options, placeholder } = props
   const showError = touched && error
@@ -12,6 +12,7 @@ function SearchSelect({ ...props }) {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <Select
+        isDisabled={status}
         {...field}
         options={options}
         onChange={(option) => {
