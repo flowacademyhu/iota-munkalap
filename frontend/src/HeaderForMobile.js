@@ -8,7 +8,7 @@ import ToolsButton from './ToolsButton'
 function HeaderForMobile() {
   return (
     <>
-      <div className="row mt-2">
+      <div className="row my-2">
         <div className="col p-0">
           <img
             className="col-auto logo p-0 m-0"
