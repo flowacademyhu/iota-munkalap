@@ -67,7 +67,9 @@ public class PartnerController {
         return partnerService.getPartnerById(id);
     }
 
+    @RolesAllowed("admin")
     @PutMapping("/partners/{id}/{status}")
+
     public Partner setPartnerStatus(@PathVariable("id") String id,
                               @PathVariable(value = "status") Status status) throws ValidationException {
         return partnerService.setPartnerActivity(id, status);
