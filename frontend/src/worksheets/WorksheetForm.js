@@ -73,6 +73,7 @@ export default function WorkSheetForm({
             }}
           >
             {({ values, setFieldValue }) => {
+              let isCreated = values.worksheetStatus === 'CREATED'
               let isClosed = values.worksheetStatus === 'CLOSED'
               let isReported = values.worksheetStatus === 'REPORTED'
               let disabled = isClosed || isReported
@@ -178,14 +179,16 @@ export default function WorkSheetForm({
                       moreClassName="h-auto"
                     />
                   </div>
-                  <div className="buttons">
-                    <Button
-                      text="Mentés és készre jelentés"
-                      type="submit"
-                      onClick={() => (finalize.current = true)}
-                      moreClassName="h-auto"
-                    />
-                  </div>
+                  {isCreated && (
+                    <div className="buttons">
+                      <Button
+                        text="Mentés és készre jelentés"
+                        type="submit"
+                        onClick={() => (finalize.current = true)}
+                        moreClassName="h-auto"
+                      />
+                    </div>
+                  )}
                 </Form>
               )
             }}
