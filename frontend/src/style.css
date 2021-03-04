@@ -52,3 +52,9 @@ img {
   opacity: 0.2;
   pointer-events: none;
 }
+
+@media screen and (max-width: 1200px) {
+  .layout {
+    align-items: center;
+  }
+}
