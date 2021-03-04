@@ -6,6 +6,7 @@ export default function TextareaInput({
   handleChange,
   label,
   container,
+  disabled,
   ...props
 }) {
   const [field, meta] = useField(props)
@@ -18,6 +19,7 @@ export default function TextareaInput({
       <Form.Group controlId={`form-group-${name}`}>
         <Form.Label>{label}</Form.Label>
         <Form.Control
+          disabled={disabled}
           {...field}
           as="textarea"
           custom

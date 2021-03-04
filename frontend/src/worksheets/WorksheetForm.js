@@ -30,10 +30,12 @@ export default function WorkSheetForm({
   worksheet,
 }) {
   const { partners } = usePartners()
-  const partnersForSelect = partners?.map((partner) => ({
-    label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
-    value: partner.partnerId,
-  }))
+  const partnersForSelect = partners
+    ?.filter((partner) => partner.enabled)
+    .map((partner) => ({
+      label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
+      value: partner.partnerId,
+    }))
 
   const finalize = useRef(false)
   return partnersForSelect ? (
@@ -73,16 +75,23 @@ export default function WorkSheetForm({
             }}
           >
             {({ values, setFieldValue }) => {
+              let isCreated = values.worksheetStatus === 'CREATED'
+              let isClosed = values.worksheetStatus === 'CLOSED'
+              let isReported = values.worksheetStatus === 'REPORTED'
+              let disabled = isClosed || isReported
+
               return (
                 <Form>
                   <h1 className="text-center">{title}</h1>
                   <SearchSelect
+                    disabled={disabled}
                     options={partnersForSelect}
                     name="partnerId"
                     label="Partner"
                     placeholder="Partner neve"
                   />
                   <SelectInput
+                    disabled={disabled}
                     name="typeOfWork"
                     label="Munkavégzés jellege"
                     container={TYPE_OF_WORK_LIST}
@@ -91,63 +100,75 @@ export default function WorkSheetForm({
                     <Input name="customTypeOfWork" label="Egyéb" type="text" />
                   )}
                   <SelectInput
+                    disabled={disabled}
                     name="assetSettlement"
                     label="Eszközök elszámolás módja"
                     container={ASSET_SETTLEMENT_LIST}
                   />
                   <SelectInput
+                    disabled={disabled}
                     name="workingTimeAccounting"
                     label="Munkaidő elszámolás módja"
                     container={WORKING_TIME_ACCOUNT_LIST}
                   />
                   <Input
+                    disabled={disabled}
                     name="numberOfEmployees"
                     label="Létszám"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={disabled}
                     name="overheadHour"
                     label="Rezsióra"
                     type="number"
                     min="0"
                   />
                   <Input
+                    disabled={disabled}
                     name="deliveryKm"
                     label="Kiszállás"
                     type="number"
                     min="0"
                   />
-                  <Input
-                    name="accountSerialNumber"
-                    label="A munkalaphoz tartozó számla sorszáma"
-                    type="text"
-                  />
                   <TextareaInput
+                    disabled={disabled}
                     name="description"
                     label="Elvégzett munka leírása"
                   />
                   <Input
+                    disabled={disabled}
                     name="usedMaterial"
                     label="Felhasznált anyagok"
                     type="text"
                   />
                   <SelectInput
+                    disabled={disabled}
                     name="typeOfPayment"
                     label="Fizetés módja"
                     container={TYPE_OF_PAYMENT_LIST}
                   />
+                  <Input
+                    disabled={isClosed}
+                    name="accountSerialNumber"
+                    label="A munkalaphoz tartozó számla sorszáma"
+                    type="text"
+                  />
                   <span>Kelt: </span>
                   <CalendarDropDown
+                    disabled={disabled}
                     name="createdAt"
                     setFieldValue={setFieldValue}
                     value={values.createdAt}
                   />
-                  <div className="mt-3 signatureDiv">
+                  <div className={disabled ? 'hidden' : 'mt-3 signatureDiv'}>
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div className="mt-3 mb-5 signatureDiv">
+                  <div
+                    className={disabled ? 'hidden' : 'mt-3 mb-5 signatureDiv'}
+                  >
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>
@@ -162,14 +183,16 @@ export default function WorkSheetForm({
                       moreClassName="h-auto"
                     />
                   </div>
-                  <div className="buttons">
-                    <Button
-                      text="Mentés és készre jelentés"
-                      type="submit"
-                      onClick={() => (finalize.current = true)}
-                      moreClassName="h-auto"
-                    />
-                  </div>
+                  {isCreated && (
+                    <div className="buttons">
+                      <Button
+                        text="Mentés és készre jelentés"
+                        type="submit"
+                        onClick={() => (finalize.current = true)}
+                        moreClassName="h-auto"
+                      />
+                    </div>
+                  )}
                 </Form>
               )
             }}

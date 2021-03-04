@@ -67,7 +67,7 @@ public class PartnerController {
         return partnerService.getPartnerById(id);
     }
 
-    @RolesAllowed("admin")
+    @RolesAllowed({"admin", "user"})
     @PutMapping("/partners/{id}/{status}")
 
     public Partner setPartnerStatus(@PathVariable("id") String id,
