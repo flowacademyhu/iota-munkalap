@@ -13,20 +13,22 @@ const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
 export const createHeader = function (worksheet, partnerData) {
-  let name = partnerData.nev
-  let phoneNumber = partnerData.telefon
-  let email = partnerData.partnerEmail
-  let country = partnerData.szamlazasiCimOrszagNev
-  let zip = partnerData.szamlazasiCimIranyitoszam
-  let city = partnerData.szamlazasiCimTelepulesNev
-  let streetName = partnerData.szamlazasiCimKozteruletNev
-  let streetType = partnerData.szamlazasiCimKozteruletJellegNev
-  let addressNum = partnerData.szamlazasiCimHazszam
-  let building = partnerData.szamlazasiCimEpulet
-  let stairWay = partnerData.szamlazasiCimLepcsohaz
-  let floor = partnerData.szamlazasiCimSzint
-  let door = partnerData.szamlazasiCimAjto
-  let parcel = partnerData.szamlazasiCimHrsz
+  const {
+    nev: name,
+    telefon: phoneNumber,
+    partnerEmail: email,
+    szamlazasiCimOrszagNev: country,
+    szamlazasiCimIranyitoszam: zip,
+    szamlazasiCimTelepulesNev: city,
+    szamlazasiCimKozteruletNev: streetName,
+    szamlazasiCimKozteruletJellegNev: streetType,
+    szamlazasiCimHazszam: addressNum,
+    szamlazasiCimEpulet: building,
+    szamlazasiCimLepcsohaz: stairWay,
+    szamlazasiCimSzint: floor,
+    szamlazasiCimAjto: door,
+    szamlazasiCimHrsz: parcel,
+  } = partnerData
 
   return (
     {
