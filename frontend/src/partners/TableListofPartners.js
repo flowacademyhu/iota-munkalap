@@ -28,6 +28,7 @@ export default function TableListofPartners() {
                 <Th scope="col">Név</Th>
                 <Th scope="col">Cím</Th>
                 <Th scope="col">Adószám</Th>
+                <Th scope="col">Állapot</Th>
                 <Th scope="col">Módosítás</Th>
               </Tr>
             </Thead>
@@ -41,6 +42,7 @@ export default function TableListofPartners() {
                       <Address partner={partner} />
                     </Td>
                     <Td>{partner.adoszam}</Td>
+                    <Td>{partner.enabled ? 'Aktív' : 'Inaktív'}</Td>
                     <Td>
                       <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />

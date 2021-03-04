@@ -8,7 +8,6 @@ export default function RadioInputGroup({ label, options, ...props }) {
   const [field, meta] = useField(props)
   const { error, touched } = meta
   const showError = touched && error
-  const { name } = props
 
   return (
     <fieldset>
@@ -17,7 +16,6 @@ export default function RadioInputGroup({ label, options, ...props }) {
           {label}
         </Form.Label>
         <Col
-          {...field}
           sm={5}
           className={`form-control border-white d-flex  ${
             showError ? 'is-invalid' : ''
@@ -25,10 +23,11 @@ export default function RadioInputGroup({ label, options, ...props }) {
         >
           {options.map((oneItem) => (
             <RadioInput
+              {...field}
               key={oneItem.value}
               label={oneItem.label}
-              name={name}
               value={oneItem.value}
+              checked={field.value === oneItem.value}
             />
           ))}
         </Col>
