@@ -30,10 +30,12 @@ export default function WorkSheetForm({
   worksheet,
 }) {
   const { partners } = usePartners()
-  const partnersForSelect = partners?.map((partner) => ({
-    label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
-    value: partner.partnerId,
-  }))
+  const partnersForSelect = partners
+    ?.filter((partner) => partner.enabled)
+    .map((partner) => ({
+      label: `${partner.nev}, a.sz.: ${partner.adoszam}`,
+      value: partner.partnerId,
+    }))
 
   const finalize = useRef(false)
   return partnersForSelect ? (
