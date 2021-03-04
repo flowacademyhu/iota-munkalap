@@ -73,11 +73,9 @@ export default function WorkSheetForm({
             }}
           >
             {({ values, setFieldValue }) => {
-              let disabled =
-                values.worksheetStatus === 'REPORTED' ||
-                values.worksheetStatus === 'CLOSED'
-
+              let isClosed = values.worksheetStatus === 'CLOSED'
               let isReported = values.worksheetStatus === 'REPORTED'
+              let disabled = isClosed || isReported
 
               return (
                 <Form>
