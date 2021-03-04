@@ -10,7 +10,7 @@ export default function useWorkSheets() {
 
   const updateWorkSheets = useCallback(
     async function () {
-      const { data } = await getWorkSheets(startDate, endDate, status)
+      const data = await getWorkSheets(startDate, endDate, status)
       if (data) {
         setWorkSheets(data)
       }

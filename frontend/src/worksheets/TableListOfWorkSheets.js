@@ -26,7 +26,7 @@ export default function TableListOfWorkSheets() {
 
   async function handlePrint(worksheet) {
     const partnerData = await getPartner(worksheet.partnerId)
-    createWorksheetPDF(worksheet, partnerData.data)
+    createWorksheetPDF(worksheet, partnerData)
   }
 
   async function closeAndReload(id) {
