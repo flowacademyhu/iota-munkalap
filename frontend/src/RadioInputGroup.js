@@ -8,7 +8,6 @@ export default function RadioInputGroup({ label, options, ...props }) {
   const [field, meta] = useField(props)
   const { error, touched } = meta
   const showError = touched && error
-  const { name } = props
 
   return (
     <fieldset>
