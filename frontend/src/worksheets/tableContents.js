@@ -130,7 +130,7 @@ export const createDetails = function (worksheet) {
           {
             text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
               typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
-                ? 'Egyéb: ' + worksheet.customTypeOfWork
+                ? worksheet.customTypeOfWork
                 : ''
             }`,
           },
