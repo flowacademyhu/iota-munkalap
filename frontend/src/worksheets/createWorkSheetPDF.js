@@ -10,7 +10,7 @@ import {
   createStyles,
 } from './tableContents'
 
-function workSheetPDF(worksheet, partnerData) {
+function createWorksheetPDF(worksheet, partnerData) {
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
 
@@ -28,4 +28,4 @@ function workSheetPDF(worksheet, partnerData) {
   pdfMake.createPdf(doc).open()
 }
 
-export default workSheetPDF
+export default createWorksheetPDF

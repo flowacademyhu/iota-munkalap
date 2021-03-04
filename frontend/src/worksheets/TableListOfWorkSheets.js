@@ -7,7 +7,7 @@ import {
 } from './TranslationForWorkSheet'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
 import LoadingScreen from '../LoadingScreen'
-import workSheetPDF from './workSheetPDF'
+import createWorksheetPDF from './createWorksheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import { getPartner } from '../api/PartnerAPI'
@@ -26,7 +26,7 @@ export default function TableListOfWorkSheets() {
 
   async function handlePrint(worksheet) {
     const partnerData = await getPartner(worksheet.partnerId)
-    workSheetPDF(worksheet, partnerData.data)
+    createWorksheetPDF(worksheet, partnerData.data)
   }
 
   async function closeAndReload(id) {
