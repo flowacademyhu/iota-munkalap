@@ -32,8 +32,11 @@ function WorkSheetOperationButtons({
 
   return (
     <>
-      <Link to={`/worksheets/update/${id}`}>
-        <EditButton hidden={!isEditable()} />
+      <Link
+        to={`/worksheets/update/${id}`}
+        className={`${!isEditable() && 'hidden'}`}
+      >
+        <EditButton />
       </Link>
       <FinalizeButton hidden={status !== 'CREATED'} onClick={onFinalize} />
       {isAdmin && (
