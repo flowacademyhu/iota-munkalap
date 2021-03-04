@@ -1,6 +1,7 @@
 import React from 'react'
 import WorksheetForm from './WorksheetForm'
 import useWorksheetData from '../hooks/useWorksheetData'
+import LoadingScreen from '../LoadingScreen'
 
 export default function Worksheet() {
   const {
@@ -10,29 +11,17 @@ export default function Worksheet() {
     sent,
     worksheetData,
   } = useWorksheetData()
-
-  return window.location.pathname === '/worksheets/new' ? (
-    <>
-      <WorksheetForm
-        handleClick={handleClick}
-        sent={sent}
-        popUpMessage={popUpMessage}
-        sendData={saveWorksheet}
-        title="Munkalap létrehozása"
-      />
-    </>
+  let isCreate = window.location.pathname === '/worksheets/new'
+  return isCreate || worksheetData ? (
+    <WorksheetForm
+      handleClick={handleClick}
+      sent={sent}
+      popUpMessage={popUpMessage}
+      sendData={saveWorksheet}
+      title={isCreate ? 'Munkalap létrehozása' : 'Adatok szerkesztése'}
+      worksheet={worksheetData}
+    />
   ) : (
-    <>
-      {worksheetData && (
-        <WorksheetForm
-          handleClick={handleClick}
-          sent={sent}
-          popUpMessage={popUpMessage}
-          sendData={saveWorksheet}
-          title="Adatok szerkesztése"
-          worksheet={worksheetData}
-        />
-      )}
-    </>
+    <LoadingScreen />
   )
 }

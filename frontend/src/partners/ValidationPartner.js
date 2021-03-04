@@ -34,6 +34,7 @@ export default function schema() {
     }),
     bankszamlaszam: yup
       .string()
+      .required('Kötelező mező!')
       .matches(
         /([0-9]{8})-([0-9]{8})/ || /([0-9]{8})-([0-9]{8})-([0-9]{8})/,
         'Nem megfelelő bankszámlaszám! Bankszámlaszám formátuma: 12345678-12345678 vagy 12345678-12345678-12345678'

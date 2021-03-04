@@ -30,6 +30,8 @@ export default function Signature(props) {
       <div className="border border-secondary mb-1">
         <SignaturePad
           ref={signaturePadRef}
+          width={400}
+          height={300}
           options={{
             minWidth: 1,
             maxWidth: 4,
@@ -38,7 +40,7 @@ export default function Signature(props) {
           }}
         />
       </div>
-      <span className="btn btn-success" onClick={clear}>
+      <span className="btn btn-success px-1 py-0 my-2" onClick={clear}>
         Törlés
       </span>
     </>

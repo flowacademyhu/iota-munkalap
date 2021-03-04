@@ -31,7 +31,7 @@ public class Partner {
     private OrderType megrendeloTipusa;
     @Column(name = "nev", nullable = false)
     private String nev;
-    @Column(name = "rovid_nev", nullable = false)
+    @Column(name = "rovid_nev")
     private String rovidNev;
     @Column(name = "adoszam")
     private String adoszam;

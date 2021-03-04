@@ -19,7 +19,7 @@ export default function FilterEmployees(props) {
       <form>
         <select
           value={status === null ? '' : status ? 'true' : 'false'}
-          className="btn btn-success"
+          className="btn border-dark"
           onChange={handleInputChange}
           name="filterEmployeebyActivity"
         >

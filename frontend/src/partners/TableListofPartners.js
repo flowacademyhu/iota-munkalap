@@ -1,57 +1,71 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import LoadingScreen from '../LoadingScreen'
 import usePartners from '../hooks/usePartners'
-import { Link } from 'react-router-dom'
 import Button from '../Button'
 import Address from './Address'
 import EditButton from '../specialButtons/EditButton'
+import InactivateButton from '../specialButtons/InactivateButton'
+import ActivateButton from '../specialButtons/ActivateButton'
 
 export default function TableListofPartners() {
-  const { partners } = usePartners()
+  const { partners, activate, inactivate } = usePartners()
 
   return (
     <>
-      <div className="d-flex justify-content-between p-1">
+      <div className="d-flex justify-content-center my-3">
         <Link to={`/partners/new`}>
           <Button text="Új partner létrehozása" moreClassName="w-auto p-1" />
         </Link>
       </div>
       <div className="border border-secondary">
         <div className="container-fluid align-items-center">
-          <table className="table table-hover text-center">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Név</th>
-                <th scope="col">Cím</th>
-                <th scope="col">Adószám</th>
-                <th scope="col">Módosítás</th>
-              </tr>
-            </thead>
-            <tbody>
+          <Table className="table table-hover table-striped text-center">
+            <Thead>
+              <Tr>
+                <Th scope="col">#</Th>
+                <Th scope="col">Név</Th>
+                <Th scope="col">Cím</Th>
+                <Th scope="col">Adószám</Th>
+                <Th scope="col">Módosítás</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {partners ? (
                 partners.map((partner, index) => (
-                  <tr key={index}>
-                    <th scope="row">{index + 1}</th>
-                    <td>{partner.nev}</td>
-                    <Address partner={partner} />
-                    <td>{partner.adoszam}</td>
-                    <td>
-                      <Link to={`/partners/update/${partner.id}`}>
+                  <Tr key={index}>
+                    <Th scope="row">{index + 1}</Th>
+                    <Td>{partner.nev}</Td>
+                    <Td>
+                      <Address partner={partner} />
+                    </Td>
+                    <Td>{partner.adoszam}</Td>
+                    <Td>
+                      <Link to={`/partners/update/${partner.partnerId}`}>
                         <EditButton />
                       </Link>
-                    </td>
-                  </tr>
+                      {partner.enabled ? (
+                        <InactivateButton
+                          onClick={() => inactivate(partner.partnerId)}
+                        />
+                      ) : (
+                        <ActivateButton
+                          onClick={() => activate(partner.partnerId)}
+                        />
+                      )}
+                    </Td>
+                  </Tr>
                 ))
               ) : (
-                <tr>
-                  <td colSpan="5">
+                <Tr>
+                  <Td colSpan="5">
                     <LoadingScreen />
-                  </td>
-                </tr>
+                  </Td>
+                </Tr>
               )}
-            </tbody>
-          </table>
+            </Tbody>
+          </Table>
         </div>
       </div>
     </>

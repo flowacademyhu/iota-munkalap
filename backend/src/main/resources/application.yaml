@@ -8,6 +8,9 @@ hu:
         defaultLimit: 10
 
 spring:
+  http:
+    encoding: charset=UTF-8
+    enabled: true
   datasource:
     url: jdbc:mysql://mysql:3306/worksheet
     username: worksheet

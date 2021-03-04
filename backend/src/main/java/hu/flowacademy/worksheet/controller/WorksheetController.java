@@ -25,7 +25,7 @@ public class WorksheetController {
     @PostMapping("/worksheets")
     @ResponseStatus(HttpStatus.CREATED)
     @RolesAllowed({"admin", "user"})
-    public Worksheet createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+    public WorksheetDTO createWorksheet(@RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
         return worksheetService.saveWorksheet(worksheetDTO);
     }
 
@@ -45,7 +45,7 @@ public class WorksheetController {
 
     @GetMapping("/worksheets")
     @RolesAllowed({"admin", "user"})
-    public List<Worksheet> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
+    public List<WorksheetDTO> getWorksheetList(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                             @RequestParam(value = "limit", required = false) Optional<Integer> limit,
                                             @RequestParam(value = "order_by", required = false) Optional<String> orderBy,
                                             @DateTimeFormat(pattern = "yyyy.MM.dd") @RequestParam (value = "maxTime") Optional<LocalDate> maxTime,
@@ -57,8 +57,8 @@ public class WorksheetController {
 
     @PutMapping("/worksheets/{id}")
     @RolesAllowed({"admin", "user"})
-    public Worksheet updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody Worksheet worksheet) throws ValidationException {
-        return worksheetService.update(worksheetId, worksheet);
+    public WorksheetDTO updateWorksheet(@PathVariable("id") String worksheetId, @RequestBody WorksheetDTO worksheetDTO) throws ValidationException {
+        return worksheetService.update(worksheetId, worksheetDTO);
     }
 
     @GetMapping("/worksheets/{id}")
