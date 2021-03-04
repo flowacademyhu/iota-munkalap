@@ -6,11 +6,11 @@ import {
   statusTranslation,
 } from './TranslationForWorkSheet'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
-import LoadingScreen from '../LoadingScreen'
-import createWorksheetPDF from './createWorksheetPDF'
+import createWorksheetPDF from './createWorkSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import { getPartner } from '../api/PartnerAPI'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const {
