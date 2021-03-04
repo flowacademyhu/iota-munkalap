@@ -12,8 +12,6 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-//adat: cim
-
 export const createHeader = function (worksheet, partnerData) {
   let name = partnerData.nev
   let phoneNumber = partnerData.telefon
