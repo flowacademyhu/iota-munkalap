@@ -4,7 +4,12 @@ import { useField } from 'formik'
 import RadioInput from './RadioInput'
 import { Row, Col } from 'react-bootstrap'
 
-export default function RadioInputGroup({ label, options, ...props }) {
+export default function RadioInputGroup({
+  label,
+  options,
+  response,
+  ...props
+}) {
   const [field, meta] = useField(props)
   const { error, touched } = meta
   const showError = touched && error
@@ -29,6 +34,7 @@ export default function RadioInputGroup({ label, options, ...props }) {
               label={oneItem.label}
               name={name}
               value={oneItem.value}
+              response={response}
             />
           ))}
         </Col>
