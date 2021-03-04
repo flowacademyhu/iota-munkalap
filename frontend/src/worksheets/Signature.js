@@ -29,7 +29,7 @@ export default function Signature(props) {
 
   return (
     <>
-      <div className="border border-secondary mb-1">
+      <div className="border border-secondary mb-1 signatureDiv">
         <SignaturePad
           ref={signaturePadRef}
           width={400}
