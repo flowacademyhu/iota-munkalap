@@ -38,7 +38,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class WorksheetServiceTest {
 
-    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("id").ascending());
+    private static final Pageable PAGEABLE = PageRequest.of(0, 1, Sort.by("id").descending());
 
     private static final String WORKSHEET_ID = "Munkalap_id1";
     private static final String PARTNER_ID = "Partner_id1";
