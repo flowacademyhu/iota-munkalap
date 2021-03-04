@@ -49,7 +49,11 @@ export default function PartnerForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              sendData(values)
+              const calculatedData =
+                values.megrendeloTipusa === 'PRIVATE'
+                  ? { ...values, adoszam: '', kadoszamtipus: '' }
+                  : values
+              sendData(calculatedData)
             }}
           >
             {({ values }) => {

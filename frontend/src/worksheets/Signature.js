@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import SignaturePad from 'react-signature-pad-wrapper'
 import { useField } from 'formik'
 
@@ -12,13 +12,15 @@ export default function Signature(props) {
     setValue(JSON.stringify([]))
   }
 
-  useEffect(() => {
-    try {
+  const refreshSign = useCallback(
+    async function () {
       signaturePadRef.current.fromData(JSON.parse(field.value))
-    } catch {
-      setValue(JSON.stringify([]))
-    }
-  }, [field.value, setValue])
+    },
+    [field.value]
+  )
+  useEffect(() => {
+    refreshSign()
+  }, [refreshSign])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
@@ -27,7 +29,7 @@ export default function Signature(props) {
 
   return (
     <>
-      <div className="border border-secondary mb-1">
+      <div className="border border-secondary mb-1 signatureDiv">
         <SignaturePad
           ref={signaturePadRef}
           width={400}

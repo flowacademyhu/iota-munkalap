@@ -37,6 +37,6 @@ public class User {
 
 
     public String getFullName() {
-        return getFirstName() + " " + getLastName();
+        return getLastName() + " " + getFirstName();
     }
 }

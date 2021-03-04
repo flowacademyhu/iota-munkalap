@@ -10,6 +10,7 @@
  6. (Optional) if you want to import the latest realm config then run `import_realm.sh`
  7. (Optional) if you've changed the Keycloak's configuration and want to export the latest realm config then run `export_realm.sh` and commit the realm.json file
  8. (Optional) Databases are persisted between `docker-compose up`-s, if you want to reset the DB's to a brand new, clean state then run `docker-compose down`
+ 9. (Optional) If you want to restart just the backend service with rebuild then run `rebuild_backend.sh`
 
 ## Start and stop the frontend
 
