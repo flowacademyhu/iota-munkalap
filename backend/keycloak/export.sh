@@ -8,6 +8,8 @@ JSON_EXPORT_FILE=/keycloak/realm.json
 
 rm -f ${LOGFILE}
 
+touch ${LOGFILE}
+
 echo "Export started, please wait..."
 
 timeout ${TIMEOUT_SECONDS}s \
