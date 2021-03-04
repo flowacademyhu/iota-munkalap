@@ -73,12 +73,13 @@ export const createHeader = function (worksheet, partnerData) {
               {
                 text: `${country ? country : ''}
                 ${zip} ${city}
-                ${streetName} ${streetType} ${addressNum}
-                ${building ? building : ''} 
-                ${stairWay ? stairWay : ''}
-                ${floor ? floor : ''} 
-                ${door ? door : ''} 
-                ${parcel ? parcel : ''}`,
+                ${streetName} ${streetType} ${addressNum} ${
+                  building ? building + ' ép.' : ''
+                } ${stairWay ? stairWay + ' lph.' : ''} ${
+                  floor ? floor + ' em.' : ''
+                } ${door ? door + ' a.' : ''} ${
+                  parcel ? 'hrsz: ' + parcel : ''
+                }`,
                 fontSize: 8,
               },
               {
