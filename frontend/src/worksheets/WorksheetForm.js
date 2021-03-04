@@ -162,13 +162,11 @@ export default function WorkSheetForm({
                     setFieldValue={setFieldValue}
                     value={values.createdAt}
                   />
-                  <div className={disabled ? 'hidden' : 'mt-3 signatureDiv'}>
+                  <div className={disabled ? 'hidden' : 'mt-3'}>
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div
-                    className={disabled ? 'hidden' : 'mt-3 mb-5 signatureDiv'}
-                  >
+                  <div className={disabled ? 'hidden' : 'mt-3 mb-5'}>
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>
