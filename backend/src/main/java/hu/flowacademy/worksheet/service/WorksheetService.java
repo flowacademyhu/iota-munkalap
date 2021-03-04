@@ -148,10 +148,10 @@ public class WorksheetService {
         List <Worksheet> worksheetList = page.isEmpty() ?
                 worksheetRepository.findAll(
                         buildSpecification(status, maxTime, minTime),
-                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+                        Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
                 : worksheetRepository.findAll(
                 buildSpecification(status, maxTime, minTime),
-                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).ascending())
+                PageRequest.of(page.orElse(DEFAULT_PAGE), limit.orElse(pagingProperties.getDefaultLimit()), Sort.by(orderBy.orElse(DEFAULT_ORDERBY)).descending())
         ).getContent();
         return worksheetList.stream().map(this::buildDTO).collect(Collectors.toList());
     }
