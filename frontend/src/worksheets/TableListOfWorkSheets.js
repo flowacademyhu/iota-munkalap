@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useParams } from 'react'
+import React from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import useWorkSheets from '../hooks/useWorkSheets'
 import {
@@ -11,7 +11,6 @@ import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
 import { getPartner } from '../api/PartnerAPI'
-const { id } = useParams()
 
 export default function TableListOfWorkSheets() {
   const {
@@ -25,40 +24,10 @@ export default function TableListOfWorkSheets() {
     setStatus: onStatus,
   } = useWorkSheets()
 
-  // const [partnerData, setPartnerData] = useState()
-
-  // const refreshPartner = useCallback(
-  //   async function (id) {
-  //     if (id !== undefined) {
-  //       try {
-  //         const response = await getPartner(id)
-  //         setPartnerData({ ...response.data, loaded: true })
-  //       } catch (error) {
-  //         setPartnerData({ loaded: true })
-  //         // setPopUpMessage('A lekérés sikertelen')
-  //         // setSent(true)
-  //       }
-  //     }
-  //   },
-  //   [id]
-  // )
-
-  // useEffect(() => {
-  //   refreshPartner()
-  // }, [refreshPartner])
-
-
-  
-  function handlePrint(worksheet) {
+  async function handlePrint(worksheet) {
     const partnerData = await getPartner(worksheet.partnerId)
-    workSheetPDF(worksheet, partnerData)
+    workSheetPDF(worksheet, partnerData.data)
   }
-
-  // function handlePrint(worksheet) {
-  //   refreshPartner(worksheet.partnerId)
-  //   console.log(partnerData)
-  //   workSheetPDF(worksheet, partnerData)
-  // }
 
   async function closeAndReload(id) {
     await closeWorkSheet(id)
@@ -110,10 +79,7 @@ export default function TableListOfWorkSheets() {
                         id={worksheet.id}
                         onFinalize={() => finalizeAndReload(worksheet.id)}
                         onClose={() => closeAndReload(worksheet.id)}
-                        onPrint={
-                          () => handlePrint(worksheet)
-                          //workSheetPDF(worksheet, partnerData)
-                        }
+                        onPrint={() => handlePrint(worksheet)}
                       />
                     </Td>
                   </Tr>
