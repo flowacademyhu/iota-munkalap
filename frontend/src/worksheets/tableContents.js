@@ -12,8 +12,12 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
+//adat: cim
+
 export const createHeader = function (worksheet, partnerData) {
   let name = partnerData.nev
+  let phoneNumber = partnerData.telefon
+  let email = partnerData.partnerEmail
   let country = partnerData.szamlazasiCimOrszagNev
   let zip = partnerData.szamlazasiCimIranyitoszam
   let city = partnerData.szamlazasiCimTelepulesNev
@@ -51,15 +55,7 @@ export const createHeader = function (worksheet, partnerData) {
                 bold: true,
                 fontSize: 10,
               },
-              {
-                text: `Partner ID:`,
-                bold: true,
-                fontSize: 8,
-              },
-              {
-                text: `${worksheet.partnerId}\n`,
-                fontSize: 8,
-              },
+
               {
                 text: `Az Ügyfél számlázási neve:`,
                 fontSize: 8,
@@ -76,8 +72,8 @@ export const createHeader = function (worksheet, partnerData) {
               },
               {
                 text: `${country ? country : ''}
-                ${zip} ${city}\n 
-                ${streetName} ${streetType} ${addressNum}\n
+                ${zip} ${city}
+                ${streetName} ${streetType} ${addressNum}
                 ${building ? building : ''} 
                 ${stairWay ? stairWay : ''}
                 ${floor ? floor : ''} 
@@ -91,7 +87,7 @@ export const createHeader = function (worksheet, partnerData) {
                 bold: true,
               },
               {
-                text: ``,
+                text: `telefon: ${phoneNumber}, email: ${email}`,
                 fontSize: 8,
               },
             ],
@@ -117,7 +113,7 @@ export const createDetails = function (worksheet) {
   return {
     style: 'tableExample',
     table: {
-      widths: [130, 130, '*', '*', '*'],
+      widths: [85, 130, 55, 55, 60, '*'],
       body: [
         [
           { text: `Munkavégzés jellege:`, bold: true },
@@ -125,6 +121,7 @@ export const createDetails = function (worksheet) {
           { text: `Létszám:`, bold: true },
           { text: `Rezsióra:`, bold: true },
           { text: `Kiszállás:`, bold: true },
+          { text: `Számlaszám:`, bold: true },
         ],
         [
           {
@@ -136,8 +133,9 @@ export const createDetails = function (worksheet) {
           },
           `${assetSettlement[worksheet.assetSettlement]}`,
           `${worksheet.numberOfEmployees} fő`,
-          `${worksheet.overheadHour} HUF`,
+          `${worksheet.overheadHour} óra`,
           `${worksheet.deliveryKm} Km`,
+          `${worksheet.accountSerialNumber}`,
         ],
       ],
     },
