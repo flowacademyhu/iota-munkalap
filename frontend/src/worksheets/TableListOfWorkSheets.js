@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import useWorkSheets from '../hooks/useWorkSheets'
+import usePartners from '../hooks/usePartners'
 import {
   typeOfWorkTranslation,
   statusTranslation,
@@ -22,6 +23,8 @@ export default function TableListOfWorkSheets() {
     status,
     setStatus: onStatus,
   } = useWorkSheets()
+
+  const { partners } = usePartners
 
   async function closeAndReload(id) {
     await closeWorkSheet(id)
@@ -73,7 +76,7 @@ export default function TableListOfWorkSheets() {
                         id={worksheet.id}
                         onFinalize={() => finalizeAndReload(worksheet.id)}
                         onClose={() => closeAndReload(worksheet.id)}
-                        onPrint={() => workSheetPDF(worksheet)}
+                        onPrint={() => workSheetPDF(worksheet, partners)}
                       />
                     </Td>
                   </Tr>

@@ -12,7 +12,20 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-export const createHeader = function (worksheet) {
+export const createHeader = function (worksheet, partners) {
+  let name = partners.nev
+  let country = partners.szamlazasiCimOrszagNev
+  let zip = partners.szamlazasiCimIranyitoszam
+  let city = partners.szamlazasiCimTelepulesNev
+  let streetName = partners.szamlazasiCimKozteruletNev
+  let streetType = partners.szamlazasiCimKozteruletJellegNev
+  let addressNum = partners.szamlazasiCimHazszam
+  let building = partners.szamlazasiCimEpulet
+  let stairWay = partners.szamlazasiCimLepcsohaz
+  let floor = partners.szamlazasiCimSzint
+  let door = partners.szamlazasiCimAjto
+  let parcel = partners.szamlazasiCimHrsz
+
   return (
     {
       text: 'Munkalap',
@@ -53,7 +66,7 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `{partner.BillingName}\n`,
+                text: `${name}\n`,
                 fontSize: 8,
               },
               {
@@ -62,7 +75,7 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `{partner.BillingAddress}\n`,
+                text: `${zip} ${city}\n ${streetName} ${streetType} ${addressNum}\n`,
                 fontSize: 8,
               },
               {
@@ -71,7 +84,7 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `{partner.phone}\n`,
+                text: ``,
                 fontSize: 8,
               },
             ],

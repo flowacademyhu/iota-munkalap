@@ -10,13 +10,13 @@ import {
   createStyles,
 } from './tableContents'
 
-function workSheetPDF(worksheet) {
+function workSheetPDF(worksheet, partners) {
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
 
   const doc = {
     content: [
-      createHeader(worksheet),
+      createHeader(worksheet, partners),
       createDetails(worksheet),
       createDescription(worksheet),
       createMaterials(worksheet),
