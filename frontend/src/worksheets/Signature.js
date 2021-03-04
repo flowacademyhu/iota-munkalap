@@ -15,15 +15,11 @@ export default function Signature(props) {
   useEffect(() => {
     try {
       signaturePadRef.current.fromData(JSON.parse(field.value))
-    } catch {
-      setValue(JSON.stringify([]))
-    }
+    } catch {}
   }, [field.value])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
-    console.log('adat')
-    console.log(data)
     setValue(data)
   }
 
