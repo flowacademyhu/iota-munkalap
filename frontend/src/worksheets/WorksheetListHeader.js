@@ -22,7 +22,7 @@ function WorksheetListHeader({
         </div>
       </div>
       <div className="row justify-content-between">
-        <div className="col-sm-6 d-flex flex-column layout mb-3">
+        <div className="col-sm-6 d-flex flex-column align-items-xl-start align-items-center mb-3">
           <DateRangeFilter
             startDate={startDate}
             onStartDate={onStartDate}
