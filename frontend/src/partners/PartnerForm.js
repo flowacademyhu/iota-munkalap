@@ -49,11 +49,11 @@ export default function PartnerForm({
             }}
             validationSchema={schema}
             onSubmit={(values) => {
-              if (values.megrendeloTipusa === 'PRIVATE') {
-                values.adoszam = ''
-                values.kadoszamtipus = ''
-              }
-              sendData(values)
+              const calculatedData =
+                values.megrendeloTipusa === 'PRIVATE'
+                  ? { ...values, adoszam: '', kadoszamtipus: '' }
+                  : values
+              sendData(calculatedData)
             }}
           >
             {({ values }) => {
@@ -66,7 +66,6 @@ export default function PartnerForm({
                     name="megrendeloTipusa"
                     label="Megrendelő típusa:"
                     options={TYPE_OF_CUSTOMER}
-                    response={partner?.megrendeloTipusa}
                   />
                   <Input name="nev" label="Név" type="text" />
                   <Input name="rovidNev" label="Rövid név" type="text" />
