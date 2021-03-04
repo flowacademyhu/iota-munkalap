@@ -61,7 +61,7 @@ export default function TableListofPartners() {
                 ))
               ) : (
                 <Tr>
-                  <Td colSpan="5">
+                  <Td colSpan="6">
                     <LoadingScreen />
                   </Td>
                 </Tr>
