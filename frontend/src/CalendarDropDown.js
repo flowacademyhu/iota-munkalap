@@ -11,9 +11,11 @@ function CalendarDropDown({
   placeholderText,
   setDate,
   date,
+  disabled,
 }) {
   return (
     <DatePicker
+      disabled={disabled}
       locale="hu"
       selected={setFieldValue ? (value && new Date(value)) || null : date}
       onChange={
