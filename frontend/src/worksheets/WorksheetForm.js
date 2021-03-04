@@ -43,7 +43,7 @@ export default function WorkSheetForm({
           {sent && <PopUp handleClick={handleClick} body={popUpMessage} />}
           <Formik
             initialValues={{
-              partnerId: worksheet?.partner.partnerId || '',
+              partnerId: worksheet?.partnerId || '',
               typeOfWork: TYPE_OF_WORK_LIST[0].value,
               customTypeOfWork: '',
               assetSettlement: ASSET_SETTLEMENT_LIST[0].value,
@@ -147,11 +147,11 @@ export default function WorkSheetForm({
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div className="mt-3">
+                  <div className="mt-3 mb-5">
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>
-                  <div className="buttons">
+                  <div className="buttons mb-3">
                     <Link to="/worksheets">
                       <Button text="Mégse" moreClassName="h-auto" />
                     </Link>

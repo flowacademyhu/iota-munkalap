@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Builder(toBuilder = true)
-@Table(indexes = @Index(name = "namingIndex", columnList = "firstName, lastName"), name = "userCustom" )
+@Table(indexes = @Index(name = "namingIndex", columnList = "firstName, lastName"), name = "userCustom")
 public class User {
 
     @Id
@@ -34,4 +34,9 @@ public class User {
     private boolean enabled;
     @JsonFormat(pattern = "yyyy.MM.dd HH:mm:ss")
     private LocalDateTime createdAt;
+
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
 }

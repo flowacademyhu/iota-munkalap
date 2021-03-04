@@ -3,6 +3,7 @@ package hu.flowacademy.worksheet.service;
 import hu.flowacademy.worksheet.configuration.PagingProperties;
 import hu.flowacademy.worksheet.entity.Partner;
 import hu.flowacademy.worksheet.enumCustom.OrderType;
+import hu.flowacademy.worksheet.enumCustom.Status;
 import hu.flowacademy.worksheet.exception.ValidationException;
 import hu.flowacademy.worksheet.repository.PartnerRepository;
 import lombok.NonNull;
@@ -54,9 +55,6 @@ public class PartnerService {
         }
         if (!StringUtils.hasText(partner.getNev())) {
             throw new ValidationException("The partner name is null");
-        }
-        if (!StringUtils.hasText(partner.getRovidNev())) {
-            throw new ValidationException("The partner short name is null");
         }
         if (partner.getMegrendeloTipusa().equals(OrderType.LEGAL) && partner.getAdoszam() == null) {
             throw new ValidationException("The tax number is null");
@@ -144,10 +142,10 @@ public class PartnerService {
         return partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
     }
 
-    public Partner togglePartnerActivity(String id) throws ValidationException {
-        Partner toToggle = partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with provided ID"));
-        toToggle.setEnabled(!toToggle.getEnabled());
-        return partnerRepository.save(toToggle);
+    public Partner setPartnerActivity(String id, Status status) throws ValidationException {
+        Partner toChange = partnerRepository.findById(id).orElseThrow(() -> new ValidationException("No partner with the given id " + id));
+        toChange.setEnabled(status == Status.active);
+        return partnerRepository.save(toChange);
     }
 
     public Partner update(String id, Partner partnerReceived) throws ValidationException {

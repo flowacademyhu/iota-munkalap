@@ -189,13 +189,11 @@ export const createSignatureAndDate = function (worksheet) {
             fontSize: 10,
           },
           {
-            colSpan: 2,
             svg: workerSignatureSvg,
-            fit: [100, 100],
+            fit: [80, 60],
           },
           {
-            colSpan: 2,
-            fit: [100, 100],
+            fit: [80, 60],
             svg: proofOfEmploymentSvg,
           },
         ],

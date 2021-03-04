@@ -1,5 +1,6 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-super-responsive-table/dist/SuperResponsiveTableStyle.css'
 import LoginForm from './LoginForm'
 import useToken from './hooks/useToken'
 import Page from './Page'
