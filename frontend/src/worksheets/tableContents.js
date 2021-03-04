@@ -55,7 +55,6 @@ export const createHeader = function (worksheet, partnerData) {
                 bold: true,
                 fontSize: 10,
               },
-
               {
                 text: `Az Ügyfél számlázási neve:`,
                 fontSize: 8,
