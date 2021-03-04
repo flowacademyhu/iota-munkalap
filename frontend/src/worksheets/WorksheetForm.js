@@ -143,11 +143,11 @@ export default function WorkSheetForm({
                     setFieldValue={setFieldValue}
                     value={values.createdAt}
                   />
-                  <div className="mt-3">
+                  <div className="mt-3 signatureDiv">
                     Munkát elvégezte:
                     <Signature name="workerSignature" />
                   </div>
-                  <div className="mt-3 mb-5">
+                  <div className="mt-3 mb-5 signatureDiv">
                     Munkavégzést igazolja:
                     <Signature name="proofOfEmployment" />
                   </div>
