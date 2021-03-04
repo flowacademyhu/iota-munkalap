@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback, useState, useEffect, useParams } from 'react'
 import { Table, Thead, Tbody, Tr, Th, Td } from 'react-super-responsive-table'
 import useWorkSheets from '../hooks/useWorkSheets'
-import usePartners from '../hooks/usePartners'
 import {
   typeOfWorkTranslation,
   statusTranslation,
@@ -11,6 +10,8 @@ import LoadingScreen from '../LoadingScreen'
 import workSheetPDF from './workSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
+import { getPartner } from '../api/PartnerAPI'
+const { id } = useParams()
 
 export default function TableListOfWorkSheets() {
   const {
@@ -24,7 +25,40 @@ export default function TableListOfWorkSheets() {
     setStatus: onStatus,
   } = useWorkSheets()
 
-  const { partners } = usePartners
+  // const [partnerData, setPartnerData] = useState()
+
+  // const refreshPartner = useCallback(
+  //   async function (id) {
+  //     if (id !== undefined) {
+  //       try {
+  //         const response = await getPartner(id)
+  //         setPartnerData({ ...response.data, loaded: true })
+  //       } catch (error) {
+  //         setPartnerData({ loaded: true })
+  //         // setPopUpMessage('A lekérés sikertelen')
+  //         // setSent(true)
+  //       }
+  //     }
+  //   },
+  //   [id]
+  // )
+
+  // useEffect(() => {
+  //   refreshPartner()
+  // }, [refreshPartner])
+
+
+  
+  function handlePrint(worksheet) {
+    const partnerData = await getPartner(worksheet.partnerId)
+    workSheetPDF(worksheet, partnerData)
+  }
+
+  // function handlePrint(worksheet) {
+  //   refreshPartner(worksheet.partnerId)
+  //   console.log(partnerData)
+  //   workSheetPDF(worksheet, partnerData)
+  // }
 
   async function closeAndReload(id) {
     await closeWorkSheet(id)
@@ -76,14 +110,17 @@ export default function TableListOfWorkSheets() {
                         id={worksheet.id}
                         onFinalize={() => finalizeAndReload(worksheet.id)}
                         onClose={() => closeAndReload(worksheet.id)}
-                        onPrint={() => workSheetPDF(worksheet, partners)}
+                        onPrint={
+                          () => handlePrint(worksheet)
+                          //workSheetPDF(worksheet, partnerData)
+                        }
                       />
                     </Td>
                   </Tr>
                 ))
               ) : (
                 <Tr>
-                  <Td colSpan="5">
+                  <Td colSpan="7">
                     <LoadingScreen />
                   </Td>
                 </Tr>

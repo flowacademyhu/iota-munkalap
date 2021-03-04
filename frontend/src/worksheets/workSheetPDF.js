@@ -1,5 +1,7 @@
 import pdfMake from 'pdfmake/build/pdfmake'
 import vfsFonts from 'pdfmake/build/vfs_fonts'
+import { getPartner } from '../api/PartnerAPI'
+import usePartnerData from '../hooks/usePartnerData'
 
 import {
   createHeader,
@@ -10,13 +12,15 @@ import {
   createStyles,
 } from './tableContents'
 
-function workSheetPDF(worksheet, partners) {
+function workSheetPDF(worksheet, partnerData) {
   const { vfs } = vfsFonts.pdfMake
   pdfMake.vfs = vfs
 
+  //const { partnerData } = usePartnerData()
+
   const doc = {
     content: [
-      createHeader(worksheet, partners),
+      createHeader(worksheet, partnerData),
       createDetails(worksheet),
       createDescription(worksheet),
       createMaterials(worksheet),

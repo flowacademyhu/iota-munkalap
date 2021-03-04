@@ -12,19 +12,19 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-export const createHeader = function (worksheet, partners) {
-  let name = partners.nev
-  let country = partners.szamlazasiCimOrszagNev
-  let zip = partners.szamlazasiCimIranyitoszam
-  let city = partners.szamlazasiCimTelepulesNev
-  let streetName = partners.szamlazasiCimKozteruletNev
-  let streetType = partners.szamlazasiCimKozteruletJellegNev
-  let addressNum = partners.szamlazasiCimHazszam
-  let building = partners.szamlazasiCimEpulet
-  let stairWay = partners.szamlazasiCimLepcsohaz
-  let floor = partners.szamlazasiCimSzint
-  let door = partners.szamlazasiCimAjto
-  let parcel = partners.szamlazasiCimHrsz
+export const createHeader = function (worksheet, partnerData) {
+  let name = partnerData.nev
+  let country = partnerData.szamlazasiCimOrszagNev
+  let zip = partnerData.szamlazasiCimIranyitoszam
+  let city = partnerData.szamlazasiCimTelepulesNev
+  let streetName = partnerData.szamlazasiCimKozteruletNev
+  let streetType = partnerData.szamlazasiCimKozteruletJellegNev
+  let addressNum = partnerData.szamlazasiCimHazszam
+  let building = partnerData.szamlazasiCimEpulet
+  let stairWay = partnerData.szamlazasiCimLepcsohaz
+  let floor = partnerData.szamlazasiCimSzint
+  let door = partnerData.szamlazasiCimAjto
+  let parcel = partnerData.szamlazasiCimHrsz
 
   return (
     {
