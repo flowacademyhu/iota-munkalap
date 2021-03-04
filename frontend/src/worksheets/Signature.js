@@ -12,11 +12,15 @@ export default function Signature(props) {
     setValue(JSON.stringify([]))
   }
 
-  useEffect(() => {
-    try {
+  const refreshSign = useCallback(
+    async function () {
       signaturePadRef.current.fromData(JSON.parse(field.value))
-    } catch {}
-  }, [field.value])
+    },
+    [field.value]
+  )
+  useEffect(() => {
+    refreshSign()
+  }, [refreshSign])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
