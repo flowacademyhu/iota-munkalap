@@ -18,10 +18,12 @@ export default function Signature(props) {
     } catch {
       setValue(JSON.stringify([]))
     }
-  }, [field.value, setValue])
+  }, [field.value])
 
   function onEnd() {
     const data = JSON.stringify(signaturePadRef.current.toData())
+    console.log('adat')
+    console.log(data)
     setValue(data)
   }
 
