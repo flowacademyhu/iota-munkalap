@@ -58,8 +58,8 @@ export default function WorkSheetForm({
               usedMaterial: '',
               typeOfPayment: TYPE_OF_PAYMENT_LIST[0].value,
               createdAt: moment(new Date()).format('yyyy-MM-DD'),
-              workerSignature: '',
-              proofOfEmployment: '',
+              workerSignature: JSON.stringify([]),
+              proofOfEmployment: JSON.stringify([]),
               worksheetStatus: 'CREATED',
               ...worksheet,
             }}
