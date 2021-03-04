@@ -12,7 +12,7 @@ function SearchSelect({ disabled, ...props }) {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <Select
-        isDisabled={disabled}
+        isDisabled={disabled} //it is disabled
         {...field}
         options={options}
         onChange={(option) => {
