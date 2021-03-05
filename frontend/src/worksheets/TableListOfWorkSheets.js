@@ -80,7 +80,7 @@ export default function TableListOfWorkSheets() {
                 ))
               ) : (
                 <Tr>
-                  <Td colSpan="5">
+                  <Td colSpan="7">
                     <LoadingScreen />
                   </Td>
                 </Tr>
