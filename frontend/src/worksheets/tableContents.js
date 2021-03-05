@@ -18,7 +18,7 @@ export const createHeader = function (worksheet) {
       ? 'Lezárt'
       : (worksheet.worksheetStatus =
           worksheet.worksheetStatus === 'REPORTED'
-            ? 'Készre jelentett'
+            ? 'Készre \njelentett'
             : 'Létrehozott')
 
   return (
