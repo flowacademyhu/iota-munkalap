@@ -90,7 +90,7 @@ export const createHeader = function (worksheet) {
                 fontSize: 15,
               },
               {
-                text: `${worksheet.worksheetStatus}/n`,
+                text: `${worksheet.worksheetStatus}`,
                 fontSize: 25,
               },
             ],
