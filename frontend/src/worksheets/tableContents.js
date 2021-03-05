@@ -16,10 +16,9 @@ export const createHeader = function (worksheet) {
   let worksheetStatus =
     worksheet.worksheetStatus === 'CLOSED'
       ? 'Lezárt'
-      : (worksheet.worksheetStatus =
-          worksheet.worksheetStatus === 'REPORTED'
-            ? 'Készre \njelentett'
-            : 'Létrehozott')
+      : worksheet.worksheetStatus === 'REPORTED'
+      ? 'Készre \njelentett'
+      : 'Létrehozott'
 
   return (
     {
