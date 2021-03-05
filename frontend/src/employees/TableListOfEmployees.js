@@ -79,6 +79,7 @@ export default function TableListOfEmployees() {
                 employees.map((employee) => (
                   <EmployeeListRow
                     employee={employee}
+                    key={employee.id}
                     onInactivate={() => inactivateAndReload(employee.id)}
                     onActivate={() => activateAndReload(employee.id)}
                   />

@@ -4,12 +4,14 @@ function updatePartner(id, credentials) {
   return api.put(`/partners/${id}`, credentials)
 }
 
-function getPartners() {
-  return api.get('/partners')
+async function getPartners() {
+  const response = await api.get('/partners')
+  return response?.data
 }
 
-function getPartner(id) {
-  return api.get(`/partners/${id}`)
+async function getPartner(id) {
+  const response = await api.get(`/partners/${id}`)
+  return response?.data
 }
 
 function createPartner(credentials) {

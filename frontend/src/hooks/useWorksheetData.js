@@ -26,7 +26,7 @@ export default function useWorksheetData() {
       if (id !== undefined) {
         try {
           const response = await getWorkSheet(id)
-          setWorksheetData({ ...response.data, loaded: true })
+          setWorksheetData({ ...response, loaded: true })
         } catch (error) {
           setWorksheetData({ loaded: true })
           setPopUpMessage('A módosítás sikertelen')

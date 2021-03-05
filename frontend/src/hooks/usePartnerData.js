@@ -22,7 +22,7 @@ export default function usePartnerData() {
       if (id !== undefined) {
         try {
           const response = await getPartner(id)
-          setPartnerData({ ...response.data, loaded: true })
+          setPartnerData({ ...response, loaded: true })
         } catch (error) {
           setPartnerData({ loaded: true })
           setPopUpMessage('A lekérés sikertelen')
