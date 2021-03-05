@@ -6,10 +6,11 @@ import {
   statusTranslation,
 } from './TranslationForWorkSheet'
 import { closeWorkSheet, finalizeWorkSheet } from '../api/WorkSheetAPI'
-import LoadingScreen from '../LoadingScreen'
-import workSheetPDF from './workSheetPDF'
+import createWorksheetPDF from './createWorkSheetPDF'
 import WorksheetListHeader from './WorksheetListHeader'
 import WorkSheetOperationButtons from './WorkSheetOperationButtons'
+import { getPartner } from '../api/PartnerAPI'
+import LoadingScreen from '../LoadingScreen'
 
 export default function TableListOfWorkSheets() {
   const {
@@ -22,6 +23,11 @@ export default function TableListOfWorkSheets() {
     status,
     setStatus: onStatus,
   } = useWorkSheets()
+
+  async function handlePrint(worksheet) {
+    const partnerData = await getPartner(worksheet.partnerId)
+    createWorksheetPDF(worksheet, partnerData)
+  }
 
   async function closeAndReload(id) {
     await closeWorkSheet(id)
@@ -73,7 +79,7 @@ export default function TableListOfWorkSheets() {
                         id={worksheet.id}
                         onFinalize={() => finalizeAndReload(worksheet.id)}
                         onClose={() => closeAndReload(worksheet.id)}
-                        onPrint={() => workSheetPDF(worksheet)}
+                        onPrint={() => handlePrint(worksheet)}
                       />
                     </Td>
                   </Tr>

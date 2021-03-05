@@ -21,7 +21,7 @@ export default function useEmployeeData() {
       if (id !== undefined) {
         try {
           const response = await getEmployee(id)
-          setEmployeeData({ ...response.data, loaded: true })
+          setEmployeeData({ ...response, loaded: true })
         } catch (error) {
           setEmployeeData({ loaded: true })
           setPopUpMessage('A módosítás sikertelen')

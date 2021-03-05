@@ -36,8 +36,9 @@ async function activateEmployee(id) {
   }
 }
 
-function getEmployee(id) {
-  return api.get(`/users/${id}`)
+async function getEmployee(id) {
+  const response = await api.get(`/users/${id}`)
+  return response?.data
 }
 
 function getEmployees(searchCriteria, status) {

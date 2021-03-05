@@ -5,20 +5,23 @@ function updateWorkSheet(id, credentials) {
   return api.put(`/worksheets/${id}`, credentials)
 }
 
-function getWorkSheets(startDate, endDate, status) {
+async function getWorkSheets(startDate, endDate, status) {
   const minTime = startDate ? moment(startDate).format('yyyy.MM.DD') : null
   const maxTime = endDate ? moment(endDate).format('yyyy.MM.DD') : null
-  return status === 'ALL'
-    ? api.get(`/worksheets/`, {
-        params: { minTime, maxTime },
-      })
-    : api.get(`/worksheets/`, {
-        params: { minTime, maxTime, status },
-      })
+  const response =
+    status === 'ALL'
+      ? await api.get(`/worksheets/`, {
+          params: { minTime, maxTime },
+        })
+      : await api.get(`/worksheets/`, {
+          params: { minTime, maxTime, status },
+        })
+  return response?.data
 }
 
-function getWorkSheet(id) {
-  return api.get(`/worksheets/${id}`)
+async function getWorkSheet(id) {
+  const response = await api.get(`/worksheets/${id}`)
+  return response?.data
 }
 
 function createWorkSheet(credentials) {

@@ -12,7 +12,24 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-export const createHeader = function (worksheet) {
+export const createHeader = function (worksheet, partnerData) {
+  const {
+    nev: name,
+    telefon: phoneNumber,
+    partnerEmail: email,
+    szamlazasiCimOrszagNev: country,
+    szamlazasiCimIranyitoszam: zip,
+    szamlazasiCimTelepulesNev: city,
+    szamlazasiCimKozteruletNev: streetName,
+    szamlazasiCimKozteruletJellegNev: streetType,
+    szamlazasiCimHazszam: addressNum,
+    szamlazasiCimEpulet: building,
+    szamlazasiCimLepcsohaz: stairWay,
+    szamlazasiCimSzint: floor,
+    szamlazasiCimAjto: door,
+    szamlazasiCimHrsz: parcel,
+  } = partnerData
+
   return (
     {
       text: 'Munkalap',
@@ -39,21 +56,12 @@ export const createHeader = function (worksheet) {
                 fontSize: 10,
               },
               {
-                text: `Partner ID:`,
-                bold: true,
-                fontSize: 8,
-              },
-              {
-                text: `${worksheet.partnerId}\n`,
-                fontSize: 8,
-              },
-              {
                 text: `Az Ügyfél számlázási neve:`,
                 fontSize: 8,
                 bold: true,
               },
               {
-                text: `{partner.BillingName}\n`,
+                text: `${name}\n`,
                 fontSize: 8,
               },
               {
@@ -62,7 +70,15 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `{partner.BillingAddress}\n`,
+                text: `${country ? country : ''}
+                ${zip} ${city}
+                ${streetName} ${streetType} ${addressNum} ${
+                  building ? building + ' ép.' : ''
+                } ${stairWay ? stairWay + ' lph.' : ''} ${
+                  floor ? floor + ' em.' : ''
+                } ${door ? door + ' a.' : ''} ${
+                  parcel ? 'hrsz: ' + parcel : ''
+                }`,
                 fontSize: 8,
               },
               {
@@ -71,7 +87,7 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `{partner.phone}\n`,
+                text: `telefon: ${phoneNumber}, email: ${email}`,
                 fontSize: 8,
               },
             ],
@@ -97,7 +113,7 @@ export const createDetails = function (worksheet) {
   return {
     style: 'tableExample',
     table: {
-      widths: [130, 130, '*', '*', '*'],
+      widths: [85, 130, 55, 55, 60, '*'],
       body: [
         [
           { text: `Munkavégzés jellege:`, bold: true },
@@ -105,19 +121,21 @@ export const createDetails = function (worksheet) {
           { text: `Létszám:`, bold: true },
           { text: `Rezsióra:`, bold: true },
           { text: `Kiszállás:`, bold: true },
+          { text: `Számlaszám:`, bold: true },
         ],
         [
           {
             text: `${typeOfWorkTranslation[worksheet.typeOfWork]} ${
               typeOfWorkTranslation[worksheet.typeOfWork] === 'Egyéb'
-                ? 'Egyéb: ' + worksheet.customTypeOfWork
+                ? worksheet.customTypeOfWork
                 : ''
             }`,
           },
           `${assetSettlement[worksheet.assetSettlement]}`,
           `${worksheet.numberOfEmployees} fő`,
-          `${worksheet.overheadHour} HUF`,
+          `${worksheet.overheadHour} óra`,
           `${worksheet.deliveryKm} Km`,
+          `${worksheet.accountSerialNumber}`,
         ],
       ],
     },
