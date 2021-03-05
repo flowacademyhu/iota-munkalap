@@ -82,7 +82,15 @@ export const createHeader = function (worksheet) {
                 bold: true,
               },
               {
-                text: `${worksheet.id}`,
+                text: `${worksheet.id}/n`,
+                fontSize: 25,
+              },
+              {
+                text: `Munkalap státusza:\n`,
+                fontSize: 15,
+              },
+              {
+                text: `${worksheet.worksheetStatus}/n`,
                 fontSize: 25,
               },
             ],
