@@ -95,6 +95,7 @@ export const createHeader = function (worksheet) {
               {
                 text: `Munkalap státusza:\n`,
                 fontSize: 15,
+                bold: true,
               },
               {
                 text: `${worksheetStatus}`,
