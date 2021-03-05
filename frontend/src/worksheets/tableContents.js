@@ -98,7 +98,7 @@ export const createHeader = function (worksheet) {
               },
               {
                 text: `${worksheetStatus}`,
-                fontSize: 25,
+                fontSize: 15,
               },
             ],
           ],
