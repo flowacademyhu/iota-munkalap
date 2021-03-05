@@ -12,15 +12,15 @@ const billable = 'A vállalkozó a számla benyújtására jogosult.'
 const possession =
   'A számla kiegyenlítéséig a felszerelt eszközök a vállalkozó tulajdonában maradnak. A fizetés ellehetetlenülésekor az eszközök leszerelésre és elszállításra kerülnek.'
 
-let worksheetStatus =
-  worksheet.worksheetStatus === CLOSED
-    ? 'Lezárt'
-    : (isReported =
-        worksheet.worksheetStatus === REPORTED
-          ? 'Készre jelentett'
-          : 'Létrehozott')
-
 export const createHeader = function (worksheet) {
+  let worksheetStatus =
+    worksheet.worksheetStatus === 'CLOSED'
+      ? 'Lezárt'
+      : (worksheet.worksheetStatus =
+          worksheet.worksheetStatus === 'REPORTED'
+            ? 'Készre jelentett'
+            : 'Létrehozott')
+
   return (
     {
       text: 'Munkalap',
