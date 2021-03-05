@@ -1,7 +1,7 @@
 import React from 'react'
 import Select, { createFilter } from 'react-select'
 import { useField } from 'formik'
-export default function SearchSelect({ ...props }) {
+export default function SearchSelect({ disabled, ...props }) {
   const [field, { touched, error }, { setValue, setTouched }] = useField(props)
   const { name, label, options, placeholder } = props
   const showError = touched && error
@@ -17,6 +17,7 @@ export default function SearchSelect({ ...props }) {
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
       <Select
+        isDisabled={disabled}
         {...field}
         options={options}
         onChange={(option) => {
