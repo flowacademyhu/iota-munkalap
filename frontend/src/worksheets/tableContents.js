@@ -30,6 +30,13 @@ export const createHeader = function (worksheet, partnerData) {
     szamlazasiCimHrsz: parcel,
   } = partnerData
 
+  let worksheetStatus =
+    worksheet.worksheetStatus === 'CLOSED'
+      ? 'Lezárt'
+      : worksheet.worksheetStatus === 'REPORTED'
+      ? 'Készre jelentett'
+      : 'Létrehozott'
+
   return (
     {
       text: 'Munkalap',
@@ -98,8 +105,17 @@ export const createHeader = function (worksheet, partnerData) {
                 bold: true,
               },
               {
-                text: `${worksheet.id}`,
+                text: `${worksheet.id}\n\n`,
                 fontSize: 25,
+              },
+              {
+                text: `Munkalap státusza:\n`,
+                fontSize: 15,
+                bold: true,
+              },
+              {
+                text: `${worksheetStatus}`,
+                fontSize: 15,
               },
             ],
           ],
